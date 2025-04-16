@@ -23,6 +23,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
     highlights: THREE.Mesh[];
     lines: THREE.Mesh[];
   } | null>(null);
+  const isEssayFocusActive = useRef<boolean>(false);
 
   useEffect(() => {
     // Initialize scene only once
@@ -76,6 +77,33 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         { z: 0, duration: 1.5, ease: "power2.out" }
       );
 
+      // Essay focus section event listener
+      const handleEssayTransition = (event: Event) => {
+        const customEvent = event as CustomEvent;
+        isEssayFocusActive.current = customEvent.detail.active;
+        
+        if (isEssayFocusActive.current && essayRef.current && cameraRef.current) {
+          // Reset essay position and rotation for close-up view
+          gsap.to(essayRef.current.essayGroup.rotation, {
+            x: 0,
+            y: 0,
+            duration: 1,
+            ease: "power2.inOut"
+          });
+          
+          // Position the essay centrally
+          gsap.to(essayRef.current.essayGroup.position, {
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 1,
+            ease: "power2.inOut"
+          });
+        }
+      };
+
+      document.addEventListener('essayTransition', handleEssayTransition);
+
       // Responsive handling
       const handleResize = () => {
         if (!cameraRef.current || !rendererRef.current) return;
@@ -90,7 +118,61 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
 
       window.addEventListener('resize', handleResize);
 
-      // Setup GSAP ScrollTrigger
+      // Set up ScrollTrigger for essay focus section
+      const essayFocusSection = document.getElementById('essay-focus');
+      if (essayFocusSection) {
+        ScrollTrigger.create({
+          trigger: essayFocusSection,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: (self) => {
+            if (!essayRef.current || !cameraRef.current) return;
+            
+            if (isEssayFocusActive.current) {
+              // Camera movement from top to bottom of essay
+              const progress = self.progress;
+              
+              // Move camera closer to the essay
+              cameraRef.current.position.z = 5 - (progress * 3);
+              
+              // Pan from top to bottom
+              essayRef.current.essayGroup.position.y = 5 - (progress * 10);
+              
+              // Slightly tilt the essay as we read down
+              essayRef.current.essayGroup.rotation.x = -0.2 + (progress * 0.1);
+              
+              // Animate red pen to follow the reading position
+              essayRef.current.redPen.position.y = 5 - (progress * 10);
+              
+              // Reveal highlights as we scroll past them
+              essayRef.current.highlights.forEach((highlight, i) => {
+                const appearPoint = 0.3 + (i * 0.2);
+                const material = highlight.material as THREE.MeshBasicMaterial;
+                
+                if (progress > appearPoint && material.opacity < 0.7) {
+                  gsap.to(material, { 
+                    opacity: 0.7, 
+                    duration: 0.5 
+                  });
+                  
+                  // Pulse animation for highlight
+                  gsap.to(highlight.scale, { 
+                    x: 1.05, 
+                    y: 1.2, 
+                    z: 1, 
+                    duration: 0.5, 
+                    yoyo: true, 
+                    repeat: 1,
+                    ease: "power1.inOut" 
+                  });
+                }
+              });
+            }
+          }
+        });
+      }
+      
+      // Setup GSAP ScrollTrigger for main scroll
       const scrollElement = document.querySelector(scrollContainer);
       if (scrollElement) {
         ScrollTrigger.create({
@@ -98,7 +180,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           start: 'top top',
           end: 'bottom bottom',
           onUpdate: (self) => {
-            if (!essayRef.current) return;
+            if (!essayRef.current || isEssayFocusActive.current) return;
             
             // Animate essay based on scroll position
             animateEssay(
@@ -149,6 +231,8 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       // Cleanup
       return () => {
         window.removeEventListener('resize', handleResize);
+        document.removeEventListener('essayTransition', handleEssayTransition);
+        
         if (ScrollTrigger) {
           ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         }

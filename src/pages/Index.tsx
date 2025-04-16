@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ThreeScene from "@/components/ThreeScene";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import EssayFocusSection from "@/components/EssayFocusSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import VideoShowcaseSection from "@/components/VideoShowcaseSection";
@@ -76,6 +77,7 @@ const Index: React.FC = () => {
       <div id="main-content" className="relative z-10">
         <Header />
         <HeroSection />
+        <EssayFocusSection />
         <FeaturesSection />
         <VideoShowcaseSection />
         <TestimonialsSection />

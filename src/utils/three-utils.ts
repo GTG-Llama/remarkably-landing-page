@@ -1,0 +1,187 @@
+
+import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+
+// Create a 3D essay model
+export const createEssayModel = async (scene: THREE.Scene) => {
+  // Create essay paper material
+  const paperMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    roughness: 0.2,
+    metalness: 0.1,
+  });
+
+  // Create essay paper geometry
+  const paperGeometry = new THREE.BoxGeometry(8, 11, 0.05);
+  const paper = new THREE.Mesh(paperGeometry, paperMaterial);
+  
+  // Add subtle texture to paper
+  const textureLoader = new THREE.TextureLoader();
+  textureLoader.load('/paper-texture.jpg', (texture) => {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 1);
+    paperMaterial.map = texture;
+    paperMaterial.needsUpdate = true;
+  });
+
+  // Simulate text lines on paper
+  const createTextLine = (y: number, width: number = 7) => {
+    const lineGeometry = new THREE.BoxGeometry(width, 0.08, 0.01);
+    const lineMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x000000,
+      transparent: true,
+      opacity: 0.2 
+    });
+    const line = new THREE.Mesh(lineGeometry, lineMaterial);
+    line.position.set(0, y, 0.03);
+    return line;
+  };
+
+  // Add multiple text lines to simulate an essay
+  const lines = [];
+  const numberOfLines = 30;
+  const spacing = 0.3;
+  const startY = 5;
+  
+  for (let i = 0; i < numberOfLines; i++) {
+    // Randomize line width slightly to make it look more natural
+    const width = 7 - Math.random() * 2;
+    const y = startY - i * spacing;
+    const line = createTextLine(y, width);
+    paper.add(line);
+    lines.push(line);
+  }
+
+  // Create a red pen
+  const createRedPen = () => {
+    const penGroup = new THREE.Group();
+    
+    // Pen body
+    const penBodyGeometry = new THREE.CylinderGeometry(0.1, 0.1, 5, 32);
+    const penBodyMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0xFF3B30, // Apple red
+      roughness: 0.3,
+      metalness: 0.7 
+    });
+    const penBody = new THREE.Mesh(penBodyGeometry, penBodyMaterial);
+    penBody.rotation.x = Math.PI / 2;
+    
+    // Pen tip
+    const penTipGeometry = new THREE.ConeGeometry(0.1, 0.3, 32);
+    const penTipMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x000000, 
+      roughness: 0.3,
+      metalness: 0.7
+    });
+    const penTip = new THREE.Mesh(penTipGeometry, penTipMaterial);
+    penTip.position.set(0, -2.5, 0);
+    penTip.rotation.x = -Math.PI / 2;
+    
+    penGroup.add(penBody);
+    penGroup.add(penTip);
+    penGroup.position.set(4, 0, 0.5);
+    penGroup.rotation.z = -Math.PI / 4;
+    
+    return penGroup;
+  };
+  
+  const redPen = createRedPen();
+  
+  // Add highlights to the essay
+  const createHighlight = (y: number, width: number = 5, color: number = 0xFFD700) => {
+    const highlightGeometry = new THREE.BoxGeometry(width, 0.25, 0.01);
+    const highlightMaterial = new THREE.MeshBasicMaterial({ 
+      color: color,
+      transparent: true,
+      opacity: 0.3
+    });
+    const highlight = new THREE.Mesh(highlightGeometry, highlightMaterial);
+    highlight.position.set(0, y, 0.02);
+    return highlight;
+  };
+  
+  // Add feature highlights at specific positions
+  const highlight1 = createHighlight(3, 6, 0xFF3B30); // Red highlight
+  const highlight2 = createHighlight(1.5, 4, 0xA89165); // Gold highlight
+  const highlight3 = createHighlight(0, 5, 0xFF3B30); // Red highlight
+  
+  paper.add(highlight1);
+  paper.add(highlight2);
+  paper.add(highlight3);
+  
+  // Group everything together
+  const essayGroup = new THREE.Group();
+  essayGroup.add(paper);
+  essayGroup.add(redPen);
+  
+  // Initial position and rotation
+  essayGroup.rotation.x = -0.2;
+  essayGroup.position.y = 0;
+  
+  scene.add(essayGroup);
+  
+  return { 
+    essayGroup, 
+    redPen,
+    highlights: [highlight1, highlight2, highlight3],
+    lines 
+  };
+};
+
+// Animation helpers
+export const animateEssay = (
+  essayGroup: THREE.Group, 
+  redPen: THREE.Group, 
+  scrollY: number, 
+  totalHeight: number
+) => {
+  // Calculate progress based on scroll position (0 to 1)
+  const progress = Math.min(Math.max(scrollY / totalHeight, 0), 1);
+  
+  // Rotate essay based on scroll
+  essayGroup.rotation.y = progress * Math.PI * 0.5 - 0.2;
+  
+  // Move essay up as we scroll down
+  essayGroup.position.y = -progress * 15 + 5;
+  
+  // Scale essay to create zoom effect
+  const scale = 1 + progress * 2;
+  essayGroup.scale.set(scale, scale, scale);
+  
+  // Move pen to simulate marking the essay
+  redPen.position.y = progress * 10 - 5;
+  redPen.position.x = 4 - progress * 2;
+  redPen.rotation.x = progress * Math.PI * 0.5;
+};
+
+// Setup lighting for the scene
+export const setupLighting = (scene: THREE.Scene) => {
+  // Ambient light for overall illumination
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  
+  // Main directional light (simulating sunlight)
+  const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+  mainLight.position.set(5, 5, 5);
+  mainLight.castShadow = true;
+  scene.add(mainLight);
+  
+  // Additional directional light from opposite direction
+  const fillLight = new THREE.DirectionalLight(0xA89165, 0.3); // Gold tint
+  fillLight.position.set(-5, 0, -5);
+  scene.add(fillLight);
+  
+  // Soft spotlight to highlight the essay
+  const spotLight = new THREE.SpotLight(0xffffff, 0.5);
+  spotLight.position.set(0, 10, 5);
+  spotLight.angle = Math.PI / 6;
+  spotLight.penumbra = 0.5;
+  spotLight.decay = 2;
+  spotLight.distance = 50;
+  spotLight.castShadow = true;
+  scene.add(spotLight);
+  
+  return { ambientLight, mainLight, fillLight, spotLight };
+};

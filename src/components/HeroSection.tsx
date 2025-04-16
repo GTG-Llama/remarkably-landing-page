@@ -9,6 +9,7 @@ const HeroSection: React.FC = () => {
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const promotionRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const tl = gsap.timeline();
@@ -55,6 +56,44 @@ const HeroSection: React.FC = () => {
       },
       "+=0.5"
     );
+
+    // Add particle effects on mouse move
+    if (sectionRef.current) {
+      const createParticle = (x: number, y: number) => {
+        const particle = document.createElement('div');
+        particle.className = 'absolute w-2 h-2 rounded-full bg-remarkably-gold/30 pointer-events-none';
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.zIndex = '5';
+        
+        sectionRef.current?.appendChild(particle);
+        
+        gsap.to(particle, {
+          x: Math.random() * 100 - 50,
+          y: Math.random() * 100 - 50,
+          opacity: 0,
+          scale: Math.random() * 3 + 1,
+          duration: Math.random() * 2 + 1,
+          ease: "power2.out",
+          onComplete: () => {
+            particle.remove();
+          }
+        });
+      };
+      
+      const handleMouseMove = (e: MouseEvent) => {
+        // Only create particles occasionally to avoid overwhelming the browser
+        if (Math.random() > 0.92) {
+          createParticle(e.clientX, e.clientY);
+        }
+      };
+      
+      sectionRef.current.addEventListener('mousemove', handleMouseMove);
+      
+      return () => {
+        sectionRef.current?.removeEventListener('mousemove', handleMouseMove);
+      };
+    }
   }, []);
 
   const scrollToFeatures = () => {
@@ -65,8 +104,17 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="content-container z-10 text-center px-4 md:px-8 max-w-5xl mx-auto">
+    <section 
+      id="hero-section"
+      ref={sectionRef}
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-70">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,145,101,0.15),rgba(255,255,255,0)_70%)]"></div>
+      </div>
+      
+      <div className="content-container z-10 text-center px-4 md:px-8 max-w-5xl mx-auto hero-anim">
         <div 
           ref={promotionRef}
           className="inline-block mb-8 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-gray-200 shadow-sm"
@@ -92,11 +140,13 @@ const HeroSection: React.FC = () => {
         </p>
         
         <div ref={ctaRef} className="flex flex-col md:flex-row items-center justify-center gap-4">
-          <button className="bg-black text-white rounded-full px-8 py-3 text-lg font-medium hover:bg-opacity-80 transition-all duration-300">
-            Start Free Trial
+          <button className="bg-black text-white rounded-full px-8 py-3 text-lg font-medium hover:bg-opacity-80 transition-all duration-300 relative overflow-hidden group">
+            <span className="relative z-10">Start Free Trial</span>
+            <span className="absolute inset-0 bg-remarkably-gold scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
           </button>
-          <button className="px-8 py-3 text-lg border border-gray-300 rounded-full hover:border-remarkably-gold hover:text-remarkably-gold transition-colors">
-            Watch Demo
+          <button className="px-8 py-3 text-lg border border-gray-300 rounded-full hover:border-remarkably-gold hover:text-remarkably-gold transition-colors relative overflow-hidden group">
+            <span className="relative z-10">Watch Demo</span>
+            <span className="absolute inset-0 bg-remarkably-gold/10 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
           </button>
         </div>
       </div>

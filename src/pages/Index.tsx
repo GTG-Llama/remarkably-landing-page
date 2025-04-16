@@ -29,7 +29,7 @@ const Index: React.FC = () => {
     tl.to(".loading-screen", {
       opacity: 0,
       duration: 0.8,
-      delay: 1.5,
+      delay: 1.2,
       ease: "power2.inOut",
     });
 

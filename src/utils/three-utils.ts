@@ -3,6 +3,17 @@ import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
+// Interfaces for essay annotations
+export interface EssayFeature {
+  id: string;
+  position: { x: number; y: number; z: number };
+  rotation?: { x: number; y: number; z: number };
+  scale?: number;
+  color: number;
+  label: string;
+  description: string;
+}
+
 // Create a 3D essay model
 export const createEssayModel = async (scene: THREE.Scene) => {
   // Create essay paper material
@@ -103,13 +114,98 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   };
   
   // Add feature highlights at specific positions
-  const highlight1 = createHighlight(3, 6, 0xFF3B30); // Red highlight
-  const highlight2 = createHighlight(1.5, 4, 0xA89165); // Gold highlight
-  const highlight3 = createHighlight(0, 5, 0xFF3B30); // Red highlight
+  const highlight1 = createHighlight(3, 6, 0xFF3B30); // Red highlight (Thesis Statement)
+  const highlight2 = createHighlight(1.5, 4, 0xA89165); // Gold highlight (Supporting Evidence)
+  const highlight3 = createHighlight(0, 5, 0xFF3B30); // Red highlight (Conclusion)
+  const highlight4 = createHighlight(-1.5, 3.5, 0x1EAEDB); // Blue highlight (Citations)
+  const highlight5 = createHighlight(-3, 4.5, 0x4CAF50); // Green highlight (Grammar)
   
   paper.add(highlight1);
   paper.add(highlight2);
   paper.add(highlight3);
+  paper.add(highlight4);
+  paper.add(highlight5);
+  
+  // Create feature annotation points
+  const features: EssayFeature[] = [
+    {
+      id: 'thesis',
+      position: { x: 3.5, y: 3, z: 0.1 },
+      color: 0xFF3B30,
+      label: 'Thesis Check',
+      description: 'Analyzes clarity and strength of thesis statements'
+    },
+    {
+      id: 'evidence',
+      position: { x: 2.5, y: 1.5, z: 0.1 },
+      color: 0xA89165,
+      label: 'Evidence Support',
+      description: 'Evaluates quality and relevance of supporting evidence'
+    },
+    {
+      id: 'conclusion',
+      position: { x: 3, y: 0, z: 0.1 },
+      color: 0xFF3B30,
+      label: 'Conclusion Analysis',
+      description: 'Checks for effective summary and closing arguments'
+    },
+    {
+      id: 'citations',
+      position: { x: 2, y: -1.5, z: 0.1 },
+      color: 0x1EAEDB,
+      label: 'Citation Verification',
+      description: 'Verifies proper citation format and usage'
+    },
+    {
+      id: 'grammar',
+      position: { x: 2.8, y: -3, z: 0.1 },
+      color: 0x4CAF50,
+      label: 'Grammar Check',
+      description: 'Identifies and corrects grammatical errors'
+    }
+  ];
+  
+  // Create feature annotation markers
+  const annotationMarkers = features.map(feature => {
+    const markerGroup = new THREE.Group();
+    
+    // Create marker dot
+    const dotGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+    const dotMaterial = new THREE.MeshBasicMaterial({ color: feature.color });
+    const dot = new THREE.Mesh(dotGeometry, dotMaterial);
+    
+    // Create label connector line
+    const lineGeometry = new THREE.BufferGeometry();
+    const lineMaterial = new THREE.LineBasicMaterial({ 
+      color: feature.color,
+      transparent: true,
+      opacity: 0.7
+    });
+    
+    // Start at the dot, extend outward
+    const linePoints = [
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(0.5, 0.2, 0)
+    ];
+    
+    lineGeometry.setFromPoints(linePoints);
+    const line = new THREE.Line(lineGeometry, lineMaterial);
+    
+    // Add to marker group
+    markerGroup.add(dot);
+    markerGroup.add(line);
+    
+    // Position the marker at feature position
+    markerGroup.position.set(feature.position.x, feature.position.y, feature.position.z);
+    
+    // Add to paper
+    paper.add(markerGroup);
+    
+    return { 
+      feature,
+      markerGroup
+    };
+  });
   
   // Group everything together
   const essayGroup = new THREE.Group();
@@ -125,8 +221,9 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   return { 
     essayGroup, 
     redPen,
-    highlights: [highlight1, highlight2, highlight3],
-    lines 
+    highlights: [highlight1, highlight2, highlight3, highlight4, highlight5],
+    lines,
+    annotationMarkers 
   };
 };
 
@@ -184,4 +281,66 @@ export const setupLighting = (scene: THREE.Scene) => {
   scene.add(spotLight);
   
   return { ambientLight, mainLight, fillLight, spotLight };
+};
+
+// Create a feature information panel that appears when focusing on a feature
+export const createFeatureInfoPanel = (scene: THREE.Scene, feature: EssayFeature) => {
+  const panelGroup = new THREE.Group();
+  
+  // Background panel
+  const panelGeometry = new THREE.PlaneGeometry(2, 0.8);
+  const panelMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.85,
+    side: THREE.DoubleSide
+  });
+  const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+  
+  // Add border
+  const borderGeometry = new THREE.EdgesGeometry(panelGeometry);
+  const borderMaterial = new THREE.LineBasicMaterial({ 
+    color: feature.color,
+    linewidth: 2
+  });
+  const border = new THREE.LineSegments(borderGeometry, borderMaterial);
+  
+  // Position elements
+  panel.position.set(feature.position.x + 1.5, feature.position.y, feature.position.z);
+  border.position.copy(panel.position);
+  
+  // Add to group
+  panelGroup.add(panel);
+  panelGroup.add(border);
+  panelGroup.visible = false;
+  
+  scene.add(panelGroup);
+  
+  return panelGroup;
+};
+
+// Show/hide feature information
+export const toggleFeatureInfo = (
+  feature: EssayFeature,
+  panel: THREE.Group,
+  visible: boolean
+) => {
+  panel.visible = visible;
+  
+  if (visible) {
+    // Animation for panel appearance
+    gsap.from(panel.position, {
+      x: feature.position.x + 1,
+      y: feature.position.y + 0.5,
+      duration: 0.3,
+      ease: "power2.out"
+    });
+    
+    gsap.from(panel.scale, {
+      x: 0.5,
+      y: 0.5,
+      duration: 0.3,
+      ease: "power2.out"
+    });
+  }
 };

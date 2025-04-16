@@ -1,9 +1,16 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { createEssayModel, animateEssay, setupLighting } from '@/utils/three-utils';
+import { 
+  createEssayModel, 
+  animateEssay, 
+  setupLighting, 
+  createFeatureInfoPanel,
+  toggleFeatureInfo,
+  EssayFeature
+} from '@/utils/three-utils';
 
 // Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -22,8 +29,15 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
     redPen: THREE.Group;
     highlights: THREE.Mesh[];
     lines: THREE.Mesh[];
+    annotationMarkers: Array<{
+      feature: EssayFeature;
+      markerGroup: THREE.Group;
+    }>;
   } | null>(null);
   const isEssayFocusActive = useRef<boolean>(false);
+  const isEssayShowcaseActive = useRef<boolean>(false);
+  const activeFeatureRef = useRef<string | null>(null);
+  const featureInfoPanels = useRef<Record<string, THREE.Group>>({});
 
   useEffect(() => {
     // Initialize scene only once
@@ -63,6 +77,14 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       // Create essay model
       const essayModel = await createEssayModel(scene);
       essayRef.current = essayModel;
+
+      // Create feature info panels
+      if (essayModel.annotationMarkers) {
+        essayModel.annotationMarkers.forEach(({ feature }) => {
+          const panel = createFeatureInfoPanel(scene, feature);
+          featureInfoPanels.current[feature.id] = panel;
+        });
+      }
 
       // Initial animation to introduce the essay
       gsap.fromTo(
@@ -104,6 +126,86 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
 
       document.addEventListener('essayTransition', handleEssayTransition);
 
+      // Feature hover event listener for the showcase section
+      const handleFeatureHover = (event: Event) => {
+        const customEvent = event as CustomEvent;
+        const featureId = customEvent.detail.featureId;
+        activeFeatureRef.current = featureId;
+        
+        // If in essay showcase section, highlight the selected feature
+        if (essayRef.current && isEssayShowcaseActive.current) {
+          // Hide all feature panels first
+          Object.values(featureInfoPanels.current).forEach(panel => {
+            panel.visible = false;
+          });
+          
+          if (featureId) {
+            // Find the marker for this feature
+            const markerInfo = essayRef.current.annotationMarkers.find(
+              marker => marker.feature.id === featureId
+            );
+            
+            if (markerInfo) {
+              const { feature, markerGroup } = markerInfo;
+              
+              // Zoom camera to this feature
+              gsap.to(cameraRef.current?.position, {
+                x: feature.position.x * 0.5,
+                y: feature.position.y * 0.5,
+                z: 7,
+                duration: 0.8,
+                ease: "power2.inOut"
+              });
+              
+              // Rotate essay to better see the feature
+              gsap.to(essayRef.current.essayGroup.rotation, {
+                y: 0.2,
+                duration: 0.8,
+                ease: "power2.inOut"
+              });
+              
+              // Pulse the marker
+              gsap.to(markerGroup.scale, {
+                x: 1.5,
+                y: 1.5,
+                z: 1.5,
+                duration: 0.5,
+                repeat: 1,
+                yoyo: true,
+                ease: "power2.inOut"
+              });
+              
+              // Show the feature info panel
+              if (featureInfoPanels.current[featureId]) {
+                toggleFeatureInfo(
+                  feature,
+                  featureInfoPanels.current[featureId],
+                  true
+                );
+              }
+            }
+          } else {
+            // Reset camera position when no feature is selected
+            gsap.to(cameraRef.current?.position, {
+              x: 0,
+              y: 0,
+              z: 10,
+              duration: 0.8,
+              ease: "power2.inOut"
+            });
+            
+            // Reset essay rotation
+            gsap.to(essayRef.current.essayGroup.rotation, {
+              y: 0,
+              duration: 0.8,
+              ease: "power2.inOut"
+            });
+          }
+        }
+      };
+
+      document.addEventListener('featureHover', handleFeatureHover);
+
       // Responsive handling
       const handleResize = () => {
         if (!cameraRef.current || !rendererRef.current) return;
@@ -125,6 +227,20 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           trigger: essayFocusSection,
           start: 'top top',
           end: 'bottom bottom',
+          onEnter: () => {
+            isEssayFocusActive.current = true;
+            isEssayShowcaseActive.current = false;
+          },
+          onLeave: () => {
+            isEssayFocusActive.current = false;
+          },
+          onEnterBack: () => {
+            isEssayFocusActive.current = true;
+            isEssayShowcaseActive.current = false;
+          },
+          onLeaveBack: () => {
+            isEssayFocusActive.current = false;
+          },
           onUpdate: (self) => {
             if (!essayRef.current || !cameraRef.current) return;
             
@@ -171,6 +287,66 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           }
         });
       }
+
+      // Set up ScrollTrigger for essay showcase section
+      const essayShowcaseSection = document.getElementById('essay-showcase');
+      if (essayShowcaseSection) {
+        ScrollTrigger.create({
+          trigger: essayShowcaseSection,
+          start: 'top bottom',
+          end: 'bottom top',
+          onEnter: () => {
+            isEssayShowcaseActive.current = true;
+            isEssayFocusActive.current = false;
+            
+            // Reset and prepare essay position for showcase
+            if (essayRef.current && cameraRef.current) {
+              gsap.to(essayRef.current.essayGroup.position, {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 1,
+                ease: "power2.inOut"
+              });
+              
+              gsap.to(essayRef.current.essayGroup.rotation, {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 1,
+                ease: "power2.inOut"
+              });
+              
+              gsap.to(essayRef.current.essayGroup.scale, {
+                x: 1.2,
+                y: 1.2,
+                z: 1.2,
+                duration: 1,
+                ease: "power2.inOut"
+              });
+              
+              // Position camera
+              gsap.to(cameraRef.current.position, {
+                x: 0,
+                y: 0,
+                z: 10,
+                duration: 1,
+                ease: "power2.inOut"
+              });
+            }
+          },
+          onLeave: () => {
+            isEssayShowcaseActive.current = false;
+          },
+          onEnterBack: () => {
+            isEssayShowcaseActive.current = true;
+            isEssayFocusActive.current = false;
+          },
+          onLeaveBack: () => {
+            isEssayShowcaseActive.current = false;
+          }
+        });
+      }
       
       // Setup GSAP ScrollTrigger for main scroll
       const scrollElement = document.querySelector(scrollContainer);
@@ -180,7 +356,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           start: 'top top',
           end: 'bottom bottom',
           onUpdate: (self) => {
-            if (!essayRef.current || isEssayFocusActive.current) return;
+            if (!essayRef.current || isEssayFocusActive.current || isEssayShowcaseActive.current) return;
             
             // Animate essay based on scroll position
             animateEssay(
@@ -232,6 +408,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       return () => {
         window.removeEventListener('resize', handleResize);
         document.removeEventListener('essayTransition', handleEssayTransition);
+        document.removeEventListener('featureHover', handleFeatureHover);
         
         if (ScrollTrigger) {
           ScrollTrigger.getAll().forEach(trigger => trigger.kill());

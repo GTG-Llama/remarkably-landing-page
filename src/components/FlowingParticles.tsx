@@ -1,183 +1,193 @@
 
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import * as THREE from "three";
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 const FlowingParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<{
-    scene: THREE.Scene;
-    camera: THREE.PerspectiveCamera;
-    renderer: THREE.WebGLRenderer;
-    particles: THREE.Points;
-    curve: THREE.CurvePath<THREE.Vector3>;
-  } | null>(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    // Initialize Three.js setup
+    // Create scene
     const scene = new THREE.Scene();
+    
+    // Create camera
     const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
+      75, 
+      window.innerWidth / window.innerHeight, 
+      0.1, 
       1000
     );
+    camera.position.z = 5;
     
+    // Create renderer
     const renderer = new THREE.WebGLRenderer({
       canvas: canvasRef.current,
       alpha: true,
-      antialias: true,
+      antialias: true
     });
-    
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     
-    // Create curve path for particles to follow
-    const curve = new THREE.CurvePath<THREE.Vector3>();
+    // Create particle system
+    const particleCount = 500;
+    const particleGeometry = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleColors = new Float32Array(particleCount * 3);
+    const particleTargets = new Float32Array(particleCount * 3);
+    const particleSpeeds = new Float32Array(particleCount);
     
-    // Create bezier curves that flow from section to section
-    const createBezierCurve = (startX: number, startY: number, endX: number, endY: number, curvature: number = 100) => {
-      const start = new THREE.Vector3(startX, startY, 0);
-      const end = new THREE.Vector3(endX, endY, 0);
-      const control1 = new THREE.Vector3(startX + curvature, startY, 0);
-      const control2 = new THREE.Vector3(endX - curvature, endY, 0);
-      
-      return new THREE.CubicBezierCurve3(start, control1, control2, end);
-    };
-    
-    // Define the flowing path using bezier curves
-    // From hero to essay focus
-    curve.add(createBezierCurve(-200, 0, 200, -window.innerHeight * 0.8));
-    // From essay focus to features
-    curve.add(createBezierCurve(200, -window.innerHeight * 0.8, -150, -window.innerHeight * 1.6));
-    // From features to video showcase
-    curve.add(createBezierCurve(-150, -window.innerHeight * 1.6, 180, -window.innerHeight * 2.4));
-    // From video showcase to testimonials
-    curve.add(createBezierCurve(180, -window.innerHeight * 2.4, -150, -window.innerHeight * 3.2));
-    // From testimonials to CTA
-    curve.add(createBezierCurve(-150, -window.innerHeight * 3.2, 0, -window.innerHeight * 4));
-    
-    // Create particles along the curve
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particleCount = 200;
-    const positions = new Float32Array(particleCount * 3);
-    const sizes = new Float32Array(particleCount);
-    const progress = new Float32Array(particleCount);
-    const speed = new Float32Array(particleCount);
-    
+    // Set particle properties
     for (let i = 0; i < particleCount; i++) {
-      // Distribute particles randomly along the curve
-      progress[i] = Math.random();
-      speed[i] = 0.0003 + Math.random() * 0.0005;
-      sizes[i] = 4 + Math.random() * 8;
+      const i3 = i * 3;
       
-      // Get point along curve
-      const point = curve.getPoint(progress[i]);
-      positions[i * 3] = point.x;
-      positions[i * 3 + 1] = point.y;
-      positions[i * 3 + 2] = point.z;
+      // Initial positions - spread them throughout the screen
+      particlePositions[i3] = (Math.random() - 0.5) * window.innerWidth * 0.5;
+      particlePositions[i3 + 1] = (Math.random() - 0.5) * window.innerHeight * 0.5;
+      particlePositions[i3 + 2] = (Math.random() - 0.5) * 10;
+      
+      // Target positions - where they'll flow to
+      particleTargets[i3] = (Math.random() - 0.5) * window.innerWidth * 0.5;
+      particleTargets[i3 + 1] = (Math.random() - 0.5) * window.innerHeight * 0.5;
+      particleTargets[i3 + 2] = (Math.random() - 0.5) * 10;
+      
+      // Set particle speed
+      particleSpeeds[i] = 0.01 + Math.random() * 0.02;
+      
+      // Set particle colors - golden palette
+      particleColors[i3] = 0.9;        // R: 230
+      particleColors[i3 + 1] = 0.7;    // G: 179
+      particleColors[i3 + 2] = 0.3;    // B: 77
     }
     
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    // Configure particle geometry
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
     
     // Create particle material
     const particleMaterial = new THREE.PointsMaterial({
-      color: 0xA89165, // Remarkably gold
-      size: 5,
-      sizeAttenuation: true,
+      size: 3,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.6,
       blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
     });
     
     // Create particle system
-    const particles = new THREE.Points(particlesGeometry, particleMaterial);
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(particles);
     
-    // Position camera
-    camera.position.z = 500;
-    
-    // Store references
-    particlesRef.current = {
-      scene,
-      camera,
-      renderer,
-      particles,
-      curve,
+    // Get sections for path animation
+    const getSectionPositions = () => {
+      const sections = [
+        document.getElementById('hero-section'),
+        document.getElementById('essay-focus'),
+        document.getElementById('features'),
+        document.getElementById('video-showcase'),
+        document.getElementById('testimonials')
+      ].filter(Boolean);
+      
+      return sections.map(section => {
+        if (!section) return { x: 0, y: 0 };
+        
+        const rect = section.getBoundingClientRect();
+        return {
+          x: rect.left + rect.width / 2 - window.innerWidth / 2,
+          y: -(rect.top + rect.height / 2 - window.innerHeight / 2)
+        };
+      });
     };
+    
+    // Set initial section positions
+    let sectionPositions = getSectionPositions();
+    
+    // Update particle targets to follow path between sections
+    const updateParticleTargets = () => {
+      sectionPositions = getSectionPositions();
+      
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        
+        // Pick two random sections to flow between
+        const sectionIndex1 = Math.floor(Math.random() * sectionPositions.length);
+        let sectionIndex2 = Math.floor(Math.random() * sectionPositions.length);
+        if (sectionIndex2 === sectionIndex1) {
+          sectionIndex2 = (sectionIndex2 + 1) % sectionPositions.length;
+        }
+        
+        const section1 = sectionPositions[sectionIndex1];
+        const section2 = sectionPositions[sectionIndex2];
+        
+        const progress = Math.random();
+        
+        // Set target as a point along the path between two sections
+        particleTargets[i3] = section1.x * (1 - progress) + section2.x * progress + (Math.random() - 0.5) * 200;
+        particleTargets[i3 + 1] = section1.y * (1 - progress) + section2.y * progress + (Math.random() - 0.5) * 200;
+        particleTargets[i3 + 2] = (Math.random() - 0.5) * 10;
+      }
+    };
+    
+    // Schedule regular target updates for continuous motion
+    updateParticleTargets();
+    const targetUpdateInterval = setInterval(updateParticleTargets, 5000);
+    
+    // Animation function
+    const animate = () => {
+      // Update particle positions to move toward their targets
+      const positionAttribute = particleGeometry.attributes.position;
+      const positions = positionAttribute.array;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        
+        // TypeScript fix: Convert ArrayLike to actual array elements
+        const x = positions[i3] as number;
+        const y = positions[i3 + 1] as number;
+        const z = positions[i3 + 2] as number;
+        
+        // Move current position toward target
+        positions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
+        positions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
+        positions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+      }
+      
+      positionAttribute.needsUpdate = true;
+      
+      // Render
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    };
+    
+    // Begin animation
+    animate();
     
     // Handle window resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      
+      // Update section positions after resize
+      updateParticleTargets();
     };
     
     window.addEventListener('resize', handleResize);
     
-    // Set up scroll trigger for adjusting particles' opacity based on scroll position
-    ScrollTrigger.create({
-      trigger: "body",
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: (self) => {
-        // Adjust camera position based on scroll
-        camera.position.y = -self.progress * window.innerHeight * 1.5;
-      }
-    });
-    
-    // Animation loop
-    const animate = () => {
-      if (!particlesRef.current) return;
-      
-      const { particles, renderer, scene, camera, curve } = particlesRef.current;
-      
-      // Update particles
-      const positions = (particles.geometry as THREE.BufferGeometry).attributes.position.array;
-      
-      for (let i = 0; i < particleCount; i++) {
-        // Update progress
-        progress[i] += speed[i];
-        if (progress[i] > 1) progress[i] = 0;
-        
-        // Update position
-        const point = curve.getPoint(progress[i]);
-        positions[i * 3] = point.x;
-        positions[i * 3 + 1] = point.y;
-        positions[i * 3 + 2] = point.z;
-      }
-      
-      (particles.geometry as THREE.BufferGeometry).attributes.position.needsUpdate = true;
-      
-      // Render
-      renderer.render(scene, camera);
-      
-      requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    // Clean up
+    // Clean up on unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
-      if (particlesRef.current) {
-        particlesRef.current.particles.geometry.dispose();
-        (particlesRef.current.particles.material as THREE.Material).dispose();
-        particlesRef.current.renderer.dispose();
+      if (canvasRef.current && canvasRef.current.parentNode) {
+        canvasRef.current.parentNode.removeChild(canvasRef.current);
       }
+      window.removeEventListener('resize', handleResize);
+      clearInterval(targetUpdateInterval);
     };
   }, []);
   
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-10"
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
       aria-hidden="true"
     />
   );

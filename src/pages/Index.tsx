@@ -4,6 +4,7 @@ import ThreeScene from "@/components/ThreeScene";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import EssayFocusSection from "@/components/EssayFocusSection";
+import EssayShowcaseSection from "@/components/EssayShowcaseSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import VideoShowcaseSection from "@/components/VideoShowcaseSection";
@@ -114,13 +115,14 @@ const Index: React.FC = () => {
       {/* Section Glow Effects */}
       <GlowEffect targetSelector="#hero-section" startDelay={0.2} />
       <GlowEffect targetSelector="#essay-focus" startDelay={0.3} />
+      <GlowEffect targetSelector="#essay-showcase" startDelay={0.35} color="rgba(168, 145, 101, 0.5)" />
       <GlowEffect targetSelector="#features" startDelay={0.4} />
       <GlowEffect targetSelector="#video-showcase" startDelay={0.5} />
 
       {/* Section Navigation Indicators */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden md:block">
         <div className="flex flex-col items-center gap-3">
-          {["hero-section", "essay-focus", "features", "video-showcase", "testimonials"].map((id, index) => (
+          {["hero-section", "essay-focus", "essay-showcase", "features", "video-showcase", "testimonials"].map((id, index) => (
             <a 
               key={id}
               href={`#${id}`}
@@ -139,6 +141,7 @@ const Index: React.FC = () => {
         <Header />
         <HeroSection />
         <EssayFocusSection />
+        <EssayShowcaseSection />
         <FeaturesSection />
         <VideoShowcaseSection />
         <TestimonialsSection />

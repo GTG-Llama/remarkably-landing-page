@@ -42,11 +42,11 @@ const Header: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
-          : "bg-transparent py-5"
+          ? "bg-white/90 backdrop-blur-md shadow-sm py-4"
+          : "bg-transparent py-6"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
           <div className="w-10 h-10 rounded-xl bg-remarkably-gold flex items-center justify-center mr-3">
@@ -56,23 +56,17 @@ const Header: React.FC = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-12">
-          <a href="#features" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
+        <nav className="hidden md:flex items-center space-x-8">
+          <a href="#features" className="font-medium hover:text-remarkably-gold transition-colors">
             Features
           </a>
-          <a href="#testimonials" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
+          <a href="#testimonials" className="font-medium hover:text-remarkably-gold transition-colors">
             Testimonials
           </a>
-          <a href="#about" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
+          <a href="#about" className="font-medium hover:text-remarkably-gold transition-colors">
             About
           </a>
-          <a href="#contact" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
-            Contact
-          </a>
-          <a href="#pricing" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
-            Pricing
-          </a>
-          <a href="#contact" className="bg-black text-white text-sm font-medium rounded-full px-6 py-2.5 hover:bg-opacity-80 transition-all duration-300">
+          <a href="#contact" className="apple-button-gold">
             Get Started
           </a>
         </nav>
@@ -117,21 +111,7 @@ const Header: React.FC = () => {
           </a>
           <a
             href="#contact"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
-          </a>
-          <a
-            href="#pricing"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Pricing
-          </a>
-          <a
-            href="#contact"
-            className="bg-black text-white text-center py-3 rounded-full"
+            className="apple-button-gold text-center"
             onClick={() => setIsMenuOpen(false)}
           >
             Get Started

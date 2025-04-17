@@ -68,7 +68,7 @@ const HeroSection: React.FC = () => {
       </div>
       
       <div className="content-container z-10 text-center md:px-8 max-w-10xl hero-anim py-[20px] rounded-md my-0 mx-0 px-0">
-        <h1 ref={headingRef} className="font-playfair text-7xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-slate-950">
+        <h1 ref={headingRef} className="font-playfair text-6xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-slate-950">
           remarkably.
         </h1>
       </div>

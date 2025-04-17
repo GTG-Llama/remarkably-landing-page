@@ -1,12 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 50;
@@ -19,14 +16,8 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrolled]);
-
-  return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/70 backdrop-blur-md py-2" : "bg-transparent py-4"
-      }`}
-    >
-      <div className="section-container flex items-center justify-between">
+  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/70 backdrop-blur-md py-2" : "bg-transparent py-4"}`}>
+      <div className="section-container flex items-center justify-between rounded px-0 py-0 my-0 mx-[26px]">
         <img src="/logo.png" alt="Logo" className="w-20 h-7" />
 
         {/* Desktop Menu */}
@@ -40,9 +31,7 @@ const Navbar = () => {
           <a href="#testimonials" className="text-black/80 hover:text-black transition-colors text-sm font-medium">
             Testimonials
           </a>
-          <Button 
-            className="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-remarkably-gold transition-all duration-300"
-          >
+          <Button className="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-remarkably-gold transition-all duration-300">
             Start Free Trial
           </Button>
         </nav>
@@ -54,8 +43,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 right-0 border-t border-black/10 animate-fade-in">
+      {mobileMenuOpen && <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 right-0 border-t border-black/10 animate-fade-in">
           <div className="section-container py-6 flex flex-col space-y-4">
             <a href="#features" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
               Features
@@ -66,17 +54,11 @@ const Navbar = () => {
             <a href="#testimonials" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
               Testimonials
             </a>
-            <Button 
-              className="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-remarkably-gold transition-all duration-300 w-full"
-              onClick={() => setMobileMenuOpen(false)}
-            >
+            <Button className="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-remarkably-gold transition-all duration-300 w-full" onClick={() => setMobileMenuOpen(false)}>
               Start Free Trial
             </Button>
           </div>
-        </div>
-      )}
-    </header>
-  );
+        </div>}
+    </header>;
 };
-
 export default Navbar;

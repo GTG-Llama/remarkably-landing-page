@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -99,24 +98,13 @@ const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <motion.section
+    <section
       id="testimonials"
       ref={sectionRef}
       className="section-padding bg-white relative overflow-hidden"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div 
-          ref={headingRef} 
-          className="text-center max-w-3xl mx-auto mb-16"
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headingRef} className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Hear From Remarkable Teachers
           </h2>
@@ -124,15 +112,9 @@ const TestimonialsSection: React.FC = () => {
             Discover how educators are using Remarkably to transform 
             their teaching experience.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          className="relative max-w-4xl mx-auto"
-          initial={{ scale: 0.95, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <div className="relative max-w-4xl mx-auto">
           <div className="h-[350px] bg-gray-50 rounded-3xl p-8 md:p-12 shadow-lg overflow-hidden relative">
             {testimonials.map((testimonial, index) => (
               <div
@@ -142,53 +124,36 @@ const TestimonialsSection: React.FC = () => {
                   index === activeIndex ? "opacity-100" : "opacity-0 pointer-events-none"
                 }`}
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="flex mb-6"
-                >
+                <div className="flex mb-6">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star key={i} size={20} fill="#A89165" color="#A89165" />
                   ))}
-                </motion.div>
+                </div>
 
-                <motion.blockquote 
-                  className="text-xl md:text-2xl font-medium italic mb-8"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
+                <blockquote className="text-xl md:text-2xl font-medium italic mb-8">
                   "{testimonial.quote}"
-                </motion.blockquote>
+                </blockquote>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
+                <div>
                   <p className="font-semibold text-lg">{testimonial.name}</p>
                   <p className="text-gray-600">
                     {testimonial.role}, {testimonial.school}
                   </p>
-                </motion.div>
+                </div>
               </div>
             ))}
           </div>
 
           <div className="flex justify-center mt-8 gap-4">
-            <motion.button
+            <button
               onClick={goToPrev}
               aria-label="Previous testimonial"
               className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-remarkably-gold hover:text-remarkably-gold transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
             >
               <ChevronLeft size={24} />
-            </motion.button>
+            </button>
             {testimonials.map((_, index) => (
-              <motion.button
+              <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 aria-label={`Go to testimonial ${index + 1}`}
@@ -197,23 +162,19 @@ const TestimonialsSection: React.FC = () => {
                     ? "bg-remarkably-gold"
                     : "bg-gray-300 hover:bg-remarkably-gold/50"
                 }`}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
               />
             ))}
-            <motion.button
+            <button
               onClick={goToNext}
               aria-label="Next testimonial"
               className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:border-remarkably-gold hover:text-remarkably-gold transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
             >
               <ChevronRight size={24} />
-            </motion.button>
+            </button>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

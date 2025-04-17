@@ -1,11 +1,14 @@
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowDown } from "lucide-react";
 import { motion } from "framer-motion";
+
 const HeroSection: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  
   useEffect(() => {
     const tl = gsap.timeline();
     tl.from(headingRef.current, {
@@ -53,6 +56,7 @@ const HeroSection: React.FC = () => {
       };
     }
   }, []);
+  
   const scrollToFeatures = () => {
     const featuresSection = document.getElementById("essay-focus");
     if (featuresSection) {
@@ -61,22 +65,61 @@ const HeroSection: React.FC = () => {
       });
     }
   };
-  return <section id="hero-section" ref={sectionRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+  
+  return (
+    <motion.section
+      id="hero-section"
+      ref={sectionRef}
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-70">
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-70"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.7 }}
+        transition={{ duration: 1.5 }}
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,145,101,0.15),rgba(255,255,255,0)_70%)]"></div>
-      </div>
+      </motion.div>
       
       <div className="content-container z-10 text-center px-4 md:px-8 max-w-5xl mx-auto hero-anim">
-        <h1 ref={headingRef} className="font-playfair text-8xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-[#000a0e]/[0.34]">
+        <motion.h1
+          ref={headingRef}
+          className="font-playfair text-8xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-[#000a0e]/[0.34]"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ 
+            duration: 1.2, 
+            ease: [0.6, 0.01, -0.05, 0.95],
+            delay: 0.2
+          }}
+        >
           remarkably.
-        </h1>
+        </motion.h1>
       </div>
 
-      <div ref={scrollIndicatorRef} className="absolute bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer" onClick={scrollToFeatures}>
+      <motion.div
+        ref={scrollIndicatorRef}
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer"
+        onClick={scrollToFeatures}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 1.5,
+          ease: "easeOut"
+        }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
         <ArrowDown size={28} className="text-remarkably-gold animate-bounce" />
         <span className="text-sm font-medium mt-2 block">Explore</span>
-      </div>
-    </section>;
+      </motion.div>
+    </motion.section>
+  );
 };
+
 export default HeroSection;

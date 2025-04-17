@@ -81,7 +81,6 @@ const VideoShowcaseSection: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
           whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
           {/* Video Placeholder - In production, replace with actual video component */}
           <div className={`w-full h-full bg-black flex items-center justify-center ${isPlaying ? 'hidden' : 'block'}`}>

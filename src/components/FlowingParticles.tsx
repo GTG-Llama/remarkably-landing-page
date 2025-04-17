@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -16,7 +17,7 @@ const FlowingParticles: React.FC<FlowingParticlesProps> = ({ particleCount = 400
     points: THREE.Points;
     positions: Float32Array;
     colors: Float32Array;
-  }>({});
+  } | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -85,7 +86,7 @@ const FlowingParticles: React.FC<FlowingParticlesProps> = ({ particleCount = 400
 
       // Animation loop
       const animate = () => {
-        if (!particlesRef.current.points || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+        if (!particlesRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
 
         // Rotate particles
         particlesRef.current.points.rotation.x += 0.0005;
@@ -99,11 +100,11 @@ const FlowingParticles: React.FC<FlowingParticlesProps> = ({ particleCount = 400
 
       // Responsive handling
       const handleResize = () => {
-        if (!rendererRef.current || !cameraRef.current) return;
+        if (!rendererRef.current || !cameraRef.current || !containerRef.current) return;
 
-        cameraRef.current.aspect = containerRef.current!.offsetWidth / containerRef.current!.offsetHeight;
+        cameraRef.current.aspect = containerRef.current.offsetWidth / containerRef.current.offsetHeight;
         cameraRef.current.updateProjectionMatrix();
-        rendererRef.current.setSize(containerRef.current!.offsetWidth, containerRef.current!.offsetHeight);
+        rendererRef.current.setSize(containerRef.current.offsetWidth, containerRef.current.offsetHeight);
       };
 
       window.addEventListener('resize', handleResize);
@@ -111,18 +112,20 @@ const FlowingParticles: React.FC<FlowingParticlesProps> = ({ particleCount = 400
       return () => {
         window.removeEventListener('resize', handleResize);
 
-        if (particlesRef.current.geometry) {
-          particlesRef.current.geometry.dispose();
+        if (particlesRef.current) {
+          if (particlesRef.current.geometry) {
+            particlesRef.current.geometry.dispose();
+          }
+          if (particlesRef.current.material) {
+            particlesRef.current.material.dispose();
+          }
+          if (sceneRef.current && particlesRef.current.points) {
+            sceneRef.current.remove(particlesRef.current.points);
+          }
         }
-        if (particlesRef.current.material) {
-          particlesRef.current.material.dispose();
-        }
-        if (sceneRef.current) {
-          sceneRef.current.remove(particlesRef.current.points);
-        }
-        if (rendererRef.current) {
+        if (rendererRef.current && containerRef.current) {
           rendererRef.current.dispose();
-          containerRef.current!.removeChild(rendererRef.current.domElement);
+          containerRef.current.removeChild(rendererRef.current.domElement);
         }
       };
     };

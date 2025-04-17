@@ -20,23 +20,30 @@ const Navbar = () => {
     };
   }, [scrolled]);
 
-  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/70 backdrop-blur-md py-3" : "bg-transparent py-5"}`}>
+  return (
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/70 backdrop-blur-md py-2" : "bg-transparent py-4"
+      }`}
+    >
       <div className="section-container flex items-center justify-between">
-        <img src="/logo.png" alt="Logo" className="w-25 h-8" />
+        <img src="/logo.png" alt="Logo" className="w-20 h-7" />
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-black/80 hover:text-black transition-colors">
+        <nav className="hidden md:flex items-center space-x-6">
+          <a href="#features" className="text-black/80 hover:text-black transition-colors text-sm font-medium">
             Features
           </a>
-          <a href="#benefits" className="text-black/80 hover:text-black transition-colors">
+          <a href="#benefits" className="text-black/80 hover:text-black transition-colors text-sm font-medium">
             Benefits
           </a>
-          <a href="#testimonials" className="text-black/80 hover:text-black transition-colors">
+          <a href="#testimonials" className="text-black/80 hover:text-black transition-colors text-sm font-medium">
             Testimonials
           </a>
-          <Button variant="outline" className="text-black border-black/30 hover:border-black">
-            Contact Us
+          <Button 
+            className="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-remarkably-gold transition-all duration-300"
+          >
+            Start Free Trial
           </Button>
         </nav>
 
@@ -47,7 +54,8 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 right-0 border-t border-black/10 animate-fade-in">
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 right-0 border-t border-black/10 animate-fade-in">
           <div className="section-container py-6 flex flex-col space-y-4">
             <a href="#features" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
               Features
@@ -58,12 +66,17 @@ const Navbar = () => {
             <a href="#testimonials" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
               Testimonials
             </a>
-            <Button variant="outline" className="text-black border-black/30 hover:border-black w-full mt-4" onClick={() => setMobileMenuOpen(false)}>
-              Contact Us
+            <Button 
+              className="bg-black text-white rounded-full px-6 py-2 text-sm font-medium hover:bg-remarkably-gold transition-all duration-300 w-full"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Start Free Trial
             </Button>
           </div>
-        </div>}
-    </header>;
+        </div>
+      )}
+    </header>
+  );
 };
 
 export default Navbar;

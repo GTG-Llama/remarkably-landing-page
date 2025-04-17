@@ -1,145 +1,71 @@
 
-import React, { useState, useEffect } from "react";
-import gsap from "gsap";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
-const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const isScrolled = window.scrollY > 50;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
-  useEffect(() => {
-    if (isMenuOpen) {
-      gsap.to(".mobile-menu", {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power3.out",
-      });
-    } else {
-      gsap.to(".mobile-menu", {
-        y: -20,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power3.in",
-      });
-    }
-  }, [isMenuOpen]);
+  return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/70 backdrop-blur-md py-3" : "bg-transparent py-5"}`}>
+      <div className="section-container flex items-center justify-between">
+        <a href="#" className="text-black text-2xl font-display font-bold">
+          R
+        </a>
 
-  return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm py-3"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center">
-          <div className="w-10 h-10 rounded-xl bg-remarkably-gold flex items-center justify-center mr-3">
-            <span className="text-white font-bold text-xl">R</span>
-          </div>
-          <span className="text-xl font-semibold tracking-tight">Remarkably</span>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-12">
-          <a href="#features" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex items-center space-x-8">
+          <a href="#features" className="text-black/80 hover:text-black transition-colors">
             Features
           </a>
-          <a href="#testimonials" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
+          <a href="#benefits" className="text-black/80 hover:text-black transition-colors">
+            Benefits
+          </a>
+          <a href="#testimonials" className="text-black/80 hover:text-black transition-colors">
             Testimonials
           </a>
-          <a href="#about" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
-            About
-          </a>
-          <a href="#contact" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
-            Contact
-          </a>
-          <a href="#pricing" className="text-sm font-medium hover:text-remarkably-gold transition-colors">
-            Pricing
-          </a>
-          <a href="#contact" className="bg-black text-white text-sm font-medium rounded-full px-6 py-2.5 hover:bg-opacity-80 transition-all duration-300">
-            Get Started
-          </a>
+          <Button variant="outline" className="text-black border-black/30 hover:border-black">
+            Contact Us
+          </Button>
         </nav>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="md:hidden text-black p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`mobile-menu absolute top-full left-0 w-full bg-white shadow-lg py-4 opacity-0 -translate-y-4 pointer-events-none md:hidden ${
-          isMenuOpen ? "pointer-events-auto" : ""
-        }`}
-      >
-        <nav className="container mx-auto px-4 flex flex-col space-y-4">
-          <a
-            href="#features"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Features
-          </a>
-          <a
-            href="#testimonials"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Testimonials
-          </a>
-          <a
-            href="#about"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            About
-          </a>
-          <a
-            href="#contact"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
-          </a>
-          <a
-            href="#pricing"
-            className="font-medium py-2 hover:text-remarkably-gold transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Pricing
-          </a>
-          <a
-            href="#contact"
-            className="bg-black text-white text-center py-3 rounded-full"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Get Started
-          </a>
-        </nav>
-      </div>
-    </header>
-  );
+      {mobileMenuOpen && <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 right-0 border-t border-black/10 animate-fade-in">
+          <div className="section-container py-6 flex flex-col space-y-4">
+            <a href="#features" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
+              Features
+            </a>
+            <a href="#benefits" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
+              Benefits
+            </a>
+            <a href="#testimonials" className="text-black/80 hover:text-black transition-colors py-2" onClick={() => setMobileMenuOpen(false)}>
+              Testimonials
+            </a>
+            <Button variant="outline" className="text-black border-black/30 hover:border-black w-full mt-4" onClick={() => setMobileMenuOpen(false)}>
+              Contact Us
+            </Button>
+          </div>
+        </div>}
+    </header>;
 };
 
-export default Header;
+export default Navbar;

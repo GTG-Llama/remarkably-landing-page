@@ -115,20 +115,15 @@ const HeroSection: React.FC = () => {
       </div>
       
       <div className="content-container z-10 text-center px-4 md:px-8 max-w-5xl mx-auto hero-anim">
-        <div 
-          ref={promotionRef}
-          className="inline-block mb-8 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-gray-200 shadow-sm"
-        >
-          <span className="text-sm font-medium">✨ Beta Promotion: Free 30-day trial for teachers</span>
-        </div>
+        
         
         <h1
           ref={headingRef}
           className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
         >
-          AI-Driven Essay
+          Remarkable?
           <br />
-          <span className="text-remarkably-gold">Grading Platform</span>
+          <span className="text-remarkably-gold">Remarkably.</span>
         </h1>
         
         <p

@@ -141,15 +141,19 @@ const FlowingParticles: React.FC = () => {
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         
-        // TypeScript fix: Convert ArrayLike to actual array elements
-        const x = positions[i3] as number;
-        const y = positions[i3 + 1] as number;
-        const z = positions[i3 + 2] as number;
+        // Get current positions
+        const x = positions[i3];
+        const y = positions[i3 + 1];
+        const z = positions[i3 + 2];
         
-        // Move current position toward target
-        positions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
-        positions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
-        positions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+        // Create new array with updated positions (cannot directly modify ArrayLike)
+        const newPositions = Float32Array.from(positions);
+        newPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
+        newPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
+        newPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+        
+        // Update the position attribute with the new positions
+        positionAttribute.set(newPositions);
       }
       
       positionAttribute.needsUpdate = true;

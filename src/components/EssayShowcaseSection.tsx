@@ -159,14 +159,13 @@ const EssayShowcaseSection: React.FC = () => {
     };
   }, []);
   return <section ref={sectionRef} id="essay-showcase" className="min-h-screen flex flex-col items-center justify-center relative py-20">
-      <div className="content-container z-10 text-center md:px-8 mx-auto px-[112px]">
+      <div className="content-container z-10 text-center md:px-8 mx-auto px-[108px]">
         <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-remarkably-gold">
             Features
           </h2>
           <p className="text-xl max-w-3xl mx-auto">
             Our AI identifies key elements of each essay and provides targeted feedback.
-            <br />
             Hover over each feature to see how Remarkably analyzes student work.
           </p>
         </div>

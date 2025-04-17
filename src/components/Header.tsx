@@ -22,9 +22,7 @@ const Navbar = () => {
 
   return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/70 backdrop-blur-md py-3" : "bg-transparent py-5"}`}>
       <div className="section-container flex items-center justify-between">
-        <a href="#" className="text-black text-2xl font-display font-bold">
-          R
-        </a>
+        <img src="/logo.png" alt="Logo" className="w-25 h-8" />
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center space-x-8">

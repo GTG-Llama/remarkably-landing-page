@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowDown } from "lucide-react";
+import { motion } from "framer-motion";
 
 const HeroSection: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -119,9 +120,9 @@ const HeroSection: React.FC = () => {
         
         <h1
           ref={headingRef}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
-        >
-          Remarkable?
+          className="relative inline-block"
+                >
+                  remarkable?
           <br />
           <span className="text-remarkably-gold">Remarkably.</span>
         </h1>

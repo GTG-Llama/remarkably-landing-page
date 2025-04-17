@@ -40,9 +40,7 @@ const Index: React.FC = () => {
     const entranceTl = gsap.timeline({ delay: 1.5 });
     
     entranceTl
-      .from("#main-content", { opacity: 0, duration: 1, ease: "power2.out" })
-      .from(".header-anim", { y: -20, opacity: 0, stagger: 0.1, duration: 0.6 }, "-=0.8")
-      .from(".hero-anim", { scale: 0.95, opacity: 0, duration: 0.8 }, "-=0.6");
+      .from("#main-content", { opacity: 0, duration: 1, ease: "power2.out" });
 
     // Smooth scroll setup
     gsap.utils.toArray('a[href^="#"]').forEach((anchor: any) => {
@@ -65,27 +63,35 @@ const Index: React.FC = () => {
     const sections = gsap.utils.toArray<HTMLElement>('section[id]');
     sections.forEach((section, i) => {
       if (i < sections.length - 1) {
-        const nextSection = sections[i + 1];
+        const sectionIndicator = document.querySelector(`.section-indicator-${i}`);
         
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top center",
-          end: "bottom center",
-          onEnter: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#A89165", duration: 0.3 });
-          },
-          onLeave: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
-            gsap.to(`.section-indicator-${i+1}`, { backgroundColor: "#A89165", duration: 0.3 });
-          },
-          onEnterBack: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#A89165", duration: 0.3 });
-            gsap.to(`.section-indicator-${i+1}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
-          },
-          onLeaveBack: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
-          }
-        });
+        if (sectionIndicator) {
+          ScrollTrigger.create({
+            trigger: section,
+            start: "top center",
+            end: "bottom center",
+            onEnter: () => {
+              gsap.to(`.section-indicator-${i}`, { backgroundColor: "#A89165", duration: 0.3 });
+            },
+            onLeave: () => {
+              gsap.to(`.section-indicator-${i}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
+              const nextIndicator = document.querySelector(`.section-indicator-${i+1}`);
+              if (nextIndicator) {
+                gsap.to(`.section-indicator-${i+1}`, { backgroundColor: "#A89165", duration: 0.3 });
+              }
+            },
+            onEnterBack: () => {
+              gsap.to(`.section-indicator-${i}`, { backgroundColor: "#A89165", duration: 0.3 });
+              const nextIndicator = document.querySelector(`.section-indicator-${i+1}`);
+              if (nextIndicator) {
+                gsap.to(`.section-indicator-${i+1}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
+              }
+            },
+            onLeaveBack: () => {
+              gsap.to(`.section-indicator-${i}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
+            }
+          });
+        }
       }
     });
 

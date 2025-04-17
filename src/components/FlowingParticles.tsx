@@ -135,9 +135,18 @@ const FlowingParticles: React.FC = () => {
     // Animation function
     const animate = () => {
       // Update particle positions to move toward their targets
-      const positionAttribute = particleGeometry.attributes.position;
-      const positions = positionAttribute.array;
+      const positionAttribute = particleGeometry.getAttribute('position') as THREE.BufferAttribute;
       
+      // Create a copy of the current positions array that we can modify
+      const positions = positionAttribute.array;
+      const newPositions = new Float32Array(positions.length);
+      
+      // Copy current values to the new array
+      for (let i = 0; i < positions.length; i++) {
+        newPositions[i] = positions[i];
+      }
+      
+      // Update positions in the new array
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         
@@ -146,23 +155,15 @@ const FlowingParticles: React.FC = () => {
         const y = positions[i3 + 1];
         const z = positions[i3 + 2];
         
-        // Create temporary array for updated positions
-        const tempPositions = [];
-        for (let j = 0; j < positions.length; j++) {
-          tempPositions[j] = positions[j];
-        }
-        
-        // Update specific positions
-        tempPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
-        tempPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
-        tempPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
-        
-        // Update the buffer with new values
-        for (let j = 0; j < tempPositions.length; j++) {
-          positionAttribute.array[j] = tempPositions[j];
-        }
+        // Update positions in our new array
+        newPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
+        newPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
+        newPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
       }
       
+      // Update the buffer attribute with the new positions
+      // We need to use copyArray which is available on BufferAttribute
+      (positionAttribute as THREE.BufferAttribute).copyArray(newPositions);
       positionAttribute.needsUpdate = true;
       
       // Render

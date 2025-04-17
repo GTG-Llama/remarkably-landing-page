@@ -109,7 +109,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
       opacity: 0.3
     });
     const highlight = new THREE.Mesh(highlightGeometry, highlightMaterial);
-    highlight.position.set(0, y, 0.02);
+    highlight.position.set(0, y, 0.04);
     return highlight;
   };
   

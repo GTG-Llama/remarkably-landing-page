@@ -166,6 +166,7 @@ const EssayShowcaseSection: React.FC = () => {
           </h2>
           <p className="text-xl max-w-3xl mx-auto">
             Our AI identifies key elements of each essay and provides targeted feedback.
+            <br />
             Hover over each feature to see how Remarkably analyzes student work.
           </p>
         </div>

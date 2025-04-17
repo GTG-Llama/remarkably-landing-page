@@ -146,14 +146,21 @@ const FlowingParticles: React.FC = () => {
         const y = positions[i3 + 1];
         const z = positions[i3 + 2];
         
-        // Create new array with updated positions (cannot directly modify ArrayLike)
-        const newPositions = Float32Array.from(positions);
-        newPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
-        newPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
-        newPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+        // Create temporary array for updated positions
+        const tempPositions = [];
+        for (let j = 0; j < positions.length; j++) {
+          tempPositions[j] = positions[j];
+        }
         
-        // Update the position attribute with the new positions
-        positionAttribute.set(newPositions);
+        // Update specific positions
+        tempPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
+        tempPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
+        tempPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+        
+        // Update the buffer with new values
+        for (let j = 0; j < tempPositions.length; j++) {
+          positionAttribute.array[j] = tempPositions[j];
+        }
       }
       
       positionAttribute.needsUpdate = true;

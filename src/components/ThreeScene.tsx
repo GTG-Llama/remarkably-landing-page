@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -27,6 +26,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
   const essayRef = useRef<{
     essayGroup: THREE.Group;
     redPen: THREE.Group;
+    checkmark: THREE.Group;
     highlights: THREE.Mesh[];
     lines: THREE.Mesh[];
     annotationMarkers: Array<{
@@ -329,7 +329,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
               gsap.to(cameraRef.current.position, {
                 x: 0,
                 y: 0,
-                z: 10,
+                z: 15,
                 duration: 1,
                 ease: "power2.inOut"
               });
@@ -358,10 +358,11 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           onUpdate: (self) => {
             if (!essayRef.current || isEssayFocusActive.current || isEssayShowcaseActive.current) return;
             
-            // Animate essay based on scroll position
+            // Animate essay based on scroll position, now including the checkmark
             animateEssay(
               essayRef.current.essayGroup,
               essayRef.current.redPen,
+              essayRef.current.checkmark,
               self.progress * document.body.scrollHeight,
               document.body.scrollHeight
             );

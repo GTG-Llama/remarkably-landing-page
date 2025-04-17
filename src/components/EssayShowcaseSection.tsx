@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
@@ -5,6 +6,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import { EssayFeature } from '@/utils/three-utils';
 import * as motion from "motion/react-client";
 import type { Variants } from "motion/react";
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Features data array matching the 3D model
@@ -76,6 +78,7 @@ const cardVariants: Variants = {
     }
   }
 };
+
 interface FeatureCardProps {
   feature: EssayFeature;
   isActive: boolean;
@@ -83,6 +86,7 @@ interface FeatureCardProps {
   onMouseLeave: () => void;
   index: number;
 }
+
 const FeatureCard: React.FC<FeatureCardProps> = ({
   feature,
   isActive,
@@ -94,6 +98,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
   // Convert hex color to RGB for use in Tailwind's text-[#hex] format
   const colorHex = '#' + feature.color.toString(16).padStart(6, '0');
+  
   useEffect(() => {
     if (cardRef.current) {
       if (isActive) {
@@ -111,47 +116,64 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       }
     }
   }, [isActive]);
-  return <motion.div initial="offscreen" whileInView="onscreen" viewport={{
-    once: true,
-    amount: 0.8
-  }} custom={index} variants={{
-    offscreen: {
-      y: 50 + index * 10,
-      opacity: 0
-    },
-    onscreen: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        bounce: 0.4,
-        duration: 0.8,
-        delay: index * 0.1
-      }
-    }
-  }} className="feature-card-animated" style={{
-    marginBottom: '1.5rem'
-  }}>
-      <div ref={cardRef} className={`bg-white rounded-xl p-6 shadow-md border-2 transition-all duration-300 ${isActive ? 'border-' + colorHex : 'border-transparent'}`} style={{
-      borderColor: isActive ? colorHex : 'transparent'
-    }} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto" style={{
-        backgroundColor: `${colorHex}20` // 20 is hex for 12% opacity
-      }}>
-          <span style={{
-          color: colorHex
-        }} className="font-bold text-xl">
+  
+  return (
+    <motion.div
+      initial="offscreen"
+      whileInView="onscreen"
+      viewport={{ once: true, amount: 0.8 }}
+      custom={index}
+      variants={{
+        offscreen: { y: 50 + index * 10, opacity: 0 },
+        onscreen: { 
+          y: 0, 
+          opacity: 1, 
+          transition: { 
+            type: "spring", 
+            bounce: 0.4, 
+            duration: 0.8, 
+            delay: index * 0.1 
+          } 
+        }
+      }}
+      className="feature-card-animated"
+      style={{ marginBottom: '1.5rem' }}
+    >
+      <div 
+        ref={cardRef} 
+        className={`bg-white rounded-xl p-6 shadow-md border-2 transition-all duration-300 ${isActive ? 'border-' + colorHex : 'border-transparent'}`}
+        style={{
+          borderColor: isActive ? colorHex : 'transparent'
+        }}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        <div 
+          className="w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto"
+          style={{
+            backgroundColor: `${colorHex}20` // 20 is hex for 12% opacity
+          }}
+        >
+          <span 
+            style={{
+              color: colorHex
+            }} 
+            className="font-bold text-xl"
+          >
             {feature.id.charAt(0).toUpperCase()}
           </span>
         </div>
         <h3 className="text-lg font-semibold mb-2">{feature.label}</h3>
         <p className="text-gray-600 text-sm">{feature.description}</p>
       </div>
-    </motion.div>;
+    </motion.div>
+  );
 };
+
 const EssayShowcaseSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
+  
   useEffect(() => {
     if (!sectionRef.current) return;
 
@@ -200,8 +222,14 @@ const EssayShowcaseSection: React.FC = () => {
       });
     };
   }, []);
-  return <section ref={sectionRef} id="essay-showcase" className="min-h-screen flex flex-col items-center justify-center relative py-20">
-      <div className="content-container z-10 text-center md:px-8 mx-auto px-[89px]">
+  
+  return (
+    <section 
+      ref={sectionRef} 
+      id="essay-showcase" 
+      className="min-h-screen flex flex-col items-center justify-center relative py-20"
+    >
+      <div className="content-container z-10 text-center md:px-8 mx-auto">
         <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-remarkably-gold">
             Features
@@ -220,25 +248,34 @@ const EssayShowcaseSection: React.FC = () => {
           </div>
 
           {/* Right side: Feature cards - Reduced width to give more space to 3D view */}
-          <div className="lg:w-2/5 pt-10 px-0">
+          <div className="lg:w-2/5 pt-10">
             <div className="grid grid-cols-1 gap-4">
-              {essayFeatures.map((feature, index) => <FeatureCard key={feature.id} feature={feature} isActive={activeFeature === feature.id} index={index} onMouseEnter={() => {
-              setActiveFeature(feature.id);
-              const event = new CustomEvent('featureHover', {
-                detail: {
-                  featureId: feature.id
-                }
-              });
-              document.dispatchEvent(event);
-            }} onMouseLeave={() => {
-              setActiveFeature(null);
-              const event = new CustomEvent('featureHover', {
-                detail: {
-                  featureId: null
-                }
-              });
-              document.dispatchEvent(event);
-            }} />)}
+              {essayFeatures.map((feature, index) => (
+                <FeatureCard 
+                  key={feature.id} 
+                  feature={feature} 
+                  isActive={activeFeature === feature.id}
+                  index={index}
+                  onMouseEnter={() => {
+                    setActiveFeature(feature.id);
+                    const event = new CustomEvent('featureHover', {
+                      detail: {
+                        featureId: feature.id
+                      }
+                    });
+                    document.dispatchEvent(event);
+                  }} 
+                  onMouseLeave={() => {
+                    setActiveFeature(null);
+                    const event = new CustomEvent('featureHover', {
+                      detail: {
+                        featureId: null
+                      }
+                    });
+                    document.dispatchEvent(event);
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -248,6 +285,8 @@ const EssayShowcaseSection: React.FC = () => {
         <ArrowDown size={24} className="text-remarkably-gold mx-auto" />
         <span className="text-sm font-medium mt-1 block">Continue exploring</span>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default EssayShowcaseSection;

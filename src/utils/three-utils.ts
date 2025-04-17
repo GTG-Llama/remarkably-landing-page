@@ -1,3 +1,4 @@
+
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
@@ -64,7 +65,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     lines.push(line);
   }
 
-  // Create a red pen with proper alignment between body and tip
+  // Create a red pen
   const createRedPen = () => {
     const penGroup = new THREE.Group();
     
@@ -76,8 +77,9 @@ export const createEssayModel = async (scene: THREE.Scene) => {
       metalness: 0.7 
     });
     const penBody = new THREE.Mesh(penBodyGeometry, penBodyMaterial);
+    penBody.rotation.x = Math.PI / 2;
     
-    // Pen tip - Fixed alignment
+    // Pen tip
     const penTipGeometry = new THREE.ConeGeometry(0.1, 0.3, 32);
     const penTipMaterial = new THREE.MeshStandardMaterial({ 
       color: 0x000000, 
@@ -85,62 +87,18 @@ export const createEssayModel = async (scene: THREE.Scene) => {
       metalness: 0.7
     });
     const penTip = new THREE.Mesh(penTipGeometry, penTipMaterial);
-    
-    // Position the pen body first
-    penBody.rotation.x = Math.PI / 2;
-    
-    // Align the tip with the body properly
-    penTip.position.set(0, -2.65, 0); // Adjusted position to connect properly
+    penTip.position.set(0, -2.5, 0);
     penTip.rotation.x = -Math.PI / 2;
     
     penGroup.add(penBody);
     penGroup.add(penTip);
-    
-    // Position the pen to be fully visible
-    penGroup.position.set(4.5, 0, 0.5);
+    penGroup.position.set(4, 0, 0.5);
     penGroup.rotation.z = -Math.PI / 4;
     
     return penGroup;
   };
   
   const redPen = createRedPen();
-  
-  // Create a checkmark (tick) object
-  const createCheckmark = () => {
-    const checkmarkGroup = new THREE.Group();
-    
-    // Create the tick material
-    const tickMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00AA00, // Green
-      roughness: 0.3,
-      metalness: 0.5,
-      emissive: 0x008800,
-      emissiveIntensity: 0.2
-    });
-    
-    // Create the main stroke of the tick
-    const mainStrokeGeometry = new THREE.BoxGeometry(0.6, 0.1, 0.05);
-    const mainStroke = new THREE.Mesh(mainStrokeGeometry, tickMaterial);
-    mainStroke.rotation.z = -Math.PI / 4;
-    
-    // Create the short stroke of the tick
-    const shortStrokeGeometry = new THREE.BoxGeometry(0.3, 0.1, 0.05);
-    const shortStroke = new THREE.Mesh(shortStrokeGeometry, tickMaterial);
-    shortStroke.position.set(-0.25, -0.25, 0);
-    shortStroke.rotation.z = Math.PI / 4;
-    
-    // Add both strokes to the group
-    checkmarkGroup.add(mainStroke);
-    checkmarkGroup.add(shortStroke);
-    
-    // Position the checkmark (will be controlled by animation)
-    checkmarkGroup.position.set(4, -5, 0.1);
-    checkmarkGroup.scale.set(0, 0, 0); // Start invisible
-    
-    return checkmarkGroup;
-  };
-  
-  const checkmark = createCheckmark();
   
   // Add highlights to the essay
   const createHighlight = (y: number, width: number = 5, color: number = 0xFFD700) => {
@@ -253,7 +211,6 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   const essayGroup = new THREE.Group();
   essayGroup.add(paper);
   essayGroup.add(redPen);
-  essayGroup.add(checkmark);
   
   // Initial position and rotation
   essayGroup.rotation.x = -0.2;
@@ -264,7 +221,6 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   return { 
     essayGroup, 
     redPen,
-    checkmark,
     highlights: [highlight1, highlight2, highlight3, highlight4, highlight5],
     lines,
     annotationMarkers 
@@ -274,8 +230,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
 // Animation helpers
 export const animateEssay = (
   essayGroup: THREE.Group, 
-  redPen: THREE.Group,
-  checkmark: THREE.Group,
+  redPen: THREE.Group, 
   scrollY: number, 
   totalHeight: number
 ) => {
@@ -294,19 +249,8 @@ export const animateEssay = (
   
   // Move pen to simulate marking the essay
   redPen.position.y = progress * 10 - 5;
-  redPen.position.x = 4.5 - progress * 2;
+  redPen.position.x = 4 - progress * 2;
   redPen.rotation.x = progress * Math.PI * 0.5;
-  
-  // Animate checkmark to appear as we scroll down
-  if (progress > 0.7) {
-    const checkScale = Math.min((progress - 0.7) * 10, 1); // Scale from 0 to 1 between 70% and 80% scroll
-    checkmark.scale.set(checkScale, checkScale, checkScale);
-    
-    // Position checkmark near "remarkably" text
-    checkmark.position.set(4, -5 + progress * 8, 0.1);
-  } else {
-    checkmark.scale.set(0, 0, 0); // Hide checkmark
-  }
 };
 
 // Setup lighting for the scene

@@ -1,15 +1,11 @@
-
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ArrowDown, CheckCircle } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { motion } from "framer-motion";
-
 const HeroSection: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const checkmarkRef = useRef<HTMLDivElement>(null);
-  
   useEffect(() => {
     const tl = gsap.timeline();
     tl.from(headingRef.current, {
@@ -23,36 +19,6 @@ const HeroSection: React.FC = () => {
       repeat: -1,
       yoyo: true
     }, "+=0.5");
-
-    // Create scroll-triggered animation for the checkmark
-    if (checkmarkRef.current) {
-      gsap.set(checkmarkRef.current, { scale: 0, opacity: 0 });
-      
-      gsap.to(checkmarkRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-          onUpdate: (self) => {
-            if (self.progress > 0.7) {
-              const progress = Math.min((self.progress - 0.7) * 10, 1);
-              gsap.to(checkmarkRef.current, { 
-                scale: progress, 
-                opacity: progress,
-                duration: 0.3
-              });
-            } else {
-              gsap.to(checkmarkRef.current, { 
-                scale: 0, 
-                opacity: 0,
-                duration: 0.3
-              });
-            }
-          }
-        }
-      });
-    }
 
     // Add particle effects on mouse move
     if (sectionRef.current) {
@@ -87,7 +53,6 @@ const HeroSection: React.FC = () => {
       };
     }
   }, []);
-  
   const scrollToFeatures = () => {
     const featuresSection = document.getElementById("essay-focus");
     if (featuresSection) {
@@ -96,35 +61,21 @@ const HeroSection: React.FC = () => {
       });
     }
   };
-  
-  return (
-    <section id="hero-section" ref={sectionRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+  return <section id="hero-section" ref={sectionRef} className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-70">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,145,101,0.15),rgba(255,255,255,0)_70%)]"></div>
       </div>
       
       <div className="content-container z-10 text-center md:px-8 max-w-10xl hero-anim py-[20px] rounded-md my-0 mx-0 px-0">
-        <div className="relative inline-block">
-          <h1 ref={headingRef} className="font-playfair text-6xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-slate-950">
-            remarkably.
-          </h1>
-          
-          {/* Checkmark that appears as user scrolls */}
-          <div 
-            ref={checkmarkRef} 
-            className="absolute bottom-1/4 -right-16 text-green-600 transform origin-center"
-          >
-            <CheckCircle size={64} className="fill-green-100" />
-          </div>
-        </div>
+        <h1 ref={headingRef} className="font-playfair text-6xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-slate-950">
+          remarkably.
+        </h1>
       </div>
 
       <div ref={scrollIndicatorRef} className="absolute bottom-12 transform cursor-pointer" onClick={scrollToFeatures}>
         <ArrowDown size={28} className="text-remarkably-gold animate-bounce" />
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;

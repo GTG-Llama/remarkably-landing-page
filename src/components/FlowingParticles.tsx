@@ -135,18 +135,9 @@ const FlowingParticles: React.FC = () => {
     // Animation function
     const animate = () => {
       // Update particle positions to move toward their targets
-      const positionAttribute = particleGeometry.getAttribute('position') as THREE.BufferAttribute;
-      
-      // Create a copy of the current positions array that we can modify
+      const positionAttribute = particleGeometry.attributes.position;
       const positions = positionAttribute.array;
-      const newPositions = new Float32Array(positions.length);
       
-      // Copy current values to the new array
-      for (let i = 0; i < positions.length; i++) {
-        newPositions[i] = positions[i];
-      }
-      
-      // Update positions in the new array
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         
@@ -155,15 +146,16 @@ const FlowingParticles: React.FC = () => {
         const y = positions[i3 + 1];
         const z = positions[i3 + 2];
         
-        // Update positions in our new array
+        // Create new array with updated positions (cannot directly modify ArrayLike)
+        const newPositions = Float32Array.from(positions);
         newPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
         newPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
         newPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+        
+        // Update the position attribute with the new positions
+        positionAttribute.set(newPositions);
       }
       
-      // Update the buffer attribute with the new positions
-      // We need to use copyArray which is available on BufferAttribute
-      (positionAttribute as THREE.BufferAttribute).copyArray(newPositions);
       positionAttribute.needsUpdate = true;
       
       // Render

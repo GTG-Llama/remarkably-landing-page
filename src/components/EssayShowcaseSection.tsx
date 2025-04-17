@@ -163,10 +163,10 @@ const EssayShowcaseSection: React.FC = () => {
       id="essay-showcase"
       className="min-h-screen flex flex-col items-center justify-center relative py-20"
     >
-      <div className="content-container z-10 max-w-6xl mx-auto px-4">
-        <div className="text-center mb-16">
+      <div className="content-container z-10 text-center px-4 md:px-8 mx-auto">
+        <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-remarkably-gold">
-            Interactive Essay Analysis
+            Features
           </h2>
           <p className="text-xl max-w-3xl mx-auto">
             Our AI identifies key elements of each essay and provides targeted feedback.
@@ -180,16 +180,10 @@ const EssayShowcaseSection: React.FC = () => {
             <div className="bg-gradient-to-b from-transparent to-white/70 absolute bottom-0 left-0 right-0 h-20 z-10 pointer-events-none"></div>
             
             {/* Placeholder for 3D view (actual 3D rendering happens in ThreeScene.tsx) */}
-            <div className="bg-white/5 rounded-xl h-full flex items-center justify-center">
-              <p className="text-center text-gray-400">
-                <ArrowDown className="mx-auto mb-2 animate-bounce" />
-                Scroll through the essay to see each feature
-              </p>
-            </div>
           </div>
 
           {/* Right side: Feature cards */}
-          <div className="lg:w-1/2">
+          <div className="pt-10 ml-20">
             <div className="grid grid-cols-1 gap-6">
               {essayFeatures.map((feature) => (
                 <FeatureCard

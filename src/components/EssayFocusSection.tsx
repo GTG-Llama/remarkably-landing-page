@@ -116,7 +116,7 @@ const EssayFocusSection: React.FC = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center animate-bounce">
+      <div className="absolute bottom-8 transform -translate-x-1/2 text-center animate-bounce">
         <ArrowDown size={24} className="text-remarkably-gold mx-auto" />
         <span className="text-sm font-medium mt-1 block">Continue scrolling</span>
       </div>

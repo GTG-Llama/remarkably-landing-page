@@ -29,7 +29,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   
   // Add subtle texture to paper
   const textureLoader = new THREE.TextureLoader();
-  textureLoader.load('/paper-texture.jpg', (texture) => {
+  textureLoader.load('/paper-texture2.jpg', (texture) => {
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set(1, 1);
@@ -43,7 +43,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     const lineMaterial = new THREE.MeshBasicMaterial({ 
       color: 0x000000,
       transparent: true,
-      opacity: 0.2 
+      opacity: 0.4 
     });
     const line = new THREE.Mesh(lineGeometry, lineMaterial);
     line.position.set(0, y, 0.03);
@@ -53,7 +53,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   // Add multiple text lines to simulate an essay
   const lines = [];
   const numberOfLines = 30;
-  const spacing = 0.3;
+  const spacing = 0.36;
   const startY = 5;
   
   for (let i = 0; i < numberOfLines; i++) {

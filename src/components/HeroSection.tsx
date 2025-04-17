@@ -73,9 +73,8 @@ const HeroSection: React.FC = () => {
         </h1>
       </div>
 
-      <div ref={scrollIndicatorRef} className="absolute bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer" onClick={scrollToFeatures}>
+      <div ref={scrollIndicatorRef} className="absolute bottom-12 transform cursor-pointer" onClick={scrollToFeatures}>
         <ArrowDown size={28} className="text-remarkably-gold animate-bounce" />
-        <span className="text-sm font-medium mt-2 block">Explore</span>
       </div>
     </section>;
 };

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -38,6 +37,10 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
   const isEssayShowcaseActive = useRef<boolean>(false);
   const activeFeatureRef = useRef<string | null>(null);
   const featureInfoPanels = useRef<Record<string, THREE.Group>>({});
+  const initialPositionRef = useRef<{ 
+    essay: { position: THREE.Vector3, rotation: THREE.Euler, scale: THREE.Vector3 },
+    camera: THREE.Vector3
+  } | null>(null);
 
   useEffect(() => {
     // Initialize scene only once
@@ -77,6 +80,16 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       // Create essay model
       const essayModel = await createEssayModel(scene);
       essayRef.current = essayModel;
+      
+      // Store initial positions to ensure consistency when scrolling back to top
+      initialPositionRef.current = {
+        essay: {
+          position: essayModel.essayGroup.position.clone(),
+          rotation: essayModel.essayGroup.rotation.clone(),
+          scale: essayModel.essayGroup.scale.clone()
+        },
+        camera: camera.position.clone()
+      };
 
       // Create feature info panels
       if (essayModel.annotationMarkers) {
@@ -90,13 +103,13 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       gsap.fromTo(
         essayModel.essayGroup.rotation, 
         { y: Math.PI * 2 }, 
-        { y: 0, duration: 1.5, ease: "power2.out" }
+        { y: initialPositionRef.current.essay.rotation.y, duration: 1.5, ease: "power2.out" }
       );
       
       gsap.fromTo(
         essayModel.essayGroup.position, 
         { z: -20 }, 
-        { z: 0, duration: 1.5, ease: "power2.out" }
+        { z: initialPositionRef.current.essay.position.z, duration: 1.5, ease: "power2.out" }
       );
 
       // Essay focus section event listener
@@ -358,35 +371,74 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           onUpdate: (self) => {
             if (!essayRef.current || isEssayFocusActive.current || isEssayShowcaseActive.current) return;
             
-            // Animate essay based on scroll position
-            animateEssay(
-              essayRef.current.essayGroup,
-              essayRef.current.redPen,
-              self.progress * document.body.scrollHeight,
-              document.body.scrollHeight
-            );
+            // When at the top of the page (progress close to 0), reset to initial position
+            if (self.progress < 0.05 && initialPositionRef.current) {
+              // Smoothly transition back to initial position
+              gsap.to(essayRef.current.essayGroup.position, {
+                x: initialPositionRef.current.essay.position.x,
+                y: initialPositionRef.current.essay.position.y,
+                z: initialPositionRef.current.essay.position.z,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+              
+              gsap.to(essayRef.current.essayGroup.rotation, {
+                x: initialPositionRef.current.essay.rotation.x,
+                y: initialPositionRef.current.essay.rotation.y,
+                z: initialPositionRef.current.essay.rotation.z,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+              
+              gsap.to(essayRef.current.essayGroup.scale, {
+                x: initialPositionRef.current.essay.scale.x,
+                y: initialPositionRef.current.essay.scale.y,
+                z: initialPositionRef.current.essay.scale.z,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+              
+              // Reset camera position to initial position as well
+              gsap.to(cameraRef.current.position, {
+                x: initialPositionRef.current.camera.x,
+                y: initialPositionRef.current.camera.y,
+                z: initialPositionRef.current.camera.z,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+            }
+            // Otherwise animate normally when scrolling down
+            else {
+              // Animate essay based on scroll position
+              animateEssay(
+                essayRef.current.essayGroup,
+                essayRef.current.redPen,
+                self.progress * document.body.scrollHeight,
+                document.body.scrollHeight
+              );
 
-            // Animate highlights as we scroll
-            essayRef.current.highlights.forEach((highlight, i) => {
-              const delay = i * 0.1;
-              const triggerPoint = 0.3 + (i * 0.1);
-              
-              // Cast to MeshBasicMaterial to access opacity
-              const material = highlight.material as THREE.MeshBasicMaterial;
-              
-              if (self.progress > triggerPoint && material.opacity < 0.7) {
-                gsap.to(material, { opacity: 0.7, duration: 0.5 });
+              // Animate highlights as we scroll
+              essayRef.current.highlights.forEach((highlight, i) => {
+                const delay = i * 0.1;
+                const triggerPoint = 0.3 + (i * 0.1);
                 
-                // Pulse animation for highlight
-                gsap.to(highlight.scale, { 
-                  x: 1.05, y: 1.2, z: 1, 
-                  duration: 0.5, 
-                  yoyo: true, 
-                  repeat: 1,
-                  ease: "power1.inOut" 
-                });
-              }
-            });
+                // Cast to MeshBasicMaterial to access opacity
+                const material = highlight.material as THREE.MeshBasicMaterial;
+                
+                if (self.progress > triggerPoint && material.opacity < 0.7) {
+                  gsap.to(material, { opacity: 0.7, duration: 0.5 });
+                  
+                  // Pulse animation for highlight
+                  gsap.to(highlight.scale, { 
+                    x: 1.05, y: 1.2, z: 1, 
+                    duration: 0.5, 
+                    yoyo: true, 
+                    repeat: 1,
+                    ease: "power1.inOut" 
+                  });
+                }
+              });
+            }
           }
         });
       }

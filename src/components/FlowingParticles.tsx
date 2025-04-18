@@ -146,14 +146,16 @@ const FlowingParticles: React.FC = () => {
         const y = positions[i3 + 1];
         const z = positions[i3 + 2];
         
-        // Create new array with updated positions (cannot directly modify ArrayLike)
-        const newPositions = Float32Array.from(positions);
-        newPositions[i3] = x + (particleTargets[i3] - x) * particleSpeeds[i];
-        newPositions[i3 + 1] = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
-        newPositions[i3 + 2] = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
+        // Calculate new positions
+        const newX = x + (particleTargets[i3] - x) * particleSpeeds[i];
+        const newY = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
+        const newZ = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
         
-        // Update the position attribute with the new positions
-        positionAttribute.set(newPositions);
+        // Update position using individual coordinates
+        // Fix: Don't use 'set' method which doesn't exist on InterleavedBufferAttribute
+        positions[i3] = newX;
+        positions[i3 + 1] = newY;
+        positions[i3 + 2] = newZ;
       }
       
       positionAttribute.needsUpdate = true;

@@ -15,7 +15,7 @@ export interface EssayFeature {
 
 // Create a 3D essay model
 export const createEssayModel = async (scene: THREE.Scene) => {
-  // Create essay paper material with improved visual quality
+  // Create essay paper material
   const paperMaterial = new THREE.MeshStandardMaterial({
     color: 0xffffff,
     roughness: 0.2,
@@ -36,20 +36,20 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     paperMaterial.needsUpdate = true;
   });
 
-  // Simulate text lines on paper with improved appearance
+  // Simulate text lines on paper
   const createTextLine = (y: number, width: number = 7) => {
     const lineGeometry = new THREE.BoxGeometry(width, 0.08, 0.01);
     const lineMaterial = new THREE.MeshBasicMaterial({ 
       color: 0x000000,
       transparent: true,
-      opacity: 0.3 
+      opacity: 0.4 
     });
     const line = new THREE.Mesh(lineGeometry, lineMaterial);
     line.position.set(0, y, 0.03);
     return line;
   };
 
-  // Add multiple text lines to simulate an essay with more natural variation
+  // Add multiple text lines to simulate an essay
   const lines = [];
   const numberOfLines = 30;
   const spacing = 0.36;
@@ -57,30 +57,30 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   
   for (let i = 0; i < numberOfLines; i++) {
     // Randomize line width slightly to make it look more natural
-    const width = 7 - Math.random() * (i % 3 === 0 ? 2.2 : 1.5);
+    const width = 7 - Math.random() * 2;
     const y = startY - i * spacing;
     const line = createTextLine(y, width);
     paper.add(line);
     lines.push(line);
   }
 
-  // Create a red pen with improved appearance
+  // Create a red pen
   const createRedPen = () => {
     const penGroup = new THREE.Group();
     
-    // Pen body with Apple-inspired design
+    // Pen body
     const penBodyGeometry = new THREE.CylinderGeometry(0.1, 0.1, 5, 32);
     const penBodyMaterial = new THREE.MeshStandardMaterial({ 
       color: 0xFF3B30,
-      roughness: 0.2,
-      metalness: 0.8
+      roughness: 0.3,
+      metalness: 0.7 
     });
     const penBody = new THREE.Mesh(penBodyGeometry, penBodyMaterial);
     
     // Make pen parallel to paper by rotating 90 degrees on Z axis
     penBody.rotation.z = Math.PI / 2;
     
-    // Pen tip with improved appearance
+    // Pen tip
     const penTipGeometry = new THREE.ConeGeometry(0.1, 0.3, 32);
     const penTipMaterial = new THREE.MeshStandardMaterial({ 
       color: 0x000000, 
@@ -91,39 +91,27 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     penTip.position.set(2.5, 0, 0);
     penTip.rotation.z = Math.PI / 2;
     
-    // Pen clip (Apple design touch)
-    const clipGeometry = new THREE.BoxGeometry(0.8, 0.1, 0.05);
-    const clipMaterial = new THREE.MeshStandardMaterial({
-      color: 0xDDDDDD,
-      metalness: 0.9,
-      roughness: 0.1
-    });
-    const clip = new THREE.Mesh(clipGeometry, clipMaterial);
-    clip.position.set(-2, 0.12, 0);
-    clip.rotation.z = Math.PI / 2;
-    
     penGroup.add(penBody);
     penGroup.add(penTip);
-    penGroup.add(clip);
     
-    // Position pen to the right of the paper, avoiding clipping
-    penGroup.position.set(6, 0, 0.8);
+    // Position pen to the right of the paper
+    penGroup.position.set(6, 0, 0.5);
     
     return penGroup;
   };
   
   const redPen = createRedPen();
   
-  // Add highlights to the essay with improved visual appearance
+  // Add highlights to the essay
   const createHighlight = (y: number, width: number = 5, color: number = 0xFFD700) => {
     const highlightGeometry = new THREE.BoxGeometry(width, 0.25, 0.01);
     const highlightMaterial = new THREE.MeshBasicMaterial({ 
       color: color,
       transparent: true,
-      opacity: 0.0 // Start transparent, will be animated in
+      opacity: 0.3
     });
     const highlight = new THREE.Mesh(highlightGeometry, highlightMaterial);
-    highlight.position.set(0, y, 0.035);
+    highlight.position.set(0, y, 0.04);
     return highlight;
   };
   
@@ -140,7 +128,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   paper.add(highlight4);
   paper.add(highlight5);
   
-  // Create feature annotation points with improved visual design
+  // Create feature annotation points
   const features: EssayFeature[] = [
     {
       id: 'thesis',
@@ -179,50 +167,34 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     }
   ];
   
-  // Create feature annotation markers with improved visual design
+  // Create feature annotation markers
   const annotationMarkers = features.map(feature => {
     const markerGroup = new THREE.Group();
     
-    // Create marker dot with refined appearance
-    const dotGeometry = new THREE.SphereGeometry(0.12, 16, 16);
-    const dotMaterial = new THREE.MeshBasicMaterial({ 
-      color: feature.color,
-      transparent: true,
-      opacity: 0.9
-    });
+    // Create marker dot
+    const dotGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+    const dotMaterial = new THREE.MeshBasicMaterial({ color: feature.color });
     const dot = new THREE.Mesh(dotGeometry, dotMaterial);
     
-    // Create a glowing effect for the dot
-    const glowGeometry = new THREE.SphereGeometry(0.16, 16, 16);
-    const glowMaterial = new THREE.MeshBasicMaterial({ 
-      color: feature.color,
-      transparent: true,
-      opacity: 0.3
-    });
-    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
-    
-    // Create label connector line with improved appearance
+    // Create label connector line
     const lineGeometry = new THREE.BufferGeometry();
     const lineMaterial = new THREE.LineBasicMaterial({ 
       color: feature.color,
       transparent: true,
-      opacity: 0.7,
-      linewidth: 2
+      opacity: 0.7
     });
     
-    // Start at the dot, extend outward in an elegant curve
+    // Start at the dot, extend outward
     const linePoints = [
       new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0.3, 0.1, 0),
-      new THREE.Vector3(0.6, 0.2, 0)
+      new THREE.Vector3(0.5, 0.2, 0)
     ];
     
     lineGeometry.setFromPoints(linePoints);
     const line = new THREE.Line(lineGeometry, lineMaterial);
     
-    // Add elements to marker group
+    // Add to marker group
     markerGroup.add(dot);
-    markerGroup.add(glow);
     markerGroup.add(line);
     
     // Position the marker at feature position
@@ -244,7 +216,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   
   // Initial position and rotation - ensure consistent starting position
   essayGroup.rotation.x = -0.2;
-  essayGroup.position.y = 2; // Start slightly elevated to allow immediate downward movement
+  essayGroup.position.y = 5; // Start slightly elevated to allow immediate downward movement
   essayGroup.position.z = 0;
   
   scene.add(essayGroup);
@@ -258,7 +230,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   };
 };
 
-// Animation helpers with improved smoothness
+// Animation helpers
 export const animateEssay = (
   essayGroup: THREE.Group, 
   redPen: THREE.Group, 
@@ -268,35 +240,33 @@ export const animateEssay = (
   // Calculate progress based on scroll position (0 to 1)
   const progress = Math.min(Math.max(scrollY / totalHeight, 0), 1);
   
-  // Rotate essay based on scroll with more organic motion
-  essayGroup.rotation.y = progress * Math.PI * 0.4 - 0.2;
+  // Rotate essay based on scroll
+  essayGroup.rotation.y = progress * Math.PI * 0.5 - 0.2;
   
-  // Move essay down as we scroll down - start moving immediately
-  essayGroup.position.y = 2 - progress * 10;
+  // Move essay down as we scroll down - start from initial elevated position
+  essayGroup.position.y = 5 - progress * 15;
   
-  // Scale essay slightly larger as we scroll for a subtle depth effect
+  // Scale essay slightly larger as we scroll
   const scale = 1 + progress * 0.5;
   essayGroup.scale.set(scale, scale, scale);
   
-  // Keep pen positioned properly relative to essay
-  redPen.position.y = 2 - progress * 10; // Match essay vertical movement
-  redPen.position.x = 6 - progress * 0.8; // Subtle horizontal movement
-  redPen.position.z = 0.8; // Keep elevated to avoid clipping
-  redPen.rotation.y = progress * Math.PI * 0.2; // Subtle rotation to follow paper
+  // Keep pen parallel to paper and avoid clipping
+  redPen.position.y = 5 - progress * 15; // Match essay vertical movement
+  redPen.position.x = 6 - progress; // Subtle horizontal movement
+  redPen.position.z = 1; // Keep elevated to avoid clipping
+  redPen.rotation.y = progress * Math.PI * 0.2; // Slight rotation to follow paper
 };
 
-// Setup lighting for the scene with improved quality
+// Setup lighting for the scene
 export const setupLighting = (scene: THREE.Scene) => {
   // Ambient light for overall illumination
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
   
-  // Main directional light (simulating sunlight) with better positioning
+  // Main directional light (simulating sunlight)
   const mainLight = new THREE.DirectionalLight(0xffffff, 1);
   mainLight.position.set(5, 5, 5);
   mainLight.castShadow = true;
-  mainLight.shadow.mapSize.width = 1024;
-  mainLight.shadow.mapSize.height = 1024;
   scene.add(mainLight);
   
   // Additional directional light from opposite direction
@@ -317,32 +287,30 @@ export const setupLighting = (scene: THREE.Scene) => {
   return { ambientLight, mainLight, fillLight, spotLight };
 };
 
-// Create a feature information panel with improved Apple-inspired design
+// Create a feature information panel that appears when focusing on a feature
 export const createFeatureInfoPanel = (scene: THREE.Scene, feature: EssayFeature) => {
   const panelGroup = new THREE.Group();
   
-  // Background panel with refined appearance
+  // Background panel
   const panelGeometry = new THREE.PlaneGeometry(2, 0.8);
   const panelMaterial = new THREE.MeshBasicMaterial({
     color: 0xffffff,
     transparent: true,
-    opacity: 0.92,
+    opacity: 0.85,
     side: THREE.DoubleSide
   });
   const panel = new THREE.Mesh(panelGeometry, panelMaterial);
   
-  // Add border with subtle appearance
+  // Add border
   const borderGeometry = new THREE.EdgesGeometry(panelGeometry);
   const borderMaterial = new THREE.LineBasicMaterial({ 
     color: feature.color,
-    linewidth: 2,
-    transparent: true,
-    opacity: 0.8
+    linewidth: 2
   });
   const border = new THREE.LineSegments(borderGeometry, borderMaterial);
   
-  // Position elements with improved placement
-  panel.position.set(feature.position.x + 1.5, feature.position.y, feature.position.z + 0.05);
+  // Position elements
+  panel.position.set(feature.position.x + 1.5, feature.position.y, feature.position.z);
   border.position.copy(panel.position);
   
   // Add to group
@@ -355,7 +323,7 @@ export const createFeatureInfoPanel = (scene: THREE.Scene, feature: EssayFeature
   return panelGroup;
 };
 
-// Show/hide feature information with improved animations
+// Show/hide feature information
 export const toggleFeatureInfo = (
   feature: EssayFeature,
   panel: THREE.Group,
@@ -368,15 +336,15 @@ export const toggleFeatureInfo = (
     gsap.from(panel.position, {
       x: feature.position.x + 1,
       y: feature.position.y + 0.5,
-      duration: 0.4,
-      ease: "power3.out"
+      duration: 0.3,
+      ease: "power2.out"
     });
     
     gsap.from(panel.scale, {
       x: 0.5,
       y: 0.5,
-      duration: 0.4,
-      ease: "power3.out"
+      duration: 0.3,
+      ease: "power2.out"
     });
   }
 };

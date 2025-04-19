@@ -43,16 +43,13 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
   } | null>(null);
 
   useEffect(() => {
-    // Initialize scene only once
     if (!canvasRef.current) return;
 
     const initializeScene = async () => {
-      // Create scene
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffffff);
       sceneRef.current = scene;
 
-      // Create camera
       const camera = new THREE.PerspectiveCamera(
         45,
         window.innerWidth / window.innerHeight,
@@ -62,7 +59,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       camera.position.z = 15;
       cameraRef.current = camera;
 
-      // Create renderer
       const renderer = new THREE.WebGLRenderer({
         canvas: canvasRef.current!,
         antialias: true,
@@ -74,14 +70,14 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       rendererRef.current = renderer;
 
-      // Setup lighting
       setupLighting(scene);
 
-      // Create essay model
       const essayModel = await createEssayModel(scene);
       essayRef.current = essayModel;
       
-      // Store initial positions to ensure consistency when scrolling back to top
+      essayModel.redPen.position.x = 6;
+      essayModel.redPen.position.z = 1;
+
       initialPositionRef.current = {
         essay: {
           position: essayModel.essayGroup.position.clone(),
@@ -91,7 +87,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         camera: camera.position.clone()
       };
 
-      // Create feature info panels
       if (essayModel.annotationMarkers) {
         essayModel.annotationMarkers.forEach(({ feature }) => {
           const panel = createFeatureInfoPanel(scene, feature);
@@ -99,7 +94,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         });
       }
 
-      // Initial animation to introduce the essay
       gsap.fromTo(
         essayModel.essayGroup.rotation, 
         { y: Math.PI * 2 }, 
@@ -112,13 +106,11 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         { z: initialPositionRef.current.essay.position.z, duration: 1.5, ease: "power2.out" }
       );
 
-      // Essay focus section event listener
       const handleEssayTransition = (event: Event) => {
         const customEvent = event as CustomEvent;
         isEssayFocusActive.current = customEvent.detail.active;
         
         if (isEssayFocusActive.current && essayRef.current && cameraRef.current) {
-          // Reset essay position and rotation for close-up view
           gsap.to(essayRef.current.essayGroup.rotation, {
             x: 0,
             y: 0,
@@ -126,7 +118,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             ease: "power2.inOut"
           });
           
-          // Position the essay centrally
           gsap.to(essayRef.current.essayGroup.position, {
             x: 0,
             y: 0,
@@ -139,21 +130,17 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
 
       document.addEventListener('essayTransition', handleEssayTransition);
 
-      // Feature hover event listener for the showcase section
       const handleFeatureHover = (event: Event) => {
         const customEvent = event as CustomEvent;
         const featureId = customEvent.detail.featureId;
         activeFeatureRef.current = featureId;
         
-        // If in essay showcase section, highlight the selected feature
         if (essayRef.current && isEssayShowcaseActive.current) {
-          // Hide all feature panels first
           Object.values(featureInfoPanels.current).forEach(panel => {
             panel.visible = false;
           });
           
           if (featureId) {
-            // Find the marker for this feature
             const markerInfo = essayRef.current.annotationMarkers.find(
               marker => marker.feature.id === featureId
             );
@@ -161,7 +148,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             if (markerInfo) {
               const { feature, markerGroup } = markerInfo;
               
-              // Zoom camera to this feature
               gsap.to(cameraRef.current?.position, {
                 x: feature.position.x * 0.5,
                 y: feature.position.y * 0.5,
@@ -170,14 +156,12 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 ease: "power2.inOut"
               });
               
-              // Rotate essay to better see the feature
               gsap.to(essayRef.current.essayGroup.rotation, {
                 y: 0.2,
                 duration: 0.8,
                 ease: "power2.inOut"
               });
               
-              // Pulse the marker
               gsap.to(markerGroup.scale, {
                 x: 1.5,
                 y: 1.5,
@@ -188,7 +172,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 ease: "power2.inOut"
               });
               
-              // Show the feature info panel
               if (featureInfoPanels.current[featureId]) {
                 toggleFeatureInfo(
                   feature,
@@ -198,7 +181,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
               }
             }
           } else {
-            // Reset camera position when no feature is selected
             gsap.to(cameraRef.current?.position, {
               x: 0,
               y: 0,
@@ -207,7 +189,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
               ease: "power2.inOut"
             });
             
-            // Reset essay rotation
             gsap.to(essayRef.current.essayGroup.rotation, {
               y: 0,
               duration: 0.8,
@@ -219,21 +200,17 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
 
       document.addEventListener('featureHover', handleFeatureHover);
 
-      // Responsive handling
       const handleResize = () => {
         if (!cameraRef.current || !rendererRef.current) return;
         
-        // Update camera
         cameraRef.current.aspect = window.innerWidth / window.innerHeight;
         cameraRef.current.updateProjectionMatrix();
         
-        // Update renderer
         rendererRef.current.setSize(window.innerWidth, window.innerHeight);
       };
 
       window.addEventListener('resize', handleResize);
 
-      // Set up ScrollTrigger for essay focus section
       const essayFocusSection = document.getElementById('essay-focus');
       if (essayFocusSection) {
         ScrollTrigger.create({
@@ -258,22 +235,16 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             if (!essayRef.current || !cameraRef.current) return;
             
             if (isEssayFocusActive.current) {
-              // Camera movement from top to bottom of essay
               const progress = self.progress;
               
-              // Move camera closer to the essay
               cameraRef.current.position.z = 5 - (progress * 3);
               
-              // Pan from top to bottom
               essayRef.current.essayGroup.position.y = 5 - (progress * 10);
               
-              // Slightly tilt the essay as we read down
               essayRef.current.essayGroup.rotation.x = -0.2 + (progress * 0.1);
               
-              // Animate red pen to follow the reading position
               essayRef.current.redPen.position.y = 5 - (progress * 10);
               
-              // Reveal highlights as we scroll past them
               essayRef.current.highlights.forEach((highlight, i) => {
                 const appearPoint = 0.3 + (i * 0.2);
                 const material = highlight.material as THREE.MeshBasicMaterial;
@@ -284,7 +255,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                     duration: 0.5 
                   });
                   
-                  // Pulse animation for highlight
                   gsap.to(highlight.scale, { 
                     x: 1.05, 
                     y: 1.2, 
@@ -301,7 +271,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         });
       }
 
-      // Set up ScrollTrigger for essay showcase section
       const essayShowcaseSection = document.getElementById('essay-showcase');
       if (essayShowcaseSection) {
         ScrollTrigger.create({
@@ -312,7 +281,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             isEssayShowcaseActive.current = true;
             isEssayFocusActive.current = false;
             
-            // Reset and prepare essay position for showcase
             if (essayRef.current && cameraRef.current) {
               gsap.to(essayRef.current.essayGroup.position, {
                 x: 0,
@@ -338,7 +306,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 ease: "power2.inOut"
               });
               
-              // Position camera
               gsap.to(cameraRef.current.position, {
                 x: 0,
                 y: 0,
@@ -360,8 +327,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           }
         });
       }
-      
-      // Setup GSAP ScrollTrigger for main scroll
+
       const scrollElement = document.querySelector(scrollContainer);
       if (scrollElement) {
         ScrollTrigger.create({
@@ -371,9 +337,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           onUpdate: (self) => {
             if (!essayRef.current || isEssayFocusActive.current || isEssayShowcaseActive.current) return;
             
-            // When at the top of the page (progress close to 0), reset to initial position
             if (self.progress < 0.05 && initialPositionRef.current) {
-              // Smoothly transition back to initial position
               gsap.to(essayRef.current.essayGroup.position, {
                 x: initialPositionRef.current.essay.position.x,
                 y: initialPositionRef.current.essay.position.y,
@@ -398,7 +362,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 ease: "power2.out"
               });
               
-              // Reset camera position to initial position as well
               gsap.to(cameraRef.current.position, {
                 x: initialPositionRef.current.camera.x,
                 y: initialPositionRef.current.camera.y,
@@ -406,29 +369,23 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 duration: 0.5,
                 ease: "power2.out"
               });
-            }
-            // Otherwise animate normally when scrolling down
-            else {
-              // Animate essay based on scroll position
+            } else {
               animateEssay(
                 essayRef.current.essayGroup,
                 essayRef.current.redPen,
                 self.progress * document.body.scrollHeight,
                 document.body.scrollHeight
               );
-
-              // Animate highlights as we scroll
+              
               essayRef.current.highlights.forEach((highlight, i) => {
                 const delay = i * 0.1;
                 const triggerPoint = 0.3 + (i * 0.1);
                 
-                // Cast to MeshBasicMaterial to access opacity
                 const material = highlight.material as THREE.MeshBasicMaterial;
                 
                 if (self.progress > triggerPoint && material.opacity < 0.7) {
                   gsap.to(material, { opacity: 0.7, duration: 0.5 });
                   
-                  // Pulse animation for highlight
                   gsap.to(highlight.scale, { 
                     x: 1.05, y: 1.2, z: 1, 
                     duration: 0.5, 
@@ -443,20 +400,16 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         });
       }
 
-      // Animation loop
       const animate = () => {
         if (!sceneRef.current || !cameraRef.current || !rendererRef.current) return;
         
-        // Render scene
         rendererRef.current.render(sceneRef.current, cameraRef.current);
         
-        // Continue animation loop
         requestAnimationFrame(animate);
       };
 
       animate();
 
-      // Cleanup
       return () => {
         window.removeEventListener('resize', handleResize);
         document.removeEventListener('essayTransition', handleEssayTransition);

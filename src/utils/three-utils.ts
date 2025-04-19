@@ -1,4 +1,3 @@
-
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
@@ -92,7 +91,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     
     penGroup.add(penBody);
     penGroup.add(penTip);
-    penGroup.position.set(4, 0, 0.5);
+    penGroup.position.set(6, 0, 0.5); // Position further to the right to avoid clipping
     penGroup.rotation.z = -Math.PI / 4;
     
     return penGroup;
@@ -212,9 +211,10 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   essayGroup.add(paper);
   essayGroup.add(redPen);
   
-  // Initial position and rotation
+  // Initial position and rotation - ensure consistent starting position
   essayGroup.rotation.x = -0.2;
   essayGroup.position.y = 0;
+  essayGroup.position.z = 0; // Ensure a consistent z position
   
   scene.add(essayGroup);
   
@@ -248,8 +248,10 @@ export const animateEssay = (
   essayGroup.scale.set(scale, scale, scale);
   
   // Move pen to simulate marking the essay
+  // Keep the pen at a safe distance to avoid clipping
   redPen.position.y = progress * 10 - 5;
-  redPen.position.x = 4 - progress * 2;
+  redPen.position.x = 6 - progress * 1.5; // Reduced horizontal movement to avoid clipping
+  redPen.position.z = 1; // Keep pen elevated on z-axis
   redPen.rotation.x = progress * Math.PI * 0.5;
 };
 

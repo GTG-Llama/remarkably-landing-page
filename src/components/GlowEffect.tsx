@@ -6,12 +6,14 @@ interface GlowEffectProps {
   targetSelector: string;
   color?: string;
   startDelay?: number;
+  size?: string;
 }
 
 const GlowEffect: React.FC<GlowEffectProps> = ({ 
   targetSelector, 
   color = "rgba(168, 145, 101, 0.4)",
-  startDelay = 0
+  startDelay = 0,
+  size = "normal"
 }) => {
   const glowRef = useRef<HTMLDivElement>(null);
   
@@ -26,10 +28,14 @@ const GlowEffect: React.FC<GlowEffectProps> = ({
       const glow = glowRef.current;
       if (!glow) return;
       
-      glow.style.width = `${rect.width + 40}px`;
-      glow.style.height = `${rect.height + 40}px`;
-      glow.style.left = `${rect.left - 20}px`;
-      glow.style.top = `${rect.top - 20}px`;
+      // Adjust size based on the size prop
+      const sizeMultiplier = size === "large" ? 1.5 : 1;
+      const padding = 20 * sizeMultiplier;
+      
+      glow.style.width = `${rect.width + padding * 2}px`;
+      glow.style.height = `${rect.height + padding * 2}px`;
+      glow.style.left = `${rect.left - padding}px`;
+      glow.style.top = `${rect.top - padding}px`;
     };
     
     // Set initial position
@@ -65,7 +71,10 @@ const GlowEffect: React.FC<GlowEffectProps> = ({
       window.removeEventListener('resize', updateGlowPosition);
       window.removeEventListener('scroll', updateGlowPosition);
     };
-  }, [targetSelector, startDelay]);
+  }, [targetSelector, startDelay, size]);
+  
+  // Adjust blur based on size
+  const blurAmount = size === "large" ? "40px" : "30px";
   
   return (
     <div 
@@ -73,7 +82,7 @@ const GlowEffect: React.FC<GlowEffectProps> = ({
       className="fixed rounded-3xl pointer-events-none z-5"
       style={{ 
         background: `radial-gradient(circle, ${color} 0%, rgba(255,255,255,0) 70%)`,
-        filter: 'blur(30px)',
+        filter: `blur(${blurAmount})`,
         transform: 'translate3d(0, 0, 0)'
       }}
       aria-hidden="true"

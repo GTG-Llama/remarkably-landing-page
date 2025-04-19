@@ -135,29 +135,39 @@ const FlowingParticles: React.FC = () => {
     // Animation function
     const animate = () => {
       // Update particle positions to move toward their targets
-      const positionAttribute = particleGeometry.attributes.position;
-      const positions = positionAttribute.array;
+      const positionAttribute = particleGeometry.attributes.position as THREE.BufferAttribute;
       
+      // Create a new array for the updated positions
+      const positions = positionAttribute.array;
+      const updatedPositions = new Float32Array(positions.length);
+      
+      // Copy the current positions to our new array first
+      for (let i = 0; i < positions.length; i++) {
+        updatedPositions[i] = positions[i];
+      }
+      
+      // Now update the positions in our copy
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         
-        // Get current positions
-        const x = positions[i3];
-        const y = positions[i3 + 1];
-        const z = positions[i3 + 2];
+        // Get current positions from the copy
+        const x = updatedPositions[i3];
+        const y = updatedPositions[i3 + 1];
+        const z = updatedPositions[i3 + 2];
         
         // Calculate new positions
         const newX = x + (particleTargets[i3] - x) * particleSpeeds[i];
         const newY = y + (particleTargets[i3 + 1] - y) * particleSpeeds[i];
         const newZ = z + (particleTargets[i3 + 2] - z) * particleSpeeds[i];
         
-        // Update position using individual coordinates
-        // Fix: Don't use 'set' method which doesn't exist on InterleavedBufferAttribute
-        positions[i3] = newX;
-        positions[i3 + 1] = newY;
-        positions[i3 + 2] = newZ;
+        // Update our copy
+        updatedPositions[i3] = newX;
+        updatedPositions[i3 + 1] = newY;
+        updatedPositions[i3 + 2] = newZ;
       }
       
+      // Update the buffer attribute with our new array
+      positionAttribute.set(updatedPositions);
       positionAttribute.needsUpdate = true;
       
       // Render

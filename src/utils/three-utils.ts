@@ -71,12 +71,14 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     // Pen body
     const penBodyGeometry = new THREE.CylinderGeometry(0.1, 0.1, 5, 32);
     const penBodyMaterial = new THREE.MeshStandardMaterial({ 
-      color: 0xFF3B30, // Apple red
+      color: 0xFF3B30,
       roughness: 0.3,
       metalness: 0.7 
     });
     const penBody = new THREE.Mesh(penBodyGeometry, penBodyMaterial);
-    penBody.rotation.x = Math.PI / 2;
+    
+    // Make pen parallel to paper by rotating 90 degrees on Z axis
+    penBody.rotation.z = Math.PI / 2;
     
     // Pen tip
     const penTipGeometry = new THREE.ConeGeometry(0.1, 0.3, 32);
@@ -86,13 +88,14 @@ export const createEssayModel = async (scene: THREE.Scene) => {
       metalness: 0.7
     });
     const penTip = new THREE.Mesh(penTipGeometry, penTipMaterial);
-    penTip.position.set(0, -2.5, 0);
-    penTip.rotation.x = -Math.PI / 2;
+    penTip.position.set(2.5, 0, 0);
+    penTip.rotation.z = Math.PI / 2;
     
     penGroup.add(penBody);
     penGroup.add(penTip);
-    penGroup.position.set(6, 0, 0.5); // Position further to the right to avoid clipping
-    penGroup.rotation.z = -Math.PI / 4;
+    
+    // Position pen to the right of the paper
+    penGroup.position.set(6, 0, 0.5);
     
     return penGroup;
   };
@@ -213,8 +216,8 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   
   // Initial position and rotation - ensure consistent starting position
   essayGroup.rotation.x = -0.2;
-  essayGroup.position.y = 0;
-  essayGroup.position.z = 0; // Ensure a consistent z position
+  essayGroup.position.y = 5; // Start slightly elevated to allow immediate downward movement
+  essayGroup.position.z = 0;
   
   scene.add(essayGroup);
   
@@ -240,19 +243,18 @@ export const animateEssay = (
   // Rotate essay based on scroll
   essayGroup.rotation.y = progress * Math.PI * 0.5 - 0.2;
   
-  // Move essay up as we scroll down
-  essayGroup.position.y = -progress * 15 + 5;
+  // Move essay down as we scroll down - start from initial elevated position
+  essayGroup.position.y = 5 - progress * 15;
   
-  // Scale essay to create zoom effect
-  const scale = 1 + progress * 2;
+  // Scale essay slightly larger as we scroll
+  const scale = 1 + progress * 0.5;
   essayGroup.scale.set(scale, scale, scale);
   
-  // Move pen to simulate marking the essay
-  // Keep the pen at a safe distance to avoid clipping
-  redPen.position.y = progress * 10 - 5;
-  redPen.position.x = 6 - progress * 1.5; // Reduced horizontal movement to avoid clipping
-  redPen.position.z = 1; // Keep pen elevated on z-axis
-  redPen.rotation.x = progress * Math.PI * 0.5;
+  // Keep pen parallel to paper and avoid clipping
+  redPen.position.y = 5 - progress * 15; // Match essay vertical movement
+  redPen.position.x = 6 - progress; // Subtle horizontal movement
+  redPen.position.z = 1; // Keep elevated to avoid clipping
+  redPen.rotation.y = progress * Math.PI * 0.2; // Slight rotation to follow paper
 };
 
 // Setup lighting for the scene

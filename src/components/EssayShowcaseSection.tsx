@@ -128,30 +128,42 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         }
       }}
     >
-      <div 
-        ref={cardRef} 
-        className={`bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg border-2 transition-all duration-300`}
-        style={{
-          borderColor: isActive ? colorHex : 'transparent'
-        }}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
+      <div className="relative">
+        {isActive && (
+          <div 
+            className="absolute top-1/2 right-full h-[2px] z-0" 
+            style={{
+              background: `linear-gradient(to left, ${colorHex}, transparent)`,
+              width: '150px',
+              transform: 'translateY(-50%)'
+            }}
+          />
+        )}
         <div 
-          className="w-14 h-14 rounded-full flex items-center justify-center mb-6 mx-auto"
+          ref={cardRef} 
+          className={`bg-white/90 backdrop-blur-sm rounded-xl p-8 shadow-lg border-2 transition-all duration-300`}
           style={{
-            backgroundColor: `${colorHex}15`
+            borderColor: isActive ? colorHex : 'transparent'
           }}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         >
-          <span 
-            style={{ color: colorHex }} 
-            className="font-bold text-2xl"
+          <div 
+            className="w-14 h-14 rounded-full flex items-center justify-center mb-6 mx-auto"
+            style={{
+              backgroundColor: `${colorHex}15`
+            }}
           >
-            {feature.id.charAt(0).toUpperCase()}
-          </span>
+            <span 
+              style={{ color: colorHex }} 
+              className="font-bold text-2xl"
+            >
+              {feature.id.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          <h3 className="text-xl font-semibold mb-3 text-gray-900">{feature.label}</h3>
+          <p className="text-gray-600 leading-relaxed">{feature.description}</p>
         </div>
-        <h3 className="text-xl font-semibold mb-3 text-gray-900">{feature.label}</h3>
-        <p className="text-gray-600 leading-relaxed">{feature.description}</p>
       </div>
     </motion.div>
   );
@@ -210,9 +222,9 @@ const EssayShowcaseSection: React.FC = () => {
     <section 
       ref={sectionRef} 
       id="essay-showcase" 
-      className="min-h-screen flex flex-col items-center justify-center relative py-24 overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center relative mt-3 overflow-hidden"
     >
-      <div className="content-container z-10 text-center max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="content-container w-full z-10 text-center md:px-8">
         <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-remarkably-gold">
             Essay Analysis Features
@@ -224,7 +236,7 @@ const EssayShowcaseSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row items-start gap-16">
-          <div className="lg:w-3/5 h-[600px] relative order-2 lg:order-1">
+          <div className="lg:w-4/5 h-[600px] relative order-2 lg:order-1">
             <div className="bg-gradient-to-b from-transparent to-white/70 absolute bottom-0 left-0 right-0 h-20 z-10 pointer-events-none"></div>
           </div>
 

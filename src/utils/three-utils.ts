@@ -86,8 +86,8 @@ export const createEssayModel = async (scene: THREE.Scene) => {
       metalness: 0.7
     });
     const penTip = new THREE.Mesh(penTipGeometry, penTipMaterial);
-    penTip.position.set(0, -2.5, 0);
-    penTip.rotation.x = -Math.PI / 2;
+    penTip.position.set(0, 0, -3);
+    penTip.rotation.x = Math.PI;
     
     penGroup.add(penBody);
     penGroup.add(penTip);
@@ -235,7 +235,7 @@ export const animateEssay = (
   totalHeight: number
 ) => {
   // Calculate progress based on scroll position (0 to 1)
-  const progress = Math.min(Math.max(scrollY / totalHeight, 0), 1);
+  const progress = Math.min(window.scrollY / totalHeight, 1);
   
   // Rotate essay based on scroll
   essayGroup.rotation.y = progress * Math.PI * 0.5 - 0.2;

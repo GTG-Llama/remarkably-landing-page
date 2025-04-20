@@ -86,9 +86,8 @@ const VideoShowcaseSection: React.FC = () => {
           {/* This would be replaced with an actual video player in production */}
           {isPlaying && (
             <div className="w-full h-full bg-black flex items-center justify-center text-white">
-              <p className="text-xl">Video would play here</p>
               {/* In production, you'd use something like: */}
-              {/* <video src="your-video-url.mp4" controls autoPlay className="w-full h-full" /> */}
+              <video src="/remarkably.mp4" controls autoPlay className="w-full h-full" />
             </div>
           )}
         </div>

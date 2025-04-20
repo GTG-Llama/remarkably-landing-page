@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -79,7 +78,7 @@ const EssayFocusSection: React.FC = () => {
       id="essay-focus" 
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
     >
-      <div className="content-container z-10 text-center px-4 md:px-8 max-w-5xl mx-auto">
+      <div className="content-container w-full text-center md:px-8">
         <motion.div 
           className="bg-white/80 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl"
           initial="hidden"

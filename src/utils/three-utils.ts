@@ -99,8 +99,8 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   
   const redPen = createRedPen();
   
-  // Add highlights to the essay
-  const createHighlight = (y: number, width: number = 5, color: number = 0xFFD700) => {
+  // Add highlights to the essay with feature ID mapping
+  const createHighlight = (y: number, width: number = 5, color: number = 0xFFD700, featureId: string = "") => {
     const highlightGeometry = new THREE.BoxGeometry(width, 0.25, 0.01);
     const highlightMaterial = new THREE.MeshBasicMaterial({ 
       color: color,
@@ -109,15 +109,19 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     });
     const highlight = new THREE.Mesh(highlightGeometry, highlightMaterial);
     highlight.position.set(0, y, 0.04);
+    
+    // Store feature ID as a custom property
+    (highlight as any).featureId = featureId;
+    
     return highlight;
   };
   
   // Add feature highlights at specific positions
-  const highlight1 = createHighlight(3, 6, 0xFF3B30); // Red highlight (Thesis Statement)
-  const highlight2 = createHighlight(1.5, 4, 0xA89165); // Gold highlight (Supporting Evidence)
-  const highlight3 = createHighlight(0, 5, 0xFF3B30); // Red highlight (Conclusion)
-  const highlight4 = createHighlight(-1.5, 3.5, 0x1EAEDB); // Blue highlight (Citations)
-  const highlight5 = createHighlight(-3, 4.5, 0x4CAF50); // Green highlight (Grammar)
+  const highlight1 = createHighlight(3, 6, 0xFF3B30, 'thesis'); // Red highlight (Thesis Statement)
+  const highlight2 = createHighlight(1.5, 4, 0xA89165, 'evidence'); // Gold highlight (Supporting Evidence)
+  const highlight3 = createHighlight(0, 5, 0xFF3B30, 'conclusion'); // Red highlight (Conclusion)
+  const highlight4 = createHighlight(-1.5, 3.5, 0x1EAEDB, 'citations'); // Blue highlight (Citations)
+  const highlight5 = createHighlight(-3, 4.5, 0x4CAF50, 'grammar'); // Green highlight (Grammar)
   
   paper.add(highlight1);
   paper.add(highlight2);

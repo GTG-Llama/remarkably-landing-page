@@ -89,28 +89,35 @@ const EssayFocusSection: React.FC = () => {
         </motion.div>
           
         <div ref={featureCardsRef} className="space-y-16">
-          {[{
-          step: "1",
-          title: "Upload Essays",
-          description: "Simply upload student essays via our intuitive interface. Support for multiple formats including Word, PDF, and plain text.",
-          videoUrl: "/videos/upload-demo.mp4",
-          icon: Share2
-        }, {
-          step: "2",
-          title: "AI Analysis",
-          description: "Our AI analyzes content, structure, and style in seconds, identifying key strengths and areas for improvement.",
-          videoUrl: "/videos/analysis-demo.mp4",
-          icon: Eye
-        }, {
-          step: "3",
-          title: "Detailed Feedback",
-          description: "Receive personalized suggestions and insights for each student, with specific recommendations for improvement.",
-          videoUrl: "/videos/feedback-demo.mp4",
-          icon: Eye
-        }].map((card, i) => <motion.div key={card.step} custom={i} initial="hidden" whileInView="visible" viewport={{
-          once: true,
-          amount: 0.6
-        }} variants={cardVariants} className="flex flex-col lg:flex-row items-stretch overflow-hidden relative">
+          {[
+            {
+              step: "1",
+              title: "Upload Essays",
+              description: "Simply upload student essays via our intuitive interface. Support for multiple formats including Word, PDF, and plain text.",
+              videoUrl: "/videos/upload-demo.mp4",
+            },
+            {
+              step: "2",
+              title: "AI Analysis",
+              description: "Our AI analyzes content, structure, and style in seconds, identifying key strengths and areas for improvement.",
+              videoUrl: "/videos/analysis-demo.mp4"
+            },
+            {
+              step: "3",
+              title: "Detailed Feedback",
+              description: "Receive personalized suggestions and insights for each student, with specific recommendations for improvement.",
+              videoUrl: "/videos/feedback-demo.mp4"
+            }
+          ].map((card, i) => (
+            <motion.div 
+              key={card.step}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.6 }}
+              variants={cardVariants}
+              className="flex flex-col lg:flex-row items-stretch overflow-hidden relative"
+            >
               <div className="w-full lg:w-1/2 bg-[#c8ee46] p-8 lg:p-12 flex flex-col justify-center border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10 transform transition-transform hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
                 <div className="flex flex-col text-left">
                   <div className="absolute top-4 right-4 bg-white rounded-full w-10 h-10 flex items-center justify-center border-2 border-black">
@@ -149,7 +156,15 @@ const EssayFocusSection: React.FC = () => {
         </div>
       </div>
       
-      
-    </section>;
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-10"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+      >
+        <ArrowDown size={24} className="text-black animate-bounce justify-center" />
+      </motion.div>
+    </section>
+  );
 };
 export default EssayFocusSection;

@@ -140,14 +140,53 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             panel.visible = false;
           });
           
+          // Reset all highlights to default opacity
+          essayRef.current.highlights.forEach(highlight => {
+            const material = highlight.material as THREE.MeshBasicMaterial;
+            gsap.to(material, { 
+              opacity: 0.3, 
+              duration: 0.3 
+            });
+            
+            // Reset scale
+            gsap.to(highlight.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+              duration: 0.3
+            });
+          });
+          
           if (featureId) {
             const markerInfo = essayRef.current.annotationMarkers.find(
               marker => marker.feature.id === featureId
             );
             
+            // Find the corresponding highlight and make it stand out
+            essayRef.current.highlights.forEach(highlight => {
+              if ((highlight as any).featureId === featureId) {
+                const material = highlight.material as THREE.MeshBasicMaterial;
+                
+                // Increase opacity for active highlight
+                gsap.to(material, { 
+                  opacity: 0.7, 
+                  duration: 0.3 
+                });
+                
+                // Make highlight slightly larger
+                gsap.to(highlight.scale, {
+                  x: 1.05,
+                  y: 1.2,
+                  z: 1.05,
+                  duration: 0.3
+                });
+              }
+            });
+            
             if (markerInfo) {
               const { feature, markerGroup } = markerInfo;
               
+              // Move camera to focus on the feature
               gsap.to(cameraRef.current?.position, {
                 x: feature.position.x * 0.5,
                 y: feature.position.y * 0.5,

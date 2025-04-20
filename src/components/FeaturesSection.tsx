@@ -60,7 +60,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           size: 24,
         })}
       </div>
-      <h3 className="text-xl font-black mb-3 text-black relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-[3px] after:bg-black">
+      <h3 className="text-xl font-black mb-3 text-black relative after:content-[''] after:absolute after:top-8 after:left-0 after:w-12 after:h-[3px] after:bg-black">
         {title}
       </h3>
       <p className="text-gray-800 font-medium">{description}</p>

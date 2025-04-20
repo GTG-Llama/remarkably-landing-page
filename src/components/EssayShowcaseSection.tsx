@@ -177,7 +177,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
               {feature.id.charAt(0).toUpperCase()}
             </span>
           </div>
-          <h3 className="text-xl font-black mb-3 text-black relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-[3px] after:bg-black">
+          <h3 className="text-xl font-black mb-3 text-black relative">
             {feature.label}
           </h3>
           <p className="text-black leading-relaxed font-medium">
@@ -243,9 +243,7 @@ const EssayShowcaseSection: React.FC = () => {
             setActiveFeature(null);
             handleFeatureHover(null);
           }
-
-          // Don't remove from visible features when leaving the viewport
-          // to maintain opacity once revealed
+          setVisibleFeatures((prev) => prev.filter((id) => id !== feature.id));
         },
         onEnterBack: () => {
           setActiveFeature(feature.id);

@@ -4,6 +4,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { ArrowDown, Share2, Eye } from "lucide-react";
 import * as motion from "motion/react-client";
 import type { Variants } from "motion/react";
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Animation variants
@@ -236,13 +237,13 @@ const EssayFocusSection: React.FC = () => {
               >
                 <div className="w-full h-full bg-black flex items-center justify-center">
                   <video
-                  src={card.videoUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
+                    src={card.videoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </motion.div>

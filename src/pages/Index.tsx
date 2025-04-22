@@ -21,100 +21,129 @@ const Index: React.FC = () => {
 
   useEffect(() => {
     const tl = gsap.timeline({
-      onComplete: () => setIsLoading(false)
+      onComplete: () => setIsLoading(false),
     });
 
     tl.to(".loading-screen", {
       opacity: 0,
       duration: 1,
       ease: "power2.inOut",
-      delay: 0.5
+      delay: 0.5,
     });
 
     const entranceTl = gsap.timeline({ delay: 1 });
-    
+
     entranceTl
-      .from("#main-content", { 
-        opacity: 0, 
-        duration: 1.2, 
-        ease: "power3.out" 
+      .from("#main-content", {
+        opacity: 0,
+        duration: 1.2,
+        ease: "power3.out",
       })
-      .from(".header-anim", { 
-        y: -30, 
-        opacity: 0, 
-        stagger: 0.1, 
-        duration: 0.8,
-        ease: "power3.out" 
-      }, "-=0.8")
-      .from(".hero-anim", { 
-        scale: 0.98, 
-        opacity: 0, 
-        duration: 1,
-        ease: "power3.out" 
-      }, "-=0.6");
+      .from(
+        ".header-anim",
+        {
+          y: -30,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.8"
+      )
+      .from(
+        ".hero-anim",
+        {
+          scale: 0.98,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+        },
+        "-=0.6"
+      );
 
     gsap.utils.toArray('a[href^="#"]').forEach((anchor: any) => {
       anchor.addEventListener("click", (e: Event) => {
         e.preventDefault();
         const targetID = anchor.getAttribute("href");
         const target = document.querySelector(targetID);
-        
+
         if (target) {
           gsap.to(window, {
             duration: 1.2,
             scrollTo: {
               y: target,
-              offsetY: 80
+              offsetY: 80,
             },
-            ease: "power3.inOut"
+            ease: "power3.inOut",
           });
         }
       });
     });
 
-    const sections = gsap.utils.toArray<HTMLElement>('section[id]');
+    const sections = gsap.utils.toArray<HTMLElement>("section[id]");
     sections.forEach((section, i) => {
       if (i < sections.length - 1) {
         const nextSection = sections[i + 1];
-        
+
         ScrollTrigger.create({
           trigger: section,
           start: "top center",
           end: "bottom center",
           onEnter: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#A89165", duration: 0.3 });
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#A89165",
+              duration: 0.3,
+            });
           },
           onLeave: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
-            gsap.to(`.section-indicator-${i+1}`, { backgroundColor: "#A89165", duration: 0.3 });
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#e5e5e5",
+              duration: 0.3,
+            });
+            gsap.to(`.section-indicator-${i + 1}`, {
+              backgroundColor: "#A89165",
+              duration: 0.3,
+            });
           },
           onEnterBack: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#A89165", duration: 0.3 });
-            gsap.to(`.section-indicator-${i+1}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#A89165",
+              duration: 0.3,
+            });
+            gsap.to(`.section-indicator-${i + 1}`, {
+              backgroundColor: "#e5e5e5",
+              duration: 0.3,
+            });
           },
           onLeaveBack: () => {
-            gsap.to(`.section-indicator-${i}`, { backgroundColor: "#e5e5e5", duration: 0.3 });
-          }
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#e5e5e5",
+              duration: 0.3,
+            });
+          },
         });
       }
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   return (
     <div className="relative">
       {isLoading && (
-        <div className="loading-screen fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div className="loading-screen fixed inset-0 bg-indigo-100 z-50 flex items-center justify-center">
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-xl bg-remarkably-gold animate-pulse mb-4 transition-all duration-500">
-              <span className="text-white font-bold text-3xl flex h-full items-center justify-center">
-                R
-              </span>
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-pink-300 border-4 border-black rotate-6"></div>
+              <div className="w-24 h-24 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative z-10 flex items-center justify-center transform -rotate-2">
+                <span className="text-black font-black text-4xl">R</span>
+              </div>
             </div>
-            <p className="text-xl font-medium text-gray-800">Loading experience...</p>
+            <p className="text-xl font-black text-black mt-6 px-6 py-3 bg-yellow-300 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              Loading experience...
+            </p>
           </div>
         </div>
       )}
@@ -129,12 +158,21 @@ const Index: React.FC = () => {
 
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden md:block">
         <div className="flex flex-col items-center gap-3">
-          {["hero-section", "essay-focus", "essay-showcase", "features", "video-showcase", "testimonials"].map((id, index) => (
-            <a 
+          {[
+            "hero-section",
+            "essay-focus",
+            "essay-showcase",
+            "features",
+            "video-showcase",
+            "testimonials",
+          ].map((id, index) => (
+            <a
               key={id}
               href={`#${id}`}
-              className={`section-indicator-${index} w-3 h-3 rounded-full bg-e5e5e5 transition-all duration-300 hover:scale-125`}
-              aria-label={`Navigate to ${id.replace('-', ' ')}`}
+              className={`section-indicator-${index} w-4 h-4 border-2 border-black ${
+                index === 0 ? "bg-black" : "bg-white"
+              } transition-all duration-300 hover:scale-125`}
+              aria-label={`Navigate to ${id.replace("-", " ")}`}
             />
           ))}
         </div>

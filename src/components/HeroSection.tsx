@@ -24,7 +24,7 @@ const HeroSection: React.FC = () => {
     if (sectionRef.current) {
       const createParticle = (x: number, y: number) => {
         const particle = document.createElement('div');
-        particle.className = 'absolute w-2 h-2 rounded-full bg-remarkably-gold/30 pointer-events-none';
+        particle.className = 'absolute w-2 h-2 rounded-full bg-black pointer-events-none';
         particle.style.left = `${x}px`;
         particle.style.top = `${y}px`;
         particle.style.zIndex = '5';
@@ -63,12 +63,12 @@ const HeroSection: React.FC = () => {
   };
   return <section id="hero-section" ref={sectionRef} className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-70">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,145,101,0.15),rgba(255,255,255,0)_70%)]"></div>
       </div>
       
-      <div className="content-container z-10 text-center md:px-8 max-w-10xl hero-anim py-[20px] rounded-md my-0 mx-0 px-0">
-        <h1 ref={headingRef} className="font-playfair text-6xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-slate-950">
+      <div className="content-container z-10 text-center md:px-8 max-w-10xl hero-anim py-[20px] rounded-md my-0 mx-0 px-0 absolute top-[45%] left-0 right-0">
+        <h1 ref={headingRef} className="font-playfair text-2xl md:text-[12rem] tracking-tight relative bg-clip-text bg-gradient-to-b from-black via-black to-remarkably-gold/90 mx-0 py-0 lg:text-[[14rem]] font-bold text-slate-950">
           remarkably.
         </h1>
       </div>

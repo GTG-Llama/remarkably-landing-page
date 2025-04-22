@@ -50,13 +50,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       <div
         className="w-14 h-14 border-2 border-black flex items-center justify-center mb-5 rounded-sm"
         style={{
-          backgroundColor: "black",
+          backgroundColor: "white",
           transform: "rotate(-3deg)",
           boxShadow: "3px 3px 0px 0px rgba(0,0,0,1)",
         }}
       >
         {React.cloneElement(icon as React.ReactElement, {
-          className: "text-white",
+          className: "text-black",
           size: 24,
         })}
       </div>
@@ -161,14 +161,28 @@ const FeaturesSection: React.FC = () => {
       style={{ visibility: "visible", opacity: 1 }}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div ref={headingRef} className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-black mb-4">
-            Helping You Become a Remarkable Teacher
-          </h2>
-          <p className="text-xl text-gray-800">
-            Our AI-powered platform gives you the tools to make a real impact
-            beyond just marking papers.
-          </p>
+        <div 
+          ref={headingRef} 
+          className="text-center max-w-3xl mx-auto mb-20 relative"
+          style={{
+            transform: "rotate(-1deg)",
+          }}
+        >
+          <div className="bg-yellow-300 border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform">
+            <h2 className="text-3xl md:text-5xl font-black mb-6 text-black relative inline-block">
+              Helping You Become a{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">Remarkable</span>
+                <span className="absolute -bottom-2 left-0 w-full h-4 bg-pink-400 -z-0"></span>
+              </span>{" "}
+              Teacher
+            </h2>
+            <p className="text-xl text-gray-800 font-bold mt-4 px-4 py-3 bg-white border-2 border-black">
+              Our AI-powered platform gives you the tools to make a real impact
+              beyond just marking papers.
+            </p>
+            <div className="absolute -top-3 -right-3 w-8 h-8 bg-blue-400 border-2 border-black"></div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -178,16 +192,10 @@ const FeaturesSection: React.FC = () => {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
-              delay={index * 0.1}
+              delay={index * 0.01}
               color={feature.color}
             />
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <button className="bg-black text-white border-4 border-black px-8 py-3 font-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transform transition-all duration-300 hover:-translate-y-1 hover:-translate-x-1">
-            Explore All Features
-          </button>
         </div>
       </div>
     </section>

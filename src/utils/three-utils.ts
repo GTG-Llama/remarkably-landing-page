@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 // Interfaces for essay annotations
 export interface EssayFeature {
@@ -64,40 +65,54 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     lines.push(line);
   }
 
-  // Create a red pen
-  const createRedPen = () => {
-    const penGroup = new THREE.Group();
-    
-    // Pen body
-    const penBodyGeometry = new THREE.CylinderGeometry(0.1, 0.1, 5, 32);
-    const penBodyMaterial = new THREE.MeshStandardMaterial({ 
-      color: 0xFF3B30, // Apple red
-      roughness: 0.3,
-      metalness: 0.7 
-    });
-    const penBody = new THREE.Mesh(penBodyGeometry, penBodyMaterial);
-    penBody.rotation.x = Math.PI / 2;
-    
-    // Pen tip
-    const penTipGeometry = new THREE.ConeGeometry(0.1, 0.3, 32);
-    const penTipMaterial = new THREE.MeshStandardMaterial({ 
-      color: 0x000000, 
-      roughness: 0.3,
-      metalness: 0.7
-    });
-    const penTip = new THREE.Mesh(penTipGeometry, penTipMaterial);
-    penTip.position.set(0, 0, -3);
-    penTip.rotation.x = Math.PI;
-    
-    penGroup.add(penBody);
-    penGroup.add(penTip);
-    penGroup.position.set(6, 0, 0.5); // Position further to the right to avoid clipping
-    penGroup.rotation.z = -Math.PI / 4;
-    
-    return penGroup;
-  };
+  // Create a red pen by loading the GLB model
+  const redPen = new THREE.Group(); // Create an empty group first
+  const gltfLoader = new GLTFLoader();
   
-  const redPen = createRedPen();
+  // Load the pen model asynchronously
+  await new Promise<void>((resolve) => {
+    gltfLoader.load(
+      '/pen.glb',
+      (gltf) => {
+        // Add the loaded model to our pen group
+        redPen.add(gltf.scene);
+        
+        // Set the pen color to red (0xff0000)
+        gltf.scene.traverse((child) => {
+          if (child instanceof THREE.Mesh && child.material) {
+            // If the mesh has a material, set its color to red
+            if (Array.isArray(child.material)) {
+              // Handle multiple materials
+              child.material.forEach(mat => {
+                if (mat.color) {
+                  mat.color.set(0xff0000); // Bright red color
+                }
+              });
+            } else if (child.material.color) {
+              // Handle single material
+              child.material.color.set(0xff0000); // Bright red color
+            }
+          }
+        });
+        
+        // Position and rotate the pen appropriately
+        redPen.position.set(1, 3, 2); // You may need to adjust these values
+        redPen.rotation.z = -0.4;
+        redPen.rotation.x = -4;
+        redPen.scale.set(0.2, 0.2, 0.2); // Adjust scale if necessary
+        
+        resolve();
+      },
+      (progress) => {
+        // Optional: Handle load progress
+        console.log('Loading pen model:', (progress.loaded / progress.total) * 100, '%');
+      },
+      (error) => {
+        console.error('Error loading pen model:', error);
+        resolve(); // Resolve even on error to prevent hanging
+      }
+    );
+  });
   
   // Add highlights to the essay with feature ID mapping
   const createHighlight = (y: number, width: number = 5, color: number = 0xFFD700, featureId: string = "") => {
@@ -105,7 +120,7 @@ export const createEssayModel = async (scene: THREE.Scene) => {
     const highlightMaterial = new THREE.MeshBasicMaterial({ 
       color: color,
       transparent: true,
-      opacity: 0.3
+      opacity: 0.2 // Reduced default opacity to make active state more noticeable
     });
     const highlight = new THREE.Mesh(highlightGeometry, highlightMaterial);
     highlight.position.set(0, y, 0.04);
@@ -216,8 +231,8 @@ export const createEssayModel = async (scene: THREE.Scene) => {
   essayGroup.add(redPen);
   
   // Initial position and rotation - ensure consistent starting position
-  essayGroup.rotation.x = -0.2;
-  essayGroup.position.y = 0;
+  essayGroup.rotation.x = -0.8;
+  essayGroup.position.y = -5;
   essayGroup.position.z = 0; // Ensure a consistent z position
   
   scene.add(essayGroup);
@@ -248,21 +263,15 @@ export const animateEssay = (
   essayGroup.position.y = -progress * 15 + 5;
   
   // Scale essay to create zoom effect
-  const scale = 1 + progress * 2;
+  const scale = 1 + progress;
   essayGroup.scale.set(scale, scale, scale);
-  
-  // Move pen to simulate marking the essay
-  // Keep the pen at a safe distance to avoid clipping
-  redPen.position.y = progress * 10 - 5;
-  redPen.position.x = 6 - progress * 1.5; // Reduced horizontal movement to avoid clipping
-  redPen.position.z = 1; // Keep pen elevated on z-axis
-  redPen.rotation.x = progress * Math.PI * 0.5;
+
 };
 
 // Setup lighting for the scene
 export const setupLighting = (scene: THREE.Scene) => {
   // Ambient light for overall illumination
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
   
   // Main directional light (simulating sunlight)

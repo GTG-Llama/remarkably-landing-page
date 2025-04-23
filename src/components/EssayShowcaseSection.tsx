@@ -10,52 +10,52 @@ gsap.registerPlugin(ScrollTrigger);
 
 const essayFeatures: EssayFeature[] = [
   {
-    id: "thesis",
+    id: "spelling",
     position: {
       x: 3.5,
       y: 3,
       z: 0.1,
     },
     color: 0xffc8dd, // Pastel pink
-    label: "Thesis Check",
+    label: "Spelling",
     description:
-      "Our AI identifies and evaluates the strength of thesis statements, ensuring clarity and argumentative merit.",
+      "We check for spelling errors and suggest corrections to enhance clarity.",
   },
   {
-    id: "evidence",
+    id: "grammar",
     position: {
       x: 2.5,
       y: 1.5,
       z: 0.1,
     },
     color: 0xbde0fe, // Pastel blue
-    label: "Evidence Support",
+    label: "Grammar",
     description:
-      "We analyze supporting evidence for relevance, sufficiency, and logical connection to the main arguments.",
+      "We analyze sentence structure, verb tense, and punctuation to ensure grammatical accuracy.",
   },
   {
-    id: "conclusion",
+    id: "punctuation",
     position: {
       x: 3,
       y: 0,
       z: 0.1,
     },
     color: 0xa2d2ff, // Pastel light blue
-    label: "Conclusion Analysis",
+    label: "Punctuation",
     description:
-      "Get feedback on conclusion effectiveness, including summary quality and closing impact.",
+      "Get feedback on punctuation accuracy, including comma usage and sentence clarity.",
   },
   {
-    id: "citations",
+    id: "Improvements",
     position: {
       x: 2,
       y: -1.5,
       z: 0.1,
     },
     color: 0xcdb4db, // Pastel purple
-    label: "Citation Verification",
+    label: "Suggestions for Improvement",
     description:
-      "Automatically check citation formatting across multiple standards (MLA, APA, Chicago) and ensure proper attribution.",
+      "We provide suggestions for improving clarity, coherence, and overall quality.",
   },
   {
     id: "grammar",
@@ -164,7 +164,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           }}
         >
           <div
-            className="w-14 h-14 flex items-center justify-center mb-4 mx-auto border-3 border-black transform rotate-12"
+            className="w-14 h-14 flex items-center justify-center mb-4 mx-auto border-3 border-black transform rotate-3"
             style={{
               backgroundColor: "#FFFFFF",
               boxShadow: "3px 3px 0px 0px rgba(0,0,0,1)",

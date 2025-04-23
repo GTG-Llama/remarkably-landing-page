@@ -1,7 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { ArrowDown, Share2, Eye } from "lucide-react";
+import { ArrowDown } from "lucide-react";
+import {
+  FaFilePdf,
+  FaFileWord,
+  FaRobot,
+  FaBrain,
+  FaChartLine,
+  FaCommentAlt,
+  FaLightbulb,
+  FaClipboardCheck,
+} from "react-icons/fa";
+import { IoText } from "react-icons/io5";
+import { CiTextAlignLeft } from "react-icons/ci";
 import * as motion from "motion/react-client";
 import type { Variants } from "motion/react";
 
@@ -39,6 +51,15 @@ const cardVariants: Variants = {
   }),
 };
 
+// Debounce utility function
+const debounce = (fn: Function, ms = 100) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+  return function (...args: any[]) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  };
+};
+
 const EssayFocusSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -46,6 +67,31 @@ const EssayFocusSection: React.FC = () => {
   const featureCardsRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
+  const triggerRefs = useRef<ScrollTrigger[]>([]);
+  const cardVisibility = useRef<boolean[]>([]);
+
+  // Debounced version of setActiveCardIndex to prevent rapid state changes
+  const debouncedSetActiveCard = useCallback(
+    debounce((index: number | null) => {
+      setActiveCardIndex(index);
+    }, 50),
+    []
+  );
+
+  // Function to determine the most visible card
+  const updateActiveCard = useCallback(() => {
+    // If no cards are visible, set activeCardIndex to null
+    if (!cardVisibility.current.some((visible) => visible)) {
+      debouncedSetActiveCard(null);
+      return;
+    }
+
+    // Find the index of the visible card
+    const visibleCardIndex = cardVisibility.current.findIndex(
+      (visible) => visible
+    );
+    debouncedSetActiveCard(visibleCardIndex);
+  }, [debouncedSetActiveCard]);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -58,32 +104,37 @@ const EssayFocusSection: React.FC = () => {
     });
     document.dispatchEvent(essayTransitionEvent);
 
+    // Initialize card visibility array
+    cardVisibility.current = Array(cardRefs.current.length).fill(false);
+
     // Create individual scroll triggers for each card
     cardRefs.current.forEach((card, index) => {
       if (!card) return;
 
       const trigger = ScrollTrigger.create({
         trigger: card,
-        start: "top center",
-        end: "bottom center",
+        start: "top center+=100", // Adjusted to give more space before triggering
+        end: "bottom center-=100", // Adjusted to give more space before ending
         onEnter: () => {
-          setActiveCardIndex(index);
+          cardVisibility.current[index] = true;
+          updateActiveCard();
         },
         onLeave: () => {
-          if (activeCardIndex === index) {
-            setActiveCardIndex(null);
-          }
+          cardVisibility.current[index] = false;
+          updateActiveCard();
         },
         onEnterBack: () => {
-          setActiveCardIndex(index);
+          cardVisibility.current[index] = true;
+          updateActiveCard();
         },
         onLeaveBack: () => {
-          if (activeCardIndex === index) {
-            setActiveCardIndex(null);
-          }
+          cardVisibility.current[index] = false;
+          updateActiveCard();
         },
         markers: false, // Set to true for debugging
       });
+
+      triggerRefs.current.push(trigger);
     });
 
     // Cleanup on component unmount
@@ -95,20 +146,13 @@ const EssayFocusSection: React.FC = () => {
       });
       document.dispatchEvent(resetEvent);
 
-      ScrollTrigger.getAll().forEach((trigger) => {
-        // Check if the trigger references our section or any of our cards
-        const triggerElement = trigger.vars.trigger;
-        const isOurSection = triggerElement === sectionRef.current;
-        const isOurCard = cardRefs.current.some(
-          (cardRef) => cardRef && triggerElement === cardRef
-        );
-
-        if (isOurSection || isOurCard) {
-          trigger.kill();
-        }
+      // Kill all our scroll triggers
+      triggerRefs.current.forEach((trigger) => {
+        trigger.kill();
       });
+      triggerRefs.current = [];
     };
-  }, [activeCardIndex]);
+  }, [updateActiveCard]);
 
   const cards = [
     {
@@ -116,24 +160,39 @@ const EssayFocusSection: React.FC = () => {
       title: "Upload Essays",
       description:
         "Simply upload student essays via our intuitive interface. Support for multiple formats including Word, PDF, and plain text.",
-      videoUrl: "/lenordemo1.mp4",
+      videoUrl: "/lenordemo1-2.mp4",
       color: "bg-[#FFC8DD]", // Pink
+      icons: [
+        { icon: FaFileWord, label: "Word documents" },
+        { icon: FaFilePdf, label: "PDF files" },
+        { icon: IoText, label: "Plain text" },
+      ],
     },
     {
       step: "2",
       title: "AI Analysis",
       description:
         "Our AI analyzes content, structure, and style in seconds, identifying key strengths and areas for improvement.",
-      videoUrl: "/videos/analysis-demo.mp4",
+      videoUrl: "/lenordemo2.mp4",
       color: "bg-[#BDE0FE]", // Blue
+      icons: [
+        { icon: FaRobot, label: "AI processing" },
+        { icon: FaBrain, label: "Smart analysis" },
+        { icon: FaChartLine, label: "Performance metrics" },
+      ],
     },
     {
       step: "3",
       title: "Detailed Feedback",
       description:
         "Receive personalized suggestions and insights for each student, with specific recommendations for improvement.",
-      videoUrl: "/videos/feedback-demo.mp4",
+      videoUrl: "/lenordemo3-3.mp4",
       color: "bg-[#CDB4DB]", // Purple
+      icons: [
+        { icon: FaCommentAlt, label: "Personalized comments" },
+        { icon: FaLightbulb, label: "Improvement suggestions" },
+        { icon: FaClipboardCheck, label: "Assessment checklist" },
+      ],
     },
   ];
 
@@ -201,7 +260,7 @@ const EssayFocusSection: React.FC = () => {
                 } p-8 lg:p-12 flex flex-col justify-center border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10 transform transition-all duration-300 ${
                   activeCardIndex === i
                     ? "translate-x-[-3px] translate-y-[-3px] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
-                    : ""
+                    : "shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                 } ${i % 2 === 0 ? "rotate-1" : "-rotate-1"}`}
               >
                 <div className="flex flex-col text-left">
@@ -216,14 +275,16 @@ const EssayFocusSection: React.FC = () => {
                   <p className="text-black font-bold text-lg mb-8 bg-white border-2 border-black p-4 -rotate-1">
                     {card.description}
                   </p>
-
                   <div className="flex space-x-3 mt-auto">
-                    <button className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all">
-                      <Share2 size={20} className="text-black" />
-                    </button>
-                    <button className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all">
-                      <Eye size={20} className="text-black" />
-                    </button>
+                    {card.icons.map((iconItem, iconIndex) => (
+                      <button
+                        key={iconIndex}
+                        className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all"
+                        title={iconItem.label}
+                      >
+                        <iconItem.icon size={20} className="text-black" />
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -232,10 +293,10 @@ const EssayFocusSection: React.FC = () => {
                 className={`w-full lg:w-1/2 bg-white border-4 border-black p-6 flex items-center justify-center lg:ml-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-0 transform transition-all duration-300 ${
                   activeCardIndex === i
                     ? "translate-x-[-3px] translate-y-[-3px] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
-                    : ""
-                  } ${i % 2 === 0 ? "-rotate-4" : "rotate-4"} overflow-hidden`}
+                    : "shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+                } ${i % 2 === 0 ? "-rotate-1" : "rotate-1"} overflow-hidden`}
               >
-                <div className="w-full h-full bg-black flex items-center justify-center">
+                <div className="w-full h-full relative">
                   <video
                     src={card.videoUrl}
                     autoPlay
@@ -250,17 +311,6 @@ const EssayFocusSection: React.FC = () => {
           ))}
         </div>
       </div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-10"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-      >
-        <button className="bg-white border-2 border-black p-3 rounded-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1 hover:-translate-x-1">
-          <ArrowDown size={24} className="text-black animate-bounce" />
-        </button>
-      </motion.div>
     </section>
   );
 };

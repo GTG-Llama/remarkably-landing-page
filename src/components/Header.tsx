@@ -66,7 +66,7 @@ const Navbar = () => {
           >
             Testimonials
           </a>
-          <button className="bg-cyan-300 text-black text-base font-black px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform transition-all hover:-translate-y-1 hover:-translate-x-1">
+          <button className="bg-yellow-300 text-black text-base font-black px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform transition-all hover:-translate-y-1 hover:-translate-x-1">
             Contact Us!
           </button>
         </nav>

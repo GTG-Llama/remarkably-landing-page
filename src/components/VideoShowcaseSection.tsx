@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { Play } from "lucide-react";
+import { IoPlay } from "react-icons/io5";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,7 +87,7 @@ const VideoShowcaseSection: React.FC = () => {
                   className="z-10 w-20 h-20 bg-white border-3 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:bg-yellow-300 transition-all hover:-translate-y-1 hover:-translate-x-1"
                   aria-label="Play video"
                 >
-                  <Play size={32} className="ml-1 text-black" />
+                  <IoPlay size={32} className="text-black" />
                 </button>
               </div>
             </div>
@@ -98,8 +98,8 @@ const VideoShowcaseSection: React.FC = () => {
                 <video
                   src="/remarkably.mp4"
                   autoPlay
-                  controls
                   loop
+                  playsInline
                   className="w-full h-full"
                 />
               </div>

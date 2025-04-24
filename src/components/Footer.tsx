@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       <div className="absolute right-1/4 top-12 w-16 h-16 bg-yellow-300 border-4 border-black rotate-12"></div>
 
       <div className="container mx-auto px-4 md:px-2 relative">
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-8 mb-12">
           <div className="relative">
             <div className="bg-white border-4 border-black p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mb-6 transform rotate-1">
               <div className="flex items-center mb-4">
@@ -32,74 +32,27 @@ const Footer: React.FC = () => {
                 and provide better feedback.
               </p>
               <div className="flex space-x-3 flex-wrap">
-                {[Facebook, Twitter, Instagram, Linkedin, Youtube].map(
-                  (Icon, i) => (
-                    <a
-                      key={i}
-                      href="#"
-                      className="bg-[#FFAFCC] border-2 border-black p-2 hover:bg-yellow-300 hover:-translate-y-1 transform transition-all flex items-center justify-center"
-                      aria-label={Icon.name}
-                    >
-                      <Icon size={18} />
-                    </a>
-                  )
-                )}
+                {[Linkedin, Youtube].map((Icon, i) => (
+                  <a
+                    key={i}
+                    href={
+                      Icon === Linkedin
+                        ? "https://www.linkedin.com/company/lenor-eduai"
+                        : "https://www.youtube.com/@Lenor-AI"
+                    }
+                    className="bg-[#FFAFCC] border-2 border-black p-2 hover:bg-yellow-300 hover:-translate-y-1 transform transition-all flex items-center justify-center"
+                    aria-label={Icon.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon size={18} />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
 
-          <div>
-            <div className="border-3 border-black bg-[#BDE0FE] p-5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
-              <h3 className="text-lg font-black mb-4 relative inline-block">
-                Product
-                <span className="absolute -bottom-1 left-0 w-full h-2 bg-yellow-300 -z-0"></span>
-              </h3>
-              <ul className="space-y-3">
-                <li>
-                  <a
-                    href="#"
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    Case Studies
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    Testimonials
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    Demo
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          
+        
 
           <div>
             <div className="border-3 border-black bg-[#B8F7D4] p-5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
@@ -138,27 +91,26 @@ const Footer: React.FC = () => {
         <div className="border-t-4 border-black pt-8 mt-12">
           <div className="border- border-black p-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]p-4 flex flex-col md:flex-row justify-between items-center">
             <p className="text-black font-bold mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()}{" "}
-              Lenor. All rights reserved.
+              &copy; {new Date().getFullYear()} Lenor. All rights reserved.
             </p>
             <div className="flex flex-wrap gap-4">
               <a
                 href="#"
                 className="text-black font-bold hover:underline decoration-2 underline-offset-4"
               >
-                Terms of Service
+                
               </a>
               <a
                 href="#"
                 className="text-black font-bold hover:underline decoration-2 underline-offset-4"
               >
-                Privacy Policy
+                
               </a>
               <a
                 href="#"
                 className="text-black font-bold hover:underline decoration-2 underline-offset-4"
               >
-                Cookies
+                
               </a>
             </div>
           </div>

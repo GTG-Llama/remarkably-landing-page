@@ -57,7 +57,9 @@ const CTASection: React.FC = () => {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <button className="bg-black text-white text-lg font-black px-8 py-4 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all duration-300 hover:-translate-y-1 hover:-translate-x-1 flex items-center gap-2">
-                    <span>Schedule A Consult</span>
+                    <a href="mailto:contact@lenorai.com">
+                      Schedule a Consult
+                    </a>
                     <ArrowRight size={18} />
                   </button>
                   <button className="bg-pink-300 text-black text-lg font-black px-8 py-4 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all duration-300 hover:-translate-y-1 hover:-translate-x-1">

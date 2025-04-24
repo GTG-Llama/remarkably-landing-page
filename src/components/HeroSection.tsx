@@ -63,7 +63,7 @@ const HeroSection: React.FC = () => {
   };
   return <section id="hero-section" ref={sectionRef} className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white opacity-40">
+      <div className="absolute inset-0 bg-black opacity-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(168,145,101,0.15),rgba(255,255,255,0)_70%)]"></div>
       </div>
       

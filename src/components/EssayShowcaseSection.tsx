@@ -40,7 +40,7 @@ const essayFeatures: EssayFeature[] = [
       y: 0,
       z: 0.1,
     },
-    color: 0xa2d2ff, // Pastel light blue
+    color: 0xfffc30, // yellow
     label: "Punctuation",
     description:
       "Get feedback on punctuation accuracy, including comma usage and sentence clarity.",
@@ -52,40 +52,13 @@ const essayFeatures: EssayFeature[] = [
       y: -1.5,
       z: 0.1,
     },
-    color: 0xcdb4db, // Pastel purple
+    color: 0x2ee84a, // Green
     label: "Suggestions for Improvement",
     description:
       "We provide suggestions for improving clarity, coherence, and overall quality.",
   },
-  {
-    id: "grammar",
-    position: {
-      x: 2.8,
-      y: -3,
-      z: 0.1,
-    },
-    color: 0xb8f7d4, // Pastel green
-    label: "Grammar Check",
-    description:
-      "Advanced grammatical analysis identifies errors and suggests improvements beyond what basic spell-checkers can find.",
-  },
 ];
 
-const cardVariants: Variants = {
-  offscreen: {
-    y: 100,
-    opacity: 0,
-  },
-  onscreen: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0.4,
-      duration: 0.8,
-    },
-  },
-};
 
 interface FeatureCardProps {
   feature: EssayFeature;
@@ -144,14 +117,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     >
       <div className="relative">
         {isActive && (
-          <div
-            className="absolute top-1/2 right-full h-[3px] z-0"
-            style={{
-              background: `linear-gradient(to left, ${colorHex}, transparent)`,
-              width: "1000px",
-              transform: "translateY(-50%)",
-            }}
-          />
+          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
         )}
         <div
           ref={cardRef}

@@ -9,6 +9,7 @@ import {
   createFeatureInfoPanel,
   toggleFeatureInfo,
   EssayFeature,
+  setupCameraLayers,
 } from "@/utils/three-utils";
 
 // Register the ScrollTrigger plugin
@@ -62,6 +63,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       );
       camera.position.z = 15;
       cameraRef.current = camera;
+      setupCameraLayers(camera);
 
       const renderer = new THREE.WebGLRenderer({
         canvas: canvasRef.current!,
@@ -150,6 +152,8 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       const handleFeatureFocus = (event: Event) => {
         const customEvent = event as CustomEvent;
         const featureId = customEvent.detail.featureId;
+        // Prevent repeated animation if featureId hasn't changed
+        if (activeFeatureRef.current === featureId) return;
         activeFeatureRef.current = featureId;
 
         if (essayRef.current && isEssayShowcaseActive.current) {
@@ -186,7 +190,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
 
                 // Increase opacity for active highlight
                 gsap.to(material, {
-                  opacity: 0.85,
+                  opacity: 0.55,
                   duration: 0.3,
                 });
 
@@ -203,17 +207,22 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             if (markerInfo) {
               const { feature, markerGroup } = markerInfo;
 
-              // Move camera to focus on the feature
+              // Move camera to focus on the feature on the LEFT-positioned essay
               gsap.to(cameraRef.current?.position, {
-                x: feature.position.x * 0.5,
-                y: feature.position.y * 0.5,
-                z: 7,
+                // Adjust X based on essay's new base position (-3) and feature offset
+                x: -3 + feature.position.x * 0.4,
+                // Adjust Y based on feature offset
+                y: feature.position.y * 0.4,
+                // Zoom in slightly, but less than before
+                z: 10,
                 duration: 0.8,
                 ease: "power2.inOut",
               });
 
+              // Rotate essay slightly to face the camera based on feature
               gsap.to(essayRef.current.essayGroup.rotation, {
-                y: 0.2,
+                // Adjust base Y rotation and add feature-specific rotation
+                y: -0.1 + feature.position.x * 0.05,
                 duration: 0.8,
                 ease: "power2.inOut",
               });
@@ -237,16 +246,19 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
               }
             }
           } else {
+            // Reset camera to the general showcase view (essay on the left)
             gsap.to(cameraRef.current?.position, {
-              x: 0,
+              x: -1, // Camera slightly left to frame the left-shifted essay
               y: 0,
-              z: 10,
+              z: 14, // Further back to see the smaller essay
               duration: 0.8,
               ease: "power2.inOut",
             });
 
             gsap.to(essayRef.current.essayGroup.rotation, {
-              y: 0,
+              x: 0, // Keep x rotation reset
+              y: -0.1, // Default rotation for showcase view
+              z: 0, // Keep z rotation reset
               duration: 0.8,
               ease: "power2.inOut",
             });
@@ -332,41 +344,45 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
       if (essayShowcaseSection) {
         ScrollTrigger.create({
           trigger: essayShowcaseSection,
-          start: "top bottom",
+          start: "top bottom", // Trigger earlier
           end: "bottom top",
           onEnter: () => {
             isEssayShowcaseActive.current = true;
             isEssayFocusActive.current = false;
 
             if (essayRef.current && cameraRef.current) {
+              // Move essay to the LEFT for showcase view
               gsap.to(essayRef.current.essayGroup.position, {
-                x: 0,
+                x: -4, // Shift left
                 y: 0,
                 z: 0,
                 duration: 1,
                 ease: "power2.inOut",
               });
 
+              // Reset rotation, maybe slight turn towards cards
               gsap.to(essayRef.current.essayGroup.rotation, {
                 x: 0,
-                y: 0,
+                y: -0.1, // Slight turn
                 z: 0,
                 duration: 1,
                 ease: "power2.inOut",
               });
 
+              // Scale DOWN essay for showcase view
               gsap.to(essayRef.current.essayGroup.scale, {
-                x: 1.2,
-                y: 1.2,
-                z: 1.2,
+                x: 0.9, // Smaller scale
+                y: 0.9,
+                z: 0.9,
                 duration: 1,
                 ease: "power2.inOut",
               });
 
+              // Position camera to view the left-positioned, smaller essay
               gsap.to(cameraRef.current.position, {
-                x: 0,
+                x: -1, // Camera slightly left
                 y: 0,
-                z: 10,
+                z: 14, // Move camera further back
                 duration: 1,
                 ease: "power2.inOut",
               });
@@ -381,6 +397,82 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
           },
           onLeaveBack: () => {
             isEssayShowcaseActive.current = false;
+          },
+        });
+      }
+
+      // Add camera transition for Features section
+      const featuresSection = document.getElementById("features");
+      if (featuresSection) {
+        ScrollTrigger.create({
+          trigger: featuresSection,
+          start: "top center",
+          end: "bottom top",
+          onEnter: () => {
+            if (essayRef.current && cameraRef.current) {
+              // Move camera into the essay for a transition effect
+              gsap.to(cameraRef.current.position, {
+                x: 0,
+                y: 0,
+                z: 3, // Move camera close to the essay
+                duration: 1.2,
+              });
+              gsap.to(essayRef.current.essayGroup.rotation, {
+                x: 0.1, // Slight tilt for drama
+                y: 0,
+                z: 0,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+              gsap.to(essayRef.current.essayGroup.scale, {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+              gsap.to(essayRef.current.redPen.scale, {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+            
+            }
+          },
+          onLeaveBack: () => {
+            // Reset camera and essay to previous state
+            if (essayRef.current && cameraRef.current && initialPositionRef.current) {
+              gsap.to(cameraRef.current.position, {
+                x: initialPositionRef.current.camera.x,
+                y: initialPositionRef.current.camera.y,
+                z: initialPositionRef.current.camera.z,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+              gsap.to(essayRef.current.essayGroup.rotation, {
+                x: initialPositionRef.current.essay.rotation.x,
+                y: initialPositionRef.current.essay.rotation.y,
+                z: initialPositionRef.current.essay.rotation.z,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+              gsap.to(essayRef.current.essayGroup.scale, {
+                x: initialPositionRef.current.essay.scale.x,
+                y: initialPositionRef.current.essay.scale.y,
+                z: initialPositionRef.current.essay.scale.z,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+              gsap.to(essayRef.current.redPen.scale, {
+                x: 0.15,
+                y: 0.15,
+                z: 0.15,
+                duration: 1.2,
+                ease: "power2.inOut",
+              });
+            }
           },
         });
       }

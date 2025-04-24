@@ -264,8 +264,8 @@ const EssayFocusSection: React.FC = () => {
                 } ${i % 2 === 0 ? "rotate-1" : "-rotate-1"}`}
               >
                 <div className="flex flex-col text-left">
-                  <div className="absolute top-4 right-4 bg-white w-12 h-12 flex items-center justify-center border-3 border-black transform rotate-12">
-                    <span className="font-black text-black text-xl">
+                  <div className="absolute top-4 right-4 bg-white w-12 h-12 flex items-center justify-center border-3 border-black transform rotate-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    <span className="font-black text-black text-xl ">
                       {card.step}
                     </span>
                   </div>

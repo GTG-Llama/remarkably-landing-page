@@ -97,6 +97,7 @@ const VideoShowcaseSection: React.FC = () => {
               <div className="w-full h-full bg-black flex items-center justify-center">
                 <video
                   src="/remarkably.mp4"
+                  controls
                   autoPlay
                   loop
                   playsInline

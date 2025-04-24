@@ -137,12 +137,16 @@ const Index: React.FC = () => {
           <div className="flex flex-col items-center">
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-pink-300 border-4 border-black rotate-6"></div>
-              <div className="w-24 h-24 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative z-10 flex items-center justify-center transform -rotate-2">
-                <span className="text-black font-black text-4xl">R</span>
+              <div className="w-48 h-16 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative z-10 flex items-center justify-center transform -rotate-2">
+                <img
+                  src="/remarkably logo black.png"
+                  alt="Logo"
+                  className="w-144 h-40 object-contain px-2"
+                />
               </div>
             </div>
             <p className="text-xl font-black text-black mt-6 px-6 py-3 bg-yellow-300 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              Loading experience...
+              Marking your essay...
             </p>
           </div>
         </div>

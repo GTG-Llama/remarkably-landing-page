@@ -42,32 +42,42 @@ const Navbar = () => {
                 : "bg-white border-2 border-black p-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transform rotate-1"
             }`}
           >
-            <img src="/remarkably logo black.png" alt="Logo" className="w-42 h-10" />
+            <img
+              src="/remarkably logo black.png"
+              alt="Logo"
+              className="w-42 h-10"
+            />
           </div>
         </div>
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-6">
           <a
-            href="#features"
+            href="#essay-focus"
             className="text-black font-bold hover:underline decoration-4 decoration-pink-400 transition-all"
+          >
+            Demo
+          </a>
+          <a
+            href="#essay-showcase"
+            className="text-black font-bold hover:underline decoration-4 decoration-blue-400 transition-all"
           >
             Features
           </a>
           <a
-            href="#benefits"
-            className="text-black font-bold hover:underline decoration-4 decoration-blue-400 transition-all"
+            href="#features"
+            className="text-black font-bold hover:underline decoration-4 decoration-yellow-400 transition-all"
           >
             Benefits
           </a>
           <a
             href="#testimonials"
-            className="text-black font-bold hover:underline decoration-4 decoration-yellow-400 transition-all"
+            className="text-black font-bold hover:underline decoration-4 decoration-green-400 transition-all"
           >
             Testimonials
           </a>
           <button className="bg-yellow-300 text-black text-base font-black px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform transition-all hover:-translate-y-1 hover:-translate-x-1">
-            Contact Us!
+            <a href="mailto:contact@lenorai.com">Contact Us!</a>
           </button>
         </nav>
 
@@ -89,15 +99,22 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-3 border-t-0 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] absolute top-full left-4 right-4 animate-fade-in">
           <div className="py-6 px-4 flex flex-col space-y-4">
             <a
-              href="#features"
-              className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-200 transition-all p-2"
+              href="#essay-focus"
+              className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-pink-200 transition-all p-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Demo
+            </a>
+            <a
+              href="#essay-showcase"
+              className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-blue-200 transition-all p-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Features
             </a>
             <a
-              href="#benefits"
-              className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-pink-200 transition-all p-2"
+              href="#features"
+              className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-200 transition-all p-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Benefits
@@ -110,10 +127,12 @@ const Navbar = () => {
               Testimonials
             </a>
             <button
-              className="bg-black text-white text-base font-black px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform transition-all hover:-translate-y-1 hover:-translate-x-1 w-full mt-4"
+              className="bg-yellow-300 text-black text-base font-black px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform transition-all hover:-translate-y-1 hover:-translate-x-1 w-full mt-4"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Start Free Trial
+              <a href="mailto:contact@lenorai.com" className="block w-full">
+                Contact Us!
+              </a>
             </button>
           </div>
         </div>

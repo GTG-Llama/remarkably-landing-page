@@ -114,7 +114,7 @@ const FeaturesSection: React.FC = () => {
       icon: <Clock />,
       title: "5x Faster Grading",
       description:
-        "Free up hours each week by automating repetitive marking tasks.",
+        "Free up teachers time to do what’s most meaningful, to teach and connect with students.",
       color: "bg-[#FFC8DD]", // Pastel pink
     },
     {
@@ -147,8 +147,8 @@ const FeaturesSection: React.FC = () => {
     },
     {
       icon: <FileCheck />,
-      title: "Enhanced Learning Outcomes",
-      description: "Faster feedback means students can improve faster too.",
+      title: "Enhanced Understanding",
+      description: "Help teachers understand their students better - keep track of every students strength and weakness and how they can improve.",
       color: "bg-[#B8F7D4]", // Pastel green
     },
   ];

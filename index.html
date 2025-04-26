@@ -4,8 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>remarkably-landing-page</title>
-
+    
+    <!-- Security and HTTPS-related meta tags -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    
+    <!-- Open Graph tags -->
     <meta property="og:title" content="remarkably-landing-page" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.remarkably.ink" /> <!-- Replace with your actual domain -->
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Ensure all resources load securely -->
+    <base href="/">
   </head>
 
   <body>
@@ -14,4 +29,3 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-`

@@ -178,7 +178,7 @@ const TestimonialsSection: React.FC = () => {
     <section
       id="testimonials"
       ref={sectionRef}
-      className="section-padding bg-indigo-200 relative overflow-hidden py-20"
+      className="section-padding bg-gradient-to-b from-indigo-300 to-indigo-400 relative overflow-hidden py-20"
     >
       <div className="container mx-auto px-4 md:px-6">
         <div

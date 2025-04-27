@@ -157,7 +157,7 @@ const FeaturesSection: React.FC = () => {
     <section
       id="features"
       ref={sectionRef}
-      className="section-padding relative overflow-hidden mt-20 z-10 bg-indigo-300 bg-opacity-50"
+      className="section-padding relative overflow-hidden mt-20 z-10 bg-gradient-to-b from-white to-indigo-200"
       style={{ visibility: "visible", opacity: 1 }}
     >
       <div className="container mx-auto px-4 md:px-6">

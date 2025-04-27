@@ -28,7 +28,7 @@ const CTASection: React.FC = () => {
     <section
       id="cta"
       ref={sectionRef}
-      className="py-24 relative overflow-hidden bg-indigo-300 bg-opacity-90"
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-900 bg-opacity-90"
     >
       {/* Decorative elements */}
       <div className="absolute top-12 left-1/4 w-24 h-24 bg-cyan-300 border-4 border-black rotate-12 z-0"></div>

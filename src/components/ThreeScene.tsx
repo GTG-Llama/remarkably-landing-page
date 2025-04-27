@@ -100,27 +100,47 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
         });
       }
 
-      // Initial animation with neobrutalism style
-      gsap.fromTo(
-        essayModel.essayGroup.rotation,
-        { y: Math.PI * 2 },
-        {
-          y: initialPositionRef.current.essay.rotation.y,
-          duration: 1.5,
-          ease: "power2.out",
-        }
-      );
-
-      gsap.fromTo(
-        essayModel.essayGroup.position,
-        { z: -20 },
-        {
+      essayModel.essayGroup.scale.set(0.85, 0.85, 0.85);
+      essayModel.essayGroup.rotation.x = -0.25;
+      essayModel.essayGroup.rotation.z = 0.08;
+      essayModel.essayGroup.position.z = -20;
+      essayModel.essayGroup.visible = false;
+      setTimeout(() => {
+        essayModel.essayGroup.visible = true;
+        gsap.to(essayModel.essayGroup.position, {
           z: initialPositionRef.current.essay.position.z,
-          duration: 1.5,
-          ease: "power2.out",
-        }
-      );
+          duration: 1.4,
+          ease: "elastic.out(1, 0.7)",
+        });
+        gsap.to(essayModel.essayGroup.scale, {
+          x: initialPositionRef.current.essay.scale.x,
+          y: initialPositionRef.current.essay.scale.y,
+          z: initialPositionRef.current.essay.scale.z,
+          duration: 1.2,
+          ease: "back.out(1.7)",
+        });
+        gsap.to(essayModel.essayGroup.rotation, {
+          x:
+            initialPositionRef.current.essay.rotation.x +
+            0.04 * (Math.random() - 0.5),
+          y:
+            initialPositionRef.current.essay.rotation.y +
+            0.04 * (Math.random() - 0.5),
+          z:
+            initialPositionRef.current.essay.rotation.z +
+            0.04 * (Math.random() - 0.5),
+          duration: 1.2,
+          ease: "back.out(1.7)",
+        });
+        gsap.fromTo(
+          essayModel.essayGroup,
+          { opacity: 0 },
+          { opacity: 1, duration: 1, ease: "power1.out" }
+        );
+      }, 100);
 
+      // Update all major transitions to use elastic/back easing
+      // Focus transition
       const handleEssayTransition = (event: Event) => {
         const customEvent = event as CustomEvent;
         isEssayFocusActive.current = customEvent.detail.active;
@@ -134,7 +154,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             x: 0,
             y: 0,
             duration: 1,
-            ease: "power2.inOut",
+            ease: "back.out(1.7)",
           });
 
           gsap.to(essayRef.current.essayGroup.position, {
@@ -142,7 +162,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
             y: 0,
             z: 0,
             duration: 1,
-            ease: "power2.inOut",
+            ease: "back.out(1.7)",
           });
         }
       };
@@ -356,8 +376,8 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 x: -4, // Shift left
                 y: 0,
                 z: 0,
-                duration: 1,
-                ease: "power2.inOut",
+                duration: 1.1,
+                ease: "elastic.out(1, 0.7)",
               });
 
               // Reset rotation, maybe slight turn towards cards
@@ -365,8 +385,8 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 x: 0,
                 y: -0.1, // Slight turn
                 z: 0,
-                duration: 1,
-                ease: "power2.inOut",
+                duration: 1.1,
+                ease: "elastic.out(1, 0.7)",
               });
 
               // Scale DOWN essay for showcase view
@@ -374,8 +394,8 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 x: 0.9, // Smaller scale
                 y: 0.9,
                 z: 0.9,
-                duration: 1,
-                ease: "power2.inOut",
+                duration: 1.1,
+                ease: "elastic.out(1, 0.7)",
               });
 
               // Position camera to view the left-positioned, smaller essay
@@ -383,7 +403,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 x: -1, // Camera slightly left
                 y: 0,
                 z: 14, // Move camera further back
-                duration: 1,
+                duration: 1.1,
                 ease: "power2.inOut",
               });
             }
@@ -438,12 +458,15 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ scrollContainer }) => {
                 duration: 1.2,
                 ease: "power2.inOut",
               });
-            
             }
           },
           onLeaveBack: () => {
             // Reset camera and essay to previous state
-            if (essayRef.current && cameraRef.current && initialPositionRef.current) {
+            if (
+              essayRef.current &&
+              cameraRef.current &&
+              initialPositionRef.current
+            ) {
               gsap.to(cameraRef.current.position, {
                 x: initialPositionRef.current.camera.x,
                 y: initialPositionRef.current.camera.y,

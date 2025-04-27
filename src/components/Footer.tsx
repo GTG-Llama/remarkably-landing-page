@@ -11,7 +11,7 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-indigo-300 pb-8 pt-20 relative">
+    <footer className="bg-gradient-to-b from-indigo-900 to-white pb-8 pt-20 relative">
       {/* Decorative elements */}
       <div className="absolute top-14 left-1/4 w-24 h-24 bg-pink-300 border-4 border-black -rotate-6"></div>
       <div className="absolute right-1/4 top-13 w-16 h-16 bg-yellow-300 border-4 border-black rotate-12"></div>

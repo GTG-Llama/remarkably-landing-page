@@ -230,3 +230,10 @@ html {
   background-color: #FDFD96;
   z-index: -1;
 }
+
+@keyframes carousel-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-supported-carousel { will-change: transform; }
+

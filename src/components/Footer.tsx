@@ -11,15 +11,15 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-indigo-100  pb-8 relative">
+    <footer className="bg-indigo-300 pb-8 pt-20 relative">
       {/* Decorative elements */}
-      <div className="absolute top-0 left-1/4 w-24 h-24 bg-pink-300 border-4 border-black -rotate-6"></div>
-      <div className="absolute right-1/4 top-12 w-16 h-16 bg-yellow-300 border-4 border-black rotate-12"></div>
+      <div className="absolute top-14 left-1/4 w-24 h-24 bg-pink-300 border-4 border-black -rotate-6"></div>
+      <div className="absolute right-1/4 top-13 w-16 h-16 bg-yellow-300 border-4 border-black rotate-12"></div>
 
       <div className="container mx-auto px-4 md:px-2 relative">
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
           <div className="relative">
-            <div className="bg-white border-4 border-black p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mb-6 transform rotate-1">
+            <div className="bg-white border-4 border-black p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mb-8">
               <div className="flex items-center mb-4">
                 <img
                   src="/remarkably logo black.png"
@@ -32,30 +32,21 @@ const Footer: React.FC = () => {
                 and provide better feedback.
               </p>
               <div className="flex space-x-3 flex-wrap">
-                {[Linkedin, Youtube].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href={
-                      Icon === Linkedin
-                        ? "https://www.linkedin.com/company/lenor-eduai"
-                        : "https://www.youtube.com/@Lenor-AI"
-                    }
-                    className="bg-[#FFAFCC] border-2 border-black p-2 hover:bg-yellow-300 hover:-translate-y-1 transform transition-all flex items-center justify-center"
-                    aria-label={Icon.name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon size={18} />
-                  </a>
-                ))}
+                <a
+                  href="https://www.linkedin.com/company/lenor-eduai"
+                  className="bg-[#FFAFCC] border-2 border-black p-2 hover:bg-yellow-300 hover:-translate-y-1 transform transition-all flex items-center justify-center"
+                  aria-label="Linkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin size={18} />
+                </a>
               </div>
             </div>
           </div>
 
-        
-
           <div>
-            <div className="border-3 border-black bg-[#B8F7D4] p-5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
+            <div className="border-3 border-black bg-[#B8F7D4] p-5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mb-8">
               <h3 className="text-lg font-black mb-4 relative inline-block">
                 Contact Us
                 <span className="absolute -bottom-1 left-0 w-full h-2 bg-pink-400 -z-0"></span>
@@ -97,21 +88,15 @@ const Footer: React.FC = () => {
               <a
                 href="#"
                 className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-              >
-                
-              </a>
+              ></a>
               <a
                 href="#"
                 className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-              >
-                
-              </a>
+              ></a>
               <a
                 href="#"
                 className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-              >
-                
-              </a>
+              ></a>
             </div>
           </div>
         </div>

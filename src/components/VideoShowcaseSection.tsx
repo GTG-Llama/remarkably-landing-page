@@ -48,7 +48,7 @@ const VideoShowcaseSection: React.FC = () => {
     <section
       id="video-showcase"
       ref={sectionRef}
-      className="section-padding py-20 bg-indigo-100 relative overflow-hidden"
+      className="section-padding py-20 bg-indigo-300 relative overflow-hidden"
     >
       {/* Decorative elements */}
       <div className="absolute top-12 left-1/3 w-24 h-24 bg-[#FFC8DD] border-4 border-black -rotate-6 z-0"></div>

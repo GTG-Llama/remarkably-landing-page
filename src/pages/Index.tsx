@@ -13,6 +13,7 @@ import FlowingParticles from "@/components/FlowingParticles";
 import GlowEffect from "@/components/GlowEffect";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import SupportedByCarousel from "@/components/SupportedByCarousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -193,6 +194,7 @@ const Index: React.FC = () => {
         <VideoShowcaseSection />
         <TestimonialsSection />
         <CTASection />
+        <SupportedByCarousel />
         <Footer />
       </div>
     </div>

@@ -200,7 +200,7 @@ const EssayFocusSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="essay-focus"
-      className="min-h-screen flex items-start justify-center relative overflow-hidden py-20 bg-indigo-100"
+      className="min-h-screen flex items-start justify-center relative overflow-hidden py-20 bg-indigo-100 "
     >
       <div className="absolute top-10 left-1/4 w-32 h-32 bg-yellow-300 border-4 border-black rotate-12 z-0"></div>
 

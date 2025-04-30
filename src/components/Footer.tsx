@@ -53,9 +53,13 @@ const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
-                  <div className="bg-black p-1">
+                  <a
+                    href="mailto:contact@lenorai.com"
+                    className="bg-black p-1 flex items-center justify-center"
+                    aria-label="Email"
+                  >
                     <Mail size={18} className="text-white" />
-                  </div>
+                  </a>
                   <a
                     href="mailto:contact@lenorai.com"
                     className="text-black font-bold hover:underline decoration-2 underline-offset-4"
@@ -64,9 +68,13 @@ const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
-                  <div className="bg-black p-1">
+                  <a
+                    href="tel:+6582608445"
+                    className="bg-black p-1 flex items-center justify-center"
+                    aria-label="Phone"
+                  >
                     <Phone size={18} className="text-white" />
-                  </div>
+                  </a>
                   <a
                     href="tel:+6582608445"
                     className="text-black font-bold hover:underline decoration-2 underline-offset-4"

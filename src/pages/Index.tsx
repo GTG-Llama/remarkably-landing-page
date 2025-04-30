@@ -82,48 +82,52 @@ const Index: React.FC = () => {
     });
 
     const sections = gsap.utils.toArray<HTMLElement>("section[id]");
-    sections.forEach((section, i) => {
-      if (i < sections.length - 1) {
-        const nextSection = sections[i + 1];
 
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top center",
-          end: "bottom center",
-          onEnter: () => {
-            gsap.to(`.section-indicator-${i}`, {
-              backgroundColor: "#A89165",
-              duration: 0.3,
-            });
-          },
-          onLeave: () => {
-            gsap.to(`.section-indicator-${i}`, {
-              backgroundColor: "#e5e5e5",
-              duration: 0.3,
-            });
-            gsap.to(`.section-indicator-${i + 1}`, {
-              backgroundColor: "#A89165",
-              duration: 0.3,
-            });
-          },
-          onEnterBack: () => {
-            gsap.to(`.section-indicator-${i}`, {
-              backgroundColor: "#A89165",
-              duration: 0.3,
-            });
-            gsap.to(`.section-indicator-${i + 1}`, {
-              backgroundColor: "#e5e5e5",
-              duration: 0.3,
-            });
-          },
-          onLeaveBack: () => {
-            gsap.to(`.section-indicator-${i}`, {
-              backgroundColor: "#e5e5e5",
-              duration: 0.3,
-            });
-          },
+    // First, reset all indicators to non-active state initially
+    sections.forEach((_, i) => {
+      if (i > 0) {
+        // Skip the first one which should be active on page load
+        gsap.set(`.section-indicator-${i}`, {
+          backgroundColor: "#e5e5e5",
         });
       }
+    });
+
+    // Create individual ScrollTrigger for each section
+    sections.forEach((section, i) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+          // Make all indicators non-active
+          sections.forEach((_, index) => {
+            gsap.to(`.section-indicator-${index}`, {
+              backgroundColor: "#e5e5e5",
+              duration: 0.3,
+            });
+          });
+          // Activate only the current indicator
+          gsap.to(`.section-indicator-${i}`, {
+            backgroundColor: "#A89165",
+            duration: 0.3,
+          });
+        },
+        onEnterBack: () => {
+          // Make all indicators non-active
+          sections.forEach((_, index) => {
+            gsap.to(`.section-indicator-${index}`, {
+              backgroundColor: "#e5e5e5",
+              duration: 0.3,
+            });
+          });
+          // Activate only the current indicator
+          gsap.to(`.section-indicator-${i}`, {
+            backgroundColor: "#A89165",
+            duration: 0.3,
+          });
+        },
+      });
     });
 
     return () => {

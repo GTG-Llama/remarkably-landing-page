@@ -55,7 +55,7 @@ const essayFeatures: EssayFeature[] = [
     color: 0x2ee84a, // Green
     label: "Suggestions for Improvement",
     description:
-      "We provide suggestions for improving clarity, coherence, and overall quality.",
+      "We analyse content and structure, providing suggestions for improvement.",
   },
 ];
 
@@ -274,7 +274,7 @@ const EssayShowcaseSection: React.FC = () => {
             <div className="absolute bottom-0 left-0 right- h-20 z-10 pointer-events-none"></div>
           </div>
 
-          <div className="lg:w-1/4 space-y-12 order-1 lg:order-2">
+          <div className="lg:w-1/3 space-y-12 order-1 lg:order-2">
             {essayFeatures.map((feature, index) => (
               <div
                 key={feature.id}

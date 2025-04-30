@@ -121,7 +121,7 @@ const FeaturesSection: React.FC = () => {
       icon: <Star />,
       title: "Personalized Feedback",
       description:
-        "Our AI learns your unique grading style and adapts to your requirements.",
+        "We aim to assist, not replace. Our AI learns your unique grading style and adapts to your requirements and final touches.",
       color: "bg-[#FFAFCC]", // Pastel darker pink
     },
     {
@@ -148,7 +148,7 @@ const FeaturesSection: React.FC = () => {
     {
       icon: <FileCheck />,
       title: "Enhanced Understanding",
-      description: "Help teachers understand their students better - keep track of every students strength and weakness and how they can improve.",
+      description: "Help teachers understand their students better - keep track of every student's strengths & weaknesses and how they can improve.",
       color: "bg-[#B8F7D4]", // Pastel green
     },
   ];

@@ -1,12 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowDown } from "lucide-react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { EssayFeature } from "@/utils/three-utils";
-import * as motion from "motion/react-client";
-import type { Variants } from "motion/react";
+import {
+  motion,
+  useInView,
+  useAnimation,
+  AnimatePresence,
+} from "framer-motion";
 
-gsap.registerPlugin(ScrollTrigger);
+// Define EssayFeature interface locally instead of importing from three-utils
+interface EssayFeature {
+  id: string;
+  position: { x: number; y: number; z: number };
+  rotation?: { x: number; y: number; z: number };
+  scale?: number;
+  color: number;
+  label: string;
+  description: string;
+}
 
 const essayFeatures: EssayFeature[] = [
   {
@@ -59,7 +69,6 @@ const essayFeatures: EssayFeature[] = [
   },
 ];
 
-
 interface FeatureCardProps {
   feature: EssayFeature;
   isActive: boolean;
@@ -75,22 +84,112 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   onMouseLeave,
   index,
 }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
   const colorHex = "#" + feature.color.toString(16).padStart(6, "0");
 
-  useEffect(() => {
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        scale: isActive ? 1.2 : 1,
-        transform: isActive ? "translate(-3px, -3px)" : "translate(0, 0)",
-        boxShadow: isActive
-          ? `8px 8px 0px 0px rgba(0,0,0,1)`
-          : `5px 5px 0px 0px rgba(0,0,0,1)`,
+  const cardVariants = {
+    inactive: {
+      scale: 1,
+      x: 0,
+      y: 0,
+      boxShadow: "5px 5px 0px 0px rgba(0,0,0,1)",
+    },
+    active: {
+      scale: 1.05,
+      x: -3,
+      y: -3,
+      boxShadow: "8px 8px 0px 0px rgba(0,0,0,1)",
+    },
+    hover: {
+      scale: 1.02,
+      x: -2,
+      y: -2,
+      boxShadow: "7px 7px 0px 0px rgba(0,0,0,1)",
+      transition: { duration: 0.2 },
+    },
+  };
+
+  const iconVariants = {
+    initial: { rotate: 0, scale: 0.8 },
+    animate: {
+      rotate: 3,
+      scale: 1,
+      transition: {
+        delay: index * 0.1,
         duration: 0.3,
-        ease: "power2.out",
-      });
-    }
-  }, [isActive]);
+        type: "spring",
+      },
+    },
+    hover: {
+      rotate: -3,
+      scale: 1.1,
+      transition: { duration: 0.2 },
+    },
+    active: {
+      scale: [1, 1.1, 1],
+      rotate: [3, 6, 3],
+      transition: {
+        scale: {
+          repeat: Infinity,
+          duration: 2,
+          ease: "easeInOut",
+        },
+        rotate: {
+          repeat: Infinity,
+          duration: 3,
+          ease: "easeInOut",
+        },
+      },
+    },
+  };
+
+  const descriptionVariants = {
+    initial: { rotate: 0 },
+    animate: { rotate: -1 },
+    hover: {
+      rotate: 1,
+      transition: { duration: 0.2 },
+    },
+    active: {
+      rotate: [-1, 0, -1],
+      y: [0, -2, 0],
+      transition: {
+        rotate: {
+          repeat: Infinity,
+          duration: 3,
+          ease: "easeInOut",
+        },
+        y: {
+          repeat: Infinity,
+          duration: 2.5,
+          ease: "easeInOut",
+        },
+      },
+    },
+  };
+
+  const labelVariants = {
+    initial: { opacity: 0, y: -10 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: index * 0.2 + 0.3,
+        duration: 0.5,
+      },
+    },
+    hover: {
+      scale: 1.05,
+      transition: { duration: 0.2 },
+    },
+    active: {
+      scale: [1, 1.03, 1],
+      transition: {
+        repeat: Infinity,
+        duration: 2,
+        ease: "easeInOut",
+      },
+    },
+  };
 
   return (
     <motion.div
@@ -116,37 +215,93 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       }}
     >
       <div className="relative">
-        {isActive && (
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
-        )}
-        <div
-          ref={cardRef}
-          className={`rounded-sm border-2 border-black p-8 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transition-all duration-300`}
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              className="absolute top-0 left-0 w-full h-full bg-black z-10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Decorative element that appears when card is active */}
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              className="absolute -top-4 -right-4 w-10 h-10 bg-yellow-300 border-3 border-black z-20"
+              initial={{ scale: 0, opacity: 0, rotate: 15 }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+                rotate: 15,
+                transition: { duration: 0.3, type: "spring" },
+              }}
+              exit={{ scale: 0, opacity: 0, transition: { duration: 0.2 } }}
+              whileInView={{
+                rotate: [15, 25, 15],
+                transition: {
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: "easeInOut",
+                },
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        <motion.div
+          className="rounded-sm border-2 border-black p-8"
           style={{
             backgroundColor: colorHex,
             borderColor: "black",
             position: "relative",
             overflow: "visible",
           }}
+          variants={cardVariants}
+          initial="inactive"
+          animate={isActive ? "active" : "inactive"}
+          whileHover="hover"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          transition={{ duration: 0.3 }}
         >
-          <div
-            className="w-14 h-14 flex items-center justify-center mb-4 mx-auto border-3 border-black transform rotate-3"
+          <motion.div
+            className="w-14 h-14 flex items-center justify-center mb-4 mx-auto border-3 border-black"
             style={{
               backgroundColor: "#FFFFFF",
               boxShadow: "3px 3px 0px 0px rgba(0,0,0,1)",
             }}
+            variants={iconVariants}
+            initial="initial"
+            animate={isActive ? "active" : "animate"}
+            whileHover="hover"
           >
             <span style={{ color: "black" }} className="font-black text-2xl">
               {feature.id.charAt(0).toUpperCase()}
             </span>
-          </div>
-          <h3 className="text-xl font-black mb-3 text-black relative">
+          </motion.div>
+          <motion.h3
+            className="text-xl font-black mb-3 text-black relative"
+            variants={labelVariants}
+            initial="initial"
+            animate={isActive ? "active" : "animate"}
+            whileHover="hover"
+          >
             {feature.label}
-          </h3>
-          <p className="text-black leading-relaxed font-bold bg-white border-2 border-black p-3 -rotate-1">
+          </motion.h3>
+          <motion.p
+            className="text-black leading-relaxed font-bold bg-white border-2 border-black p-3"
+            variants={descriptionVariants}
+            initial="initial"
+            animate={isActive ? "active" : "animate"}
+            whileHover="hover"
+          >
             {feature.description}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -157,10 +312,67 @@ const EssayShowcaseSection: React.FC = () => {
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
   const featureRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [visibleFeatures, setVisibleFeatures] = useState<string[]>([]);
+  const controls = useAnimation();
+
+  const headingVariants = {
+    hidden: { y: 50, opacity: 0, rotate: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      rotate: 1,
+      transition: {
+        duration: 0.7,
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+    hover: {
+      rotate: 2,
+      boxShadow: "12px 12px 0px 0px rgba(0,0,0,1)",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  const highlightVariants = {
+    hidden: { width: 0 },
+    visible: {
+      width: "100%",
+      transition: {
+        delay: 0.5,
+        duration: 0.8,
+      },
+    },
+  };
+
+  const decorativeVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: (custom: number) => ({
+      scale: 1,
+      opacity: 1,
+      rotate: custom,
+      transition: {
+        delay: 0.3,
+        duration: 0.5,
+        type: "spring",
+      },
+    }),
+    hover: {
+      scale: 1.1,
+      rotate: (custom) => custom * 1.5,
+      transition: { duration: 0.3 },
+    },
+  };
+
+  const isInView = useInView(sectionRef, { once: true });
 
   useEffect(() => {
-    if (!sectionRef.current) return;
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
 
+  useEffect(() => {
     const handleFeatureHover = (featureId: string | null) => {
       const event = new CustomEvent("featureHover", {
         detail: {
@@ -170,76 +382,47 @@ const EssayShowcaseSection: React.FC = () => {
       document.dispatchEvent(event);
     };
 
-    // Clear existing triggers first
-    ScrollTrigger.getAll().forEach((trigger) => {
-      if (trigger.vars.trigger === sectionRef.current) {
-        trigger.kill();
-      }
-    });
+    // Set up intersection observers for each feature card
+    const observers: IntersectionObserver[] = [];
 
-    // Create individual scroll triggers for each card
-    essayFeatures.forEach((feature, index) => {
-      // Check if the ref exists
-      if (!featureRefs.current[feature.id]) return;
+    essayFeatures.forEach((feature) => {
+      const featureRef = featureRefs.current[feature.id];
+      if (!featureRef) return;
 
-      const cardElement = featureRefs.current[feature.id];
-
-      if (!cardElement) return;
-
-      const trigger = ScrollTrigger.create({
-        trigger: cardElement,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => {
-          setActiveFeature(feature.id);
-          handleFeatureHover(feature.id);
-
-          setVisibleFeatures((prev) => {
-            if (!prev.includes(feature.id)) {
-              return [...prev, feature.id];
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveFeature(feature.id);
+              handleFeatureHover(feature.id);
+              setVisibleFeatures((prev) => {
+                if (!prev.includes(feature.id)) {
+                  return [...prev, feature.id];
+                }
+                return prev;
+              });
+            } else {
+              if (activeFeature === feature.id) {
+                setActiveFeature(null);
+                handleFeatureHover(null);
+              }
+              setVisibleFeatures((prev) =>
+                prev.filter((id) => id !== feature.id)
+              );
             }
-            return prev;
           });
         },
-        onLeave: () => {
-          if (activeFeature === feature.id) {
-            setActiveFeature(null);
-            handleFeatureHover(null);
-          }
-          setVisibleFeatures((prev) => prev.filter((id) => id !== feature.id));
-        },
-        onEnterBack: () => {
-          setActiveFeature(feature.id);
-          handleFeatureHover(feature.id);
+        { threshold: 0.6 }
+      );
 
-          setVisibleFeatures((prev) => {
-            if (!prev.includes(feature.id)) {
-              return [...prev, feature.id];
-            }
-            return prev;
-          });
-        },
-        onLeaveBack: () => {
-          if (activeFeature === feature.id) {
-            setActiveFeature(null);
-            handleFeatureHover(null);
-          }
-
-          setVisibleFeatures((prev) => prev.filter((id) => id !== feature.id));
-        },
-      });
-
-      return () => trigger.kill();
+      observer.observe(featureRef);
+      observers.push(observer);
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === sectionRef.current) {
-          trigger.kill();
-        }
-      });
+      observers.forEach((observer) => observer.disconnect());
     };
-  }, [activeFeature, featureRefs.current]);
+  }, [activeFeature]);
 
   return (
     <section
@@ -247,30 +430,135 @@ const EssayShowcaseSection: React.FC = () => {
       id="essay-showcase"
       className="min-h-screen py-20 flex flex-col items-center justify-center relative overflow-hidden"
     >
-      {/* Decorative elements that don't interfere with the 3D model */}
-      <div className="absolute top-10 left-0 w-24 h-24 bg-yellow-300 border-4 border-black rotate-12 z-0"></div>
-      <div className="absolute bottom-10 right-5 w-20 h-20 bg-pink-300 border-4 border-black -rotate-6 z-0"></div>
-      
+      {/* Decorative elements with animations */}
+      <motion.div
+        className="absolute top-10 left-0 w-24 h-24 bg-yellow-300 border-4 border-black z-0"
+        variants={decorativeVariants}
+        custom={12}
+        initial="hidden"
+        animate={controls}
+        whileHover="hover"
+        // Add continuous floating animation
+        whileInView={{
+          y: [0, -15, 0],
+          rotate: [12, 16, 12],
+          transition: {
+            y: {
+              repeat: Infinity,
+              duration: 5,
+              ease: "easeInOut",
+            },
+            rotate: {
+              repeat: Infinity,
+              duration: 7,
+              ease: "easeInOut",
+            },
+          },
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-10 right-5 w-20 h-20 bg-pink-300 border-4 border-black z-0"
+        variants={decorativeVariants}
+        custom={-6}
+        initial="hidden"
+        animate={controls}
+        whileHover="hover"
+        // Add continuous floating animation
+        whileInView={{
+          y: [0, -10, 0],
+          x: [0, 8, 0],
+          rotate: [-6, -9, -6],
+          transition: {
+            y: {
+              repeat: Infinity,
+              duration: 6,
+              ease: "easeInOut",
+            },
+            x: {
+              repeat: Infinity,
+              duration: 8,
+              ease: "easeInOut",
+            },
+            rotate: {
+              repeat: Infinity,
+              duration: 7,
+              ease: "easeInOut",
+            },
+          },
+        }}
+      />
+
+      {/* Add new decorative element */}
+      <motion.div
+        className="absolute top-1/3 right-10 w-16 h-16 bg-cyan-300 border-4 border-black z-0"
+        initial={{ scale: 0, opacity: 0, rotate: 45 }}
+        animate={{
+          scale: 1,
+          opacity: 1,
+          rotate: 45,
+          transition: {
+            delay: 0.5,
+            duration: 0.5,
+            type: "spring",
+          },
+        }}
+        whileInView={{
+          y: [0, 12, 0],
+          rotate: [45, 50, 45],
+          transition: {
+            y: {
+              repeat: Infinity,
+              duration: 4.5,
+              ease: "easeInOut",
+            },
+            rotate: {
+              repeat: Infinity,
+              duration: 6,
+              ease: "easeInOut",
+            },
+          },
+        }}
+      />
+
       <div className="content-container w-3/4 z-10 text-center md:px-2 mt-5 relative">
-        <div className="bg-[#BDE0FE] border-4 border-black p-8 md:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-16 transform rotate-1">
+        <motion.div
+          className="bg-[#BDE0FE] border-4 border-black p-8 md:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-16"
+          variants={headingVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover="hover"
+        >
           <h2 className="text-3xl md:text-4xl font-black mb-4 text-black">
-            Essay 
+            Essay
             <span className="relative inline-block mx-2">
               <span className="relative z-10">Analysis</span>
-              <span className="absolute -bottom-2 left-0 w-full h-4 bg-yellow-300 -z-0"></span>
-            </span> 
+              <motion.span
+                className="absolute -bottom-2 left-0 w-full h-4 bg-yellow-300 -z-0"
+                variants={highlightVariants}
+                initial="hidden"
+                animate={controls}
+              />
+            </span>
             Features
           </h2>
-          <p className="text-xl text-black font-bold bg-white border-2 border-black p-4 max-w-3xl mx-auto -rotate-1">
+          <motion.p
+            className="text-xl text-black font-bold bg-white border-2 border-black p-4 max-w-3xl mx-auto"
+            initial={{ rotate: 0 }}
+            animate={{ rotate: -1 }}
+            whileHover={{
+              rotate: 1,
+              transition: { duration: 0.3 },
+            }}
+          >
             Explore how our AI meticulously analyzes each element of student
             essays, providing comprehensive feedback for improvement.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="flex flex-col lg:flex-row items-start gap-16">
           <div className="lg:w-3/5 h-[700px] relative order-2 lg:order-1">
             {/* This empty div is where the 3D model will be visible */}
-            {/* We won't add a background or borders here to keep the model visible */}
             <div className="absolute bottom-0 left-0 right- h-20 z-10 pointer-events-none"></div>
           </div>
 
@@ -279,11 +567,7 @@ const EssayShowcaseSection: React.FC = () => {
               <div
                 key={feature.id}
                 ref={(el) => (featureRefs.current[feature.id] = el)}
-                className={`transition-all duration-500 ${
-                  visibleFeatures.includes(feature.id)
-                    ? "opacity-100"
-                    : "opacity-60"
-                }`}
+                className="transition-all duration-500"
               >
                 <FeatureCard
                   feature={feature}

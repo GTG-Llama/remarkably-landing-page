@@ -202,7 +202,47 @@ const EssayFocusSection: React.FC = () => {
       id="essay-focus"
       className="min-h-screen flex items-start justify-center relative overflow-hidden py-20 bg-gradient-to-b from-indigo-200 to-white"
     >
-      <div className="absolute top-10 left-1/4 w-32 h-32 bg-yellow-300 border-4 border-black rotate-12 z-0"></div>
+      <motion.div
+        className="absolute top-10 left-1/4 w-32 h-32 bg-yellow-300 border-4 border-black rotate-12 z-0"
+        animate={{
+          y: [0, -15, 0],
+          rotate: [12, 15, 12],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      ></motion.div>
+
+      <motion.div
+        className="absolute bottom-20 right-10 w-20 h-20 bg-cyan-300 border-4 border-black -rotate-6 z-0"
+        animate={{
+          y: [0, -20, 0],
+          rotate: [-6, -10, -6],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      ></motion.div>
+
+      <motion.div
+        className="absolute top-1/3 right-1/4 w-16 h-16 bg-pink-300 border-4 border-black rotate-45 z-0"
+        animate={{
+          y: [0, 15, 0],
+          x: [0, 10, 0],
+          rotate: [45, 50, 45],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      ></motion.div>
 
       <div className="content-container w-full md:px-8 max-w-6xl mx-auto z-10 relative">
         <motion.div
@@ -219,20 +259,53 @@ const EssayFocusSection: React.FC = () => {
             <motion.h2
               ref={titleRef}
               className="text-3xl md:text-5xl font-black mb-6 text-black"
-              variants={contentVariants}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+                delay: 0.2,
+              }}
             >
               See How
-              <span className="relative inline-block mx-2">
+              <motion.span
+                className="relative inline-block mx-2"
+                animate={{
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
                 <span className="relative z-10">Remarkably </span>
-                <span className="absolute -bottom-2 left-0 w-full h-4 bg-yellow-300 -z-0"></span>
-              </span>
+                <motion.span
+                  className="absolute -bottom-2 left-0 w-full h-4 bg-yellow-300 -z-0"
+                  animate={{
+                    width: ["0%", "100%"],
+                    x: ["-10%", "0%"],
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.5,
+                    ease: "easeOut",
+                  }}
+                ></motion.span>
+              </motion.span>
               Works
             </motion.h2>
 
             <motion.p
               ref={descriptionRef}
               className="text-xl text-black font-bold mb-6 bg-white border-2 border-black p-4 max-w-3xl mx-auto -rotate-1"
-              variants={contentVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: 0.5,
+              }}
             >
               Our AI-powered technology analyzes essays in real-time, providing
               personalized feedback with the accuracy and nuance of an
@@ -253,8 +326,19 @@ const EssayFocusSection: React.FC = () => {
               variants={cardVariants}
               className="flex flex-col lg:flex-row items-stretch overflow-visible relative"
             >
-              <div className="absolute -top-6 -left-6 w-12 h-12 bg-yellow-300 border-4 border-black rotate-12 z-10"></div>
-              <div
+              <motion.div
+                className="absolute -top-6 -left-6 w-12 h-12 bg-yellow-300 border-4 border-black rotate-12 z-10"
+                animate={{
+                  rotate: activeCardIndex === i ? [12, 30, 12] : 12,
+                  scale: activeCardIndex === i ? [1, 1.1, 1] : 1,
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: activeCardIndex === i ? Infinity : 0,
+                  ease: "easeInOut",
+                }}
+              ></motion.div>
+              <motion.div
                 className={`w-full lg:w-1/2 ${
                   card.color
                 } p-8 lg:p-12 flex flex-col justify-center border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10 transform transition-all duration-300 ${
@@ -262,39 +346,101 @@ const EssayFocusSection: React.FC = () => {
                     ? "translate-x-[-3px] translate-y-[-3px] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
                     : "shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                 } ${i % 2 === 0 ? "rotate-1" : "-rotate-1"}`}
+                whileHover={{
+                  scale: 1.02,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
+                }}
               >
                 <div className="flex flex-col text-left">
-                  <div className="absolute top-4 right-4 bg-white w-12 h-12 flex items-center justify-center border-3 border-black transform rotate-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <span className="font-black text-black text-xl ">
+                  <motion.div
+                    className="absolute top-4 right-4 bg-white w-12 h-12 flex items-center justify-center border-3 border-black transform rotate-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                    animate={{
+                      rotate: activeCardIndex === i ? [12, 0, 12] : 12,
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: activeCardIndex === i ? Infinity : 0,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <span className="font-black text-black text-xl">
                       {card.step}
                     </span>
-                  </div>
-                  <h3 className="text-2xl lg:text-3xl font-black mb-6 text-black">
+                  </motion.div>
+                  <motion.h3
+                    className="text-2xl lg:text-3xl font-black mb-6 text-black"
+                    animate={{
+                      scale: activeCardIndex === i ? [1, 1.03, 1] : 1,
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: activeCardIndex === i ? Infinity : 0,
+                      ease: "easeInOut",
+                    }}
+                  >
                     {card.title}
-                  </h3>
-                  <p className="text-black font-bold text-lg mb-8 bg-white border-2 border-black p-4 -rotate-1">
+                  </motion.h3>
+                  <motion.p
+                    className="text-black font-bold text-lg mb-8 bg-white border-2 border-black p-4 -rotate-1"
+                    animate={{
+                      rotate: activeCardIndex === i ? [-1, -2, -1] : -1,
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: activeCardIndex === i ? Infinity : 0,
+                      ease: "easeInOut",
+                    }}
+                  >
                     {card.description}
-                  </p>
+                  </motion.p>
                   <div className="flex space-x-3 mt-auto">
                     {card.icons.map((iconItem, iconIndex) => (
-                      <button
+                      <motion.button
                         key={iconIndex}
                         className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all"
                         title={iconItem.label}
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: 5,
+                          transition: { duration: 0.2 },
+                        }}
+                        animate={
+                          activeCardIndex === i
+                            ? {
+                                y: [0, -3, 0],
+                                transition: {
+                                  duration: 1.5,
+                                  delay: iconIndex * 0.2,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                },
+                              }
+                            : {}
+                        }
                       >
                         <iconItem.icon size={20} className="text-black" />
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div
+              <motion.div
                 className={`w-full lg:w-1/2 bg-white border-4 border-black p-6 flex items-center justify-center lg:ml-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-0 transform transition-all duration-300 ${
                   activeCardIndex === i
                     ? "translate-x-[-3px] translate-y-[-3px] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
                     : "shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
                 } ${i % 2 === 0 ? "-rotate-1" : "rotate-1"} overflow-hidden`}
+                whileHover={{
+                  scale: 1.02,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  },
+                }}
               >
                 <div className="w-full h-full relative">
                   <video
@@ -306,7 +452,7 @@ const EssayFocusSection: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>

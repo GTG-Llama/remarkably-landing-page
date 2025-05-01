@@ -77,9 +77,20 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load("/paper-texture2.jpg");
 
-    // Preload models
+    // Preload models - adding required callback functions
     const gltfLoader = new GLTFLoader();
-    gltfLoader.load("/pen.glb");
+    gltfLoader.load(
+      "/pen.glb",
+      () => {
+        // Success callback - model is now preloaded
+        console.log("Pen model preloaded successfully");
+      },
+      undefined, // Progress callback (optional)
+      (error) => {
+        // Error callback
+        console.error("Error preloading pen model:", error);
+      }
+    );
   };
 
   // Create a 3D essay model (previously in three-utils.ts)

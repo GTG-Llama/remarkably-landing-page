@@ -30,7 +30,7 @@ const Navbar = () => {
   const scrollToTestimonials = () => {
     // Scroll approximately 400vh down the page
     window.scrollTo({
-      top: window.innerHeight * 8.6,
+      top: window.innerHeight * 8.2,
       behavior: "smooth",
     });
   };

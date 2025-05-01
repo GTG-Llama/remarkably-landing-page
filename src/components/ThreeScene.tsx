@@ -71,9 +71,20 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
 
   // COMBINED UTILITY FUNCTIONS
 
+  // Preload resources to improve initial load time
+  const preloadResources = () => {
+    // Preload textures
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load("/paper-texture2.jpg");
+
+    // Preload models
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load("/pen.glb");
+  };
+
   // Create a 3D essay model (previously in three-utils.ts)
   const createEssayModel = async (scene: THREE.Scene) => {
-    // Create essay paper material
+    // Create essay paper material with optimized loading
     const paperMaterial = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       roughness: 0.2,
@@ -417,6 +428,9 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
       // Setup lighting
       setupLighting(scene);
 
+      // Preload resources
+      preloadResources();
+
       // Create essay model
       const essayModel = await createEssayModel(scene);
       essayRef.current = essayModel;
@@ -466,67 +480,64 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
         }
       }
 
-      // Entrance animation
+      // Entrance animation - Show immediately without delay
       essayModel.essayGroup.position.z = -10;
-      essayModel.essayGroup.visible = false;
-      setTimeout(() => {
-        essayModel.essayGroup.visible = true;
+      essayModel.essayGroup.visible = true;
 
-        // Use a single timeline for better coordination
-        const entranceTl = gsap.timeline({
-          defaults: { duration: 1.2, ease: "back.out(1.7)" },
-        });
+      // Use a single timeline for better coordination
+      const entranceTl = gsap.timeline({
+        defaults: { duration: 1.2, ease: "back.out(1.7)" },
+      });
 
-        entranceTl
-          .to(essayModel.essayGroup.position, {
-            z: 0, // Bring to front
-            x: rightSidePosition ? (partialView ? 10 : 4) : 0,
+      entranceTl
+        .to(essayModel.essayGroup.position, {
+          z: 0, // Bring to front
+          x: rightSidePosition ? (partialView ? 10 : 4) : 0,
+          y: 0,
+          duration: 1.4,
+          ease: "elastic.out(1, 0.7)",
+        })
+        .to(
+          essayModel.redPen.position,
+          {
+            x: rightSidePosition ? (partialView ? 14 : 8) : 6, // Moved further to the right
             y: 0,
+            z: 3, // Ensure pen is in front
             duration: 1.4,
             ease: "elastic.out(1, 0.7)",
-          })
-          .to(
-            essayModel.redPen.position,
-            {
-              x: rightSidePosition ? (partialView ? 14 : 8) : 6, // Moved further to the right
-              y: 0,
-              z: 3, // Ensure pen is in front
-              duration: 1.4,
-              ease: "elastic.out(1, 0.7)",
-            },
-            "<"
-          )
-          .to(
-            essayModel.essayGroup.scale,
-            {
-              x: initialPositionRef.current!.essay.scale.x,
-              y: initialPositionRef.current!.essay.scale.y,
-              z: initialPositionRef.current!.essay.scale.z,
-            },
-            "<"
-          )
-          .to(
-            essayModel.essayGroup.rotation,
-            {
-              x:
-                initialPositionRef.current!.essay.rotation.x +
-                0.04 * (Math.random() - 0.5),
-              y:
-                initialPositionRef.current!.essay.rotation.y +
-                0.04 * (Math.random() - 0.5),
-              z:
-                initialPositionRef.current!.essay.rotation.z +
-                0.04 * (Math.random() - 0.5),
-            },
-            "<"
-          )
-          .fromTo(
-            essayModel.essayGroup,
-            { opacity: 0 },
-            { opacity: 1, duration: 1, ease: "power1.out" },
-            "<"
-          );
-      }, 100);
+          },
+          "<"
+        )
+        .to(
+          essayModel.essayGroup.scale,
+          {
+            x: initialPositionRef.current!.essay.scale.x,
+            y: initialPositionRef.current!.essay.scale.y,
+            z: initialPositionRef.current!.essay.scale.z,
+          },
+          "<"
+        )
+        .to(
+          essayModel.essayGroup.rotation,
+          {
+            x:
+              initialPositionRef.current!.essay.rotation.x +
+              0.04 * (Math.random() - 0.5),
+            y:
+              initialPositionRef.current!.essay.rotation.y +
+              0.04 * (Math.random() - 0.5),
+            z:
+              initialPositionRef.current!.essay.rotation.z +
+              0.04 * (Math.random() - 0.5),
+          },
+          "<"
+        )
+        .fromTo(
+          essayModel.essayGroup,
+          { opacity: 0 },
+          { opacity: 1, duration: 1, ease: "power1.out" },
+          "<"
+        );
 
       // Event handler for essay transitions
       const handleEssayTransition = (event: Event) => {

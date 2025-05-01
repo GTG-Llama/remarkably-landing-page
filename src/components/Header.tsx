@@ -19,6 +19,38 @@ const Navbar = () => {
     };
   }, [scrolled]);
 
+  const scrollToFeatures = () => {
+    // Scroll approximately 100vh down the page
+    window.scrollTo({
+      top: window.innerHeight * 1.0,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToTestimonials = () => {
+    // Scroll approximately 400vh down the page
+    window.scrollTo({
+      top: window.innerHeight * 8.6,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToEssayShowcase = () => {
+    // Scroll approximately 200vh down the page
+    window.scrollTo({
+      top: window.innerHeight * 3.2,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToFeaturesSection = () => {
+    // Scroll approximately 300vh down the page
+    window.scrollTo({
+      top: window.innerHeight * 5.5,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -45,7 +77,7 @@ const Navbar = () => {
             <img
               src="/remarkably logo black.png"
               alt="Logo"
-              className="w-42 h-10"
+              className="w-50 h-10 px-2 py-1"
             />
           </div>
         </div>
@@ -55,24 +87,28 @@ const Navbar = () => {
           <a
             href="#essay-focus"
             className="text-black font-bold hover:underline decoration-4 decoration-pink-400 transition-all"
+            onClick={scrollToFeatures}
           >
             Demo
           </a>
           <a
             href="#essay-showcase"
             className="text-black font-bold hover:underline decoration-4 decoration-blue-400 transition-all"
+            onClick={scrollToEssayShowcase}
           >
             Features
           </a>
           <a
             href="#features"
             className="text-black font-bold hover:underline decoration-4 decoration-yellow-400 transition-all"
+            onClick={scrollToFeaturesSection}
           >
             Benefits
           </a>
           <a
             href="#testimonials"
             className="text-black font-bold hover:underline decoration-4 decoration-green-400 transition-all"
+            onClick={scrollToTestimonials}
           >
             Testimonials
           </a>

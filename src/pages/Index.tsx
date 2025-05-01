@@ -109,7 +109,7 @@ const Index: React.FC = () => {
           });
           // Activate only the current indicator
           gsap.to(`.section-indicator-${i}`, {
-            backgroundColor: "#A89165",
+            backgroundColor: "#ffe712",
             duration: 0.3,
           });
         },
@@ -123,7 +123,7 @@ const Index: React.FC = () => {
           });
           // Activate only the current indicator
           gsap.to(`.section-indicator-${i}`, {
-            backgroundColor: "#A89165",
+            backgroundColor: "#ffe712",
             duration: 0.3,
           });
         },
@@ -177,7 +177,6 @@ const Index: React.FC = () => {
           ].map((id, index) => (
             <a
               key={id}
-              href={`#${id}`}
               className={`section-indicator-${index} w-4 h-4 border-2 border-black ${
                 index === 0 ? "bg-black" : "bg-white"
               } transition-all duration-300 hover:scale-125`}

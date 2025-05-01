@@ -124,22 +124,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       scale: 1.1,
       transition: { duration: 0.2 },
     },
-    active: {
-      scale: [1, 1.1, 1],
-      rotate: [3, 6, 3],
-      transition: {
-        scale: {
-          repeat: Infinity,
-          duration: 2,
-          ease: "easeInOut",
-        },
-        rotate: {
-          repeat: Infinity,
-          duration: 3,
-          ease: "easeInOut",
-        },
-      },
-    },
   };
 
   const descriptionVariants = {
@@ -148,46 +132,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     hover: {
       rotate: 1,
       transition: { duration: 0.2 },
-    },
-    active: {
-      rotate: [-1, 0, -1],
-      y: [0, -2, 0],
-      transition: {
-        rotate: {
-          repeat: Infinity,
-          duration: 3,
-          ease: "easeInOut",
-        },
-        y: {
-          repeat: Infinity,
-          duration: 2.5,
-          ease: "easeInOut",
-        },
-      },
-    },
-  };
-
-  const labelVariants = {
-    initial: { opacity: 0, y: -10 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: index * 0.2 + 0.3,
-        duration: 0.5,
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.2 },
-    },
-    active: {
-      scale: [1, 1.03, 1],
-      transition: {
-        repeat: Infinity,
-        duration: 2,
-        ease: "easeInOut",
-      },
     },
   };
 
@@ -227,31 +171,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           )}
         </AnimatePresence>
 
-        {/* Decorative element that appears when card is active */}
-        <AnimatePresence>
-          {isActive && (
-            <motion.div
-              className="absolute -top-4 -right-4 w-10 h-10 bg-yellow-300 border-3 border-black z-20"
-              initial={{ scale: 0, opacity: 0, rotate: 15 }}
-              animate={{
-                scale: 1,
-                opacity: 1,
-                rotate: 15,
-                transition: { duration: 0.3, type: "spring" },
-              }}
-              exit={{ scale: 0, opacity: 0, transition: { duration: 0.2 } }}
-              whileInView={{
-                rotate: [15, 25, 15],
-                transition: {
-                  repeat: Infinity,
-                  duration: 2,
-                  ease: "easeInOut",
-                },
-              }}
-            />
-          )}
-        </AnimatePresence>
-
         <motion.div
           className="rounded-sm border-2 border-black p-8"
           style={{
@@ -276,27 +195,21 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             }}
             variants={iconVariants}
             initial="initial"
-            animate={isActive ? "active" : "animate"}
+            animate="animate"
             whileHover="hover"
           >
             <span style={{ color: "black" }} className="font-black text-2xl">
               {feature.id.charAt(0).toUpperCase()}
             </span>
           </motion.div>
-          <motion.h3
-            className="text-xl font-black mb-3 text-black relative"
-            variants={labelVariants}
-            initial="initial"
-            animate={isActive ? "active" : "animate"}
-            whileHover="hover"
-          >
+          <h3 className="text-xl font-black mb-3 text-black relative">
             {feature.label}
-          </motion.h3>
+          </h3>
           <motion.p
             className="text-black leading-relaxed font-bold bg-white border-2 border-black p-3"
             variants={descriptionVariants}
             initial="initial"
-            animate={isActive ? "active" : "animate"}
+            animate="animate"
             whileHover="hover"
           >
             {feature.description}
@@ -438,23 +351,6 @@ const EssayShowcaseSection: React.FC = () => {
         initial="hidden"
         animate={controls}
         whileHover="hover"
-        // Add continuous floating animation
-        whileInView={{
-          y: [0, -15, 0],
-          rotate: [12, 16, 12],
-          transition: {
-            y: {
-              repeat: Infinity,
-              duration: 5,
-              ease: "easeInOut",
-            },
-            rotate: {
-              repeat: Infinity,
-              duration: 7,
-              ease: "easeInOut",
-            },
-          },
-        }}
       />
 
       <motion.div
@@ -464,61 +360,6 @@ const EssayShowcaseSection: React.FC = () => {
         initial="hidden"
         animate={controls}
         whileHover="hover"
-        // Add continuous floating animation
-        whileInView={{
-          y: [0, -10, 0],
-          x: [0, 8, 0],
-          rotate: [-6, -9, -6],
-          transition: {
-            y: {
-              repeat: Infinity,
-              duration: 6,
-              ease: "easeInOut",
-            },
-            x: {
-              repeat: Infinity,
-              duration: 8,
-              ease: "easeInOut",
-            },
-            rotate: {
-              repeat: Infinity,
-              duration: 7,
-              ease: "easeInOut",
-            },
-          },
-        }}
-      />
-
-      {/* Add new decorative element */}
-      <motion.div
-        className="absolute top-1/3 right-10 w-16 h-16 bg-cyan-300 border-4 border-black z-0"
-        initial={{ scale: 0, opacity: 0, rotate: 45 }}
-        animate={{
-          scale: 1,
-          opacity: 1,
-          rotate: 45,
-          transition: {
-            delay: 0.5,
-            duration: 0.5,
-            type: "spring",
-          },
-        }}
-        whileInView={{
-          y: [0, 12, 0],
-          rotate: [45, 50, 45],
-          transition: {
-            y: {
-              repeat: Infinity,
-              duration: 4.5,
-              ease: "easeInOut",
-            },
-            rotate: {
-              repeat: Infinity,
-              duration: 6,
-              ease: "easeInOut",
-            },
-          },
-        }}
       />
 
       <div className="content-container w-3/4 z-10 text-center md:px-2 mt-5 relative">

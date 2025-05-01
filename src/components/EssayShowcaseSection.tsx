@@ -164,7 +164,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             <motion.div
               className="absolute top-0 left-0 w-full h-full bg-black z-10"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.1 }}
+              animate={{ opacity: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             />

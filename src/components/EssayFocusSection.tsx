@@ -398,7 +398,7 @@ const EssayFocusSection: React.FC = () => {
                   </motion.p>
                   <div className="flex space-x-3 mt-auto">
                     {card.icons.map((iconItem, iconIndex) => (
-                      <motion.button
+                      <motion.div
                         key={iconIndex}
                         className="p-3 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 transition-all"
                         title={iconItem.label}
@@ -422,7 +422,7 @@ const EssayFocusSection: React.FC = () => {
                         }
                       >
                         <iconItem.icon size={20} className="text-black" />
-                      </motion.button>
+                      </motion.div>
                     ))}
                   </div>
                 </div>

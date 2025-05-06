@@ -77,11 +77,12 @@ const CTASection: React.FC = () => {
                 </motion.p>
                 <div className="flex flex-wrap gap-4">
                   <motion.button
-                    className="bg-black text-white text-lg font-black px-8 py-4 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all duration-300 hover:-translate-y-1 hover:-translate-x-1 flex items-center gap-2"
+                    className="bg-black text-white text-lg font-black px-8 py-4 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all flex items-center gap-2 animate-bounce"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
+
                   >
-                    <a href="mailto:contact@lenorai.com">Schedule a Consult</a>
+                    <a href="mailto:contact@lenorai.com">Book a Demo</a>
                     <ArrowRight size={18} />
                   </motion.button>
                   <motion.button

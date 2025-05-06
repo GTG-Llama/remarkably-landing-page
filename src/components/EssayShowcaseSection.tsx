@@ -72,16 +72,12 @@ const essayFeatures: EssayFeature[] = [
 interface FeatureCardProps {
   feature: EssayFeature;
   isActive: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
   index: number;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
   feature,
   isActive,
-  onMouseEnter,
-  onMouseLeave,
   index,
 }) => {
   const colorHex = "#" + feature.color.toString(16).padStart(6, "0");
@@ -183,8 +179,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           initial="inactive"
           animate={isActive ? "active" : "inactive"}
           whileHover="hover"
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
           transition={{ duration: 0.3 }}
         >
           <motion.div
@@ -285,20 +279,11 @@ const EssayShowcaseSection: React.FC = () => {
     }
   }, [isInView, controls]);
 
+  // Set up intersection observers for each feature card
   useEffect(() => {
-    const handleFeatureHover = (featureId: string | null) => {
-      const event = new CustomEvent("featureHover", {
-        detail: {
-          featureId,
-        },
-      });
-      document.dispatchEvent(event);
-    };
-
-    // Set up intersection observers for each feature card
     const observers: IntersectionObserver[] = [];
 
-    essayFeatures.forEach((feature) => {
+    essayFeatures.forEach((feature, index) => {
       const featureRef = featureRefs.current[feature.id];
       if (!featureRef) return;
 
@@ -306,8 +291,8 @@ const EssayShowcaseSection: React.FC = () => {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
+              // Only set the active feature based on visibility in viewport
               setActiveFeature(feature.id);
-              handleFeatureHover(feature.id);
               setVisibleFeatures((prev) => {
                 if (!prev.includes(feature.id)) {
                   return [...prev, feature.id];
@@ -317,7 +302,6 @@ const EssayShowcaseSection: React.FC = () => {
             } else {
               if (activeFeature === feature.id) {
                 setActiveFeature(null);
-                handleFeatureHover(null);
               }
               setVisibleFeatures((prev) =>
                 prev.filter((id) => id !== feature.id)
@@ -414,22 +398,6 @@ const EssayShowcaseSection: React.FC = () => {
                   feature={feature}
                   isActive={activeFeature === feature.id}
                   index={index}
-                  onMouseEnter={() => {
-                    setActiveFeature(feature.id);
-                    document.dispatchEvent(
-                      new CustomEvent("featureHover", {
-                        detail: { featureId: feature.id },
-                      })
-                    );
-                  }}
-                  onMouseLeave={() => {
-                    setActiveFeature(null);
-                    document.dispatchEvent(
-                      new CustomEvent("featureHover", {
-                        detail: { featureId: null },
-                      })
-                    );
-                  }}
                 />
               </div>
             ))}

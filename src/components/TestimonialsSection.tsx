@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -48,6 +48,8 @@ const testimonials: Testimonial[] = [
 const TestimonialsSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right, 0 for initial
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+  const autoScrollTimerRef = useRef<number | null>(null);
 
   // Heading animation variants
   const headingVariants = {
@@ -139,29 +141,71 @@ const TestimonialsSection: React.FC = () => {
     },
   };
 
+  // Setup auto-scrolling
+  useEffect(() => {
+    // Clear any existing timer when component mounts or dependencies change
+    if (autoScrollTimerRef.current) {
+      window.clearInterval(autoScrollTimerRef.current);
+    }
+
+    // Only start auto-scrolling if it's not paused
+    if (!isAutoScrollPaused) {
+      autoScrollTimerRef.current = window.setInterval(() => {
+        setDirection(1);
+        setActiveIndex((current) =>
+          current === testimonials.length - 1 ? 0 : current + 1
+        );
+      }, 4000);
+    }
+
+    // Clean up timer when component unmounts
+    return () => {
+      if (autoScrollTimerRef.current) {
+        window.clearInterval(autoScrollTimerRef.current);
+      }
+    };
+  }, [activeIndex, isAutoScrollPaused]);
+
   const goToPrev = () => {
+    // Pause auto-scrolling temporarily
+    setIsAutoScrollPaused(true);
     setDirection(-1);
     setActiveIndex((current) =>
       current === 0 ? testimonials.length - 1 : current - 1
     );
+
+    // Resume auto-scrolling after user interaction
+    setTimeout(() => setIsAutoScrollPaused(false), 8000);
   };
 
   const goToNext = () => {
+    // Pause auto-scrolling temporarily
+    setIsAutoScrollPaused(true);
     setDirection(1);
     setActiveIndex((current) =>
       current === testimonials.length - 1 ? 0 : current + 1
     );
+
+    // Resume auto-scrolling after user interaction
+    setTimeout(() => setIsAutoScrollPaused(false), 8000);
   };
 
   const goToSlide = (index: number) => {
+    // Pause auto-scrolling temporarily
+    setIsAutoScrollPaused(true);
     setDirection(index > activeIndex ? 1 : -1);
     setActiveIndex(index);
+
+    // Resume auto-scrolling after user interaction
+    setTimeout(() => setIsAutoScrollPaused(false), 8000);
   };
 
   return (
     <section
       id="testimonials"
       className="section-padding bg-gradient-to-b from-indigo-300 to-indigo-400 relative overflow-hidden py-20"
+      onMouseEnter={() => setIsAutoScrollPaused(true)}
+      onMouseLeave={() => setIsAutoScrollPaused(false)}
     >
       <div className="container mx-auto px-4 md:px-6">
         <motion.div

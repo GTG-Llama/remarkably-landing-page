@@ -147,8 +147,11 @@ const Navbar = () => {
               x: -4,
             }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              window.location.href = "mailto:contact@lenorai.com";
+            }}
           >
-            <a href="mailto:contact@lenorai.com">Contact Us!</a>
+            Contact Us!
           </motion.button>
         </nav>
 
@@ -216,16 +219,16 @@ const Navbar = () => {
               </motion.a>
               <motion.button
                 className="bg-yellow-300 text-black text-base font-black px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform transition-all hover:-translate-y-1 hover:-translate-x-1 w-full mt-4"
-                onClick={() => setMobileMenuOpen(false)}
                 whileHover={{
                   scale: 1.02,
                   boxShadow: "6px 6px 0px 0px rgba(0,0,0,1)",
                 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  window.location.href = "mailto:contact@lenorai.com";
+                }}
               >
-                <a href="mailto:contact@lenorai.com" className="block w-full">
                   Contact Us!
-                </a>
               </motion.button>
             </div>
           </motion.div>

@@ -579,160 +579,173 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
 
       document.addEventListener("essayTransition", handleEssayTransition);
 
-      // Feature focus handler with debounce for performance
-      let featureFocusTimeout: NodeJS.Timeout | null = null;
-      const handleFeatureFocus = (event: Event) => {
-        const customEvent = event as CustomEvent;
-        const featureId = customEvent.detail.featureId;
+      // Feature focus handler based on scroll position
+      const handleFeatureByScroll = () => {
+        if (
+          !essayRef.current ||
+          !isEssayShowcaseActive.current ||
+          !cameraRef.current
+        )
+          return;
 
-        // Clear any pending timeout
-        if (featureFocusTimeout) {
-          clearTimeout(featureFocusTimeout);
+        // Get the essay showcase section element
+        const essayShowcaseSection = document.getElementById("essay-showcase");
+        if (!essayShowcaseSection) return;
+
+        // Get scroll position relative to the essay showcase section
+        const sectionRect = essayShowcaseSection.getBoundingClientRect();
+        const sectionHeight = sectionRect.height;
+        const viewportHeight = window.innerHeight;
+
+        // Calculate progress within the section
+        // -1 when section is below viewport, 0 when section top is at viewport bottom,
+        // 1 when section bottom is at viewport top, 2 when section is above viewport
+        const progress =
+          (viewportHeight - sectionRect.top) / (viewportHeight + sectionHeight);
+
+        // Define feature IDs to focus on at different scroll positions
+        let featureId = null;
+
+        // Determine which feature to focus on based on scroll progress
+        if (progress >= 0.2 && progress < 0.4) {
+          featureId = "spelling"; // First feature
+        } else if (progress >= 0.20 && progress < 0.5) {
+          featureId = "grammar"; // Second feature
+        } else if (progress >= 0.5 && progress < 0.7) {
+          featureId = "punctuation"; // Third feature
+        } else if (progress >= 0.7 && progress < 1) {
+          featureId = "Improvements"; // Fourth feature
         }
 
-        // Debounce to prevent rapid state changes causing jitter
-        featureFocusTimeout = setTimeout(() => {
-          // Prevent repeated animation if featureId hasn't changed
-          if (activeFeatureRef.current === featureId) return;
-          activeFeatureRef.current = featureId;
+        // Prevent repeated animation if featureId hasn't changed
+        if (activeFeatureRef.current === featureId) return;
+        activeFeatureRef.current = featureId;
 
-          if (essayRef.current && isEssayShowcaseActive.current) {
-            // Reset all highlights to default opacity
-            essayRef.current.highlights.forEach((highlight) => {
-              const material = highlight.material as THREE.MeshBasicMaterial;
-              gsap.to(material, {
-                opacity: 0.2,
-                duration: 0.3,
-              });
+        // Reset all highlights to default opacity
+        essayRef.current.highlights.forEach((highlight) => {
+          const material = highlight.material as THREE.MeshBasicMaterial;
+          gsap.to(material, {
+            opacity: 0.2,
+            duration: 0.3,
+          });
 
-              // Reset scale
-              gsap.to(highlight.scale, {
-                x: -1,
-                y: 1,
-                z: 1,
-                duration: 0.3,
-              });
+          // Reset scale
+          gsap.to(highlight.scale, {
+            x: 1,
+            y: 1,
+            z: 1,
+            duration: 0.3,
+          });
+        });
+
+        if (featureId) {
+          const markerInfo = essayRef.current.annotationMarkers.find(
+            (marker) => marker.feature.id === featureId
+          );
+
+          if (markerInfo) {
+            const { feature } = markerInfo;
+
+            // Create a single timeline for coordinated animations
+            const focusTl = gsap.timeline({
+              defaults: { duration: 0.8, ease: "power2.inOut" },
             });
 
-            if (featureId) {
-              const markerInfo = essayRef.current.annotationMarkers.find(
-                (marker) => marker.feature.id === featureId
-              );
+            // Move camera to focus on feature
+            focusTl.to(cameraRef.current.position, {
+              x: rightSidePosition
+                ? partialView
+                  ? 11 + feature.position.x * 0.4
+                  : 4 + feature.position.x * 0.4
+                : -3 + feature.position.x * 0.4,
+              y: feature.position.y * 0.4,
+              z: 10,
+            });
 
-              if (markerInfo) {
-                const { feature, markerGroup } = markerInfo;
+            // Rotate essay to face camera
+            focusTl.to(
+              essayRef.current.essayGroup.rotation,
+              {
+                y: rightSidePosition
+                  ? 0.1 - feature.position.x * 0.05
+                  : -0.1 + feature.position.x * 0.05,
+              },
+              "<"
+            );
 
-                // Create a single timeline for coordinated animations
-                const focusTl = gsap.timeline({
-                  defaults: { duration: 0.8, ease: "power2.inOut" },
-                });
+            // Also move the pen to stay with the essay
+            focusTl.to(
+              essayRef.current.redPen.position,
+              {
+                x: rightSidePosition ? (partialView ? 14 : 8) : 6,
+                y: feature.position.y * 0.3,
+                z: 3,
+              },
+              "<"
+            );
 
-                // Move camera to focus on feature
-                focusTl.to(cameraRef.current?.position, {
-                  x: rightSidePosition
-                    ? partialView
-                      ? 11 + feature.position.x * 0.4
-                      : 4 + feature.position.x * 0.4
-                    : -3 + feature.position.x * 0.4,
-                  y: feature.position.y * 0.4,
-                  z: 10,
-                });
+            // Highlight the selected feature
+            const highlightToAnimate = essayRef.current.highlights.find(
+              (h) => (h as any).featureId === featureId
+            );
 
-                // Rotate essay to face camera
-                focusTl.to(
-                  essayRef.current.essayGroup.rotation,
-                  {
-                    y: rightSidePosition
-                      ? 0.1 - feature.position.x * 0.05
-                      : -0.1 + feature.position.x * 0.05,
-                  },
-                  "<"
-                );
-
-                // Also move the pen to stay with the essay
-                focusTl.to(
-                  essayRef.current.redPen.position,
-                  {
-                    x: rightSidePosition ? (partialView ? 14 : 8) : 6,
-                    y: feature.position.y * 0.3,
-                    z: 3,
-                  },
-                  "<"
-                );
-
-                // Highlight marker
-                focusTl.to(markerGroup.scale, {
-                  x: 1.5,
-                  y: 1.5,
-                  z: 1.5,
-                  duration: 0.5,
-                  repeat: 1,
-                  yoyo: true,
-                  ease: "power2.inOut",
-                });
-
-                // Highlight the selected feature
-                const highlightToAnimate = essayRef.current.highlights.find(
-                  (h) => (h as any).featureId === featureId
-                );
-
-                if (highlightToAnimate) {
-                  const material =
-                    highlightToAnimate.material as THREE.MeshBasicMaterial;
-                  gsap.to(material, {
-                    opacity: 0.7,
-                    duration: 0.3,
-                  });
-
-                  gsap.to(highlightToAnimate.scale, {
-                    x: 1.05,
-                    y: 1.2,
-                    z: 1,
-                    duration: 0.5,
-                    yoyo: true,
-                    repeat: 1,
-                    ease: "power1.inOut",
-                  });
-                }
-              }
-            } else {
-              // Reset camera with a single timeline
-              const resetTl = gsap.timeline({
-                defaults: { duration: 0.8, ease: "power2.inOut" },
+            if (highlightToAnimate) {
+              const material =
+                highlightToAnimate.material as THREE.MeshBasicMaterial;
+              gsap.to(material, {
+                opacity: 0.7,
+                duration: 0.3,
               });
 
-              resetTl.to(cameraRef.current?.position, {
-                x: rightSidePosition ? (partialView ? 6 : 1) : -1,
-                y: 0,
-                z: 14,
+              // Add scale animation to the highlighted element
+              gsap.to(highlightToAnimate.scale, {
+                x: 1.05,
+                y: 1.2,
+                z: 1,
+                duration: 0.5,
+                yoyo: true,
+                repeat: 1,
+                ease: "power1.inOut",
               });
-
-              resetTl.to(
-                essayRef.current.essayGroup.rotation,
-                {
-                  x: 0,
-                  y: rightSidePosition ? 0.1 : -0.1,
-                  z: 0,
-                },
-                "<"
-              );
-
-              // Reset pen position
-              resetTl.to(
-                essayRef.current.redPen.position,
-                {
-                  x: rightSidePosition ? (partialView ? 14 : 8) : 6,
-                  y: 0,
-                  z: 3,
-                },
-                "<"
-              );
             }
           }
-        }, 50); // Short delay to prevent rapid changes
+        } else {
+          // Reset camera position for no feature selected
+          const resetTl = gsap.timeline({
+            defaults: { duration: 0.8, ease: "power2.inOut" },
+          });
+
+          resetTl.to(cameraRef.current?.position, {
+            x: rightSidePosition ? (partialView ? 6 : 1) : -1,
+            y: 0,
+            z: 14,
+          });
+
+          resetTl.to(
+            essayRef.current.essayGroup.rotation,
+            {
+              x: 0,
+              y: rightSidePosition ? 0.1 : -0.1,
+              z: 0,
+            },
+            "<"
+          );
+
+          // Reset pen position
+          resetTl.to(
+            essayRef.current.redPen.position,
+            {
+              x: rightSidePosition ? (partialView ? 14 : 8) : 6,
+              y: 0,
+              z: 3,
+            },
+            "<"
+          );
+        }
       };
 
-      document.addEventListener("featureHover", handleFeatureFocus);
+      // Add scroll event listener for feature highlighting
+      window.addEventListener("scroll", handleFeatureByScroll);
 
       // Handle window resize for responsive layout
       const handleResize = () => {
@@ -791,16 +804,6 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
                   gsap.to(material, {
                     opacity: 0.7,
                     duration: 0.5,
-                  });
-
-                  gsap.to(highlight.scale, {
-                    x: 1.05,
-                    y: 1.2,
-                    z: 1,
-                    duration: 0.5,
-                    yoyo: true,
-                    repeat: 1,
-                    ease: "power1.inOut",
                   });
                 }
               });
@@ -1168,11 +1171,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
 
         window.removeEventListener("resize", handleResize);
         document.removeEventListener("essayTransition", handleEssayTransition);
-        document.removeEventListener("featureHover", handleFeatureFocus);
-
-        if (featureFocusTimeout) {
-          clearTimeout(featureFocusTimeout);
-        }
+        window.removeEventListener("scroll", handleFeatureByScroll);
 
         if (ScrollTrigger) {
           ScrollTrigger.getAll().forEach((trigger) => trigger.kill());

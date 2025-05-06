@@ -235,7 +235,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
       },
       {
         id: "grammar",
-        position: { x: 2.5, y: 1.5, z: 0.1 },
+        position: { x: 2.5, y: 6, z: 0.1 },
         color: 0xbde0fe,
         label: "Grammar",
         description:
@@ -243,7 +243,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
       },
       {
         id: "punctuation",
-        position: { x: 3, y: -1.5, z: 0.1 },
+        position: { x: 3, y: 1, z: 0.1 },
         color: 0xfffc30,
         label: "Punctuation",
         description:

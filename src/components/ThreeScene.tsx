@@ -888,6 +888,65 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
           onEnterBack: () => {
             isEssayShowcaseActive.current = true;
             isEssayFocusActive.current = false;
+
+            // Apply the same positioning as onEnter when scrolling back up
+            if (essayRef.current && cameraRef.current) {
+              const showcaseTl = gsap.timeline({
+                defaults: { duration: 1.1, ease: "power2.inOut" },
+              });
+
+              showcaseTl.to(essayRef.current.essayGroup.position, {
+                x: rightSidePosition ? (partialView ? 10 : 4) : -4,
+                y: 0,
+                z: 0,
+                ease: "elastic.out(1, 0.7)",
+              });
+
+              showcaseTl.to(
+                essayRef.current.essayGroup.rotation,
+                {
+                  x: 0,
+                  y: rightSidePosition ? 0.1 : -0.1,
+                  z: 0,
+                  ease: "elastic.out(1, 0.7)",
+                },
+                "<"
+              );
+
+              showcaseTl.to(
+                essayRef.current.essayGroup.scale,
+                {
+                  x: 0.9,
+                  y: 0.9,
+                  z: 0.9,
+                  ease: "elastic.out(1, 0.7)",
+                },
+                "<"
+              );
+
+              showcaseTl.to(
+                cameraRef.current.position,
+                {
+                  x: rightSidePosition ? (partialView ? 6 : 1) : -1,
+                  y: 0,
+                  z: 14,
+                  ease: "power2.inOut",
+                },
+                "<"
+              );
+
+              // Move pen with essay
+              showcaseTl.to(
+                essayRef.current.redPen.position,
+                {
+                  x: rightSidePosition ? (partialView ? 14 : 8) : 6,
+                  y: 0,
+                  z: 3,
+                  ease: "elastic.out(1, 0.7)",
+                },
+                "<"
+              );
+            }
           },
           onLeaveBack: () => {
             isEssayShowcaseActive.current = false;

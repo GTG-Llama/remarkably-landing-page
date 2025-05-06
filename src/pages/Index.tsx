@@ -179,7 +179,7 @@ const Index: React.FC = () => {
               key={id}
               className={`section-indicator-${index} w-4 h-4 border-2 border-black ${
                 index === 0 ? "bg-black" : "bg-white"
-              } transition-all duration-300 hover:scale-125`}
+              } transition-all duration-300`}
               aria-label={`Navigate to ${id.replace("-", " ")}`}
             />
           ))}

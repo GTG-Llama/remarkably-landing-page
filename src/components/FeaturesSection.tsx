@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { Clock, Star, PenLine, Award, BarChart, FileCheck } from "lucide-react";
+import { Clock, Star, PenLine, Award, FileCheck } from "lucide-react";
+import { MdGrading } from "react-icons/md";
 import { motion } from "framer-motion";
 
 interface FeatureCardProps {
@@ -172,7 +173,7 @@ const FeaturesSection: React.FC = () => {
       color: "bg-[#BDE0FE]", // Pastel blue
     },
     {
-      icon: <BarChart />,
+      icon: <MdGrading />,
       title: "Standardized Grading",
       description:
         "Ensure consistent and fair grading for every student across classes.",

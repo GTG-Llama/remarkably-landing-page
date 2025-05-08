@@ -108,9 +108,21 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply text-foreground font-sans antialiased;
+    /* Default mobile background: Indigo gradient */
+    background-image: linear-gradient(to bottom, theme('colors.indigo.700'), theme('colors.indigo.100'));
     overflow-x: hidden;
-    background-color: #f0f4ff; /* Light indigo background for entire site */
+  }
+
+  /* Desktop background: Revert to the original light indigo solid color */
+  @media (min-width: 1024px) { /* lg breakpoint */
+    body {
+      background-image: none; /* Remove the gradient */
+      background-color: #f0f4ff; /* Original light indigo background */
+      /* The @apply bg-background might also set a background. 
+         Ensure this explicit background-color takes precedence or remove/adjust bg-background if it conflicts. 
+         For now, we assume direct background-color is fine. */
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

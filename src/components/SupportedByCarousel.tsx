@@ -135,15 +135,15 @@ const SupportedByCarousel: React.FC = () => {
                 <Tooltip key={idx}>
                   <TooltipTrigger asChild>
                     <motion.div
-                      className="flex items-center justify-center h-30 w-30 md:h-40 md:w-40 cursor-pointer"
+                      className="flex items-center justify-center h-12 w-auto lg:h-20 lg:w-auto cursor-pointer p-2"
                       variants={logoVariants}
-                      custom={idx % logos.length} // Use modulo to assign delay based on original position
+                      custom={idx % logos.length}
                       whileHover="hover"
                     >
                       <motion.img
                         src={logo.src}
                         alt={logo.alt}
-                        className="h-40 md:h-40 object-contain mx-auto"
+                        className="h-12 lg:h-20 object-contain mx-auto"
                         draggable={false}
                         whileHover={{
                           filter: "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2))",

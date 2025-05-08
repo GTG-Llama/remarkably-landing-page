@@ -28,7 +28,7 @@ const HeroSection: React.FC = () => {
     );
 
     // Add particle effects on mouse move
-    if (sectionRef.current) {
+    if (window.innerWidth >= 1024 && sectionRef.current) {
       const createParticle = (x: number, y: number) => {
         const particle = document.createElement("div");
         particle.className =
@@ -55,9 +55,10 @@ const HeroSection: React.FC = () => {
           createParticle(e.clientX, e.clientY);
         }
       };
-      sectionRef.current.addEventListener("mousemove", handleMouseMove);
+      const currentSectionRef = sectionRef.current;
+      currentSectionRef.addEventListener("mousemove", handleMouseMove);
       return () => {
-        sectionRef.current?.removeEventListener("mousemove", handleMouseMove);
+        currentSectionRef?.removeEventListener("mousemove", handleMouseMove);
       };
     }
   }, []);
@@ -113,11 +114,11 @@ const HeroSection: React.FC = () => {
     <section
       id="hero-section"
       ref={sectionRef}
-      className="relative h-screen flex flex-col md:flex-row items-center justify-center overflow-hidden"
+      className="relative h-screen flex flex-col lg:flex-row items-center justify-center overflow-hidden pt-20 lg:pt-32"
     >
       {/* Decorative elements for neobrutalism style */}
       <motion.div
-        className="absolute top-12 left-12 w-24 h-24 bg-[var(--neo-bg-blue)] neo-border z-0"
+        className="absolute top-28 left-12 w-24 h-24 bg-[var(--neo-bg-blue)] neo-border z-0"
         variants={decorativeElementVariants}
         custom={1}
         initial="hidden"
@@ -129,7 +130,7 @@ const HeroSection: React.FC = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-14 left-20 w-16 h-16 bg-[var(--neo-bg-pink)] neo-border z-0"
+        className="absolute bottom-44 right-2 w-16 h-16 bg-[var(--neo-bg-pink)] neo-border z-0"
         variants={decorativeElementVariants}
         custom={2}
         initial="hidden"
@@ -141,7 +142,7 @@ const HeroSection: React.FC = () => {
         }}
       />
       <motion.div
-        className="absolute top-24 right-48 w-20 h-20 bg-[var(--neo-bg-yellow)] neo-border z-0 md:block hidden"
+        className="absolute top-24 right-48 w-20 h-20 bg-[var(--neo-bg-yellow)] neo-border z-0 lg:block hidden"
         variants={decorativeElementVariants}
         custom={3}
         initial="hidden"
@@ -155,7 +156,7 @@ const HeroSection: React.FC = () => {
 
       {/* Left side - Catchy phrases with neobrutalism styling */}
       <motion.div
-        className="w-full md:w-1/2 px-6 md:px-12 lg:px-16 flex flex-col justify-center z-10 mb-10 md:mb-0"
+        className="w-full px-6 md:px-8 md:max-w-2xl md:text-center lg:max-w-none lg:w-1/2 lg:px-16 lg:text-left flex flex-col justify-center z-10 mb-10 lg:mb-0"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -172,7 +173,7 @@ const HeroSection: React.FC = () => {
         >
           <h1
             ref={headingRef}
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-black"
+            className="text-5xl lg:text-6xl font-black text-black"
           >
             <motion.span
               className="block"
@@ -180,15 +181,8 @@ const HeroSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              The future of
+              The future of essay grading is
             </motion.span>
-            <motion.span
-              className="block mt-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
-              essay grading is{" "}
               <motion.span
                 className="neo-highlight"
                 whileHover={{
@@ -199,7 +193,6 @@ const HeroSection: React.FC = () => {
               >
                 here
               </motion.span>
-            </motion.span>
           </h1>
         </motion.div>
 
@@ -213,7 +206,7 @@ const HeroSection: React.FC = () => {
           }}
           initial={{ rotate: -2 }}
         >
-          <p className="text-xl md:text-2xl font-bold text-black">
+          <p className="text-xl lg:text-2xl font-bold text-black">
             Replace tedious manual grading with AI-powered solutions that frees
             up time for what truly matters, teaching and connecting with
             students.
@@ -243,7 +236,7 @@ const HeroSection: React.FC = () => {
 
       {/* Right side - 3D Essay Model (adjusted to be partially visible) */}
       <motion.div
-        className="w-full md:w-1/2 h-[400px] md:h-screen relative"
+        className="w-full lg:w-1/2 h-auto lg:h-screen relative hidden lg:block"
         initial={{ opacity: 0, x: 100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{

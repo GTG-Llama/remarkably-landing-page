@@ -34,11 +34,10 @@ const contentVariants: Variants = {
     },
   },
 };
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
+
+// MODIFIED cardVariants to be a function that checks isMobile
+const getCardVariants = (isMobile: boolean): Variants => ({
+  hidden: isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
@@ -49,7 +48,7 @@ const cardVariants: Variants = {
       bounce: 0.4,
     },
   }),
-};
+});
 
 // Debounce utility function
 const debounce = (fn: Function, ms = 100) => {
@@ -69,6 +68,8 @@ const EssayFocusSection: React.FC = () => {
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
   const triggerRefs = useRef<ScrollTrigger[]>([]);
   const cardVisibility = useRef<boolean[]>([]);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+  const cardVariants = getCardVariants(isMobile); // Get variants based on mobile status
 
   // Debounced version of setActiveCardIndex to prevent rapid state changes
   const debouncedSetActiveCard = useCallback(
@@ -244,7 +245,7 @@ const EssayFocusSection: React.FC = () => {
         }}
       ></motion.div>
 
-      <div className="content-container w-full md:px-8 max-w-6xl mx-auto z-10 relative">
+      <div className="content-container w-full px-4 lg:px-8 max-w-6xl mx-auto z-10 relative">
         <motion.div
           className="mb-20 relative"
           initial="hidden"
@@ -255,10 +256,10 @@ const EssayFocusSection: React.FC = () => {
           }}
           variants={contentVariants}
         >
-          <div className="bg-cyan-300 border-4 border-black p-8 md:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-1 text-center">
+          <div className="bg-cyan-300 border-4 border-black p-8 lg:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-1 text-center">
             <motion.h2
               ref={titleRef}
-              className="text-3xl md:text-5xl font-black mb-6 text-black"
+              className="text-3xl lg:text-5xl font-black mb-6 text-black"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{

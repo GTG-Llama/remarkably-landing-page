@@ -401,7 +401,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
     const initializeScene = async () => {
       // Create scene
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xffffff);
+      scene.background = new THREE.Color(0xa3b3ff); // Lighter indigo background (Tailwind indigo-400)
       sceneRef.current = scene;
 
       // Setup camera

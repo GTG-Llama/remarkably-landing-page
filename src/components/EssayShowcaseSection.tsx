@@ -81,6 +81,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   index,
 }) => {
   const colorHex = "#" + feature.color.toString(16).padStart(6, "0");
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+
+  const cardInitialVariant = isMobile ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 };
 
   const cardVariants = {
     inactive: {
@@ -138,10 +141,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       viewport={{ once: true, amount: 0.8 }}
       custom={index}
       variants={{
-        offscreen: {
-          y: 30,
-          opacity: 0,
-        },
+        offscreen: cardInitialVariant,
         onscreen: {
           y: 0,
           opacity: 1,
@@ -325,7 +325,7 @@ const EssayShowcaseSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="essay-showcase"
-      className="min-h-screen py-20 flex flex-col items-center justify-center relative overflow-hidden"
+      className="min-h-screen pt-20 pb-10 lg:pb-20 flex flex-col items-center justify-center relative overflow-hidden"
     >
       {/* Decorative elements with animations */}
       <motion.div
@@ -382,9 +382,9 @@ const EssayShowcaseSection: React.FC = () => {
         </motion.div>
 
         <div className="flex flex-col lg:flex-row items-start gap-16">
-          <div className="lg:w-3/5 h-[700px] relative order-2 lg:order-1">
+          <div className="lg:w-3/5 h-[700px] relative order-2 lg:order-1 hidden lg:block">
             {/* This empty div is where the 3D model will be visible */}
-            <div className="absolute bottom-0 left-0 right- h-20 z-10 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-20 z-10 pointer-events-none"></div>
           </div>
 
           <div className="lg:w-1/3 space-y-12 order-1 lg:order-2">

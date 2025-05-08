@@ -18,8 +18,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   index = 0,
   color,
 }) => {
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+
   const cardVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: isMobile ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 },
     visible: (i: number) => ({
       y: 0,
       opacity: 1,
@@ -198,7 +200,7 @@ const FeaturesSection: React.FC = () => {
   return (
     <section
       id="features"
-      className="section-padding relative overflow-hidden mt-20 z-10 bg-gradient-to-b from-white to-indigo-200"
+      className="section-padding relative overflow-hidden mt-0 lg:mt-20 z-10 bg-gradient-to-b from-white to-indigo-200"
     >
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
@@ -216,7 +218,7 @@ const FeaturesSection: React.FC = () => {
               transition: { duration: 0.3 },
             }}
           >
-            <h2 className="text-3xl md:text-5xl font-black mb-6 text-black relative inline-block">
+            <h2 className="text-3xl lg:text-5xl font-black mb-6 text-black relative inline-block">
               Helping You Become a{" "}
               <span className="relative inline-block">
                 <span className="relative z-10">Remarkable</span>
@@ -255,7 +257,7 @@ const FeaturesSection: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

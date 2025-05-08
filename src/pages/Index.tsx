@@ -62,76 +62,82 @@ const Index: React.FC = () => {
         "-=0.6"
       );
 
-    gsap.utils.toArray('a[href^="#"]').forEach((anchor: any) => {
-      anchor.addEventListener("click", (e: Event) => {
-        e.preventDefault();
-        const targetID = anchor.getAttribute("href");
-        const target = document.querySelector(targetID);
+    // Check if the screen width is greater than tablet breakpoint (e.g., 1024px for lg)
+    if (window.innerWidth >= 1024) {
+      gsap.utils.toArray('a[href^="#"]').forEach((anchor: any) => {
+        anchor.addEventListener("click", (e: Event) => {
+          e.preventDefault();
+          const targetID = anchor.getAttribute("href");
+          const target = document.querySelector(targetID);
 
-        if (target) {
-          gsap.to(window, {
-            duration: 1.2,
-            scrollTo: {
-              y: target,
-              offsetY: 80,
-            },
-            ease: "power3.inOut",
+          if (target) {
+            gsap.to(window, {
+              duration: 1.2,
+              scrollTo: {
+                y: target,
+                offsetY: 80, // Keep header height in mind
+              },
+              ease: "power3.inOut",
+            });
+          }
+        });
+      });
+
+      const sections = gsap.utils.toArray<HTMLElement>("section[id]");
+
+      // First, reset all indicators to non-active state initially
+      sections.forEach((_, i) => {
+        if (i > 0) {
+          // Skip the first one which should be active on page load
+          gsap.set(`.section-indicator-${i}`, {
+            backgroundColor: "#e5e5e5", // A neutral, non-active color
           });
         }
       });
-    });
 
-    const sections = gsap.utils.toArray<HTMLElement>("section[id]");
-
-    // First, reset all indicators to non-active state initially
-    sections.forEach((_, i) => {
-      if (i > 0) {
-        // Skip the first one which should be active on page load
-        gsap.set(`.section-indicator-${i}`, {
-          backgroundColor: "#e5e5e5",
+      // Create individual ScrollTrigger for each section
+      sections.forEach((section, i) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top center",
+          end: "bottom center",
+          onEnter: () => {
+            // Make all indicators non-active
+            sections.forEach((_, index) => {
+              gsap.to(`.section-indicator-${index}`, {
+                backgroundColor: "#e5e5e5",
+                duration: 0.3,
+              });
+            });
+            // Activate only the current indicator
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#ffe712", // Your active color
+              duration: 0.3,
+            });
+          },
+          onEnterBack: () => {
+            // Make all indicators non-active
+            sections.forEach((_, index) => {
+              gsap.to(`.section-indicator-${index}`, {
+                backgroundColor: "#e5e5e5",
+                duration: 0.3,
+              });
+            });
+            // Activate only the current indicator
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#ffe712", // Your active color
+              duration: 0.3,
+            });
+          },
         });
-      }
-    });
-
-    // Create individual ScrollTrigger for each section
-    sections.forEach((section, i) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => {
-          // Make all indicators non-active
-          sections.forEach((_, index) => {
-            gsap.to(`.section-indicator-${index}`, {
-              backgroundColor: "#e5e5e5",
-              duration: 0.3,
-            });
-          });
-          // Activate only the current indicator
-          gsap.to(`.section-indicator-${i}`, {
-            backgroundColor: "#ffe712",
-            duration: 0.3,
-          });
-        },
-        onEnterBack: () => {
-          // Make all indicators non-active
-          sections.forEach((_, index) => {
-            gsap.to(`.section-indicator-${index}`, {
-              backgroundColor: "#e5e5e5",
-              duration: 0.3,
-            });
-          });
-          // Activate only the current indicator
-          gsap.to(`.section-indicator-${i}`, {
-            backgroundColor: "#ffe712",
-            duration: 0.3,
-          });
-        },
       });
-    });
+    }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      // Kill all ScrollTriggers if they were created
+      if (window.innerWidth >= 1024) {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      }
     };
   }, []);
 
@@ -165,7 +171,7 @@ const Index: React.FC = () => {
       <GlowEffect targetSelector="#features" startDelay={0.4} />
       <GlowEffect targetSelector="#video-showcase" startDelay={0.5} />
 
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden md:block">
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden lg:block">
         <div className="flex flex-col items-center gap-3">
           {[
             "hero-section",
@@ -186,7 +192,10 @@ const Index: React.FC = () => {
         </div>
       </div>
 
-      <ThreeScene scrollContainer="#main-content" />
+      {/* Wrap ThreeScene in a div with responsive visibility classes */}
+      <div className="hidden lg:block">
+        <ThreeScene scrollContainer="#main-content" />
+      </div>
 
       <div id="main-content" className="relative z-10">
         <Header />

@@ -1,8 +1,16 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem; /* Default padding (16px) for small screens */
+  /* Consider if text-align: center is the desired global behavior. 
+     It's often better to set text alignment on more specific containers or components. */
   text-align: center;
+}
+
+@media (min-width: 1024px) { /* lg breakpoint in Tailwind by default */
+  #root {
+    padding: 2rem; /* Larger padding (32px) for large screens and up */
+  }
 }
 
 .logo {

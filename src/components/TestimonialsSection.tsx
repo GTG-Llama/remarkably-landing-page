@@ -277,7 +277,7 @@ const TestimonialsSection: React.FC = () => {
               viewport={{ once: true }}
             ></motion.div>
 
-            <div className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 md:p-12 overflow-hidden relative z-0 min-h-[470px]">
+            <div className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 md:p-12 overflow-hidden relative z-0 min-h-[600px]">
               <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                   key={activeIndex}

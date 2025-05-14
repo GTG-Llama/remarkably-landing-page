@@ -68,7 +68,7 @@ const Header = () => {
           bounce: 0.3
         }}
       >
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-0 py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
             <motion.div

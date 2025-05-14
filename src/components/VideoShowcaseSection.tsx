@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { IoPlay } from "react-icons/io5";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useVideoPlayback } from "@/hooks/useVideoPlayback";
 
 const VideoShowcaseSection: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const controls = useAnimation();
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const videoRef = useVideoPlayback(true, false, true);
 
   useEffect(() => {
     if (isInView) {
@@ -248,13 +250,18 @@ const VideoShowcaseSection: React.FC = () => {
                 transition={{ duration: 0.4 }}
               >
                 <video
+                  ref={videoRef}
                   src="/remarkably.mp4"
                   controls
                   autoPlay
                   loop
                   playsInline
+                  preload="auto"
                   className="w-full h-full"
-                />
+                >
+                  <source src="/remarkably.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </motion.div>
             )}
           </motion.div>

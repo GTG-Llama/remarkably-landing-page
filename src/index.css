@@ -205,6 +205,36 @@ html {
   scroll-behavior: smooth;
 }
 
+html:not(.loaded) {
+  overflow: hidden;
+}
+
+html.loaded {
+  overflow: auto;
+}
+
+/* Ensure all images have proper loading behavior */
+img {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+img:not([src]), img[src=""] {
+  opacity: 0;
+}
+
+/* Loading state styles */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #EEF2FF; /* indigo-100 */
+  transition: opacity 0.5s ease-in-out;
+}
+
 /* Neo-brutalism decorative elements */
 .neo-dot {
   @apply w-16 h-16 absolute border-4 border-black rounded-none;

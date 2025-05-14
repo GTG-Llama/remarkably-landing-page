@@ -17,10 +17,63 @@ import SupportedByCarousel from "@/components/SupportedByCarousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// List of important images to preload
+const imagesToPreload = [
+  "/remarkably logo black.png",
+  // Add other critical images here
+];
+
 const Index: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
 
+  // Preload critical images
   useEffect(() => {
+    let loadedCount = 0;
+    const totalImages = imagesToPreload.length;
+    
+    const preloadImage = (src: string) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          loadedCount++;
+          setProgress(Math.floor((loadedCount / totalImages) * 100));
+          resolve(true);
+        };
+        img.onerror = () => {
+          loadedCount++;
+          setProgress(Math.floor((loadedCount / totalImages) * 100));
+          resolve(false);
+        };
+      });
+    };
+
+    const loadAllImages = async () => {
+      await Promise.all(imagesToPreload.map(src => preloadImage(src)));
+      setImagesLoaded(true);
+    };
+
+    loadAllImages();
+    
+    // Set a minimum loading time to prevent flash
+    const minLoadingTimer = setTimeout(() => {
+      setContentReady(true);
+    }, 1500);
+    
+    return () => clearTimeout(minLoadingTimer);
+  }, []);
+
+  // Handle animations and page setup after loading
+  useEffect(() => {
+    // Only proceed when both images are loaded and minimum time has passed
+    if (!imagesLoaded || !contentReady) return;
+    
+    // Ensure the page is scrolled to top
+    window.scrollTo(0, 0);
+    
     const tl = gsap.timeline({
       onComplete: () => setIsLoading(false),
     });
@@ -139,7 +192,7 @@ const Index: React.FC = () => {
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
     };
-  }, []);
+  }, [imagesLoaded, contentReady]);
 
   return (
     <div className="relative">
@@ -157,7 +210,7 @@ const Index: React.FC = () => {
               </div>
             </div>
             <p className="text-xl font-black text-black mt-6 px-6 py-3 bg-yellow-300 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              Marking your essay...
+              Marking your essay... {progress}%
             </p>
           </div>
         </div>

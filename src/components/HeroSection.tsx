@@ -116,43 +116,6 @@ const HeroSection: React.FC = () => {
       ref={sectionRef}
       className="relative h-screen flex flex-col lg:flex-row items-center justify-center overflow-hidden pt-20 lg:pt-32"
     >
-      {/* Decorative elements for neobrutalism style */}
-      <motion.div
-        className="absolute top-28 left-12 w-24 h-24 bg-[var(--neo-bg-blue)] neo-border z-0"
-        variants={decorativeElementVariants}
-        custom={1}
-        initial="hidden"
-        animate="visible"
-        whileHover={{
-          scale: 1.1,
-          rotate: 20,
-          transition: { duration: 0.3 },
-        }}
-      />
-      <motion.div
-        className="absolute bottom-44 right-2 w-16 h-16 bg-[var(--neo-bg-pink)] neo-border z-0"
-        variants={decorativeElementVariants}
-        custom={2}
-        initial="hidden"
-        animate="visible"
-        whileHover={{
-          scale: 1.1,
-          rotate: -12,
-          transition: { duration: 0.3 },
-        }}
-      />
-      <motion.div
-        className="absolute top-24 right-48 w-20 h-20 bg-[var(--neo-bg-yellow)] neo-border z-0 lg:block hidden"
-        variants={decorativeElementVariants}
-        custom={3}
-        initial="hidden"
-        animate="visible"
-        whileHover={{
-          scale: 1.1,
-          rotate: 12,
-          transition: { duration: 0.3 },
-        }}
-      />
 
       {/* Left side - Catchy phrases with neobrutalism styling */}
       <motion.div

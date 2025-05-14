@@ -92,7 +92,7 @@ const SupportedByCarousel: React.FC = () => {
   return (
     <motion.section
       ref={sectionRef}
-      className="py-12 bg-white border-t-4 border-black border-b-4 border-black"
+      className="py-12 bg-white border-t-4 border-b-4 border-white"
       initial="hidden"
       animate={controls}
       variants={containerVariants}

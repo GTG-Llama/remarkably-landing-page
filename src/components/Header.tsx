@@ -39,7 +39,7 @@ const Header = () => {
   };
 
   const handleContactClick = () => {
-    window.location.href = "mailto:lenor.eduai@gmail.com";
+    window.location.href = "mailto:contact@lenorai.com";
   };
 
   return (

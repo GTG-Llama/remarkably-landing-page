@@ -3,83 +3,83 @@ import LandingPageTemplate from "./LandingPageTemplate";
 
 const MalaysiaEducation: React.FC = () => {
   const pageContent = {
-    pageTitle: "Remarkably | AI-Powered Essay Grading for Malaysian Education",
-    metaDescription: "Transform essay assessment in Malaysian schools with Remarkably's AI platform. Support for KSSM, SPM, and STPM curricula while saving teachers valuable time.",
+    pageTitle: "Remarkably | AI-Powered English Essay Grading for Malaysian Education",
+    metaDescription: "Transform English essay assessment in Malaysian schools with Remarkably's AI platform. Support for KSSM, SPM, and STPM English curricula while saving teachers valuable time.",
     
-    heroTitle: "Revolutionize Essay Assessment for Malaysian Schools",
-    heroSubtitle: "Reduce marking time by 80% while providing quality feedback to students. Supports Bahasa Malaysia, English, and Chinese language essays.",
+    heroTitle: "Revolusi penilaian karangan bahasa Inggeris untuk sekolah Malaysia",
+    heroSubtitle: "Kurangkan masa menanda hingga 80% sambil memberikan maklum balas berkualiti kepada pelajar. Khusus untuk karangan bahasa Inggeris dalam pendidikan Malaysia.",
     
     keyFeatures: [
       {
-        title: "Multilingual Support",
-        description: "Our AI understands and evaluates essays in Bahasa Malaysia, English, and Chinese, perfect for Malaysia's multicultural education system.",
+        title: "Fokus bahasa Inggeris",
+        description: "AI kami mengkhusus dalam menilai karangan bahasa Inggeris, memberikan penilaian yang tepat untuk keperluan pendidikan Malaysia.",
       },
       {
-        title: "KSSM & KBSM Aligned",
-        description: "Designed to meet the requirements of Malaysia's national curriculum standards and assessment criteria.",
+        title: "Selaras dengan KSSM & KBSM",
+        description: "Direka untuk memenuhi keperluan standard kurikulum kebangsaan Malaysia dan kriteria penilaian bahasa Inggeris.",
       },
       {
-        title: "SPM & STPM Preparation",
-        description: "Ideal for helping students prepare for crucial national examinations with feedback that follows official marking schemes.",
+        title: "Persediaan SPM & STPM Bahasa Inggeris",
+        description: "Sesuai untuk membantu pelajar bersedia untuk peperiksaan bahasa Inggeris penting dengan maklum balas yang mengikut skim pemarkahan rasmi.",
       },
       {
-        title: "Time-Efficient Grading",
-        description: "Reduce marking time from 15 minutes to just 3 minutes per essay, saving teachers hundreds of hours each academic year.",
+        title: "Penilaian yang cekap masa",
+        description: "Kurangkan masa menanda dari 15 minit kepada hanya 3 minit setiap karangan, menjimatkan beratus jam setiap tahun akademik.",
       },
       {
-        title: "Comprehensive Analytics",
-        description: "Track student progress across time, identify strengths and weaknesses, and generate reports for parents and school leadership.",
+        title: "Analitik komprehensif",
+        description: "Jejaki kemajuan pelajar dari masa ke masa, kenal pasti kekuatan dan kelemahan dalam penulisan bahasa Inggeris, dan jana laporan untuk ibu bapa dan kepimpinan sekolah.",
       },
       {
-        title: "Handwritten Essay Support",
-        description: "Our system can process both digital and handwritten essays, accommodating various assessment conditions.",
+        title: "Sokongan karangan tulisan tangan",
+        description: "Sistem kami boleh memproses karangan bahasa Inggeris digital mahupun tulisan tangan, menampung pelbagai keadaan penilaian.",
       },
     ],
     
     benefits: [
       {
-        title: "Educational Excellence",
-        description: "Help Malaysian schools maintain their reputation for high educational standards while embracing educational technology.",
+        title: "Kecemerlangan bahasa Inggeris",
+        description: "Bantu sekolah Malaysia mengekalkan reputasi untuk standard bahasa Inggeris yang tinggi sambil menerima teknologi pendidikan.",
       },
       {
-        title: "Teacher Wellbeing",
-        description: "Reduce teacher burnout and improve work-life balance by automating time-consuming marking tasks.",
+        title: "Kesejahteraan guru",
+        description: "Kurangkan keletihan guru dan tingkatkan keseimbangan kerja-hidup dengan mengautomasikan tugas menanda karangan bahasa Inggeris yang memakan masa.",
       },
       {
-        title: "Data-Driven Education",
-        description: "Support Malaysia's Education Blueprint goals for evidence-based teaching and learning with detailed analytics.",
+        title: "Pendidikan berasaskan data",
+        description: "Sokong matlamat Pelan Pembangunan Pendidikan Malaysia untuk pengajaran dan pembelajaran berasaskan bukti dengan analitik terperinci untuk pembangunan bahasa Inggeris.",
       },
       {
-        title: "Enhanced Student Outcomes",
-        description: "Provide consistent, detailed feedback that helps students improve their writing skills and academic performance.",
+        title: "Peningkatan hasil pelajar",
+        description: "Berikan maklum balas yang konsisten dan terperinci yang membantu pelajar meningkatkan kemahiran menulis bahasa Inggeris dan prestasi akademik.",
       },
     ],
     
-    ctaTitle: "Make Your School ",
-    ctaSubtitle: "Join forward-thinking Malaysian schools that are already using Remarkably to transform their approach to essay assessment.",
-    ctaButtonText: "Book a Free Demo",
+    ctaTitle: "Jadikan sekolah anda ",
+    ctaSubtitle: "Sertai sekolah-sekolah progresif di Malaysia yang sudah menggunakan Remarkably untuk mentransformasi pendekatan penilaian karangan bahasa Inggeris mereka.",
+    ctaButtonText: "Tempah Demo Percuma",
     
     ctaFeatures: [
-      "Multilingual user interface and support",
-      "MOE-aligned assessment criteria",
-      "Teacher training and implementation",
-      "School-wide analytics dashboard",
-      "Customization for your school's needs"
+      "Kepakaran penilaian bahasa Inggeris",
+      "Kriteria penilaian bahasa Inggeris selaras KPM",
+      "Latihan guru dan pelaksanaan",
+      "Dashboard analitik bahasa Inggeris se-sekolah",
+      "Penyesuaian mengikut keperluan sekolah anda"
     ],
     
     curriculumSection: {
-      title: "Supporting Malaysian Curricula",
+      title: "Menyokong kurikulum bahasa Inggeris Malaysia",
       items: [
-        "KSSM Bahasa Malaysia",
-        "KSSM English Language",
-        "SPM Bahasa Malaysia",
-        "SPM English",
-        "STPM Pengajian Am",
-        "STPM Literature",
-        "Chinese Independent Schools",
-        "IGCSE in Malaysian Schools",
-        "International Baccalaureate",
-        "MUET Preparation"
+        "KSSM Bahasa Inggeris",
+        "SPM Bahasa Inggeris",
+        "STPM Kesusasteraan Inggeris",
+        "STPM Kertas Am",
+        "Sekolah antarabangsa - Bahasa Inggeris",
+        "IGCSE Bahasa Inggeris Bahasa Pertama",
+        "IGCSE Bahasa Inggeris Bahasa Kedua",
+        "IB Bahasa Inggeris A & B",
+        "Persediaan MUET",
+        "Kelayakan Bahasa Inggeris Cambridge"
       ]
     }
   };

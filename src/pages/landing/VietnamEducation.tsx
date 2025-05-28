@@ -3,83 +3,83 @@ import LandingPageTemplate from "./LandingPageTemplate";
 
 const VietnamEducation: React.FC = () => {
   const pageContent = {
-    pageTitle: "Remarkably | Giải pháp chấm điểm bằng AI cho Giáo dục Việt Nam",
-    metaDescription: "Nâng cao hiệu quả giảng dạy với nền tảng chấm điểm bài luận bằng AI của Remarkably. Hỗ trợ chương trình giáo dục Việt Nam và tiết kiệm thời gian cho giáo viên.",
+    pageTitle: "Remarkably | Giải pháp chấm điểm bài luận tiếng Anh bằng AI cho Giáo dục Việt Nam",
+    metaDescription: "Nâng cao hiệu quả giảng dạy tiếng Anh với nền tảng chấm điểm bài luận bằng AI của Remarkably. Hỗ trợ chương trình giáo dục Việt Nam và tiết kiệm thời gian cho giáo viên.",
     
-    heroTitle: "Giải Pháp AI Hiện Đại Cho Giáo Dục Việt Nam",
-    heroSubtitle: "Tiết kiệm 80% thời gian chấm bài, giúp giáo viên tập trung vào giảng dạy chất lượng. Hỗ trợ cả tiếng Việt và tiếng Anh.",
+    heroTitle: "Cách mạng hóa việc chấm điểm bài luận tiếng Anh tại Việt Nam",
+    heroSubtitle: "Tiết kiệm 80% thời gian chấm bài và cung cấp phản hồi chất lượng cao cho học sinh. Chuyên biệt cho việc đánh giá bài luận tiếng Anh trong giáo dục Việt Nam.",
     
     keyFeatures: [
       {
-        title: "Hỗ Trợ Tiếng Việt",
-        description: "Công nghệ AI hiểu và đánh giá bài viết tiếng Việt với độ chính xác cao, phù hợp với văn phong và ngữ pháp Việt Nam.",
+        title: "Tập trung vào tiếng Anh",
+        description: "AI của chúng tôi chuyên đánh giá bài luận tiếng Anh, cung cấp việc đánh giá chính xác cho các yêu cầu giáo dục của Việt Nam.",
       },
       {
-        title: "Tuân Thủ Chương Trình Bộ GD&ĐT",
-        description: "Thiết kế phù hợp với khung chương trình và tiêu chí đánh giá của Bộ Giáo dục và Đào tạo Việt Nam.",
+        title: "Phù hợp với chương trình GDPT Việt Nam",
+        description: "Được thiết kế để đáp ứng các yêu cầu của tiêu chuẩn chương trình giáo dục phổ thông và tiêu chí đánh giá tiếng Anh quốc gia.",
       },
       {
-        title: "Tự Động Hóa Chấm Điểm",
-        description: "Giảm thời gian chấm từ 15 phút xuống chỉ còn 3 phút mỗi bài, giúp giáo viên tiết kiệm hàng trăm giờ mỗi năm học.",
+        title: "Chuẩn bị cho kỳ thi THPT Quốc gia",
+        description: "Lý tưởng để giúp học sinh chuẩn bị cho các kỳ thi tiếng Anh quan trọng với phản hồi theo đúng phương án chấm điểm chính thức.",
       },
       {
-        title: "Phân Tích Dữ Liệu Chi Tiết",
-        description: "Theo dõi tiến bộ của học sinh qua thời gian, xác định điểm mạnh và điểm yếu để cải thiện kết quả học tập.",
+        title: "Chấm điểm hiệu quả về thời gian",
+        description: "Giảm thời gian chấm bài từ 15 phút xuống chỉ còn 3 phút mỗi bài luận, tiết kiệm hàng trăm giờ mỗi năm học.",
       },
       {
-        title: "Hỗ Trợ Thi THPT Quốc Gia",
-        description: "Công cụ lý tưởng để chuẩn bị cho kỳ thi quan trọng với phản hồi chi tiết theo tiêu chí chấm điểm chính thức.",
+        title: "Phân tích toàn diện",
+        description: "Theo dõi tiến độ học sinh theo thời gian, xác định điểm mạnh và điểm yếu trong việc viết tiếng Anh, và tạo báo cáo cho phụ huynh và ban lãnh đạo nhà trường.",
       },
       {
-        title: "Chấm Bài Viết Tay",
-        description: "Hỗ trợ cả bài viết tay, phù hợp với điều kiện thi cử và làm bài tập tại Việt Nam.",
+        title: "Hỗ trợ bài luận viết tay",
+        description: "Hệ thống của chúng tôi có thể xử lý cả bài luận kỹ thuật số và viết tay bằng tiếng Anh, phù hợp với các điều kiện đánh giá khác nhau.",
       },
     ],
     
     benefits: [
       {
-        title: "Nâng Cao Chất Lượng Giáo Dục",
-        description: "Giúp các trường học Việt Nam áp dụng công nghệ tiên tiến vào giảng dạy, đáp ứng mục tiêu đổi mới giáo dục quốc gia.",
+        title: "Xuất sắc về ngôn ngữ tiếng Anh",
+        description: "Giúp các trường học Việt Nam duy trì danh tiếng về tiêu chuẩn tiếng Anh cao trong khi áp dụng công nghệ giáo dục.",
       },
       {
-        title: "Giảm Áp Lực Cho Giáo Viên",
-        description: "Cải thiện điều kiện làm việc và sức khỏe tinh thần của giáo viên bằng cách giảm khối lượng công việc hành chính.",
+        title: "Phụ Có Khỏe Mạnh cho Giáo viên",
+        description: "Giảm tình trạng kiệt sức của giáo viên và cải thiện sự cân bằng giữa công việc và cuộc sống bằng cách tự động hóa các nhiệm vụ chấm bài luận tiếng Anh tốn thời gian.",
       },
       {
-        title: "Chuẩn Bị Kỹ Năng Thế Kỷ 21",
-        description: "Phát triển kỹ năng viết và tư duy phản biện cho học sinh Việt Nam, chuẩn bị cho thành công trong kỷ nguyên số.",
+        title: "Giáo dục dựa trên dữ liệu",
+        description: "Hỗ trợ các mục tiêu của Chương trình Giáo dục Việt Nam cho việc giảng dạy và học tập dựa trên bằng chứng với phân tích chi tiết cho việc phát triển ngôn ngữ tiếng Anh.",
       },
       {
-        title: "Dữ Liệu Đáng Tin Cậy",
-        description: "Cung cấp đánh giá khách quan, giúp nhà trường và phụ huynh có thông tin chính xác về tiến bộ học tập của học sinh.",
+        title: "Nâng cao kết quả học tập của học sinh",
+        description: "Cung cấp phản hồi nhất quán, chi tiết giúp học sinh cải thiện kỹ năng viết tiếng Anh và thành tích học tập.",
       },
     ],
     
-    ctaTitle: "Đưa Trường Học Của Bạn Trở Nên ",
-    ctaSubtitle: "Tham gia cùng các trường tiên phong tại Việt Nam đang sử dụng Remarkably để nâng cao chất lượng dạy và học.",
-    ctaButtonText: "Đăng Ký Demo Miễn Phí",
+    ctaTitle: "Biến trường học của bạn thành ",
+    ctaSubtitle: "Tham gia cùng các trường học tiến bộ ở Việt Nam đã sử dụng Remarkably để chuyển đổi phương pháp đánh giá bài luận tiếng Anh.",
+    ctaButtonText: "Đặt lịch Demo miễn phí",
     
     ctaFeatures: [
-      "Hướng dẫn sử dụng bằng tiếng Việt",
-      "Hỗ trợ kỹ thuật 24/7",
-      "Đào tạo giáo viên",
-      "Tùy chỉnh theo yêu cầu trường học",
-      "Phân tích dữ liệu toàn trường"
+      "Chuyên môn đánh giá ngôn ngữ tiếng Anh",
+      "Tiêu chí đánh giá tiếng Anh phù hợp với BGD&ĐT",
+      "Đào tạo giáo viên và triển khai",
+      "Bảng điều khiển phân tích tiếng Anh toàn trường",
+      "Tùy chỉnh theo nhu cầu trường học của bạn"
     ],
     
     curriculumSection: {
-      title: "Hỗ Trợ Chương Trình Giáo Dục Việt Nam",
+      title: "Hỗ trợ chương trình giáo dục tiếng Anh của Việt Nam",
       items: [
-        "Ngữ Văn THCS",
-        "Ngữ Văn THPT",
         "Tiếng Anh THCS",
         "Tiếng Anh THPT",
-        "Luyện thi THPT Quốc Gia",
-        "Chương trình tích hợp",
-        "Chương trình nâng cao",
-        "Tiếng Anh chuyên",
-        "IELTS/TOEFL",
-        "Các môn xã hội"
+        "Thi THPT Quốc gia môn Anh",
+        "Chương trình tiếng Anh chuyên",
+        "Trường quốc tế - tiếng Anh",
+        "Cambridge First Certificate",
+        "Cambridge Advanced",
+        "IELTS",
+        "TOEFL",
+        "Chứng chỉ tiếng Anh Cambridge"
       ]
     }
   };

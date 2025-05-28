@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FlowingParticles from "@/components/FlowingParticles";
 import GlowEffect from "@/components/GlowEffect";
+import ThreeScene from "@/components/ThreeScene";
+import FeaturesSection from "@/components/FeaturesSection";
+import VideoShowcaseSection from "@/components/VideoShowcaseSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import SupportedByCarousel from "@/components/SupportedByCarousel";
+import EssayShowcaseSection from "@/components/EssayShowcaseSection";
+import EssayFocusSection from "@/components/EssayFocusSection";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, ArrowDown } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,6 +65,9 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
   const [progress, setProgress] = useState(0);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [contentReady, setContentReady] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
   // Set page title and meta description
   useEffect(() => {
@@ -110,6 +120,47 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
     return () => clearTimeout(minLoadingTimer);
   }, []);
 
+  // Add particle effects on mouse move
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    
+    if (window.innerWidth >= 1024) {
+      const createParticle = (x: number, y: number) => {
+        const particle = document.createElement("div");
+        particle.className = "absolute w-2 h-2 rounded-full bg-black pointer-events-none";
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        particle.style.zIndex = "5";
+        sectionRef.current?.appendChild(particle);
+        gsap.to(particle, {
+          x: Math.random() * 100 - 50,
+          y: Math.random() * 100 - 50,
+          opacity: 0,
+          scale: Math.random() * 3 + 1,
+          duration: Math.random() * 2 + 1,
+          ease: "power2.out",
+          onComplete: () => {
+            particle.remove();
+          },
+        });
+      };
+      
+      const handleMouseMove = (e: MouseEvent) => {
+        // Only create particles occasionally to avoid overwhelming the browser
+        if (Math.random() > 0.92) {
+          createParticle(e.clientX, e.clientY);
+        }
+      };
+      
+      const currentSectionRef = sectionRef.current;
+      currentSectionRef.addEventListener("mousemove", handleMouseMove);
+      
+      return () => {
+        currentSectionRef?.removeEventListener("mousemove", handleMouseMove);
+      };
+    }
+  }, []);
+
   // Handle animations and page setup after loading
   useEffect(() => {
     // Only proceed when both images are loaded and minimum time has passed
@@ -158,12 +209,118 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
         },
         "-=0.6"
       );
+      
+    // Setup scroll indicators
+    if (window.innerWidth >= 1024) {
+      const sections = gsap.utils.toArray<HTMLElement>("section[id]");
+
+      // First, reset all indicators to non-active state initially
+      sections.forEach((_, i) => {
+        if (i > 0) {
+          // Skip the first one which should be active on page load
+          gsap.set(`.section-indicator-${i}`, {
+            backgroundColor: "#e5e5e5", // A neutral, non-active color
+          });
+        }
+      });
+
+      // Create individual ScrollTrigger for each section
+      sections.forEach((section, i) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top center",
+          end: "bottom center",
+          onEnter: () => {
+            // Make all indicators non-active
+            sections.forEach((_, index) => {
+              gsap.to(`.section-indicator-${index}`, {
+                backgroundColor: "#e5e5e5",
+                duration: 0.3,
+              });
+            });
+            // Activate only the current indicator
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#ffe712", // Your active color
+              duration: 0.3,
+            });
+          },
+          onEnterBack: () => {
+            // Make all indicators non-active
+            sections.forEach((_, index) => {
+              gsap.to(`.section-indicator-${index}`, {
+                backgroundColor: "#e5e5e5",
+                duration: 0.3,
+              });
+            });
+            // Activate only the current indicator
+            gsap.to(`.section-indicator-${i}`, {
+              backgroundColor: "#ffe712", // Your active color
+              duration: 0.3,
+            });
+          },
+        });
+      });
+    }
+
+    return () => {
+      // Kill all ScrollTriggers if they were created
+      if (window.innerWidth >= 1024) {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      }
+    };
   }, [imagesLoaded, contentReady]);
+
+  const scrollToFeatures = () => {
+    // Scroll approximately 100vh down the page
+    window.scrollTo({
+      top: window.innerHeight * 1.0,
+      behavior: "smooth",
+    });
+  };
+
+  // Animation variants for staggered elements
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10,
+      },
+    },
+  };
+
+  const decorativeElementVariants = {
+    hidden: { scale: 0, rotate: 0 },
+    visible: (i: number) => ({
+      scale: 1,
+      rotate: i === 1 ? 12 : i === 2 ? -6 : 6,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+        delay: 0.2 * i,
+      },
+    }),
+  };
 
   return (
     <div className="relative">
       {isLoading && (
-        <div className="loading-screen fixed inset-0 bg-indigo-100 z-50 flex items-center justify-center">
+        <div className="loading-screen fixed inset-0 bg-indigo-100 z-10 flex items-center justify-center">
           <div className="flex flex-col items-center">
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-pink-300 border-4 border-black rotate-6"></div>
@@ -176,33 +333,67 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
               </div>
             </div>
             <p className="text-xl font-black text-black mt-6 px-6 py-3 bg-yellow-300 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              Loading... {progress}%
+              Marking your essay... {progress}%
             </p>
           </div>
         </div>
       )}
 
       <FlowingParticles />
+
       <GlowEffect targetSelector="#hero-section" startDelay={0.2} />
+      <GlowEffect targetSelector="#essay-focus" startDelay={0.3} />
+      <GlowEffect targetSelector="#essay-showcase" startDelay={0.35} />
       <GlowEffect targetSelector="#features" startDelay={0.4} />
-      <GlowEffect targetSelector="#benefits" startDelay={0.5} />
+      <GlowEffect targetSelector="#video-showcase" startDelay={0.45} />
+      <GlowEffect targetSelector="#testimonials" startDelay={0.5} />
+      <GlowEffect targetSelector="#benefits" startDelay={0.52} />
+      <GlowEffect targetSelector="#curriculum" startDelay={0.54} />
+
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden lg:block">
+        <div className="flex flex-col items-center gap-3">
+          {[
+            "hero-section",
+            "essay-focus",
+            "essay-showcase",
+            "features",
+            "video-showcase",
+            "testimonials",
+            "benefits",
+            "curriculum",
+            "cta",
+          ].map((id, index) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className={`section-indicator-${index} w-4 h-4 border-2 border-black ${
+                index === 0 ? "bg-yellow-300" : "bg-white"
+              } transition-all duration-300`}
+              aria-label={`Navigate to ${id.replace("-", " ")}`}
+            />
+          ))}
+        </div>
+      </div>
 
       <Header />
 
-      <div id="main-content" className="pt-20">
+      <div id="main-content" className="relative">
         {/* Hero Section */}
         <section
           id="hero-section"
+          ref={sectionRef as React.RefObject<HTMLElement>}
           className="relative min-h-screen flex flex-col lg:flex-row items-center justify-center overflow-hidden pt-20 lg:pt-32"
         >
+          {/* Left side content */}
           <motion.div
-            className="w-full px-6 md:px-8 md:max-w-2xl md:text-center lg:max-w-none lg:w-1/2 lg:px-16 lg:text-left flex flex-col justify-center z-10 mb-10 lg:mb-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            className="w-full pb-32 px-6 md:px-8 md:max-w-2xl md:text-center lg:max-w-none lg:w-1/2 lg:px-16 lg:text-left flex flex-col justify-center z-10 mb-20 lg:mb-0"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
             <motion.div
               className="bg-white neo-border neo-shadow p-8 transform mb-8 relative"
+              variants={itemVariants}
               whileHover={{
                 rotate: 3,
                 scale: 1.02,
@@ -210,7 +401,10 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
               }}
               initial={{ rotate: 1 }}
             >
-              <h1 className="text-5xl lg:text-6xl font-black text-black">
+              <h1
+                ref={headingRef}
+                className="text-5xl lg:text-6xl font-black text-black"
+              >
                 <motion.span
                   className="block"
                   initial={{ opacity: 0, y: 20 }}
@@ -219,11 +413,22 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
                 >
                   {heroTitle}
                 </motion.span>
+                <motion.span
+                  className="neo-highlight"
+                  whileHover={{
+                    scale: 1.1,
+                    color: "#FF9500",
+                    transition: { duration: 0.2 },
+                  }}
+                >
+                  here
+                </motion.span>
               </h1>
             </motion.div>
 
             <motion.div
               className="bg-[var(--neo-bg-cyan)] neo-border neo-shadow-sm p-6 mb-8"
+              variants={itemVariants}
               whileHover={{
                 rotate: -4,
                 scale: 1.02,
@@ -238,12 +443,11 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
 
             <motion.div
               className="flex flex-col sm:flex-row gap-4 mt-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              onClick={scrollToFeatures}
+              variants={itemVariants}
             >
               <motion.button
-                className="neo-button-accent transform"
+                className="neo-button-accent transform animate-bounce"
                 whileHover={{
                   scale: 1.1,
                   rotate: -2,
@@ -253,11 +457,13 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
                 whileTap={{ scale: 0.95 }}
                 initial={{ rotate: -1 }}
               >
-                <a href="#cta">Request a Demo</a>
+                Learn more
+                <ArrowDown className="inline-block ml-2" size={16} />
               </motion.button>
             </motion.div>
           </motion.div>
 
+          {/* Right side - 3D model */}
           <motion.div
             className="w-full lg:w-1/2 h-auto lg:h-screen relative"
             initial={{ opacity: 0, x: 100 }}
@@ -269,34 +475,47 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
               delay: 0.5,
             }}
           >
-            <div className="relative w-full h-full flex items-center justify-center">
-              <motion.div
-                className="absolute top-1/4 left-1/4 w-40 h-40 bg-yellow-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-0"
-                initial={{ rotate: 0, opacity: 0 }}
-                animate={{ rotate: 12, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
-              />
-              <motion.div
-                className="absolute bottom-1/4 right-1/4 w-36 h-36 bg-pink-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-0"
-                initial={{ rotate: 0, opacity: 0 }}
-                animate={{ rotate: -6, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.9 }}
-              />
-              <motion.div 
-                className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10 max-w-xl"
-                initial={{ rotate: 0, opacity: 0 }}
-                animate={{ rotate: -2, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.1 }}
-              >
-                <img 
-                  src="/remarkably logo black.png" 
-                  alt="Essay Grading Demo" 
-                  className="w-full h-auto object-contain"
+            <div className="hidden lg:block h-full">
+              <ThreeScene scrollContainer="#main-content" rightSidePosition={true} partialView={true} />
+            </div>
+            
+            {/* Fallback for mobile */}
+            <div className="block lg:hidden relative w-full h-[400px]">
+              <div className="relative w-full h-full flex items-center justify-center">
+                <motion.div
+                  className="absolute top-1/4 left-1/4 w-40 h-40 bg-yellow-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-0"
+                  initial={{ rotate: 0, opacity: 0 }}
+                  animate={{ rotate: 12, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
                 />
-              </motion.div>
+                <motion.div
+                  className="absolute bottom-1/4 right-1/4 w-36 h-36 bg-pink-300 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-0"
+                  initial={{ rotate: 0, opacity: 0 }}
+                  animate={{ rotate: -6, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.9 }}
+                />
+                <motion.div 
+                  className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10 max-w-xl"
+                  initial={{ rotate: 0, opacity: 0 }}
+                  animate={{ rotate: -2, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.1 }}
+                >
+                  <img 
+                    src="/remarkably logo black.png" 
+                    alt="Essay Grading Demo" 
+                    className="w-full h-auto object-contain"
+                  />
+                </motion.div>
+              </div>
             </div>
           </motion.div>
         </section>
+
+        {/* Essay Focus Section */}
+        <EssayFocusSection />
+
+        {/* Essay Showcase Section */}
+        <EssayShowcaseSection />
 
         {/* Key Features Section */}
         <section
@@ -341,11 +560,12 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
               {keyFeatures.map((feature, index) => (
                 <motion.div
                   key={index}
-                  className={`bg-[${
-                    ["#FFC8DD", "#FFAFCC", "#BDE0FE", "#A2D2FF", "#CDB4DB", "#B8F7D4"][
+                  style={{
+                    backgroundColor: ["#FFC8DD", "#FFAFCC", "#BDE0FE", "#A2D2FF", "#CDB4DB", "#B8F7D4"][
                       index % 6
                     ]
-                  }] border-3 border-black p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] rounded-sm relative`}
+                  }}
+                  className="border-3 border-black p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] rounded-sm relative"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
@@ -367,7 +587,13 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
           </div>
         </section>
 
-        {/* Benefits Section */}
+        {/* Video Showcase Section */}
+        <VideoShowcaseSection />
+
+        {/* Testimonials Section */}
+        <TestimonialsSection />
+
+        {/* Benefits Section - Custom */}
         <section
           id="benefits"
           className="section-padding relative overflow-hidden z-10 bg-gradient-to-b from-indigo-200 to-white py-24"
@@ -494,7 +720,18 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Supported By Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-black mb-2">Trusted By</h2>
+              <p className="text-gray-700">Join these forward-thinking institutions already using Remarkably</p>
+            </div>
+            <SupportedByCarousel />
+          </div>
+        </section>
+
+        {/* CTA Section - custom implementation */}
         <section
           id="cta"
           className="py-24 relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-900 bg-opacity-90"

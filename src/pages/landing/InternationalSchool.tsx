@@ -4,23 +4,23 @@ import LandingPageTemplate from "./LandingPageTemplate";
 const InternationalSchool: React.FC = () => {
   const pageContent = {
     pageTitle: "Remarkably | AI Essay Grading for International Schools",
-    metaDescription: "Elevate your international school's academic excellence with Remarkably's AI-powered essay assessment platform. Supporting IB, Cambridge, AP and other international curricula.",
+    metaDescription: "Elevate your international school's academic excellence with Remarkably's AI-powered English essay assessment platform. Supporting IB, Cambridge, AP and other international curricula.",
     
-    heroTitle: "World-Class AI Essay Assessment for Global Educational Leaders",
+    heroTitle: "World-Class AI English Essay Assessment for Global Educational Leaders",
     heroSubtitle: "Join forward-thinking international schools using AI to deliver exceptional educational experiences while reducing teacher workload by up to 80%.",
     
     keyFeatures: [
       {
         title: "International Curriculum Support",
-        description: "Designed to work with IB, Cambridge A-Levels, AP, American, British, Australian and other international curricula.",
+        description: "Designed to work with English language components of IB, Cambridge A-Levels, AP, American, British, Australian and other international curricula.",
       },
       {
-        title: "Multi-Language Assessment",
-        description: "Support for essays in multiple languages to serve your diverse international student body.",
+        title: "English Essay Excellence",
+        description: "Specialized in assessing English essays with the accuracy and nuance needed for international academic standards.",
       },
       {
         title: "Global Academic Standards",
-        description: "Our AI understands global educational benchmarks while adapting to your school's specific assessment criteria.",
+        description: "Our AI understands global educational benchmarks for English writing while adapting to your school's specific assessment criteria.",
       },
       {
         title: "Advanced Analytics",
@@ -28,7 +28,7 @@ const InternationalSchool: React.FC = () => {
       },
       {
         title: "Customizable Rubrics",
-        description: "Tailor assessment criteria to match your specific program requirements and educational philosophy.",
+        description: "Tailor English assessment criteria to match your specific program requirements and educational philosophy.",
       },
       {
         title: "Plagiarism Detection",
@@ -39,7 +39,7 @@ const InternationalSchool: React.FC = () => {
     benefits: [
       {
         title: "Academic Excellence",
-        description: "Support your reputation for educational distinction with cutting-edge assessment technology that delivers consistent, high-quality feedback.",
+        description: "Support your reputation for educational distinction with cutting-edge assessment technology that delivers consistent, high-quality feedback on English writing.",
       },
       {
         title: "Teacher Retention",
@@ -56,31 +56,31 @@ const InternationalSchool: React.FC = () => {
     ],
     
     ctaTitle: "Elevate Your School to ",
-    ctaSubtitle: "Join prestigious international schools worldwide using Remarkably to transform assessment and instruction.",
+    ctaSubtitle: "Join prestigious international schools worldwide using Remarkably to transform English essay assessment and instruction.",
     ctaButtonText: "Request International School Demo",
     
     ctaFeatures: [
       "Customized onboarding for international schools",
-      "Multiple curriculum framework support",
-      "Multilingual assessment capabilities",
+      "Multiple English curriculum framework support",
+      "English language assessment expertise",
       "Global implementation expertise",
       "Priority technical support"
     ],
     
     curriculumSection: {
-      title: "Supporting Global Curriculum Frameworks",
+      title: "Supporting English in Global Curriculum Frameworks",
       items: [
-        "International Baccalaureate (IB)",
-        "Cambridge IGCSE",
-        "Cambridge A & AS Levels",
-        "Advanced Placement (AP)",
-        "American Curriculum",
-        "British Curriculum",
-        "Australian Curriculum",
-        "International Primary Curriculum",
-        "CBSE/ICSE",
-        "Extended Essay",
-        "Theory of Knowledge"
+        "International Baccalaureate (IB) English A & B",
+        "Cambridge IGCSE English",
+        "Cambridge A & AS Levels English",
+        "Advanced Placement (AP) English",
+        "American Curriculum English",
+        "British Curriculum English",
+        "Australian Curriculum English",
+        "International Primary Curriculum English",
+        "CBSE/ICSE English",
+        "IB Extended Essay",
+        "Theory of Knowledge (English responses)"
       ]
     }
   };

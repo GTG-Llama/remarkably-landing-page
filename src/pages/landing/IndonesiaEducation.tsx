@@ -3,83 +3,83 @@ import LandingPageTemplate from "./LandingPageTemplate";
 
 const IndonesiaEducation: React.FC = () => {
   const pageContent = {
-    pageTitle: "Remarkably | Solusi Penilaian Esai dengan AI untuk Pendidikan Indonesia",
-    metaDescription: "Tingkatkan kualitas pendidikan dengan platform penilaian esai berbasis AI dari Remarkably. Mendukung Kurikulum Merdeka dan membantu guru menghemat waktu.",
+    pageTitle: "Remarkably | Solusi Penilaian Esai Bahasa Inggris dengan AI untuk Pendidikan Indonesia",
+    metaDescription: "Tingkatkan kualitas pendidikan bahasa Inggris dengan platform penilaian esai berbasis AI dari Remarkably. Mendukung Kurikulum Merdeka dan membantu guru menghemat waktu.",
     
-    heroTitle: "Revolusi Penilaian Esai untuk Pendidikan Indonesia",
-    heroSubtitle: "Kurangi waktu penilaian hingga 80% dan berikan umpan balik yang lebih bermakna. Mendukung Bahasa Indonesia dan Bahasa Inggris.",
+    heroTitle: "Revolusikan penilaian esai bahasa Inggris untuk sekolah Indonesia",
+    heroSubtitle: "Kurangi waktu mengoreksi hingga 80% sambil memberikan umpan balik berkualitas kepada siswa. Khusus untuk esai bahasa Inggris dalam pendidikan Indonesia.",
     
     keyFeatures: [
       {
-        title: "Mendukung Bahasa Indonesia",
-        description: "AI kami memahami struktur dan gaya bahasa Indonesia, memberikan penilaian yang akurat sesuai standar nasional.",
+        title: "Fokus bahasa Inggris",
+        description: "AI kami mengkhususkan diri dalam mengevaluasi esai bahasa Inggris, memberikan penilaian yang akurat untuk kebutuhan pendidikan Indonesia.",
       },
       {
         title: "Selaras dengan Kurikulum Merdeka",
-        description: "Dirancang untuk mendukung pendekatan pembelajaran berbasis proyek dan penilaian formatif Kurikulum Merdeka.",
+        description: "Dirancang untuk memenuhi persyaratan standar kurikulum nasional Indonesia dan kriteria penilaian bahasa Inggris.",
       },
       {
-        title: "Efisiensi Waktu Guru",
-        description: "Kurangi waktu penilaian dari 15 menit menjadi hanya 3 menit per esai, menghemat ratusan jam per tahun ajaran.",
+        title: "Persiapan UN & ANBK Bahasa Inggris",
+        description: "Ideal untuk membantu siswa mempersiapkan ujian bahasa Inggris penting dengan umpan balik yang mengikuti skema penilaian resmi.",
       },
       {
-        title: "Analisis Perkembangan Siswa",
-        description: "Pantau kemajuan siswa dari waktu ke waktu, identifikasi kekuatan dan kelemahan untuk meningkatkan hasil belajar.",
+        title: "Penilaian yang efisien waktu",
+        description: "Kurangi waktu mengoreksi dari 15 menit menjadi hanya 3 menit per esai, menghemat ratusan jam setiap tahun akademik.",
       },
       {
-        title: "Persiapan Ujian Nasional",
-        description: "Bantu siswa mempersiapkan diri untuk Asesmen Nasional dengan umpan balik yang sesuai dengan standar penilaian Kemendikbudristek.",
+        title: "Analitik komprehensif",
+        description: "Lacak kemajuan siswa dari waktu ke waktu, identifikasi kekuatan dan kelemahan dalam penulisan bahasa Inggris, dan buat laporan untuk orang tua dan pimpinan sekolah.",
       },
       {
-        title: "Dukungan Tulisan Tangan",
-        description: "Mampu menilai esai tulisan tangan, ideal untuk kondisi ujian di sekolah-sekolah Indonesia.",
+        title: "Dukungan esai tulisan tangan",
+        description: "Sistem kami dapat memproses esai bahasa Inggris digital maupun tulisan tangan, mengakomodasi berbagai kondisi penilaian.",
       },
     ],
     
     benefits: [
       {
-        title: "Implementasi Teknologi Modern",
-        description: "Bantu sekolah Indonesia mengadopsi teknologi canggih dalam pendidikan, mendukung visi Indonesia Emas 2045.",
+        title: "Keunggulan bahasa Inggris",
+        description: "Bantu sekolah Indonesia mempertahankan reputasi standar bahasa Inggris yang tinggi sambil mengadopsi teknologi pendidikan.",
       },
       {
-        title: "Kesejahteraan Guru",
-        description: "Kurangi beban administrasi guru dan tingkatkan fokus pada pengajaran berkualitas, sesuai dengan program kesejahteraan pendidik nasional.",
+        title: "Kesejahteraan guru",
+        description: "Kurangi kelelahan guru dan tingkatkan keseimbangan kerja-hidup dengan mengotomatisasi tugas mengoreksi esai bahasa Inggris yang memakan waktu.",
       },
       {
-        title: "Akreditasi Sekolah",
-        description: "Dukung peningkatan kualitas sekolah dengan metode pengajaran inovatif yang dapat meningkatkan nilai akreditasi.",
+        title: "Pendidikan berbasis data",
+        description: "Dukung tujuan Kurikulum Merdeka Indonesia untuk pengajaran dan pembelajaran berbasis bukti dengan analitik terperinci untuk pengembangan bahasa Inggris.",
       },
       {
-        title: "Pendidikan Berkualitas untuk Semua",
-        description: "Bantu mewujudkan pemerataan pendidikan berkualitas dengan menyediakan umpan balik konsisten bagi semua siswa di berbagai daerah.",
+        title: "Peningkatan hasil belajar siswa",
+        description: "Berikan umpan balik yang konsisten dan terperinci yang membantu siswa meningkatkan kemampuan menulis bahasa Inggris dan prestasi akademik.",
       },
     ],
     
-    ctaTitle: "Wujudkan Sekolah yang ",
-    ctaSubtitle: "Bergabunglah dengan sekolah-sekolah terkemuka di Indonesia yang telah menggunakan Remarkably untuk meningkatkan kualitas pendidikan.",
+    ctaTitle: "Jadikan sekolah Anda ",
+    ctaSubtitle: "Bergabunglah dengan sekolah-sekolah maju di Indonesia yang sudah menggunakan Remarkably untuk mentransformasi pendekatan penilaian esai bahasa Inggris mereka.",
     ctaButtonText: "Jadwalkan Demo Gratis",
     
     ctaFeatures: [
-      "Panduan pengguna dalam Bahasa Indonesia",
-      "Dukungan teknis lokal",
-      "Pelatihan guru",
-      "Kustomisasi sesuai kebutuhan sekolah",
-      "Dashboard analitik seluruh sekolah"
+      "Keahlian penilaian bahasa Inggris",
+      "Kriteria penilaian bahasa Inggris selaras Kemendikbudristek",
+      "Pelatihan guru dan implementasi",
+      "Dashboard analitik bahasa Inggris se-sekolah",
+      "Kustomisasi sesuai kebutuhan sekolah Anda"
     ],
     
     curriculumSection: {
-      title: "Mendukung Kurikulum Indonesia",
+      title: "Mendukung kurikulum bahasa Inggris Indonesia",
       items: [
-        "Kurikulum Merdeka",
-        "Bahasa Indonesia SMP",
-        "Bahasa Indonesia SMA",
+        "Bahasa Inggris Kurikulum Merdeka",
         "Bahasa Inggris SMP",
         "Bahasa Inggris SMA",
-        "Persiapan Asesmen Nasional",
-        "Program IPS",
-        "Program IPA",
-        "Program Bahasa",
-        "Sekolah Menengah Kejuruan"
+        "Persiapan ANBK Bahasa Inggris",
+        "Sekolah internasional - Bahasa Inggris",
+        "Cambridge First Certificate",
+        "Cambridge Advanced",
+        "IELTS",
+        "TOEFL",
+        "Kualifikasi Bahasa Inggris Cambridge"
       ]
     }
   };

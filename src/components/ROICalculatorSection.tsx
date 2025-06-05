@@ -335,7 +335,7 @@ const ROICalculatorSection: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
           height: 24px;

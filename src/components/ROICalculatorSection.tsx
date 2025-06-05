@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Calculator, TrendingUp, Clock, DollarSign } from "lucide-react";
@@ -147,12 +148,12 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="relative">
                   <input type="range" min="1" max="100" value={teachers} onChange={e => setTeachers(Number(e.target.value))} className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider" />
                   <motion.div animate={{
-                  x: teachers / 100 * 100 - 50
+                  x: (teachers - 1) / 99 * 100 + "%"
                 }} transition={{
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-yellow-300 border-2 border-black py-1 font-black px-[17px] mx-[145px]">
+                }} className="absolute -top-12 left-0 transform -translate-x-1/2 bg-yellow-300 border-2 border-black py-1 px-3 font-black whitespace-nowrap" style={{ left: `${(teachers - 1) / 99 * 100}%` }}>
                     {teachers}
                   </motion.div>
                 </div>
@@ -165,12 +166,12 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="relative">
                   <input type="range" min="10" max="500" value={essaysPerWeek} onChange={e => setEssaysPerWeek(Number(e.target.value))} className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider" />
                   <motion.div animate={{
-                  x: essaysPerWeek / 500 * 100 - 50
+                  x: (essaysPerWeek - 10) / 490 * 100 + "%"
                 }} transition={{
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-pink-300 border-2 border-black px-3 py-1 font-black mx-[142px]">
+                }} className="absolute -top-12 left-0 transform -translate-x-1/2 bg-pink-300 border-2 border-black px-3 py-1 font-black whitespace-nowrap" style={{ left: `${(essaysPerWeek - 10) / 490 * 100}%` }}>
                     {essaysPerWeek}
                   </motion.div>
                 </div>
@@ -181,12 +182,12 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="relative">
                   <input type="range" min="5" max="30" value={markingTimePerEssay} onChange={e => setMarkingTimePerEssay(Number(e.target.value))} className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider" />
                   <motion.div animate={{
-                  x: markingTimePerEssay / 30 * 100 - 50
+                  x: (markingTimePerEssay - 5) / 25 * 100 + "%"
                 }} transition={{
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-blue-300 border-2 border-black py-1 font-black px-[8px] mx-[138px]">
+                }} className="absolute -top-12 left-0 transform -translate-x-1/2 bg-blue-300 border-2 border-black py-1 px-2 font-black whitespace-nowrap" style={{ left: `${(markingTimePerEssay - 5) / 25 * 100}%` }}>
                     {markingTimePerEssay}min
                   </motion.div>
                 </div>
@@ -199,12 +200,12 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="relative">
                   <input type="range" min="15" max="100" value={hourlyRate} onChange={e => setHourlyRate(Number(e.target.value))} className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider" />
                   <motion.div animate={{
-                  x: hourlyRate / 100 * 100 - 50
+                  x: (hourlyRate - 15) / 85 * 100 + "%"
                 }} transition={{
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-300 border-2 border-black px-3 py-1 font-black mx-[144px]">
+                }} className="absolute -top-12 left-0 transform -translate-x-1/2 bg-green-300 border-2 border-black px-3 py-1 font-black whitespace-nowrap" style={{ left: `${(hourlyRate - 15) / 85 * 100}%` }}>
                     ${hourlyRate}
                   </motion.div>
                 </div>

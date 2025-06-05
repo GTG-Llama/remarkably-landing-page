@@ -142,7 +142,7 @@ const ROICalculatorSection: React.FC = () => {
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-yellow-300 border-2 border-black py-1 font-black mx-[142px] px-[17px]">
+                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-yellow-300 border-2 border-black py-1 font-black px-[17px] mx-[141px]">
                     {teachers}
                   </motion.div>
                 </div>
@@ -167,9 +167,7 @@ const ROICalculatorSection: React.FC = () => {
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-2">
-                  Minutes per Essay (current marking time)
-                </label>
+                <label className="block text-lg font-bold text-black mb-2">Minutes per Essay (currently)</label>
                 <div className="relative">
                   <input type="range" min="5" max="30" value={markingTimePerEssay} onChange={e => setMarkingTimePerEssay(Number(e.target.value))} className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider" />
                   <motion.div animate={{
@@ -178,7 +176,7 @@ const ROICalculatorSection: React.FC = () => {
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-blue-300 border-2 border-black py-1 font-black px-[8px] mx-[136px]">
+                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-blue-300 border-2 border-black py-1 font-black px-[8px] mx-[138px]">
                     {markingTimePerEssay}min
                   </motion.div>
                 </div>
@@ -196,7 +194,7 @@ const ROICalculatorSection: React.FC = () => {
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-300 border-2 border-black px-3 py-1 font-black mx-[143px]">
+                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-300 border-2 border-black px-3 py-1 font-black mx-[144px]">
                     ${hourlyRate}
                   </motion.div>
                 </div>

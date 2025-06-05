@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Calculator, TrendingUp, Clock, DollarSign } from "lucide-react";
+
 const ROICalculatorSection: React.FC = () => {
   const [teachers, setTeachers] = useState(10);
   const [essaysPerWeek, setEssaysPerWeek] = useState(50);
@@ -14,6 +15,13 @@ const ROICalculatorSection: React.FC = () => {
   const timeSavedWithAI = yearlyMarkingHours * 0.8; // 80% time saving
   const costSavings = timeSavedWithAI * hourlyRate;
   const hoursPerWeekSaved = timeSavedWithAI / 52;
+  
+  // Calculate equivalent part-time teachers based on Singapore average salary
+  const singaporeTeacherMonthlySalary = 4400; // SGD 4,400 per month
+  const singaporeTeacherAnnualSalary = singaporeTeacherMonthlySalary * 12;
+  const equivalentPartTimeTeachers = Math.round(costSavings / singaporeTeacherAnnualSalary);
+
+  // Animation variants
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -58,7 +66,9 @@ const ROICalculatorSection: React.FC = () => {
       }
     }
   };
-  return <section id="roi-calculator" className="py-24 relative overflow-hidden bg-gradient-to-b from-white to-indigo-100">
+
+  return (
+    <section id="roi-calculator" className="py-24 relative overflow-hidden bg-gradient-to-b from-white to-indigo-100">
       {/* Decorative elements */}
       <motion.div className="absolute top-12 left-1/4 w-24 h-24 bg-yellow-300 border-4 border-black z-0" initial={{
       rotate: 0,
@@ -290,7 +300,10 @@ const ROICalculatorSection: React.FC = () => {
             }
           }}>
               <p className="text-lg font-black text-black">
-                🎯 That's equivalent to hiring {Math.round(timeSavedWithAI / 1800)} additional part-time teachers!
+                🎯 That's equivalent to hiring {equivalentPartTimeTeachers > 0 ? equivalentPartTimeTeachers : 1} additional teacher{equivalentPartTimeTeachers !== 1 ? 's' : ''}!
+              </p>
+              <p className="text-sm font-bold text-gray-700 mt-1">
+                (Based on SG$4,400/month average teacher salary)
               </p>
             </motion.div>
           </motion.div>
@@ -314,6 +327,8 @@ const ROICalculatorSection: React.FC = () => {
           cursor: pointer;
         }
       `}</style>
-    </section>;
+    </section>
+  );
 };
+
 export default ROICalculatorSection;

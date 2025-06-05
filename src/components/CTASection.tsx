@@ -8,7 +8,7 @@ const CTASection: React.FC = () => {
   return (
     <section
       id="cta"
-      className="py-24 relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-900 bg-opacity-90"
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-indigo-600 to-indigo-900 bg-opacity-90"
     >
       {/* Decorative elements */}
       <motion.div

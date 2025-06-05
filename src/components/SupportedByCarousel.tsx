@@ -92,12 +92,13 @@ const SupportedByCarousel: React.FC = () => {
   return (
     <motion.section
       ref={sectionRef}
-      className="py-12 bg-white border-t-4 border-b-4 border-white"
+      className="py-12 bg-white w-full"
+      style={{ backgroundColor: "#ffffff" }}
       initial="hidden"
       animate={controls}
       variants={containerVariants}
     >
-      <div className="max-w-6xl mx-auto px-4 bg-white">
+      <div className="max-w-6xl mx-auto px-4 bg-white w-full" style={{ backgroundColor: "#ffffff" }}>
         <motion.h3
           className="text-2xl md:text-3xl font-black text-center mb-8 text-black relative inline-block mx-auto"
           variants={titleVariants}
@@ -112,7 +113,7 @@ const SupportedByCarousel: React.FC = () => {
             Supported by
           </motion.span>
           <motion.span
-            className="absolute bottom-0 left-0 w-1/2 h-3 bg-yellow-300 -z-0"
+            className="absolute bottom-0 left-0 w-full h-3 bg-yellow-300 -z-0"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ delay: 0.8, duration: 0.5 }}

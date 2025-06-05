@@ -142,7 +142,7 @@ const ROICalculatorSection: React.FC = () => {
                   type: "spring",
                   stiffness: 300,
                   damping: 30
-                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-yellow-300 border-2 border-black py-1 font-black px-[17px] mx-[141px]">
+                }} className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-yellow-300 border-2 border-black py-1 font-black px-[17px] mx-[145px]">
                     {teachers}
                   </motion.div>
                 </div>

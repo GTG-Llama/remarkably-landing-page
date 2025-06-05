@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import ThreeScene from "@/components/ThreeScene";
 import Header from "@/components/Header";
@@ -7,6 +8,7 @@ import EssayShowcaseSection from "@/components/EssayShowcaseSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import VideoShowcaseSection from "@/components/VideoShowcaseSection";
+import ROICalculatorSection from "@/components/ROICalculatorSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import FlowingParticles from "@/components/FlowingParticles";
@@ -223,6 +225,7 @@ const Index: React.FC = () => {
       <GlowEffect targetSelector="#essay-showcase" startDelay={0.35} />
       <GlowEffect targetSelector="#features" startDelay={0.4} />
       <GlowEffect targetSelector="#video-showcase" startDelay={0.5} />
+      <GlowEffect targetSelector="#roi-calculator" startDelay={0.55} />
 
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden lg:block">
         <div className="flex flex-col items-center gap-3">
@@ -233,6 +236,7 @@ const Index: React.FC = () => {
             "features",
             "video-showcase",
             "testimonials",
+            "roi-calculator",
           ].map((id, index) => (
             <a
               key={id}
@@ -258,6 +262,7 @@ const Index: React.FC = () => {
         <FeaturesSection />
         <VideoShowcaseSection />
         <TestimonialsSection />
+        <ROICalculatorSection />
         <CTASection />
         <SupportedByCarousel />
         <Footer />

@@ -215,7 +215,7 @@ Message: ${data.message}`,
                       </div>
                       <div>
                         <p className="font-bold">Email</p>
-                        <p className="text-gray-600">hello@remarkably.ai</p>
+                        <p className="text-gray-600">contact@lenorai.com</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -224,7 +224,7 @@ Message: ${data.message}`,
                       </div>
                       <div>
                         <p className="font-bold">Phone</p>
-                        <p className="text-gray-600">+65 1234 5678</p>
+                        <p className="text-gray-600">+65 8260 8445</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Calculator, TrendingUp, Clock, DollarSign } from "lucide-react";
@@ -17,6 +16,11 @@ const ROICalculatorSection: React.FC = () => {
   const timeSavedWithAI = yearlyMarkingHours * 0.8; // 80% time saving
   const costSavings = timeSavedWithAI * hourlyRate;
   const hoursPerWeekSaved = (timeSavedWithAI / 52);
+
+  // Singapore teacher calculation: $4,400/month * 12 months = $52,800/year
+  // Assuming part-time is 20 hours/week * 52 weeks = 1,040 hours/year
+  // Hourly rate: $52,800 / 1,040 = ~$50.77/hour for part-time equivalent
+  const singaporeTeacherEquivalent = Math.round(costSavings / 26400); // $4,400 * 6 months as rough part-time equivalent
 
   const containerVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -132,12 +136,15 @@ const ROICalculatorSection: React.FC = () => {
               />
             </motion.h3>
 
-            <div className="space-y-6">
+            <div className="space-y-8">
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-2">
+                <label className="block text-lg font-bold text-black mb-4">
                   Number of Teachers
                 </label>
                 <div className="relative">
+                  <div className="bg-yellow-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-16 mx-auto">
+                    {teachers}
+                  </div>
                   <input
                     type="range"
                     min="1"
@@ -146,21 +153,17 @@ const ROICalculatorSection: React.FC = () => {
                     onChange={(e) => setTeachers(Number(e.target.value))}
                     className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
                   />
-                  <motion.div
-                    className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-yellow-300 border-2 border-black px-3 py-1 font-black"
-                    animate={{ x: (teachers / 100) * 100 - 50 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    {teachers}
-                  </motion.div>
                 </div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-2">
+                <label className="block text-lg font-bold text-black mb-4">
                   Essays per Week (all teachers)
                 </label>
                 <div className="relative">
+                  <div className="bg-pink-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-16 mx-auto">
+                    {essaysPerWeek}
+                  </div>
                   <input
                     type="range"
                     min="10"
@@ -169,21 +172,17 @@ const ROICalculatorSection: React.FC = () => {
                     onChange={(e) => setEssaysPerWeek(Number(e.target.value))}
                     className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
                   />
-                  <motion.div
-                    className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-pink-300 border-2 border-black px-3 py-1 font-black"
-                    animate={{ x: (essaysPerWeek / 500) * 100 - 50 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    {essaysPerWeek}
-                  </motion.div>
                 </div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-2">
+                <label className="block text-lg font-bold text-black mb-4">
                   Minutes per Essay (current marking time)
                 </label>
                 <div className="relative">
+                  <div className="bg-blue-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-20 mx-auto">
+                    {markingTimePerEssay}min
+                  </div>
                   <input
                     type="range"
                     min="5"
@@ -192,21 +191,17 @@ const ROICalculatorSection: React.FC = () => {
                     onChange={(e) => setMarkingTimePerEssay(Number(e.target.value))}
                     className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
                   />
-                  <motion.div
-                    className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-blue-300 border-2 border-black px-3 py-1 font-black"
-                    animate={{ x: (markingTimePerEssay / 30) * 100 - 50 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    {markingTimePerEssay}min
-                  </motion.div>
                 </div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-2">
+                <label className="block text-lg font-bold text-black mb-4">
                   Teacher Hourly Rate ($)
                 </label>
                 <div className="relative">
+                  <div className="bg-green-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-16 mx-auto">
+                    ${hourlyRate}
+                  </div>
                   <input
                     type="range"
                     min="15"
@@ -215,13 +210,6 @@ const ROICalculatorSection: React.FC = () => {
                     onChange={(e) => setHourlyRate(Number(e.target.value))}
                     className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
                   />
-                  <motion.div
-                    className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-green-300 border-2 border-black px-3 py-1 font-black"
-                    animate={{ x: (hourlyRate / 100) * 100 - 50 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    ${hourlyRate}
-                  </motion.div>
                 </div>
               </motion.div>
             </div>
@@ -328,7 +316,10 @@ const ROICalculatorSection: React.FC = () => {
               }}
             >
               <p className="text-lg font-black text-black">
-                🎯 That's equivalent to hiring {Math.round(timeSavedWithAI / 1800)} additional part-time teachers!
+                🎯 That's equivalent to hiring {singaporeTeacherEquivalent} additional part-time teachers!
+              </p>
+              <p className="text-sm font-bold text-gray-700 mt-1">
+                (Based on SG$4,400/month teacher salary)
               </p>
             </motion.div>
           </motion.div>

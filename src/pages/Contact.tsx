@@ -15,16 +15,15 @@ import { emailjsConfig } from "@/lib/emailjs-config";
 
 /**
  * Contact form validation schema using Zod
- * Ensures all required fields are provided and email format is valid
+ * Only first name, last name, and email are required
  */
 const contactFormSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  phone: z.string().optional(),
-  company: z.string().min(2, "Company name must be at least 2 characters"),
-  role: z.string().min(2, "Role must be at least 2 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  company: z.string().optional(),
+  role: z.string().optional(),
+  message: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -78,10 +77,9 @@ Best regards,
 The Remarkably Team
 
 ---
-Company: ${data.company}
-Role: ${data.role}
-Phone: ${data.phone || "Not provided"}
-Message: ${data.message}`,
+${data.company ? `Company: ${data.company}` : ""}
+${data.role ? `Role: ${data.role}` : ""}
+${data.message ? `Message: ${data.message}` : "No specific message provided"}`,
       };
 
       // Send the email using config values
@@ -300,42 +298,28 @@ Message: ${data.message}`,
                       </div>
                     </motion.div>
 
-                    {/* Email and Phone */}
-                    <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="font-bold">
-                          Email Address *
-                        </Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          {...register("email")}
-                          className="border-2 border-black focus:border-blue-500"
-                          placeholder="john@school.edu"
-                        />
-                        {errors.email && (
-                          <p className="text-red-600 text-sm font-medium">{errors.email.message}</p>
-                        )}
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="phone" className="font-bold">
-                          Phone Number
-                        </Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          {...register("phone")}
-                          className="border-2 border-black focus:border-blue-500"
-                          placeholder="+65 1234 5678"
-                        />
-                      </div>
+                    {/* Email Field - Full Width */}
+                    <motion.div variants={itemVariants} className="space-y-2">
+                      <Label htmlFor="email" className="font-bold">
+                        Email Address *
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        {...register("email")}
+                        className="border-2 border-black focus:border-blue-500"
+                        placeholder="john@school.edu"
+                      />
+                      {errors.email && (
+                        <p className="text-red-600 text-sm font-medium">{errors.email.message}</p>
+                      )}
                     </motion.div>
 
-                    {/* Company and Role */}
+                    {/* Company and Role - Optional */}
                     <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="company" className="font-bold">
-                          School/Organization *
+                          School/Organization
                         </Label>
                         <Input
                           id="company"
@@ -343,13 +327,10 @@ Message: ${data.message}`,
                           className="border-2 border-black focus:border-blue-500"
                           placeholder="ABC International School"
                         />
-                        {errors.company && (
-                          <p className="text-red-600 text-sm font-medium">{errors.company.message}</p>
-                        )}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="role" className="font-bold">
-                          Your Role *
+                          Your Role
                         </Label>
                         <Input
                           id="role"
@@ -357,26 +338,20 @@ Message: ${data.message}`,
                           className="border-2 border-black focus:border-blue-500"
                           placeholder="Head of Department"
                         />
-                        {errors.role && (
-                          <p className="text-red-600 text-sm font-medium">{errors.role.message}</p>
-                        )}
                       </div>
                     </motion.div>
 
-                    {/* Message */}
+                    {/* Message - Optional */}
                     <motion.div variants={itemVariants} className="space-y-2">
                       <Label htmlFor="message" className="font-bold">
-                        Message *
+                        Message
                       </Label>
                       <Textarea
                         id="message"
                         {...register("message")}
                         className="border-2 border-black focus:border-blue-500 min-h-[120px]"
-                        placeholder="Tell us about your school's marking challenges and how we can help..."
+                        placeholder="Tell us about your school's marking challenges and how we can help... (optional)"
                       />
-                      {errors.message && (
-                        <p className="text-red-600 text-sm font-medium">{errors.message.message}</p>
-                      )}
                     </motion.div>
 
                     {/* Submit Button */}

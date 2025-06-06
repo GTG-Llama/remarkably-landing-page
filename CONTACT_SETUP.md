@@ -22,14 +22,21 @@ This guide will help you set up the contact form with EmailJS to automatically s
 
 1. In your EmailJS dashboard, go to **Email Templates**
 2. Click **Create New Template**
-3. Use this template structure:
+3. **Option A - Use the HTML Template:**
 
-```html
-Subject: Welcome to Remarkably! 🎉 Hi {{to_name}}, {{message}} Best regards,
-{{from_name}}
-```
+   - Copy the contents of `emailjs-welcome-template.html`
+   - Paste it into the EmailJS template editor (HTML mode)
+   - Set the subject to: `Welcome to Remarkably! 🎉`
 
-4. Make sure to include these variables in your template:
+4. **Option B - Simple Text Template:**
+   Use this basic template structure:
+
+   ```html
+   Subject: Welcome to Remarkably! 🎉 Hi {{to_name}}, {{message}} Best regards,
+   {{from_name}}
+   ```
+
+5. Make sure to include these variables in your template:
 
    - `{{to_email}}` - recipient email
    - `{{to_name}}` - recipient name
@@ -37,7 +44,7 @@ Subject: Welcome to Remarkably! 🎉 Hi {{to_name}}, {{message}} Best regards,
    - `{{subject}}` - email subject
    - `{{message}}` - email message content
 
-5. Save the template and note down your **Template ID**
+6. Save the template and note down your **Template ID**
 
 ### Step 4: Get Your Public Key
 
@@ -74,10 +81,9 @@ The contact form includes these fields:
 - First Name (required)
 - Last Name (required)
 - Email Address (required)
-- Phone Number (optional)
-- School/Organization (required)
-- Role (required)
-- Message (required)
+- School/Organization (optional)
+- Role (optional)
+- Message (optional)
 
 ### Email Content
 

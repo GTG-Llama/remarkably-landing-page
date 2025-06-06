@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Remarkably! 🎉</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f8fafc;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 4px solid #000000;
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 80px;
+            height: 80px;
+            background-color: #ffd700;
+            border: 4px solid #000000;
+            transform: rotate(12deg);
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: -15px;
+            width: 60px;
+            height: 60px;
+            background-color: #ff69b4;
+            border: 4px solid #000000;
+            transform: rotate(-6deg);
+        }
+        
+        .logo {
+            font-size: 36px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-subtitle {
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: #ffd700;
+            padding: 2px 8px;
+            border: 2px solid #000000;
+            font-weight: 900;
+            transform: rotate(1deg);
+            display: inline-block;
+        }
+        
+        .message-text {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        
+        .next-steps {
+            background-color: #e6fffa;
+            border: 3px solid #000000;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .next-steps::before {
+            content: '🚀';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            padding: 5px 10px;
+            font-size: 20px;
+        }
+        
+        .next-steps h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+        
+        .steps-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .steps-list li {
+            padding: 8px 0;
+            font-weight: 600;
+            color: #2d3748;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .steps-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #38a169;
+            font-weight: 900;
+            font-size: 18px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #000000;
+            color: #ffffff;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 16px;
+            border: 3px solid #000000;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        
+        .contact-info {
+            background-color: #fff5f5;
+            border: 3px solid #000000;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .contact-item {
+            display: inline-block;
+            margin: 10px 20px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .contact-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #4ade80;
+            border: 2px solid #000000;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .footer {
+            background-color: #1a202c;
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            display: inline-block;
+            margin: 0 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 10px;
+                border: 2px solid #000000;
+                box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+            }
+            
+            .header, .content, .footer {
+                padding: 20px 15px;
+            }
+            
+            .logo {
+                font-size: 28px;
+            }
+            
+            .greeting {
+                font-size: 20px;
+            }
+            
+            .contact-item {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo">Remarkably</div>
+            <div class="header-subtitle">AI-Powered Marking & Assessment</div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <div class="greeting">
+                Hello <span class="highlight">{{to_name}}</span>! 👋
+            </div>
+            
+            <div class="message-text">
+                Thank you for reaching out to Remarkably! We're absolutely <strong>thrilled</strong> that you're interested in revolutionizing your marking and assessment process.
+            </div>
+            
+            <div class="message-text">
+                At Remarkably, we understand the challenges educators face with time-consuming marking tasks. That's why we've built an AI-powered solution that can save your school thousands of hours and significant costs while maintaining the highest quality of feedback for students.
+            </div>
+            
+            <!-- Next Steps Section -->
+            <div class="next-steps">
+                <h3>What happens next?</h3>
+                <ul class="steps-list">
+                    <li>Our education specialists will review your inquiry within 24 hours</li>
+                    <li>We'll schedule a personalized demo tailored to your school's needs</li>
+                    <li>You'll see exactly how Remarkably can transform your marking process</li>
+                    <li>We'll calculate your specific time and cost savings</li>
+                </ul>
+            </div>
+            
+            <div class="message-text">
+                In the meantime, feel free to explore our resources or reply to this email with any specific questions about your marking challenges. We're here to help! 🎯
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <a href="mailto:contact@lenorai.com" class="cta-button">
+                    📧 Reply to This Email
+                </a>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <strong>Email:</strong> contact@lenorai.com
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <strong>Phone:</strong> +65 8260 8445
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🌏</span>
+                    <strong>Location:</strong> Singapore
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                <strong>Best regards,</strong><br>
+                {{from_name}}<br>
+                The Remarkably Team
+            </div>
+            
+            <div class="footer-text">
+                🚀 Transforming education through intelligent assessment technology
+            </div>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">Website</a> |
+                <a href="#" class="social-link">LinkedIn</a> |
+                <a href="#" class="social-link">Twitter</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

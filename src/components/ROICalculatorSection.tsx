@@ -63,18 +63,18 @@ const ROICalculatorSection: React.FC = () => {
   return (
     <section
       id="roi-calculator"
-      className="py-24 relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-600"
+      className="py-12 relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-600"
     >
       {/* Decorative elements */}
       <motion.div
-        className="absolute top-12 left-1/4 w-24 h-24 bg-yellow-300 border-4 border-black z-0"
+        className="absolute top-6 left-1/4 w-16 h-16 bg-yellow-300 border-4 border-black z-0"
         initial={{ rotate: 0, opacity: 0 }}
         whileInView={{ rotate: 12, opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
       />
       <motion.div
-        className="absolute bottom-12 right-1/4 w-20 h-20 bg-pink-300 border-4 border-black z-0"
+        className="absolute bottom-6 right-1/4 w-14 h-14 bg-pink-300 border-4 border-black z-0"
         initial={{ rotate: 0, opacity: 0 }}
         whileInView={{ rotate: -6, opacity: 1 }}
         viewport={{ once: true }}
@@ -83,14 +83,14 @@ const ROICalculatorSection: React.FC = () => {
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div
-            className="bg-green-300 border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform"
+            className="bg-green-300 border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform"
             variants={itemVariants}
             whileHover={{
               rotate: 1,
@@ -98,14 +98,14 @@ const ROICalculatorSection: React.FC = () => {
               transition: { duration: 0.3 },
             }}
           >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Calculator className="w-8 h-8" />
-              <h2 className="text-3xl lg:text-5xl font-black text-black">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <Calculator className="w-6 h-6" />
+              <h2 className="text-2xl lg:text-4xl font-black text-black">
                 ROI Calculator
               </h2>
             </div>
             <motion.p
-              className="text-xl text-gray-800 font-bold mt-4 px-4 py-3 bg-white border-2 border-black"
+              className="text-lg text-gray-800 font-bold mt-3 px-3 py-2 bg-white border-2 border-black"
               variants={itemVariants}
             >
               Calculate how much time and money your school can save with Remarkably
@@ -113,17 +113,91 @@ const ROICalculatorSection: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        {/* Prominent Total Annual Value */}
+        <motion.div
+          className="max-w-4xl mx-auto mb-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div
+            className="bg-white text-black border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
+            variants={resultVariants}
+            whileHover={{
+              y: -4,
+              x: -4,
+              boxShadow: "12px 12px 0px 0px rgba(0,0,0,1)",
+              transition: { duration: 0.3 },
+            }}
+          >
+            {/* Decorative elements */}
+            <div className="absolute top-2 right-2 w-12 h-12 bg-yellow-300 border-4 border-black transform rotate-12"></div>
+            <div className="absolute bottom-2 left-2 w-8 h-8 bg-pink-300 border-4 border-black transform -rotate-6"></div>
+            
+            <div className="text-center relative z-10">
+              <motion.p
+                className="text-lg font-black mb-3 text-yellow-500"
+                variants={itemVariants}
+              >
+                🏆 TOTAL ANNUAL VALUE RECOVERED
+              </motion.p>
+              <motion.div
+                className="bg-white text-black border-4 border-black p-4 inline-block shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
+                key={costSavings}
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.4, type: "spring", stiffness: 150 }}
+                whileHover={{
+                  rotate: 2,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <motion.p
+                  className="text-4xl lg:text-6xl font-black text-green-600"
+                  key={costSavings}
+                  initial={{ scale: 1.1, rotateY: 10 }}
+                  animate={{ scale: 1, rotateY: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  ${costSavings.toLocaleString()}
+                </motion.p>
+              </motion.div>
+              <motion.p
+                className="text-sm font-bold text-black-300 mt-2"
+                variants={itemVariants}
+              >
+                in teaching capacity recovered annually
+              </motion.p>
+              <motion.div
+                className="flex justify-center items-center gap-3 mt-3 flex-wrap"
+                variants={itemVariants}
+              >
+                <div className="bg-yellow-300 text-black border-2 border-black px-3 py-1 font-black text-sm">
+                  {timeSavedWithAI.toFixed(0)} Hours Saved
+                </div>
+                <div className="bg-green-300 text-black border-2 border-black px-3 py-1 font-black text-sm">
+                  {singaporeTeacherEquivalent} Teachers Worth
+                </div>
+                <div className="bg-pink-300 text-black border-2 border-black px-3 py-1 font-black text-sm">
+                  80% Time Reduction
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {/* Input Section */}
           <motion.div
-            className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative"
+            className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
             <motion.h3
-              className="text-2xl font-black mb-6 text-black relative inline-block"
+              className="text-xl font-black mb-4 text-black relative inline-block"
               variants={itemVariants}
             >
               Your School Details
@@ -136,80 +210,93 @@ const ROICalculatorSection: React.FC = () => {
               />
             </motion.h3>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-4">
-                  Number of Teachers
-                </label>
-                <div className="relative">
-                  <div className="bg-yellow-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-16 mx-auto">
+                <div className="flex justify-between items-center mb-3">
+                  <label className="block text-base font-bold text-black">
+                    Number of Teachers
+                  </label>
+                  <div className="bg-yellow-300 border-2 border-black px-3 py-1 font-black text-center">
                     {teachers}
                   </div>
-                  <input
-                    type="range"
-                    min="1"
-                    max="100"
-                    value={teachers}
-                    onChange={(e) => setTeachers(Number(e.target.value))}
-                    className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
-                  />
                 </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="100"
+                  value={teachers}
+                  onChange={(e) => setTeachers(Number(e.target.value))}
+                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-4">
-                  Essays per Month (per teacher)
-                </label>
-                <div className="relative">
-                  <div className="bg-pink-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-16 mx-auto">
+                <div className="flex justify-between items-center mb-3">
+                  <label className="block text-base font-bold text-black">
+                    Essays per Month (per teacher)
+                  </label>
+                  <div className="bg-pink-300 border-2 border-black px-3 py-1 font-black text-center">
                     {essaysPerMonth}
                   </div>
-                  <input
-                    type="range"
-                    min="1"
-                    max="500"
-                    value={essaysPerMonth}
-                    onChange={(e) => setEssaysPerMonth(Number(e.target.value))}
-                    className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
-                  />
                 </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="500"
+                  value={essaysPerMonth}
+                  onChange={(e) => setEssaysPerMonth(Number(e.target.value))}
+                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-4">
-                  Minutes per Essay (current marking time)
-                </label>
-                <div className="relative">
-                  <div className="bg-blue-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-20 mx-auto">
+                <div className="flex justify-between items-center mb-3">
+                  <label className="block text-base font-bold text-black">
+                    Minutes per Essay (current marking time)
+                  </label>
+                  <div className="bg-blue-300 border-2 border-black px-3 py-1 font-black text-center">
                     {markingTimePerEssay}min
                   </div>
-                  <input
-                    type="range"
-                    min="5"
-                    max="30"
-                    value={markingTimePerEssay}
-                    onChange={(e) => setMarkingTimePerEssay(Number(e.target.value))}
-                    className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
-                  />
                 </div>
+                <input
+                  type="range"
+                  min="5"
+                  max="30"
+                  value={markingTimePerEssay}
+                  onChange={(e) => setMarkingTimePerEssay(Number(e.target.value))}
+                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                />
               </motion.div>
 
               <motion.div variants={itemVariants}>
-                <label className="block text-lg font-bold text-black mb-4">
-                  Teacher Hourly Rate ($)
-                </label>
-                <div className="relative">
-                  <div className="bg-green-300 border-2 border-black px-3 py-1 font-black text-center mb-2 w-16 mx-auto">
+                <div className="flex justify-between items-center mb-3">
+                  <label className="block text-base font-bold text-black">
+                    Teacher Hourly Rate ($)
+                  </label>
+                  <div className="bg-green-300 border-2 border-black px-3 py-1 font-black text-center">
                     ${hourlyRate}
                   </div>
-                  <input
-                    type="range"
-                    min="15"
-                    max="100"
-                    value={hourlyRate}
-                    onChange={(e) => setHourlyRate(Number(e.target.value))}
-                    className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
-                  />
+                </div>
+                <input
+                  type="range"
+                  min="15"
+                  max="100"
+                  value={hourlyRate}
+                  onChange={(e) => setHourlyRate(Number(e.target.value))}
+                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                />
+              </motion.div>
+
+              {/* Additional spacing to match right side height */}
+              <motion.div variants={itemVariants} className="mt-8">
+                <div className="bg-cyan-300 border-4 border-black p-4 text-center">
+                  <h4 className="text-lg font-black text-black mb-2">Quick Summary</h4>
+                  <p className="text-sm font-bold text-black">
+                    {totalEssaysPerMonth.toLocaleString()} total essays per month
+                  </p>
+                  <p className="text-sm font-bold text-black">
+                    {monthlyMarkingHours.toFixed(0)} hours of marking per month
+                  </p>
                 </div>
               </motion.div>
             </div>
@@ -217,7 +304,7 @@ const ROICalculatorSection: React.FC = () => {
 
           {/* Results Section - Invoice Format */}
           <motion.div
-            className="space-y-6"
+            className="space-y-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -225,18 +312,18 @@ const ROICalculatorSection: React.FC = () => {
           >
             {/* Invoice Header */}
             <motion.div
-              className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+              className="bg-white border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
               variants={resultVariants}
             >
-              <div className="text-center mb-4">
-                <h3 className="text-2xl font-black text-black mb-2">REMARKABLY SAVINGS INVOICE</h3>
-                <div className="bg-yellow-300 border-2 border-black px-4 py-2 inline-block">
-                  <p className="text-lg font-black">ANNUAL ROI BREAKDOWN</p>
+              <div className="text-center mb-3">
+                <h3 className="text-xl font-black text-black mb-2">REMARKABLY SAVINGS INVOICE</h3>
+                <div className="bg-yellow-300 border-2 border-black px-3 py-1 inline-block">
+                  <p className="text-base font-black">ANNUAL ROI BREAKDOWN</p>
                 </div>
               </div>
               <div className="flex justify-between items-center border-b-2 border-black pb-2">
-                <span className="font-bold">School Details:</span>
-                <span className="font-bold">{teachers} Teachers • {essaysPerMonth} Essays/Month</span>
+                <span className="font-bold text-sm">School Details:</span>
+                <span className="font-bold text-sm">{teachers} Teachers • {essaysPerMonth} Essays/Month</span>
               </div>
             </motion.div>
 
@@ -247,7 +334,7 @@ const ROICalculatorSection: React.FC = () => {
             >
               {/* Time Saved Item */}
               <motion.div
-                className="border-b-4 border-black p-6 hover:bg-yellow-50 transition-colors"
+                className="border-b-4 border-black p-4 hover:bg-yellow-50 transition-colors"
                 whileHover={{
                   x: -2,
                   y: -2,
@@ -257,16 +344,16 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="bg-yellow-300 border-2 border-black p-2">
-                      <Clock className="w-6 h-6" />
+                      <Clock className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-lg font-black text-black">TIME SAVINGS</h4>
-                      <p className="text-sm font-bold text-gray-700">Annual hours recovered</p>
+                      <h4 className="text-base font-black text-black">TIME SAVINGS</h4>
+                      <p className="text-xs font-bold text-gray-700">Annual hours recovered</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <motion.p
-                      className="text-2xl font-black text-black"
+                      className="text-xl font-black text-black"
                       key={timeSavedWithAI}
                       initial={{ scale: 1.2, color: "#FF6B6B" }}
                       animate={{ scale: 1, color: "#000000" }}
@@ -274,7 +361,7 @@ const ROICalculatorSection: React.FC = () => {
                     >
                       {timeSavedWithAI.toFixed(0)} hrs
                     </motion.p>
-                    <p className="text-sm font-bold text-gray-600">
+                    <p className="text-xs font-bold text-gray-600">
                       ({hoursPerWeekSaved.toFixed(1)} hrs/week)
                     </p>
                   </div>
@@ -283,7 +370,7 @@ const ROICalculatorSection: React.FC = () => {
 
               {/* Cost Savings Item */}
               <motion.div
-                className="border-b-4 border-black p-6 hover:bg-green-50 transition-colors"
+                className="border-b-4 border-black p-4 hover:bg-green-50 transition-colors"
                 whileHover={{
                   x: -2,
                   y: -2,
@@ -293,16 +380,16 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="bg-green-300 border-2 border-black p-2">
-                      <DollarSign className="w-6 h-6" />
+                      <DollarSign className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-lg font-black text-black">COST SAVINGS</h4>
-                      <p className="text-sm font-bold text-gray-700">Annual salary savings (80% reduction)</p>
+                      <h4 className="text-base font-black text-black">COST SAVINGS</h4>
+                      <p className="text-xs font-bold text-gray-700">Annual salary savings (80% reduction)</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <motion.p
-                      className="text-2xl font-black text-black"
+                      className="text-xl font-black text-black"
                       key={costSavings}
                       initial={{ scale: 1.2, color: "#4ECDC4" }}
                       animate={{ scale: 1, color: "#000000" }}
@@ -310,7 +397,7 @@ const ROICalculatorSection: React.FC = () => {
                     >
                       ${costSavings.toLocaleString()}
                     </motion.p>
-                    <p className="text-sm font-bold text-gray-600">
+                    <p className="text-xs font-bold text-gray-600">
                       @ ${hourlyRate}/hr rate
                     </p>
                   </div>
@@ -319,7 +406,7 @@ const ROICalculatorSection: React.FC = () => {
 
               {/* ROI Impact Item */}
               <motion.div
-                className="border-b-4 border-black p-6 hover:bg-pink-50 transition-colors"
+                className="border-b-4 border-black p-4 hover:bg-pink-50 transition-colors"
                 whileHover={{
                   x: -2,
                   y: -2,
@@ -329,16 +416,16 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="bg-pink-300 border-2 border-black p-2">
-                      <TrendingUp className="w-6 h-6" />
+                      <TrendingUp className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-lg font-black text-black">ROI IMPACT</h4>
-                      <p className="text-sm font-bold text-gray-700">Teachers refocus on high-value work</p>
+                      <h4 className="text-base font-black text-black">ROI IMPACT</h4>
+                      <p className="text-xs font-bold text-gray-700">Teachers refocus on high-value work</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="bg-white border-2 border-black p-2 max-w-48">
-                      <p className="text-sm font-black text-black">
+                    <div className="bg-white border-2 border-black p-2 max-w-44">
+                      <p className="text-xs font-black text-black">
                         Teaching, mentoring & curriculum development
                       </p>
                     </div>
@@ -348,7 +435,7 @@ const ROICalculatorSection: React.FC = () => {
 
               {/* Teacher Equivalent Item */}
               <motion.div
-                className="p-6 hover:bg-blue-50 transition-colors"
+                className="p-4 hover:bg-blue-50 transition-colors"
                 whileHover={{
                   x: -2,
                   y: -2,
@@ -358,16 +445,16 @@ const ROICalculatorSection: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-300 border-2 border-black p-2">
-                      <span className="text-xl">🎯</span>
+                      <span className="text-lg">🎯</span>
                     </div>
                     <div>
-                      <h4 className="text-lg font-black text-black">HIRING EQUIVALENT</h4>
-                      <p className="text-sm font-bold text-gray-700">Additional part-time teachers</p>
+                      <h4 className="text-base font-black text-black">HIRING EQUIVALENT</h4>
+                      <p className="text-xs font-bold text-gray-700">Additional part-time teachers</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <motion.p
-                      className="text-2xl font-black text-black"
+                      className="text-xl font-black text-black"
                       key={singaporeTeacherEquivalent}
                       initial={{ scale: 1.2, color: "#3B82F6" }}
                       animate={{ scale: 1, color: "#000000" }}
@@ -375,40 +462,12 @@ const ROICalculatorSection: React.FC = () => {
                     >
                       {singaporeTeacherEquivalent} teachers
                     </motion.p>
-                    <p className="text-sm font-bold text-gray-600">
+                    <p className="text-xs font-bold text-gray-600">
                       (SG$4,400/month salary)
                     </p>
                   </div>
                 </div>
               </motion.div>
-            </motion.div>
-
-            {/* Invoice Total */}
-            <motion.div
-              className="bg-black text-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-              variants={resultVariants}
-              whileHover={{
-                y: -3,
-                x: -3,
-                boxShadow: "12px 12px 0px 0px rgba(0,0,0,1)",
-                transition: { duration: 0.2 },
-              }}
-            >
-              <div className="text-center">
-                <p className="text-lg font-black mb-2">TOTAL ANNUAL VALUE</p>
-                <motion.p
-                  className="text-4xl font-black text-yellow-300"
-                  key={costSavings}
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  ${costSavings.toLocaleString()}
-                </motion.p>
-                <p className="text-sm font-bold text-gray-300 mt-2">
-                  in recovered teaching capacity
-                </p>
-              </div>
             </motion.div>
           </motion.div>
         </div>

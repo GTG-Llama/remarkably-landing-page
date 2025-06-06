@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
   
   // Create refs for each section
   const demoRef = useRef<HTMLElement | null>(null);
@@ -39,7 +41,7 @@ const Header = () => {
   };
 
   const handleContactClick = () => {
-    window.location.href = "mailto:contact@lenorai.com";
+    navigate("/contact");
   };
 
   return (

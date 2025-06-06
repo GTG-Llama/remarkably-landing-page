@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Calculator, TrendingUp, Clock, DollarSign } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ROICalculatorSection: React.FC = () => {
   const [teachers, setTeachers] = useState(10);
   const [essaysPerMonth, setEssaysPerMonth] = useState(20);
   const [markingTimePerEssay, setMarkingTimePerEssay] = useState(15);
   const [hourlyRate, setHourlyRate] = useState(30);
+  const navigate = useNavigate();
 
   // Calculations
   const totalEssaysPerMonth = essaysPerMonth * teachers;
@@ -58,6 +60,10 @@ const ROICalculatorSection: React.FC = () => {
         damping: 15,
       },
     },
+  };
+
+  const handleContactClick = () => {
+    navigate("/contact");
   };
 
   return (
@@ -274,7 +280,10 @@ const ROICalculatorSection: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <button className="bg-yellow-300 text-black border-4 border-black px-8 py-4 font-black text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+                  <button 
+                    onClick={handleContactClick}
+                    className="bg-yellow-300 text-black border-4 border-black px-8 py-4 font-black text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
+                  >
                     Contact Us
                   </button>
                 </motion.div>

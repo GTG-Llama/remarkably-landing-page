@@ -1,9 +1,15 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const CTASection: React.FC = () => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const handleBookDemo = () => {
+    navigate("/contact");
+  };
 
   return (
     <section
@@ -77,12 +83,12 @@ const CTASection: React.FC = () => {
                 </motion.p>
                 <div className="flex flex-wrap gap-4">
                   <motion.button
+                    onClick={handleBookDemo}
                     className="bg-black text-white text-lg font-black px-8 py-4 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all flex items-center gap-2 animate-bounce"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-
                   >
-                    <a href="mailto:contact@lenorai.com">Book a Demo</a>
+                    Book a Demo
                     <ArrowRight size={18} />
                   </motion.button>
                   <motion.div

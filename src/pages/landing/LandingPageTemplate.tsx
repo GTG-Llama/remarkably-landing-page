@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { ArrowRight, Check, ArrowDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,6 +69,7 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Set page title and meta description
   useEffect(() => {
@@ -315,6 +317,10 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
         delay: 0.2 * i,
       },
     }),
+  };
+
+  const handleContactClick = () => {
+    navigate("/contact");
   };
 
   return (
@@ -799,11 +805,12 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
                     </motion.p>
                     <div className="flex flex-wrap gap-4">
                       <motion.button
+                        onClick={handleContactClick}
                         className="bg-black text-white text-lg font-black px-8 py-4 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all flex items-center gap-2"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                       >
-                        <a href="mailto:contact@remarkably.ink">{ctaButtonText}</a>
+                        {ctaButtonText}
                         <ArrowRight size={18} />
                       </motion.button>
                       <motion.div

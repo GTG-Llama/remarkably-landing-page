@@ -53,41 +53,40 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
+      console.log("🚀 Starting email send process...");
+      console.log("📧 EmailJS Config:", {
+        publicKey: emailjsConfig.publicKey ? "✅ Set" : "❌ Missing",
+        serviceId: emailjsConfig.serviceId ? "✅ Set" : "❌ Missing", 
+        templateId: emailjsConfig.templateId ? "✅ Set" : "❌ Missing",
+      });
+      console.log("📝 Form data:", data);
+
       // Initialize EmailJS with config
       await emailjs.init(emailjsConfig.publicKey);
+      console.log("✅ EmailJS initialized successfully");
 
       // Send welcome email to the user
       const emailParams = {
         to_email: data.email,
         to_name: `${data.firstName} ${data.lastName}`,
         from_name: "Remarkably Team",
-        subject: "Welcome to Remarkably! 🎉",
-        message: `Hi ${data.firstName},
-
-Thank you for your interest in Remarkably! We're excited to help transform your marking and assessment process.
-
-Here's what happens next:
-• Our team will review your inquiry within 24 hours
-• We'll reach out to schedule a personalized demo
-• You'll see how Remarkably can save your school time and money
-
-In the meantime, feel free to explore our resources or reply to this email with any questions.
-
-Best regards,
-The Remarkably Team
-
----
-${data.company ? `Company: ${data.company}` : ""}
-${data.role ? `Role: ${data.role}` : ""}
-${data.message ? `Message: ${data.message}` : "No specific message provided"}`,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        company: data.company || "",
+        role: data.role || "",
+        message: data.message || "No specific message provided",
       };
 
+      console.log("📨 Email params:", emailParams);
+
       // Send the email using config values
-      await emailjs.send(
+      const result = await emailjs.send(
         emailjsConfig.serviceId,
         emailjsConfig.templateId,
         emailParams
       );
+
+      console.log("✅ Email sent successfully:", result);
 
       // Show success state
       setIsSubmitted(true);
@@ -98,10 +97,27 @@ ${data.message ? `Message: ${data.message}` : "No specific message provided"}`,
         description: "We've sent you a welcome email and will be in touch soon.",
       });
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("❌ Full error details:", error);
+      console.error("❌ Error message:", error.message);
+      console.error("❌ Error text:", error.text);
+      console.error("❌ Error status:", error.status);
+      
+      // More specific error messages
+      let errorMessage = "Please try again or contact us directly.";
+      
+      if (error.status === 404) {
+        errorMessage = "EmailJS service not found. Please check your Service ID.";
+      } else if (error.status === 401) {
+        errorMessage = "Authentication failed. Please check your Public Key.";
+      } else if (error.text?.includes("template")) {
+        errorMessage = "Email template error. Please check your Template ID.";
+      } else if (error.text?.includes("service")) {
+        errorMessage = "Email service error. Please check your Service ID.";
+      }
+
       toast({
         title: "Something went wrong",
-        description: "Please try again or contact us directly.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -154,7 +170,7 @@ ${data.message ? `Message: ${data.message}` : "No specific message provided"}`,
           </motion.div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Thank you!</h1>
           <p className="text-lg text-gray-600 mb-6 max-w-md">
-            We've received your message and sent you a welcome email. Our team will be in touch within 24 hours.
+            We've received your message and sent you a welcome email. Our team will be in touch soon.
           </p>
           <Button
             onClick={() => setIsSubmitted(false)}
@@ -243,7 +259,7 @@ ${data.message ? `Message: ${data.message}` : "No specific message provided"}`,
                   <CardContent className="p-6">
                     <h3 className="text-lg font-bold mb-2">Quick Response Guarantee</h3>
                     <p className="text-sm text-gray-700">
-                      We respond to all inquiries within 24 hours. For urgent matters, please call us directly.
+                      We respond to all inquiries as soon as possible. For urgent matters, please call us directly.
                     </p>
                   </CardContent>
                 </Card>

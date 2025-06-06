@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmailJS Test</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <h1>EmailJS Connection Test</h1>
+    <button onclick="testEmailJS()">Test EmailJS</button>
+    <div id="result"></div>
+
+    <script>
+        async function testEmailJS() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                // Your actual credentials
+                const publicKey = "o4DmM7zH1a5uSvI-O";
+                const serviceId = "service_ttgzdo2";
+                const templateId = "template_gjx4xjm";
+
+                await emailjs.init(publicKey);
+                console.log('✅ EmailJS initialized');
+
+                const params = {
+                    to_name: 'Test User',
+                    to_email: 'test@example.com',
+                    from_name: 'Remarkably Team',
+                    reply_to: 'test@example.com',
+                    subject: 'Welcome to Remarkably! 🎉',
+                    message: 'This is a test message from the contact form'
+                };
+
+                const result = await emailjs.send(serviceId, templateId, params);
+                console.log('✅ Success:', result);
+                resultDiv.innerHTML = '<span style="color: green;">✅ SUCCESS! EmailJS is working correctly.</span>';
+
+            } catch (error) {
+                console.error('❌ Error:', error);
+                resultDiv.innerHTML = `<span style="color: red;">❌ ERROR: ${error.text || error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html> 

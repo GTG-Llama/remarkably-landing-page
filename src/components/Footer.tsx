@@ -8,8 +8,16 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate("/contact");
+  };
+
   return (
     <footer className="bg-gradient-to-b from-indigo-900 to-white pb-8 pt-20 relative">
       {/* Decorative elements */}
@@ -53,19 +61,19 @@ const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
-                  <a
-                    href="mailto:contact@lenorai.com"
+                  <button
+                    onClick={handleContactClick}
                     className="bg-black p-1 flex items-center justify-center"
-                    aria-label="Email"
+                    aria-label="Contact Form"
                   >
                     <Mail size={18} className="text-white" />
-                  </a>
-                  <a
-                    href="mailto:contact@lenorai.com"
+                  </button>
+                  <button
+                    onClick={handleContactClick}
                     className="text-black font-bold hover:underline decoration-2 underline-offset-4"
                   >
                     contact@lenorai.com
-                  </a>
+                  </button>
                 </li>
                 <li className="flex items-center gap-3">
                   <a

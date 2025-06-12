@@ -12,6 +12,13 @@ import VietnamEducation from "./pages/landing/VietnamEducation";
 import IndonesiaEducation from "./pages/landing/IndonesiaEducation";
 import MalaysiaEducation from "./pages/landing/MalaysiaEducation";
 import TuitionCenter from "./pages/landing/TuitionCenter";
+import Features from "./pages/Features";
+import Benefits from "./pages/Benefits";
+import HowItWorks from "./pages/HowItWorks";
+import Pricing from "./pages/Pricing";
+import FAQ from "./pages/FAQ";
+import About from "./pages/About";
+import Achievements from "./pages/Achievements";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +37,16 @@ const App = () => (
           <Route path="/indonesia" element={<IndonesiaEducation />} />
           <Route path="/malaysia" element={<MalaysiaEducation />} />
           <Route path="/tuition" element={<TuitionCenter />} />
+          
+          {/* New Routes */}
+          <Route path="/features" element={<Features />} />
+          <Route path="/benefits" element={<Benefits />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/achievements" element={<Achievements />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

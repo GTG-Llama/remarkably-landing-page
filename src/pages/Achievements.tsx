@@ -11,18 +11,18 @@ const Achievements: React.FC = () => {
           content="Backed by global leaders. Recognized by national institutions. Built for educators. Learn about Remarkably's achievements and recognition." 
         />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Achievements</h1>
-          <p className="text-xl text-gray-600 mb-12">
+      <div className="page-container">
+        <div className="content-card">
+          <h1>Achievements</h1>
+          <p className="text-xl mb-8">
             Backed by global leaders. Recognized by national institutions. Built for educators.
           </p>
 
-          <p className="text-lg text-gray-700 mb-8">
+          <p className="text-lg mb-8">
             Remarkably (under parent brand Lenor) is supported by top programs and institutions:
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="bg-white border border-gray-200 rounded-lg p-4 text-center shadow-sm">
               <h3 className="font-semibold text-gray-900 text-sm">Google for Startups</h3>
             </div>
@@ -48,8 +48,10 @@ const Achievements: React.FC = () => {
               <h3 className="font-semibold text-gray-900 text-sm">NUS Computing</h3>
             </div>
           </div>
+        </div>
 
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Awards</h2>
+        <div className="content-card">
+          <h2 className="mb-6">Awards</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
@@ -92,8 +94,10 @@ const Achievements: React.FC = () => {
               <p className="text-pink-800">NUS Venture Ignition Grant</p>
             </div>
           </div>
+        </div>
 
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center mt-12">
+        <div className="content-card">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Recognized Excellence</h2>
             <p className="text-gray-600 mb-6">
               Our achievements reflect our commitment to transforming education through innovative AI technology.

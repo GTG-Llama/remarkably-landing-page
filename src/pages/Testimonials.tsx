@@ -11,14 +11,16 @@ const Testimonials: React.FC = () => {
           content="Read what teachers and educators are saying about Remarkably's AI-powered essay grading platform." 
         />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Testimonials</h1>
-          <p className="text-xl text-gray-600 mb-12">
+      <div className="page-container">
+        <div className="content-card">
+          <h1>Testimonials</h1>
+          <p className="text-xl mb-8">
             Hear from educators who are transforming their grading experience with Remarkably.
           </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="content-card">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -79,7 +81,9 @@ const Testimonials: React.FC = () => {
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="content-card">
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-blue-900 mb-4">Join Our Community of Satisfied Educators</h2>
             <p className="text-blue-800 mb-6">

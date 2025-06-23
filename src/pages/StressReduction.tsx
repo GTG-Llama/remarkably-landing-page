@@ -11,16 +11,18 @@ const StressReduction: React.FC = () => {
           content="5 Effective Strategies to Reduce Teacher Stress. Managing stress helps teachers stay energized, focused, and present in the classroom." 
         />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Stress Reduction</h1>
-          <p className="text-xl text-gray-600 mb-8">
+      <div className="page-container">
+        <div className="content-card">
+          <h1>Stress Reduction</h1>
+          <p className="text-xl mb-8">
             <strong>5 Effective Strategies to Reduce Teacher Stress</strong><br />
             Managing stress helps teachers stay energized, focused, and present in the classroom. 
             Implement these evidence-based techniques to protect your well-being and improve job satisfaction.
           </p>
+        </div>
 
-          <div className="space-y-8">
+        <div className="content-card">
+          <div className="space-y-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <h2 className="text-2xl font-semibold text-blue-900 mb-4">1. Mindful Breathing & Meditation</h2>
               <p className="text-blue-800 mb-4">
@@ -80,8 +82,10 @@ const StressReduction: React.FC = () => {
               </ul>
             </div>
           </div>
+        </div>
 
-          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-8 text-center mt-12">
+        <div className="content-card">
+          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-indigo-900 mb-4">Reduce Stress with Smart Technology</h2>
             <p className="text-indigo-800 mb-6">
               Remarkably can help reduce grading stress by automating essay feedback, giving you more time for self-care and what matters most.

@@ -11,14 +11,16 @@ const QnA: React.FC = () => {
           content="Get answers to frequently asked questions about Remarkably's AI-powered essay grading platform for educators." 
         />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Q&A</h1>
-          <p className="text-xl text-gray-600 mb-12">
+      <div className="page-container">
+        <div className="content-card">
+          <h1>Q&A</h1>
+          <p className="text-xl mb-8">
             Frequently asked questions about Remarkably's AI-powered essay grading platform.
           </p>
+        </div>
 
-          <div className="space-y-8">
+        <div className="content-card">
+          <div className="space-y-6">
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
                 "Can it actually grade handwritten essays? My students have messy writing."
@@ -64,8 +66,10 @@ const QnA: React.FC = () => {
               </p>
             </div>
           </div>
+        </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center mt-12">
+        <div className="content-card">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-blue-900 mb-4">Still Have Questions?</h2>
             <p className="text-blue-800 mb-6">
               Our team is here to help you understand how Remarkably can transform your grading experience.

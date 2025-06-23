@@ -11,16 +11,18 @@ const Benefits: React.FC = () => {
           content="Remarkably helps educators save time, personalize feedback, reduce grading stress, and improve student outcomes — all through the power of AI." 
         />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Benefits</h1>
-          <p className="text-xl text-gray-600 mb-8">
+      <div className="page-container">
+        <div className="content-card">
+          <h1>Benefits</h1>
+          <p className="text-xl mb-8">
             <strong>Empowering Teachers with AI Grading: Remarkably Benefits</strong><br />
             Remarkably helps educators save time, personalize feedback, reduce grading stress, and improve student
             outcomes — all through the power of AI.
           </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="content-card">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <h3 className="text-xl font-semibold text-blue-900 mb-3">5× Faster Grading</h3>
               <p className="text-blue-800">
@@ -63,7 +65,9 @@ const Benefits: React.FC = () => {
               </p>
             </div>
           </div>
+        </div>
 
+        <div className="content-card">
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to Transform Your Grading?</h2>
             <p className="text-gray-600 mb-6">

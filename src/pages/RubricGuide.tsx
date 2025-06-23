@@ -11,16 +11,18 @@ const RubricGuide: React.FC = () => {
           content="A well-crafted rubric sets clear expectations for students and guides teachers to grade fairly. Use this practical, educator-friendly guide whether you're starting from scratch or refining an existing rubric." 
         />
       </Helmet>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg max-w-none">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">Rubric Guide</h1>
-          <p className="text-xl text-gray-600 mb-8">
+      <div className="page-container">
+        <div className="content-card">
+          <h1>Rubric Guide</h1>
+          <p className="text-xl mb-8">
             <strong>How to Create an Effective Rubric for Essay Grading</strong><br />
             A well-crafted rubric sets clear expectations for students and guides teachers to grade fairly. 
             Use this practical, educator-friendly guide whether you're starting from scratch or refining an existing rubric.
           </p>
+        </div>
 
-          <div className="space-y-8">
+        <div className="content-card">
+          <div className="space-y-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <h2 className="text-2xl font-semibold text-blue-900 mb-4">1. Start with Your Learning Goals</h2>
               <p className="text-blue-800 mb-3">
@@ -59,8 +61,10 @@ const RubricGuide: React.FC = () => {
               </p>
             </div>
           </div>
+        </div>
 
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 mt-12">
+        <div className="content-card">
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">Sample Rubric Framework</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <div className="font-semibold text-gray-900">Criteria</div>
@@ -84,8 +88,10 @@ const RubricGuide: React.FC = () => {
               <div className="text-gray-700">Poor organization</div>
             </div>
           </div>
+        </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center mt-8">
+        <div className="content-card">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-blue-900 mb-4">Ready to Streamline Your Grading?</h2>
             <p className="text-blue-800 mb-6">
               Use Remarkably to apply your custom rubrics automatically with AI-powered grading.

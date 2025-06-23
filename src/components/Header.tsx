@@ -1,44 +1,39 @@
-import { useState, useEffect, useRef } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+const mainLinks = [
+  { name: "Features", path: "/features" },
+  { name: "Pricing", path: "/pricing" },
+  { name: "Benefits", path: "/benefits" },
+];
+
+const moreLinks = [
+  { name: "How It Works", path: "/how-it-works" },
+  { name: "FAQ", path: "/faq" },
+  { name: "About", path: "/about" },
+  { name: "Achievements", path: "/achievements" },
+];
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const navigate = useNavigate();
-  
-  // Create refs for each section
-  const demoRef = useRef<HTMLElement | null>(null);
-  const featuresRef = useRef<HTMLElement | null>(null);
-  const benefitsRef = useRef<HTMLElement | null>(null);
-  const testimonialsRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    // Set refs to target DOM elements
-    demoRef.current = document.querySelector("#essay-focus");
-    featuresRef.current = document.querySelector("#essay-showcase");
-    benefitsRef.current = document.querySelector("#features");
-    testimonialsRef.current = document.querySelector("#testimonials");
-
     const handleScroll = () => {
       const isScrolled = window.scrollY > 50;
       if (isScrolled !== scrolled) {
         setScrolled(isScrolled);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrolled]);
-
-  const scrollToSection = (ref: React.MutableRefObject<HTMLElement | null>) => {
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   const handleContactClick = () => {
     navigate("/contact");
@@ -72,10 +67,9 @@ const Header = () => {
       >
         <div className="container mx-auto px-0 py-4 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0">
             <motion.div
-              className={"bg-white border-2 border-black p-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transform rotate-1"
-              }
+              className="bg-white border-2 border-black p-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transform rotate-1"
               whileHover={{
                 rotate: 3,
                 transition: { duration: 0.3 },
@@ -87,38 +81,57 @@ const Header = () => {
                 className="w-50 h-10 px-2 py-1"
               />
             </motion.div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-10">
-            <motion.button 
-              onClick={() => scrollToSection(demoRef)}
-              className="text-black font-semibold text-lg hover:underline decoration-2 underline-offset-4"
-              whileHover={{ scale: 1.05 }}
+          <nav className="hidden lg:flex items-center gap-6 relative">
+            {mainLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="text-black font-semibold text-lg hover:underline decoration-2 underline-offset-4"
+              >
+                {link.name}
+              </Link>
+            ))}
+            {/* More Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setMoreOpen(true)}
+              onMouseLeave={() => setMoreOpen(false)}
             >
-              Demo
-            </motion.button>
-            <motion.button 
-              onClick={() => scrollToSection(featuresRef)}
-              className="text-black font-semibold text-lg hover:underline decoration-2 underline-offset-4"
-              whileHover={{ scale: 1.05 }}
-            >
-              Features
-            </motion.button>
-            <motion.button 
-              onClick={() => scrollToSection(benefitsRef)}
-              className="text-black font-semibold text-lg hover:underline decoration-2 underline-offset-4"
-              whileHover={{ scale: 1.05 }}
-            >
-              Benefits
-            </motion.button>
-            <motion.button 
-              onClick={() => scrollToSection(testimonialsRef)}
-              className="text-black font-semibold text-lg hover:underline decoration-2 underline-offset-4"
-              whileHover={{ scale: 1.05 }}
-            >
-              Testimonials
-            </motion.button>
+              <button
+                className="flex items-center text-black font-semibold text-lg hover:underline decoration-2 underline-offset-4 focus:outline-none"
+                type="button"
+              >
+                More <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              <AnimatePresence>
+                {moreOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute left-0 mt-2 w-48 bg-white border-2 border-black shadow-lg rounded-md z-50"
+                  >
+                    <ul className="py-2">
+                      {moreLinks.map((link) => (
+                        <li key={link.path}>
+                          <Link
+                            to={link.path}
+                            className="block px-4 py-2 text-black hover:bg-yellow-100 hover:underline"
+                            onClick={() => setMoreOpen(false)}
+                          >
+                            {link.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </nav>
 
           {/* Contact Us Button */}
@@ -156,44 +169,21 @@ const Header = () => {
               transition={{ duration: 0.3 }}
             >
               <div className="py-4 px-4 flex flex-col space-y-4">
-                <button
-                  onClick={() => {
-                    scrollToSection(demoRef);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-100 transition-all px-2"
-                >
-                  Demo
-                </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(featuresRef);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-100 transition-all px-2"
-                >
-                  Features
-                </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(benefitsRef);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-100 transition-all px-2"
-                >
-                  Benefits
-                </button>
-                <button
-                  onClick={() => {
-                    scrollToSection(testimonialsRef);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-100 transition-all px-2"
-                >
-                  Testimonials
-                </button>
+                {[...mainLinks, ...moreLinks].map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className="text-black font-bold py-2 border-b-2 border-dashed border-black hover:bg-yellow-100 transition-all px-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
                 <motion.button
-                  onClick={handleContactClick}
+                  onClick={() => {
+                    handleContactClick();
+                    setMobileMenuOpen(false);
+                  }}
                   className="bg-yellow-300 text-black font-bold px-6 py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] w-full"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

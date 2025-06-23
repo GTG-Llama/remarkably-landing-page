@@ -1,419 +1,489 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { 
+  Check, 
+  X, 
+  Star, 
+  ArrowRight, 
+  Calculator, 
+  Clock, 
+  DollarSign,
+  Users,
+  Zap,
+  Shield,
+  Sparkles
+} from 'lucide-react';
 
 const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
-  const [studentCount, setStudentCount] = useState(100);
-  const [calculatedSavings, setCalculatedSavings] = useState({ time: 0, money: 0 });
+  const [essaysPerMonth, setEssaysPerMonth] = useState(100);
+  const [timePerEssay, setTimePerEssay] = useState(15);
+  const [hourlyRate, setHourlyRate] = useState(50);
 
-  useEffect(() => {
-    // Calculate time and money savings
-    const minutesPerEssay = 3; // Average time to grade an essay manually
-    const essaysPerMonth = studentCount * 2; // Assume 2 essays per student per month
-    const timeSavedMinutes = essaysPerMonth * minutesPerEssay * 0.75; // 75% time savings
-    const timeSavedHours = Math.round(timeSavedMinutes / 60);
-    
-    // Assuming teacher makes $30/hour
-    const moneySaved = Math.round(timeSavedHours * 30);
-    
-    setCalculatedSavings({ time: timeSavedHours, money: moneySaved });
-  }, [studentCount]);
-
-  const pricingPlans = [
+  const plans = [
     {
-      name: 'Teacher',
-      description: 'Perfect for individual educators',
-      monthlyPrice: 29,
-      yearlyPrice: 290,
-      students: 'Up to 150',
+      name: 'Starter',
+      description: 'Perfect for individual teachers',
+      price: { monthly: 29, yearly: 290 },
       features: [
-        'AI-powered essay grading',
-        'Instant detailed feedback',
-        'Basic analytics dashboard',
+        'Up to 100 essays per month',
+        'Basic AI grading',
+        'Standard feedback',
         'Email support',
-        'Standard rubrics',
-        'Google Classroom integration'
+        'Basic analytics',
+        'PDF export'
+      ],
+      limitations: [
+        'No custom rubrics',
+        'No team collaboration',
+        'No API access'
       ],
       popular: false,
-      color: 'blue'
+      cta: 'Start Free Trial'
     },
     {
-      name: 'School',
-      description: 'Ideal for departments and small schools',
-      monthlyPrice: 99,
-      yearlyPrice: 990,
-      students: 'Up to 500',
+      name: 'Professional',
+      description: 'Ideal for departments and schools',
+      price: { monthly: 99, yearly: 990 },
       features: [
-        'Everything in Teacher plan',
-        'Advanced analytics & reporting',
-        'Custom rubrics builder',
+        'Up to 500 essays per month',
+        'Advanced AI grading',
+        'Detailed feedback',
         'Priority support',
-        'LMS integrations (Canvas, Blackboard)',
-        'Bulk import/export',
-        'Plagiarism detection',
-        'Multi-teacher collaboration'
+        'Advanced analytics',
+        'Custom rubrics',
+        'Team collaboration',
+        'Bulk processing',
+        'LMS integration'
+      ],
+      limitations: [
+        'No white-label options',
+        'Limited API calls'
       ],
       popular: true,
-      color: 'purple'
+      cta: 'Start Free Trial'
     },
     {
-      name: 'District',
-      description: 'For large institutions and districts',
-      monthlyPrice: 299,
-      yearlyPrice: 2990,
-      students: 'Unlimited',
+      name: 'Enterprise',
+      description: 'For large institutions',
+      price: { monthly: 299, yearly: 2990 },
       features: [
-        'Everything in School plan',
-        'Dedicated account manager',
-        'Custom AI model training',
-        'Advanced security features',
+        'Unlimited essays',
+        'Premium AI grading',
+        'Custom feedback templates',
+        'Dedicated support',
+        'Full analytics suite',
+        'Custom rubrics',
+        'Team collaboration',
+        'Bulk processing',
+        'Full LMS integration',
         'API access',
         'White-label options',
-        'Professional development training',
+        'Custom training',
         'SLA guarantee'
       ],
+      limitations: [],
       popular: false,
-      color: 'green'
+      cta: 'Contact Sales'
     }
   ];
+
+  const calculateROI = () => {
+    const timeSavedPerEssay = timePerEssay * 0.8; // 80% time savings
+    const totalTimeSaved = (essaysPerMonth * timeSavedPerEssay) / 60; // in hours
+    const monthlySavings = totalTimeSaved * hourlyRate;
+    const yearlyROI = (monthlySavings * 12) - (plans[1].price.yearly); // Using Professional plan
+    
+    return {
+      timeSavedPerMonth: totalTimeSaved,
+      monthlySavings,
+      yearlyROI
+    };
+  };
+
+  const roi = calculateROI();
 
   const faqs = [
     {
-      question: 'How accurate is the AI grading?',
-      answer: 'Our AI achieves 98% consistency with human graders and continuously improves through machine learning. It provides detailed feedback on grammar, structure, content, and creativity.'
+      question: "Is there a free trial?",
+      answer: "Yes! We offer a 14-day free trial for all plans. No credit card required."
     },
     {
-      question: 'Can I customize the grading rubrics?',
-      answer: 'Yes! School and District plans include a custom rubrics builder. You can create subject-specific rubrics and adjust weighting for different criteria.'
+      question: "Can I change plans anytime?",
+      answer: "Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect immediately."
     },
     {
-      question: 'What file formats do you support?',
-      answer: 'We support PDF, DOC, DOCX files, and scanned handwritten essays. Our OCR technology can read handwriting with high accuracy.'
+      question: "What payment methods do you accept?",
+      answer: "We accept all major credit cards, PayPal, and can arrange invoicing for enterprise customers."
     },
     {
-      question: 'Is there a free trial?',
-      answer: 'Yes! We offer a 14-day free trial with full access to all features. No credit card required to start.'
+      question: "Is there a setup fee?",
+      answer: "No setup fees for any plan. We believe in transparent, straightforward pricing."
     },
     {
-      question: 'How does billing work?',
-      answer: 'Billing is based on your plan tier and student count. You can upgrade or downgrade anytime, and we prorate the charges accordingly.'
+      question: "Do you offer discounts for educational institutions?",
+      answer: "Yes! We offer special pricing for schools and educational institutions. Contact us for details."
     }
   ];
-
-  const getPrice = (plan: typeof pricingPlans[0]) => {
-    return billingCycle === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice;
-  };
-
-  const getSavingsPercentage = () => {
-    return Math.round(((pricingPlans[1].monthlyPrice * 12 - pricingPlans[1].yearlyPrice) / (pricingPlans[1].monthlyPrice * 12)) * 100);
-  };
 
   return (
     <>
       <Helmet>
-        <title>Pricing - Remarkably AI Essay Grading Platform</title>
-        <meta name="description" content="Choose the perfect plan for your needs. Transparent pricing for AI-powered essay grading. Start with a free trial and save up to 75% of your grading time." />
-        <meta name="keywords" content="AI grading pricing, essay grading cost, teacher pricing plans, school subscriptions" />
+        <title>Pricing - Affordable AI Essay Grading Plans | Remarkably</title>
+        <meta name="description" content="Choose the perfect plan for your needs. Start with our free trial and see how Remarkably can save you time and improve grading quality." />
+        <meta name="keywords" content="AI essay grading pricing, education technology pricing, teacher tools cost, grading software plans" />
       </Helmet>
 
-      <div className="page-container">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Simple, Transparent
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Pricing
-            </span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Choose the plan that fits your needs. All plans include our core AI grading features 
-            with a 14-day free trial and no setup fees.
-          </p>
-          
-          {/* Billing Toggle */}
-          <div className="inline-flex items-center bg-gray-100 rounded-full p-1 mb-12">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                billingCycle === 'monthly'
-                  ? 'bg-white text-blue-600 shadow-md'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle('yearly')}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                billingCycle === 'yearly'
-                  ? 'bg-white text-blue-600 shadow-md'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Yearly
-              <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                Save {getSavingsPercentage()}%
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
-          {pricingPlans.map((plan, index) => (
-            <div
-              key={index}
-              className={`pricing-card ${plan.popular ? 'featured' : ''} hover-lift`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <p className="text-gray-600 mb-6">{plan.description}</p>
-                
-                <div className="mb-4">
-                  <span className="text-5xl font-bold text-gray-900">
-                    ${getPrice(plan)}
-                  </span>
-                  <span className="text-gray-600">
-                    /{billingCycle === 'monthly' ? 'month' : 'year'}
-                  </span>
-                </div>
-                
-                <div className="text-sm text-gray-500 mb-6">
-                  {plan.students} students
-                </div>
-                
-                <Link
-                  to="/demo"
-                  className={`w-full inline-block py-3 px-6 rounded-full font-bold transition-all duration-300 transform hover:scale-105 ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
-                  }`}
-                >
-                  Start Free Trial
-                </Link>
-              </div>
-              
-              <div className="space-y-4">
-                <h4 className="font-semibold text-gray-900 mb-4">What's included:</h4>
-                {plan.features.map((feature, featureIndex) => (
-                  <div key={featureIndex} className="flex items-center space-x-3">
-                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center">
-                      <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-gray-700">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ROI Calculator */}
-        <div className="mb-20">
-          <div className="content-card bg-gradient-to-br from-blue-50 to-indigo-50">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Calculate Your Savings</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                See how much time and money you can save with Remarkably's AI-powered grading
-              </p>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="container mx-auto text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="badge badge-primary mb-8 inline-flex">
+              <DollarSign className="h-4 w-4 mr-2" />
+              Transparent Pricing
             </div>
             
-            <div className="max-w-4xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Students
-                  </label>
-                  <input
-                    type="range"
-                    min="50"
-                    max="1000"
-                    step="50"
-                    value={studentCount}
-                    onChange={(e) => setStudentCount(Number(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                  />
-                  <div className="flex justify-between text-sm text-gray-500 mt-1">
-                    <span>50</span>
-                    <span className="font-bold text-blue-600">{studentCount}</span>
-                    <span>1000+</span>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-6 bg-white rounded-xl shadow-sm">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">
-                      {calculatedSavings.time}h
-                    </div>
-                    <div className="text-sm text-gray-600">Time Saved Monthly</div>
-                  </div>
-                  <div className="text-center p-6 bg-white rounded-xl shadow-sm">
-                    <div className="text-3xl font-bold text-green-600 mb-2">
-                      ${calculatedSavings.money}
-                    </div>
-                    <div className="text-sm text-gray-600">Value Saved Monthly</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="text-center mt-8">
-                <p className="text-gray-600 mb-4">
-                  With {studentCount} students, you could save <strong>{calculatedSavings.time} hours</strong> per month
-                </p>
-                <Link
-                  to="/demo"
-                  className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105"
-                >
-                  Start Saving Time Today
-                  <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-              </div>
+            <h1 className="mb-6">
+              Simple Pricing for
+              <span className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] bg-clip-text text-transparent"> Every Educator</span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Choose the plan that fits your needs. All plans include our core AI grading features 
+              with a 14-day free trial. No setup fees, no hidden costs.
+            </p>
+
+            {/* Billing Toggle */}
+            <div className="flex items-center justify-center mb-12">
+              <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-gray-900' : 'text-gray-500'}`}>
+                Monthly
+              </span>
+              <button
+                onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  billingCycle === 'yearly' ? 'bg-[#667EEA]' : 'bg-gray-200'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    billingCycle === 'yearly' ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+              <span className={`ml-3 ${billingCycle === 'yearly' ? 'text-gray-900' : 'text-gray-500'}`}>
+                Yearly
+              </span>
+              {billingCycle === 'yearly' && (
+                <span className="ml-2 badge badge-accent">Save 17%</span>
+              )}
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Feature Comparison */}
-        <div className="mb-20">
-          <h2 className="text-3xl font-bold text-center mb-12">Compare Plans</h2>
-          
-          <div className="content-card overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-gray-200">
-                  <th className="text-left py-4 px-6 font-bold text-gray-900">Features</th>
-                  <th className="text-center py-4 px-6 font-bold text-blue-600">Teacher</th>
-                  <th className="text-center py-4 px-6 font-bold text-purple-600 bg-purple-50">School</th>
-                  <th className="text-center py-4 px-6 font-bold text-green-600">District</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { feature: 'AI Essay Grading', teacher: true, school: true, district: true },
-                  { feature: 'Student Limit', teacher: '150', school: '500', district: 'Unlimited' },
-                  { feature: 'Basic Analytics', teacher: true, school: true, district: true },
-                  { feature: 'Advanced Reporting', teacher: false, school: true, district: true },
-                  { feature: 'Custom Rubrics', teacher: false, school: true, district: true },
-                  { feature: 'Plagiarism Detection', teacher: false, school: true, district: true },
-                  { feature: 'API Access', teacher: false, school: false, district: true },
-                  { feature: 'White-label Options', teacher: false, school: false, district: true },
-                  { feature: 'Support Level', teacher: 'Email', school: 'Priority', district: 'Dedicated Manager' }
-                ].map((row, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-4 px-6 font-medium text-gray-900">{row.feature}</td>
-                    <td className="py-4 px-6 text-center">
-                      {typeof row.teacher === 'boolean' ? (
-                        row.teacher ? (
-                          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                            <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        ) : (
-                          <div className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
-                            <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </div>
-                        )
-                      ) : (
-                        <span className="text-gray-600">{row.teacher}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-6 text-center bg-purple-25">
-                      {typeof row.school === 'boolean' ? (
-                        row.school ? (
-                          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                            <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        ) : (
-                          <div className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
-                            <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </div>
-                        )
-                      ) : (
-                        <span className="text-gray-600">{row.school}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-6 text-center">
-                      {typeof row.district === 'boolean' ? (
-                        row.district ? (
-                          <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                            <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        ) : (
-                          <div className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
-                            <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                          </div>
-                        )
-                      ) : (
-                        <span className="text-gray-600">{row.district}</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      {/* Pricing Cards */}
+      <section className="section bg-white">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {plans.map((plan, index) => (
+              <div
+                key={index}
+                className={`pricing-card ${plan.popular ? 'pricing-card-featured' : ''}`}
+              >
+                <div className="p-8">
+                  {plan.popular && (
+                    <div className="flex items-center justify-center mb-4">
+                      <span className="badge badge-primary">
+                        <Star className="h-3 w-3 mr-1" />
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                  <p className="text-gray-600 mb-6">{plan.description}</p>
+                  
+                  <div className="mb-6">
+                    <div className="flex items-baseline">
+                      <span className="text-4xl font-bold text-gray-900">
+                        ${plan.price[billingCycle]}
+                      </span>
+                      <span className="text-gray-500 ml-2">
+                        /{billingCycle === 'monthly' ? 'month' : 'year'}
+                      </span>
+                    </div>
+                    {billingCycle === 'yearly' && (
+                      <p className="text-sm text-gray-500 mt-1">
+                        ${Math.round(plan.price.yearly / 12)}/month billed annually
+                      </p>
+                    )}
+                  </div>
 
-        {/* FAQ Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          
-          <div className="max-w-4xl mx-auto space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="content-card">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{faq.question}</h3>
-                <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center">
+                        <Check className="h-5 w-5 text-[#4FD1C7] mr-3 flex-shrink-0" />
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                    {plan.limitations.map((limitation, limitationIndex) => (
+                      <li key={limitationIndex} className="flex items-center">
+                        <X className="h-5 w-5 text-gray-400 mr-3 flex-shrink-0" />
+                        <span className="text-gray-500">{limitation}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    to={plan.cta === 'Contact Sales' ? '/contact' : '/demo'}
+                    className={`btn w-full ${
+                      plan.popular ? 'btn-primary' : 'btn-secondary'
+                    } btn-lg`}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl p-12">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Join thousands of educators who have transformed their grading experience
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/demo"
-              className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              Start 14-Day Free Trial
-            </Link>
-            <Link
-              to="/contact"
-              className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300"
-            >
-              Contact Sales
-            </Link>
+      {/* ROI Calculator */}
+      <section className="section">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="mb-4">Calculate Your ROI</h2>
+              <p className="text-xl text-gray-600">
+                See how much time and money you can save with Remarkably
+              </p>
+            </div>
+
+            <div className="card card-padding">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Calculator Inputs */}
+                <div>
+                  <h3 className="mb-6 flex items-center">
+                    <Calculator className="h-6 w-6 mr-2 text-[#667EEA]" />
+                    Your Current Situation
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Essays graded per month
+                      </label>
+                      <input
+                        type="range"
+                        min="10"
+                        max="500"
+                        value={essaysPerMonth}
+                        onChange={(e) => setEssaysPerMonth(Number(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>10</span>
+                        <span className="font-medium text-[#667EEA]">{essaysPerMonth}</span>
+                        <span>500</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Minutes per essay (current)
+                      </label>
+                      <input
+                        type="range"
+                        min="5"
+                        max="30"
+                        value={timePerEssay}
+                        onChange={(e) => setTimePerEssay(Number(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>5</span>
+                        <span className="font-medium text-[#667EEA]">{timePerEssay}</span>
+                        <span>30</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Your hourly rate ($)
+                      </label>
+                      <input
+                        type="range"
+                        min="20"
+                        max="100"
+                        value={hourlyRate}
+                        onChange={(e) => setHourlyRate(Number(e.target.value))}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>$20</span>
+                        <span className="font-medium text-[#667EEA]">${hourlyRate}</span>
+                        <span>$100</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Results */}
+                <div>
+                  <h3 className="mb-6 flex items-center">
+                    <Sparkles className="h-6 w-6 mr-2 text-[#4FD1C7]" />
+                    Your Savings with Remarkably
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    <div className="bg-[#EBF4FF] rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <Clock className="h-5 w-5 text-[#667EEA] mr-2" />
+                        <span className="font-medium text-gray-700">Time Saved</span>
+                      </div>
+                      <div className="text-2xl font-bold text-[#667EEA]">
+                        {roi.timeSavedPerMonth.toFixed(1)} hours/month
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        80% reduction in grading time
+                      </div>
+                    </div>
+
+                    <div className="bg-[#E6FFFA] rounded-lg p-4">
+                      <div className="flex items-center mb-2">
+                        <DollarSign className="h-5 w-5 text-[#4FD1C7] mr-2" />
+                        <span className="font-medium text-gray-700">Monthly Savings</span>
+                      </div>
+                      <div className="text-2xl font-bold text-[#4FD1C7]">
+                        ${roi.monthlySavings.toFixed(0)}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Value of time saved
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] rounded-lg p-4 text-white">
+                      <div className="flex items-center mb-2">
+                        <Zap className="h-5 w-5 mr-2" />
+                        <span className="font-medium">Annual ROI</span>
+                      </div>
+                      <div className="text-2xl font-bold">
+                        ${roi.yearlyROI.toFixed(0)}
+                      </div>
+                      <div className="text-sm opacity-90">
+                        Net savings after Professional plan cost
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
+                    <Link to="/demo" className="btn btn-primary btn-lg w-full">
+                      Start Saving Today
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Features Comparison */}
+      <section className="section bg-white">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Why Choose Remarkably?</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Compare our features with traditional grading methods
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="icon-container icon-container-primary mx-auto">
+                  <Clock className="h-8 w-8" />
+                </div>
+                <h3 className="mb-3">5-7x Faster</h3>
+                <p className="text-gray-600">
+                  Reduce grading time from 15-20 minutes to just 3-5 minutes per essay
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="icon-container icon-container-accent mx-auto">
+                  <Shield className="h-8 w-8" />
+                </div>
+                <h3 className="mb-3">Consistent Quality</h3>
+                <p className="text-gray-600">
+                  AI ensures consistent grading standards across all essays
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="icon-container icon-container-primary mx-auto">
+                  <Users className="h-8 w-8" />
+                </div>
+                <h3 className="mb-3">Trusted by 50+ Schools</h3>
+                <p className="text-gray-600">
+                  Join educators worldwide who trust Remarkably for efficient grading
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="section">
+        <div className="container mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="mb-4">Frequently Asked Questions</h2>
+              <p className="text-xl text-gray-600">
+                Everything you need to know about our pricing and plans
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {faqs.map((faq, index) => (
+                <div key={index} className="card card-padding">
+                  <h3 className="mb-3">{faq.question}</h3>
+                  <p className="text-gray-600">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section gradient-bg">
+        <div className="container mx-auto text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-white mb-6">
+              Ready to Transform Your Grading?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Start your free trial today. No credit card required, 
+              no setup fees, and full access to all features.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/demo" className="btn btn-accent btn-lg">
+                Start Free Trial
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link to="/contact" className="btn btn-secondary btn-lg">
+                Contact Sales
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

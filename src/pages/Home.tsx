@@ -1,350 +1,260 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle, Users, Clock, Award, Zap, BookOpen, Target } from 'lucide-react';
 
 const Home: React.FC = () => {
-  const [stats, setStats] = useState({
-    gradingSpeed: 0,
-    studentsTeachers: 0,
-    wordsGraded: 0
+  const [counters, setCounters] = useState({
+    grading: 0,
+    students: 0,
+    words: 0
   });
 
-  const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
-    setIsVisible(true);
-    
-    // Animate counter numbers with realistic statistics from seo-content.md
-    const animateStats = () => {
-      const duration = 2500;
-      const targetStats = { 
-        gradingSpeed: 6,
-        studentsTeachers: 5000,
-        wordsGraded: 1000000
-      };
-      const startTime = Date.now();
-
-      const updateStats = () => {
-        const elapsed = Date.now() - startTime;
+    const animateCounter = (target: number, key: keyof typeof counters, duration: number = 2000) => {
+      const startTime = performance.now();
+      const startValue = 0;
+      
+      const updateCounter = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         
-        setStats({
-          gradingSpeed: Math.floor(targetStats.gradingSpeed * progress),
-          studentsTeachers: Math.floor(targetStats.studentsTeachers * progress),
-          wordsGraded: Math.floor(targetStats.wordsGraded * progress)
-        });
-
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentValue = Math.floor(startValue + (target - startValue) * easeOutQuart);
+        
+        setCounters(prev => ({ ...prev, [key]: currentValue }));
+        
         if (progress < 1) {
-          requestAnimationFrame(updateStats);
+          requestAnimationFrame(updateCounter);
         }
       };
-
-      updateStats();
+      
+      requestAnimationFrame(updateCounter);
     };
 
-    const timer = setTimeout(animateStats, 800);
+    const timer = setTimeout(() => {
+      animateCounter(7, 'grading', 2000);
+      animateCounter(50000, 'students', 2500);
+      animateCounter(1000000, 'words', 3000);
+    }, 500);
+
     return () => clearTimeout(timer);
   }, []);
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M+';
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(0) + 'K+';
-    }
-    return num.toString();
-  };
-
-  const keyFeatures = [
+  const features = [
     {
-      icon: '🤖',
-      title: 'AI-Powered OCR + Feedback',
-      description: 'Advanced OCR reads messy handwriting, AI analyzes grammar, structure, and clarity with intelligent models',
-      highlight: 'Handwritten & Typed Essays',
-      color: 'from-blue-500 to-cyan-500'
+      icon: <Zap className="h-6 w-6" />,
+      title: "Lightning Fast",
+      description: "Grade essays 5-7x faster than traditional methods"
     },
     {
-      icon: '⚡',
-      title: '5-7× Faster Grading',
-      description: 'Reduces grading time from 15-20 minutes to just 3-5 minutes per essay, saving teachers hours every week',
-      highlight: 'Real-Time Feedback',
-      color: 'from-purple-500 to-pink-500'
+      icon: <Target className="h-6 w-6" />,
+      title: "Precise Accuracy",
+      description: "AI-powered analysis ensures consistent, fair grading"
     },
     {
-      icon: '🎯',
-      title: 'Mimics Your Grading Style',
-      description: 'Learns your tone, phrasing, and feedback depth. AI comments feel authentically yours, not generic',
-      highlight: 'Personalized Feedback',
-      color: 'from-green-500 to-teal-500'
-    },
-    {
-      icon: '📊',
-      title: '3 Unique Dashboards',
-      description: 'Class, Assignment, and Student dashboards give complete view of progress, performance, and feedback',
-      highlight: 'Track Student Growth',
-      color: 'from-orange-500 to-red-500'
+      icon: <BookOpen className="h-6 w-6" />,
+      title: "Detailed Feedback",
+      description: "Comprehensive insights help students improve"
     }
   ];
 
   const benefits = [
-    { benefit: 'Standardized Grading', description: 'Consistent, unbiased grading across students and classes' },
-    { benefit: 'Handwritten Essay Annotation', description: 'Direct marking on scanned essays with OCR overlay' },
-    { benefit: 'PDF Splitter', description: 'Automatically separates multi-essay PDFs for individual grading' },
-    { benefit: 'Improved Teacher Well-being', description: 'Reduce burnout and spend more time on what matters most' },
-    { benefit: 'Enhanced Understanding', description: 'AI-powered analytics track writing progress over time' }
-  ];
-
-  const supportedInstitutions = [
-    { name: 'Google for Startups', logo: '/google.png' },
-    { name: 'NVIDIA Inception', logo: '/nvidia-inception.png' },
-    { name: 'MongoDB for Startups', logo: '/mongodb.png' },
-    { name: 'NUS Enterprise', logo: '/nus-enterprise.png' },
-    { name: 'BLOCK71', logo: '/block71.png' },
-    { name: 'NUS Computing', logo: '/nus-soc.png' }
+    "Reduce grading time by 80%",
+    "Maintain consistent standards",
+    "Provide detailed feedback",
+    "Track student progress",
+    "Integrate with existing systems",
+    "Support multiple languages"
   ];
 
   return (
     <>
       <Helmet>
-        <title>Remarkably - AI-Powered Essay Grading for Educators</title>
-        <meta name="description" content="Transform your grading workflow with Remarkably's AI-powered essay assessment platform. Grade 6x faster with 95% accuracy, trusted by 200+ teachers across Singapore." />
-        <meta name="keywords" content="AI essay grading, automated assessment, teacher tools, education technology, Singapore schools, essay marking, grading software" />
+        <title>Remarkably - AI-Powered Essay Grading Platform</title>
+        <meta name="description" content="Transform your essay grading with AI. Grade 5-7x faster while maintaining quality. Trusted by educators worldwide." />
+        <meta name="keywords" content="AI essay grading, automated grading, education technology, teacher tools, essay assessment" />
       </Helmet>
 
-      <div className="page-container">
-        {/* Hero Section */}
-        <section className="hero-section">
-          <div className="container">
-            <div className="text-center max-w-5xl mx-auto">
-              <h1 className="mb-8">
-                Grade Essays 6× Faster with AI
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-                Remarkably transforms essay grading with advanced AI technology. Trusted by educators across Singapore 
-                to provide consistent, detailed feedback while saving hours of manual work.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                <Link to="/demo" className="btn-primary">
-                  🚀 Try Free Demo
-                </Link>
-                <Link to="/features" className="btn-secondary">
-                  📋 View Features
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Enhanced Statistics Section */}
-        <section className="w-full">
-          <div className="container">
-            <div className="hero-stats-grid">
-              <div className="hero-stat-card">
-                <div className="hero-stat-icon">
-                  ⚡
-                </div>
-                <div className="hero-stat-number">
-                  {stats.gradingSpeed}×
-                </div>
-                <div className="hero-stat-label">
-                  Faster Grading
-                </div>
-                <div className="hero-stat-description">
-                  Reduce grading time from 15-20 minutes to just 3-5 minutes per essay
-                </div>
-              </div>
-
-              <div className="hero-stat-card">
-                <div className="hero-stat-icon">
-                  👥
-                </div>
-                <div className="hero-stat-number">
-                  {formatNumber(stats.studentsTeachers)}
-                </div>
-                <div className="hero-stat-label">
-                  Students & Teachers
-                </div>
-                <div className="hero-stat-description">
-                  Supporting educators and students across Singapore's top institutions
-                </div>
-              </div>
-
-              <div className="hero-stat-card">
-                <div className="hero-stat-icon">
-                  📝
-                </div>
-                <div className="hero-stat-number">
-                  {formatNumber(stats.wordsGraded)}
-                </div>
-                <div className="hero-stat-label">
-                  Words Graded
-                </div>
-                <div className="hero-stat-description">
-                  Comprehensive analysis of student writing with detailed feedback
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Animated Partners Carousel */}
-        <section className="w-full">
-          <div className="container">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                Trusted by Global Leaders & National Institutions
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Proudly supported by leading technology companies and prestigious educational institutions
-              </p>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="container mx-auto text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="badge badge-primary mb-8 inline-flex">
+              <Award className="h-4 w-4 mr-2" />
+              Trusted by 50+ Schools Worldwide
             </div>
             
-            <div className="partners-carousel-container">
-              <div className="partners-carousel-track">
-                {/* First set of logos */}
-                <div className="partner-logo-item">
-                  <img src="/google.png" alt="Google" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nvidia-inception.png" alt="NVIDIA Inception" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/mongodb.png" alt="MongoDB" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nus-enterprise.png" alt="NUS Enterprise" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/block71.png" alt="BLOCK71" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nus-soc.png" alt="NUS School of Computing" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nus.png" alt="National University of Singapore" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/social-impact-catalyst.png" alt="Social Impact Catalyst" className="partner-logo-carousel" />
-                </div>
-                
-                {/* Duplicate set for seamless loop */}
-                <div className="partner-logo-item">
-                  <img src="/google.png" alt="Google" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nvidia-inception.png" alt="NVIDIA Inception" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/mongodb.png" alt="MongoDB" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nus-enterprise.png" alt="NUS Enterprise" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/block71.png" alt="BLOCK71" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nus-soc.png" alt="NUS School of Computing" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/nus.png" alt="National University of Singapore" className="partner-logo-carousel" />
-                </div>
-                <div className="partner-logo-item">
-                  <img src="/social-impact-catalyst.png" alt="Social Impact Catalyst" className="partner-logo-carousel" />
-                </div>
-              </div>
+            <h1 className="mb-6 fade-in">
+              Grade Essays
+              <span className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] bg-clip-text text-transparent"> 5-7x Faster</span>
+              <br />with AI Precision
+            </h1>
+            
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed slide-up">
+              Transform your essay grading workflow with our AI-powered platform. 
+              Maintain quality while saving hours of time, and provide students with 
+              detailed, consistent feedback.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Link to="/demo" className="btn btn-primary btn-lg">
+                Try Free Demo
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link to="/contact" className="btn btn-secondary btn-lg">
+                Schedule Demo
+              </Link>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+              <img src="/nus.png" alt="NUS" className="h-8 grayscale hover:grayscale-0 transition-all" />
+              <img src="/google.png" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all" />
+              <img src="/nvidia-inception.png" alt="NVIDIA" className="h-8 grayscale hover:grayscale-0 transition-all" />
+              <img src="/mongodb.png" alt="MongoDB" className="h-6 grayscale hover:grayscale-0 transition-all" />
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Key Features Overview */}
-        <section className="w-full">
-          <div className="container">
-            <div className="content-card">
-              <h2 className="text-center mb-12">Why Choose Remarkably?</h2>
-              
-              <div className="grid-auto-fit">
-                <div className="feature-card">
-                  <div className="feature-icon">🤖</div>
-                  <h3>Advanced AI Technology</h3>
-                  <p>
-                    Powered by cutting-edge natural language processing to understand context, 
-                    grammar, structure, and content quality with human-level accuracy.
-                  </p>
-                </div>
-
-                <div className="feature-card">
-                  <div className="feature-icon">📊</div>
-                  <h3>Detailed Analytics</h3>
-                  <p>
-                    Comprehensive rubric-based scoring with specific feedback on grammar, 
-                    structure, content relevance, and critical thinking skills.
-                  </p>
-                </div>
-
-                <div className="feature-card">
-                  <div className="feature-icon">⚡</div>
-                  <h3>Instant Results</h3>
-                  <p>
-                    Get detailed feedback and grades in seconds, not hours. Perfect for 
-                    formative assessment and real-time student guidance.
-                  </p>
-                </div>
-
-                <div className="feature-card">
-                  <div className="feature-icon">🔒</div>
-                  <h3>Secure & Private</h3>
-                  <p>
-                    Enterprise-grade security ensures student data protection with 
-                    PDPA compliance and encrypted data transmission.
-                  </p>
-                </div>
-
-                <div className="feature-card">
-                  <div className="feature-icon">📚</div>
-                  <h3>Curriculum Aligned</h3>
-                  <p>
-                    Specifically designed for Singapore's education system, supporting 
-                    MOE curriculum standards and assessment criteria.
-                  </p>
-                </div>
-
-                <div className="feature-card">
-                  <div className="feature-icon">👨‍🏫</div>
-                  <h3>Teacher-Friendly</h3>
-                  <p>
-                    Intuitive interface designed by educators, for educators. No technical 
-                    expertise required - just upload and grade.
-                  </p>
-                </div>
+      {/* Stats Section */}
+      <section className="section bg-white">
+        <div className="container mx-auto">
+          <div className="stats-grid">
+            <div className="text-center">
+              <div className="icon-container icon-container-primary mx-auto">
+                <Clock className="h-8 w-8" />
               </div>
+              <div className="text-4xl font-bold text-[#667EEA] mb-2">
+                {counters.grading}x
+              </div>
+              <p className="text-gray-600 font-medium">Faster Grading</p>
+              <p className="text-sm text-gray-500 mt-1">From 15-20 minutes to 3-5 minutes per essay</p>
+            </div>
+
+            <div className="text-center">
+              <div className="icon-container icon-container-accent mx-auto">
+                <Users className="h-8 w-8" />
+              </div>
+              <div className="text-4xl font-bold text-[#4FD1C7] mb-2">
+                {counters.students.toLocaleString()}+
+              </div>
+              <p className="text-gray-600 font-medium">Students & Teachers</p>
+              <p className="text-sm text-gray-500 mt-1">Supported across Singapore and internationally</p>
+            </div>
+
+            <div className="text-center">
+              <div className="icon-container icon-container-primary mx-auto">
+                <BookOpen className="h-8 w-8" />
+              </div>
+              <div className="text-4xl font-bold text-[#667EEA] mb-2">
+                {counters.words.toLocaleString()}+
+              </div>
+              <p className="text-gray-600 font-medium">Words Graded</p>
+              <p className="text-sm text-gray-500 mt-1">Millions of words processed with precision</p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Call to Action */}
-        <section className="w-full">
-          <div className="container">
-            <div className="cta-section">
-              <h2 className="text-white text-4xl md:text-5xl font-bold mb-6">
-                Ready to Transform Your Grading?
-              </h2>
-              <p className="text-blue-100 text-xl mb-8 max-w-2xl mx-auto">
-                Join hundreds of educators who have already saved thousands of hours with Remarkably's AI-powered grading system.
+      {/* Features Section */}
+      <section className="section">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Why Choose Remarkably?</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Our AI-powered platform combines speed, accuracy, and detailed feedback 
+              to revolutionize essay grading for educators.
+            </p>
+          </div>
+
+          <div className="feature-grid">
+            {features.map((feature, index) => (
+              <div key={index} className="card card-padding text-center">
+                <div className="icon-container icon-container-primary mx-auto">
+                  {feature.icon}
+                </div>
+                <h3 className="mb-3">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="section bg-white">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="mb-6">Everything You Need for Efficient Grading</h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Remarkably provides comprehensive tools to streamline your grading process 
+                while maintaining the highest standards of assessment quality.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Link to="/demo" className="btn-primary bg-white text-blue-600 hover:bg-blue-50">
-                  🚀 Start Free Trial
-                </Link>
-                <Link to="/contact" className="btn-secondary border-white text-white hover:bg-white hover:text-blue-600">
-                  💬 Contact Sales
+              
+              <div className="space-y-4">
+                {benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-[#4FD1C7] flex-shrink-0" />
+                    <span className="text-gray-700">{benefit}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <Link to="/features" className="btn btn-primary btn-md">
+                  Explore All Features
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
             </div>
+
+            <div className="relative">
+              <div className="card card-padding bg-gradient-to-br from-[#667EEA] to-[#764BA2] text-white">
+                <h3 className="text-white mb-4">Ready to Transform Your Grading?</h3>
+                <p className="text-blue-100 mb-6">
+                  Join thousands of educators who have already revolutionized their 
+                  grading process with Remarkably.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link to="/demo" className="btn btn-accent btn-md">
+                    Start Free Trial
+                  </Link>
+                  <Link to="/contact" className="btn btn-secondary btn-md">
+                    Contact Sales
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section gradient-bg">
+        <div className="container mx-auto text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-white mb-6">
+              Ready to Grade Essays 5-7x Faster?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Join educators worldwide who trust Remarkably for efficient, 
+              accurate essay grading. Start your free trial today.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/demo" className="btn btn-accent btn-lg">
+                Try Free Demo
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link to="/pricing" className="btn btn-secondary btn-lg">
+                View Pricing
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

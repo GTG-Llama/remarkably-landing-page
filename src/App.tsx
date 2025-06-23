@@ -12,8 +12,6 @@ import VietnamEducation from "./pages/landing/VietnamEducation";
 import IndonesiaEducation from "./pages/landing/IndonesiaEducation";
 import MalaysiaEducation from "./pages/landing/MalaysiaEducation";
 import TuitionCenter from "./pages/landing/TuitionCenter";
-import Features from "./pages/Features";
-import Benefits from "./pages/Benefits";
 import HowItWorks from "./pages/HowItWorks";
 import Pricing from "./pages/Pricing";
 import FAQ from "./pages/FAQ";
@@ -40,7 +38,6 @@ const App = () => (
           
           {/* New Routes */}
           <Route path="/features" element={<Features />} />
-          <Route path="/benefits" element={<Benefits />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/faq" element={<FAQ />} />

@@ -4,12 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const [stats, setStats] = useState({
-    timesSaved: 0,
-    accuracy: 0,
-    schools: 0,
-    teachers: 0,
-    essaysGraded: 0,
-    hoursPerRound: 0
+    gradingSpeed: 0,
+    studentsTeachers: 0,
+    wordsGraded: 0
   });
 
   const [isVisible, setIsVisible] = useState(false);
@@ -21,12 +18,9 @@ const Home: React.FC = () => {
     const animateStats = () => {
       const duration = 2500;
       const targetStats = { 
-        timesSaved: 7, // 5-7× faster from content
-        accuracy: 95, // Conservative accuracy estimate
-        schools: 50, // MOE schools and international classrooms
-        teachers: 200, // Conservative estimate based on growth
-        essaysGraded: 400, // From Lianhua case study
-        hoursPerRound: 20 // 20+ hours saved per round from content
+        gradingSpeed: 6,
+        studentsTeachers: 5000,
+        wordsGraded: 1000000
       };
       const startTime = Date.now();
 
@@ -35,12 +29,9 @@ const Home: React.FC = () => {
         const progress = Math.min(elapsed / duration, 1);
         
         setStats({
-          timesSaved: Math.floor(targetStats.timesSaved * progress),
-          accuracy: Math.floor(targetStats.accuracy * progress),
-          schools: Math.floor(targetStats.schools * progress),
-          teachers: Math.floor(targetStats.teachers * progress),
-          essaysGraded: Math.floor(targetStats.essaysGraded * progress),
-          hoursPerRound: Math.floor(targetStats.hoursPerRound * progress)
+          gradingSpeed: Math.floor(targetStats.gradingSpeed * progress),
+          studentsTeachers: Math.floor(targetStats.studentsTeachers * progress),
+          wordsGraded: Math.floor(targetStats.wordsGraded * progress)
         });
 
         if (progress < 1) {
@@ -54,6 +45,15 @@ const Home: React.FC = () => {
     const timer = setTimeout(animateStats, 800);
     return () => clearTimeout(timer);
   }, []);
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M+';
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(0) + 'K+';
+    }
+    return num.toString();
+  };
 
   const keyFeatures = [
     {
@@ -106,356 +106,241 @@ const Home: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Remarkably - AI-Powered Essay Grading for Handwritten & Typed Work</title>
-        <meta name="description" content="AI grading platform built for real classrooms. Grade handwritten and typed essays 5-7× faster with personalized feedback. Save 20+ hours per marking cycle." />
-        <meta name="keywords" content="AI essay grading, handwritten essay grading, automated marking, teacher tools, OCR essay grading, education technology, MOE schools" />
+        <title>Remarkably - AI-Powered Essay Grading for Educators</title>
+        <meta name="description" content="Transform your grading workflow with Remarkably's AI-powered essay assessment platform. Grade 6x faster with 95% accuracy, trusted by 200+ teachers across Singapore." />
+        <meta name="keywords" content="AI essay grading, automated assessment, teacher tools, education technology, Singapore schools, essay marking, grading software" />
       </Helmet>
 
-      <div className="w-full">
-        {/* Hero Section - Full Screen */}
-        <section className="hero-section bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-          {/* Animated background elements */}
-          <div className="absolute inset-0">
-            <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
-          </div>
-
-          <div className={`relative z-10 container mx-auto px-4 text-center transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            {/* Logo and Main Headline */}
-            <div className="mb-8">
-              <div className="flex items-center justify-center mb-6">
-                <img 
-                  src="/remarkably logo black.png" 
-                  alt="Remarkably Logo" 
-                  className="h-20 w-auto mr-4"
-                />
-              </div>
-              <h1 className="text-6xl md:text-8xl font-black leading-tight">
-                <span className="block text-gray-900 mb-4">Grade Essays with</span>
-                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
-                  AI Precision
-                </span>
+      <div className="page-container">
+        {/* Hero Section */}
+        <section className="hero-section">
+          <div className="container">
+            <div className="text-center max-w-5xl mx-auto">
+              <h1 className="mb-8">
+                Grade Essays 6× Faster with AI
               </h1>
-            </div>
-            
-            <div className="max-w-5xl mx-auto mb-12">
-              <p className="text-2xl md:text-3xl text-gray-700 mb-6 font-medium leading-relaxed">
-                AI grading platform built for <strong>real classrooms</strong>
-              </p>
-              <p className="text-xl md:text-2xl text-gray-600 leading-relaxed">
-                Grade handwritten and typed essays, mirror your personal marking style, 
-                and provide instant, high-quality feedback.
-                <span className="block mt-3 text-blue-700 font-semibold">
-                  Saving teachers hours every week.
-                </span>
-              </p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-              <a
-                href="https://www.youtube.com/watch?v=cf7o8uxp8LM"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-5 px-10 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl flex items-center"
-              >
-                <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                Watch Live Demo
-                <svg className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </a>
-              
-              <Link
-                to="/demo"
-                className="group bg-white hover:bg-gray-50 text-gray-800 font-bold py-5 px-10 rounded-full text-xl border-3 border-gray-200 hover:border-blue-300 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
-              >
-                Try Interactive Demo
-              </Link>
-            </div>
-
-            {/* Key Statistics Grid */}
-            <div className="stats-grid">
-              <div className="stat-item hover:scale-105 transition-transform duration-300">
-                <div className="stat-number text-blue-600">
-                  {stats.timesSaved}×
-                </div>
-                <div className="stat-label">Faster Grading</div>
-                <div className="text-sm text-gray-500 mt-2">From 15-20 min to 3-5 min per essay</div>
-              </div>
-              
-              <div className="stat-item hover:scale-105 transition-transform duration-300">
-                <div className="stat-number text-purple-600">
-                  {stats.hoursPerRound}+
-                </div>
-                <div className="stat-label">Hours Saved</div>
-                <div className="text-sm text-gray-500 mt-2">Per marking round vs manual</div>
-              </div>
-              
-              <div className="stat-item hover:scale-105 transition-transform duration-300">
-                <div className="stat-number text-green-600">
-                  {stats.schools}+
-                </div>
-                <div className="stat-label">Schools Trust Us</div>
-                <div className="text-sm text-gray-500 mt-2">MOE & International Schools</div>
-              </div>
-              
-              <div className="stat-item hover:scale-105 transition-transform duration-300">
-                <div className="stat-number text-cyan-600">
-                  {stats.essaysGraded}+
-                </div>
-                <div className="stat-label">Essays/Month</div>
-                <div className="text-sm text-gray-500 mt-2">Graded by our pilot schools</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Trusted Partners Section */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Backed by Global Leaders & National Institutions
-              </h2>
-              <p className="text-xl text-gray-600">
-                Supported by world-class accelerators and technology partners
-              </p>
-            </div>
-            <div className="partners-grid">
-              {supportedInstitutions.map((partner, index) => (
-                <div key={index} className="flex items-center justify-center p-4 hover:scale-110 transition-transform duration-300">
-                  <img 
-                    src={partner.logo} 
-                    alt={partner.name}
-                    className="partner-logo max-h-16 w-auto"
-                    title={partner.name}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Core Features Section */}
-        <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold text-gray-900 mb-6">
-                AI Powered Essay Grading Features
-              </h2>
-              <p className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                For <strong>Handwritten and Typed Work</strong> - Built for real classrooms with advanced OCR and AI feedback
-              </p>
-            </div>
-
-            <div className="grid-auto-fit">
-              {keyFeatures.map((feature, index) => (
-                <div key={index} className="feature-card group">
-                  <div className={`feature-icon bg-gradient-to-r ${feature.color} group-hover:scale-110 transition-transform duration-300`}>
-                    <span className="text-3xl">{feature.icon}</span>
-                  </div>
-                  <div className="mb-4">
-                    <div className="inline-block bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full mb-3">
-                      {feature.highlight}
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                  </div>
-                  <p className="text-gray-600 leading-relaxed text-lg">{feature.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Benefits Section */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold text-gray-900 mb-6">
-                Empowering Teachers with AI Grading
-              </h2>
-              <p className="text-2xl text-gray-600 max-w-4xl mx-auto">
-                Save time, personalize feedback, reduce grading stress, and improve student outcomes
-              </p>
-            </div>
-
-            <div className="max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-8">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-start space-x-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl hover:shadow-lg transition-all duration-300">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{benefit.benefit}</h3>
-                      <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works Section */}
-        <section className="py-24 bg-gradient-to-br from-indigo-50 to-purple-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold text-gray-900 mb-6">
-                How Remarkably Works
-              </h2>
-              <p className="text-2xl text-gray-600 max-w-4xl mx-auto">
-                AI-Powered Grading for Handwritten and Typed Essays in 5 Simple Steps
-              </p>
-            </div>
-
-            <div className="max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-5 gap-8">
-                {[
-                  {
-                    step: '01',
-                    title: 'Upload Any Format',
-                    description: 'Handwritten essays, Word docs, PDFs from Google Drive or LMS. Bulk upload supported.',
-                    icon: '📤'
-                  },
-                  {
-                    step: '02',
-                    title: 'OCR + AI Transcription',
-                    description: 'Reads messy handwriting, recognizes names, maintains formatting across multiple styles.',
-                    icon: '🔍'
-                  },
-                  {
-                    step: '03',
-                    title: 'Analyze & Evaluate',
-                    description: 'Grammar, structure, clarity - thesis clarity, paragraph cohesion, logical flow.',
-                    icon: '🧠'
-                  },
-                  {
-                    step: '04',
-                    title: 'Personalized Feedback',
-                    description: 'Learns your tone and depth, customizes to rubrics and marking schemes.',
-                    icon: '🎯'
-                  },
-                  {
-                    step: '05',
-                    title: 'Real-Time Annotation',
-                    description: 'Comments appear directly on essays with suggested changes and improvements.',
-                    icon: '📝'
-                  }
-                ].map((step, index) => (
-                  <div key={index} className="text-center relative">
-                    <div className="relative inline-block mb-6">
-                      <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-4xl mb-4 mx-auto shadow-2xl hover:scale-110 transition-transform duration-300">
-                        {step.icon}
-                      </div>
-                      <div className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full flex items-center justify-center text-sm font-bold text-blue-600 shadow-lg border-2 border-blue-100">
-                        {step.step}
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-                    <p className="text-gray-600 leading-relaxed text-sm">{step.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Case Study Highlight */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 to-purple-600/90"></div>
-                <div className="relative z-10">
-                  <div className="flex items-center justify-center mb-8">
-                    <img 
-                      src="/lianhua-primary.png" 
-                      alt="Lianhua Primary School" 
-                      className="h-16 w-auto mr-4 bg-white rounded-lg p-2"
-                    />
-                    <h2 className="text-4xl font-bold">Lianhua Primary School Success</h2>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-3 gap-8 mb-8">
-                    <div className="text-center">
-                      <div className="text-5xl font-black mb-2">5-7×</div>
-                      <div className="text-lg opacity-90">Faster Grading</div>
-                      <div className="text-sm opacity-75">15 min → 3-5 min per essay</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-5xl font-black mb-2">400+</div>
-                      <div className="text-lg opacity-90">Essays/Month</div>
-                      <div className="text-sm opacity-75">Graded with detailed feedback</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-5xl font-black mb-2">1000+</div>
-                      <div className="text-lg opacity-90">Students</div>
-                      <div className="text-sm opacity-75">Benefiting from faster feedback</div>
-                    </div>
-                  </div>
-                  
-                  <p className="text-xl mb-8 opacity-90 max-w-4xl mx-auto">
-                    "Founded in 1946 under Singapore's MOE, Lianhua Primary achieved 
-                    dramatic improvements in grading efficiency while maintaining quality and teacher satisfaction."
-                  </p>
-                  
-                  <Link
-                    to="/case-study"
-                    className="inline-flex items-center bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
-                  >
-                    Read Full Case Study
-                    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA Section */}
-        <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50">
-          <div className="container mx-auto px-4 text-center">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-5xl font-bold text-gray-900 mb-6">
-                Ready to Transform Your Teaching?
-              </h2>
-              <p className="text-2xl text-gray-600 mb-12 leading-relaxed">
-                Join 50+ schools and 200+ teachers who have already made the switch to smarter, 
-                faster grading with Remarkably
+              <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+                Remarkably transforms essay grading with advanced AI technology. Trusted by educators across Singapore 
+                to provide consistent, detailed feedback while saving hours of manual work.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-                <a
-                  href="https://www.youtube.com/watch?v=cf7o8uxp8LM"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-5 px-10 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center"
-                >
-                  <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                  Watch Demo Video
-                </a>
-                <Link
-                  to="/contact"
-                  className="bg-white border-3 border-gray-200 hover:border-blue-300 text-gray-800 hover:text-blue-600 font-bold py-5 px-10 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-xl"
-                >
-                  Schedule Live Demo
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+                <Link to="/demo" className="btn-primary">
+                  🚀 Try Free Demo
+                </Link>
+                <Link to="/features" className="btn-secondary">
+                  📋 View Features
                 </Link>
               </div>
-              
-              <p className="text-lg text-gray-500">
-                See how we grade a real handwritten essay in under 2 minutes
+            </div>
+          </div>
+        </section>
+
+        {/* Enhanced Statistics Section */}
+        <section className="w-full">
+          <div className="container">
+            <div className="hero-stats-grid">
+              <div className="hero-stat-card">
+                <div className="hero-stat-icon">
+                  ⚡
+                </div>
+                <div className="hero-stat-number">
+                  {stats.gradingSpeed}×
+                </div>
+                <div className="hero-stat-label">
+                  Faster Grading
+                </div>
+                <div className="hero-stat-description">
+                  Reduce grading time from 15-20 minutes to just 3-5 minutes per essay
+                </div>
+              </div>
+
+              <div className="hero-stat-card">
+                <div className="hero-stat-icon">
+                  👥
+                </div>
+                <div className="hero-stat-number">
+                  {formatNumber(stats.studentsTeachers)}
+                </div>
+                <div className="hero-stat-label">
+                  Students & Teachers
+                </div>
+                <div className="hero-stat-description">
+                  Supporting educators and students across Singapore's top institutions
+                </div>
+              </div>
+
+              <div className="hero-stat-card">
+                <div className="hero-stat-icon">
+                  📝
+                </div>
+                <div className="hero-stat-number">
+                  {formatNumber(stats.wordsGraded)}
+                </div>
+                <div className="hero-stat-label">
+                  Words Graded
+                </div>
+                <div className="hero-stat-description">
+                  Comprehensive analysis of student writing with detailed feedback
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Animated Partners Carousel */}
+        <section className="w-full">
+          <div className="container">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                Trusted by Global Leaders & National Institutions
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Proudly supported by leading technology companies and prestigious educational institutions
               </p>
+            </div>
+            
+            <div className="partners-carousel-container">
+              <div className="partners-carousel-track">
+                {/* First set of logos */}
+                <div className="partner-logo-item">
+                  <img src="/google.png" alt="Google" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nvidia-inception.png" alt="NVIDIA Inception" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/mongodb.png" alt="MongoDB" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nus-enterprise.png" alt="NUS Enterprise" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/block71.png" alt="BLOCK71" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nus-soc.png" alt="NUS School of Computing" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nus.png" alt="National University of Singapore" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/social-impact-catalyst.png" alt="Social Impact Catalyst" className="partner-logo-carousel" />
+                </div>
+                
+                {/* Duplicate set for seamless loop */}
+                <div className="partner-logo-item">
+                  <img src="/google.png" alt="Google" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nvidia-inception.png" alt="NVIDIA Inception" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/mongodb.png" alt="MongoDB" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nus-enterprise.png" alt="NUS Enterprise" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/block71.png" alt="BLOCK71" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nus-soc.png" alt="NUS School of Computing" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/nus.png" alt="National University of Singapore" className="partner-logo-carousel" />
+                </div>
+                <div className="partner-logo-item">
+                  <img src="/social-impact-catalyst.png" alt="Social Impact Catalyst" className="partner-logo-carousel" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Key Features Overview */}
+        <section className="w-full">
+          <div className="container">
+            <div className="content-card">
+              <h2 className="text-center mb-12">Why Choose Remarkably?</h2>
+              
+              <div className="grid-auto-fit">
+                <div className="feature-card">
+                  <div className="feature-icon">🤖</div>
+                  <h3>Advanced AI Technology</h3>
+                  <p>
+                    Powered by cutting-edge natural language processing to understand context, 
+                    grammar, structure, and content quality with human-level accuracy.
+                  </p>
+                </div>
+
+                <div className="feature-card">
+                  <div className="feature-icon">📊</div>
+                  <h3>Detailed Analytics</h3>
+                  <p>
+                    Comprehensive rubric-based scoring with specific feedback on grammar, 
+                    structure, content relevance, and critical thinking skills.
+                  </p>
+                </div>
+
+                <div className="feature-card">
+                  <div className="feature-icon">⚡</div>
+                  <h3>Instant Results</h3>
+                  <p>
+                    Get detailed feedback and grades in seconds, not hours. Perfect for 
+                    formative assessment and real-time student guidance.
+                  </p>
+                </div>
+
+                <div className="feature-card">
+                  <div className="feature-icon">🔒</div>
+                  <h3>Secure & Private</h3>
+                  <p>
+                    Enterprise-grade security ensures student data protection with 
+                    PDPA compliance and encrypted data transmission.
+                  </p>
+                </div>
+
+                <div className="feature-card">
+                  <div className="feature-icon">📚</div>
+                  <h3>Curriculum Aligned</h3>
+                  <p>
+                    Specifically designed for Singapore's education system, supporting 
+                    MOE curriculum standards and assessment criteria.
+                  </p>
+                </div>
+
+                <div className="feature-card">
+                  <div className="feature-icon">👨‍🏫</div>
+                  <h3>Teacher-Friendly</h3>
+                  <p>
+                    Intuitive interface designed by educators, for educators. No technical 
+                    expertise required - just upload and grade.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="w-full">
+          <div className="container">
+            <div className="cta-section">
+              <h2 className="text-white text-4xl md:text-5xl font-bold mb-6">
+                Ready to Transform Your Grading?
+              </h2>
+              <p className="text-blue-100 text-xl mb-8 max-w-2xl mx-auto">
+                Join hundreds of educators who have already saved thousands of hours with Remarkably's AI-powered grading system.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Link to="/demo" className="btn-primary bg-white text-blue-600 hover:bg-blue-50">
+                  🚀 Start Free Trial
+                </Link>
+                <Link to="/contact" className="btn-secondary border-white text-white hover:bg-white hover:text-blue-600">
+                  💬 Contact Sales
+                </Link>
+              </div>
             </div>
           </div>
         </section>

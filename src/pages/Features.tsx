@@ -140,8 +140,8 @@ const Features: React.FC = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="hero">
-        <div className="container mx-auto text-center">
+      <section className="section-hero">
+        <div className="container-custom text-center">
           <div className="max-w-4xl mx-auto">
             <div className="badge badge-primary mb-8 inline-flex">
               <Sparkles className="h-4 w-4 mr-2" />
@@ -167,9 +167,9 @@ const Features: React.FC = () => {
       </section>
 
       {/* Interactive Features Section */}
-      <section className="section bg-white">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
+<section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
             <h2 className="mb-4">Core Features</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Explore our main features that make essay grading faster, more accurate, and more insightful.
@@ -231,9 +231,9 @@ const Features: React.FC = () => {
       </section>
 
       {/* Additional Features Grid */}
-      <section className="section">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
+      <section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative">
+        <div className="container-custom">
+          <div className="text-center mb-12">
             <h2 className="mb-4">Additional Features</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               More powerful tools to enhance your grading experience and improve educational outcomes.
@@ -255,9 +255,9 @@ const Features: React.FC = () => {
       </section>
 
       {/* Comparison Table */}
-      <section className="section bg-white">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
+      <section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
             <h2 className="mb-4">Traditional vs. AI-Powered Grading</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               See how Remarkably compares to traditional grading methods across key metrics.
@@ -296,8 +296,8 @@ const Features: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section gradient-bg">
-        <div className="container mx-auto text-center">
+      <section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative gradient-bg">
+        <div className="container-custom text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-white mb-6">
               Experience All Features Today

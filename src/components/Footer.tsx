@@ -1,121 +1,307 @@
-import React from "react";
-import {
-  Facebook,
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { 
+  Brain, 
+  Mail, 
+  MapPin, 
+  Phone, 
+  ArrowRight,
   Twitter,
-  Instagram,
-  Youtube,
   Linkedin,
-  Mail,
-  Phone,
-} from "lucide-react";
-import { useNavigate } from "react-router-dom";
+  Github,
+  BookOpen,
+  Users,
+  Award,
+  Target,
+  Zap,
+  MessageCircle
+} from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleContactClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate("/contact");
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
   };
 
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
+  const quickLinks = [
+    { name: 'Features', path: '/features', icon: <BookOpen className="w-4 h-4" /> },
+    { name: 'Benefits', path: '/benefits', icon: <Award className="w-4 h-4" /> },
+    { name: 'Demo', path: '/demo', icon: <Users className="w-4 h-4" /> },
+    { name: 'Pricing', path: '/pricing', icon: <Target className="w-4 h-4" /> },
+  ];
+
+  const solutions = [
+    { name: 'Local Schools', path: '/local-school' },
+    { name: 'International Schools', path: '/international-school' },
+    { name: 'Tuition Centers', path: '/tuition' },
+    { name: 'Higher Education', path: '/features' },
+  ];
+
+  const company = [
+    { name: 'About Us', path: '/about-us' },
+    { name: 'Achievements', path: '/achievements' },
+    { name: 'Case Studies', path: '/case-study' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
+  const socialLinks = [
+    { icon: <Twitter className="w-5 h-5" />, href: '#', label: 'Twitter' },
+    { icon: <Linkedin className="w-5 h-5" />, href: '#', label: 'LinkedIn' },
+    { icon: <Github className="w-5 h-5" />, href: '#', label: 'GitHub' },
+  ];
+
   return (
-    <footer className="bg-gradient-to-b from-indigo-900 to-white pb-8 pt-20 relative">
-      {/* Decorative elements */}
-      <div className="absolute top-14 left-1/4 w-24 h-24 bg-pink-300 border-4 border-black -rotate-6"></div>
-      <div className="absolute right-1/4 top-13 w-16 h-16 bg-yellow-300 border-4 border-black rotate-12"></div>
+    <footer className="relative bg-tech-slate-900 border-t border-tech-slate-700/50 overflow-hidden">
+      {/* Neural network background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="neural-grid h-full" />
+      </div>
 
-      <div className="container mx-auto px-4 md:px-2 relative">
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          <div className="relative">
-            <div className="bg-white border-4 border-black p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mb-8">
-              <div className="flex items-center mb-4">
-                <img
-                  src="/remarkably logo black.png"
-                  alt="Logo"
-                  className="w-38 h-10"
-                />
+      {/* Floating elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 bg-tech-purple-500/10 rounded-full blur-xl"
+          animate={{
+            y: [0, -20, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-20 w-24 h-24 bg-tech-gold-500/10 rounded-full blur-xl"
+          animate={{
+            y: [0, 20, 0],
+            scale: [1, 0.9, 1],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+        />
+      </div>
+
+      <div className="container-custom relative z-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="py-16 space-y-16"
+        >
+          {/* Top section - Newsletter and CTA */}
+          <motion.div
+            variants={itemVariants}
+            className="card-neural bg-gradient-to-br from-tech-purple-500/10 to-tech-gold-500/10 border-tech-purple-500/30 text-center"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="space-y-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-tech-purple-500 to-tech-gold-500 rounded-full mb-4">
+                  <Brain className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white">
+                  Ready to Transform Your Grading?
+                </h3>
+                <p className="text-tech-slate-300 text-lg">
+                  Join thousands of educators who have already revolutionized their essay grading process with AI.
+                </p>
               </div>
-              <p className="text-black font-medium mb-6">
-                Empowering teachers with AI-powered essay grading to save time
-                and provide better feedback.
+              
+              <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <motion.button
+                    className="btn-primary group flex-1"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Zap className="w-5 h-5 mr-2" />
+                    Start Free Trial
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                  
+                  <motion.button
+                    className="btn-secondary group flex-1"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    Schedule Demo
+                  </motion.button>
+                </div>
+                
+                <p className="text-tech-slate-400 text-sm">
+                  No credit card required • Setup in minutes • Cancel anytime
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Main footer content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            {/* Company info */}
+            <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
+              <Link to="/" className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-tech-purple-500 to-tech-gold-500 rounded-xl flex items-center justify-center">
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-2xl font-bold text-white">Remarkably</span>
+              </Link>
+              
+              <p className="text-tech-slate-300 leading-relaxed">
+                AI-powered essay grading platform designed for educators. Grade 6-7x faster while 
+                maintaining quality and personal teaching standards.
               </p>
-              <div className="flex space-x-3 flex-wrap">
-                <a
-                  href="https://www.linkedin.com/company/lenor-eduai"
-                  className="bg-[#FFAFCC] border-2 border-black p-2 hover:bg-yellow-300 hover:-translate-y-1 transform transition-all flex items-center justify-center"
-                  aria-label="Linkedin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Linkedin size={18} />
-                </a>
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-tech-slate-300">
+                  <MapPin className="w-5 h-5 text-tech-gold-400 flex-shrink-0" />
+                  <span>Singapore & Southeast Asia</span>
+                </div>
+                <div className="flex items-center gap-3 text-tech-slate-300">
+                  <Mail className="w-5 h-5 text-tech-gold-400 flex-shrink-0" />
+                  <span>hello@remarkably.ai</span>
+                </div>
+                <div className="flex items-center gap-3 text-tech-slate-300">
+                  <Phone className="w-5 h-5 text-tech-gold-400 flex-shrink-0" />
+                  <span>+65 9123 4567</span>
+                </div>
+              </div>
+              
+              {/* Social links */}
+              <div className="flex gap-4 pt-4">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-tech-slate-800 hover:bg-gradient-to-br hover:from-tech-purple-500 hover:to-tech-gold-500 rounded-lg flex items-center justify-center text-tech-slate-400 hover:text-white transition-all duration-300"
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label={social.label}
+                  >
+                    {social.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Quick Links */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <h4 className="text-lg font-semibold text-white">Product</h4>
+              <ul className="space-y-3">
+                {quickLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      to={link.path}
+                      className="flex items-center gap-2 text-tech-slate-300 hover:text-tech-gold-400 transition-colors group"
+                    >
+                      <span className="text-tech-slate-500 group-hover:text-tech-gold-400 transition-colors">
+                        {link.icon}
+                      </span>
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Solutions */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <h4 className="text-lg font-semibold text-white">Solutions</h4>
+              <ul className="space-y-3">
+                {solutions.map((solution) => (
+                  <li key={solution.name}>
+                    <Link
+                      to={solution.path}
+                      className="text-tech-slate-300 hover:text-tech-gold-400 transition-colors"
+                    >
+                      {solution.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Company */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <h4 className="text-lg font-semibold text-white">Company</h4>
+              <ul className="space-y-3">
+                {company.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      to={item.path}
+                      className="text-tech-slate-300 hover:text-tech-gold-400 transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Trust indicators */}
+          <motion.div variants={itemVariants} className="border-t border-tech-slate-700/50 pt-8">
+            <div className="text-center space-y-6">
+              <p className="text-tech-slate-400 text-sm">Trusted by leading educational institutions</p>
+              <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+                <img src="/nus.png" alt="NUS" className="h-8 grayscale hover:grayscale-0 transition-all" />
+                <img src="/google.png" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all" />
+                <img src="/nvidia-inception.png" alt="NVIDIA" className="h-8 grayscale hover:grayscale-0 transition-all" />
+                <img src="/mongodb.png" alt="MongoDB" className="h-6 grayscale hover:grayscale-0 transition-all" />
+                <img src="/nus-enterprise.png" alt="NUS Enterprise" className="h-8 grayscale hover:grayscale-0 transition-all" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div>
-            <div className="border-3 border-black bg-[#B8F7D4] p-5 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mb-8">
-              <h3 className="text-lg font-black mb-4 relative inline-block">
-                Contact Us
-                <span className="absolute -bottom-1 left-0 w-full h-2 bg-pink-400 -z-0"></span>
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <button
-                    onClick={handleContactClick}
-                    className="bg-black p-1 flex items-center justify-center"
-                    aria-label="Contact Form"
-                  >
-                    <Mail size={18} className="text-white" />
-                  </button>
-                  <button
-                    onClick={handleContactClick}
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    contact@lenorai.com
-                  </button>
-                </li>
-                <li className="flex items-center gap-3">
-                  <a
-                    href="tel:+6582608445"
-                    className="bg-black p-1 flex items-center justify-center"
-                    aria-label="Phone"
-                  >
-                    <Phone size={18} className="text-white" />
-                  </a>
-                  <a
-                    href="tel:+6582608445"
-                    className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-                  >
-                    (+65) 8260 8445
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t-4 border-black pt-8 mt-12">
-          <div className="border- border-black p-1 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]p-4 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-black font-bold mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} Lenor. All rights reserved.
+          {/* Bottom section */}
+          <motion.div
+            variants={itemVariants}
+            className="border-t border-tech-slate-700/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          >
+            <p className="text-tech-slate-400 text-sm">
+              © 2024 Remarkably by Lenor AI. All rights reserved.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="#"
-                className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-              ></a>
-              <a
-                href="#"
-                className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-              ></a>
-              <a
-                href="#"
-                className="text-black font-bold hover:underline decoration-2 underline-offset-4"
-              ></a>
+            
+            <div className="flex gap-6 text-sm text-tech-slate-400">
+              <Link to="/privacy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+              <Link to="/cookies" className="hover:text-white transition-colors">
+                Cookie Policy
+              </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </footer>
   );

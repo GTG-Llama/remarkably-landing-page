@@ -1,174 +1,117 @@
 import React from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
-
-const logos = [
-  { src: "/nus-enterprise.png", alt: "NUS Enterprise" },
-  { src: "/block71.png", alt: "Block71" },
-  { src: "/google.png", alt: "Google" },
-  { src: "/nvidia-inception.png", alt: "Nvidia Inception Program" },
-  { src: "/nus.png", alt: "NUS" },
-  { src: "/nus-soc.png", alt: "NUS SOC" },
-  { src: "/mongodb.png", alt: "MongoDB" },
-  { src: "/nhouse.png", alt: "nHouse" },
-  { src: "/social-impact-catalyst.png", alt: "Social Impact Catalyst" },
-  { src: "/hangar.png", alt: "Hangar" },
-  { src: "/lianhua-primary.png", alt: "Lianhua Primary School" },
-];
-
-const carouselLogos = [...logos, ...logos]; // Duplicate for seamless loop
+import { motion } from "framer-motion";
 
 const SupportedByCarousel: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const controls = useAnimation();
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-        duration: 0.6,
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { y: -30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-        duration: 0.7,
-      },
-    },
-  };
-
-  const carouselVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 0.8 },
-    },
-  };
-
-  const logoVariants = {
-    hidden: { y: 20, opacity: 0, scale: 0.8 },
-    visible: (custom: number) => ({
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 70,
-        damping: 12,
-        delay: custom * 0.1,
-      },
-    }),
-    hover: {
-      y: -10,
-      scale: 1.1,
-      transition: { duration: 0.3 },
-    },
-  };
+  // Logo data with all partners
+  const logos = [
+    { src: "/google.png", alt: "Google for Startups" },
+    { src: "/nvidia-inception.png", alt: "NVIDIA Inception Program" },
+    { src: "/mongodb.png", alt: "MongoDB for Startups" },
+    { src: "/nus.png", alt: "NUS Enterprise" },
+    { src: "/block71.png", alt: "BLOCK71 Singapore" },
+    { src: "/hangar.png", alt: "The HANGAR by NUS Enterprise" },
+    { src: "/nus-soc.png", alt: "NUS School of Computing" },
+    { src: "/lianhua-primary.png", alt: "Lianhua Primary School" },
+    { src: "/nus-enterprise.png", alt: "NUS Enterprise" },
+    { src: "/social-impact-catalyst.png", alt: "Social Impact Catalyst" },
+    { src: "/nhouse.png", alt: "N.House" },
+  ];
 
   return (
-    <motion.section
-      ref={sectionRef}
-      className="py-12 bg-white w-full"
-      style={{ backgroundColor: "#ffffff" }}
-      initial="hidden"
-      animate={controls}
-      variants={containerVariants}
-    >
-      <div className="max-w-6xl mx-auto px-4 bg-white w-full" style={{ backgroundColor: "#ffffff" }}>
-        <motion.h3
-          className="text-2xl md:text-3xl font-black text-center mb-8 text-black relative inline-block mx-auto"
-          variants={titleVariants}
-          style={{ display: "block" }}
-        >
-          <motion.span
-            className="relative z-10"
-            initial={{ color: "#000" }}
-            whileHover={{ color: "#6366f1" }}
-            transition={{ duration: 0.3 }}
-          >
-            Supported by
-          </motion.span>
-          <motion.span
-            className="absolute bottom-0 left-0 w-full h-3 bg-yellow-300 -z-0"
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-          ></motion.span>
-        </motion.h3>
-
-        <TooltipProvider>
-          <motion.div
-            className="w-full overflow-visible"
-            variants={carouselVariants}
-          >
-            <div
-              className="flex items-center gap-10"
-              style={{
-                width: "max-content",
-                animation: "carousel-scroll 30s linear infinite",
-              }}
-            >
-              {carouselLogos.map((logo, idx) => (
-                <Tooltip key={idx}>
-                  <TooltipTrigger asChild>
-                    <motion.div
-                      className="flex items-center justify-center h-12 w-auto lg:h-20 lg:w-auto cursor-pointer p-2"
-                      variants={logoVariants}
-                      custom={idx % logos.length}
-                      whileHover="hover"
-                    >
-                      <motion.img
-                        src={logo.src}
-                        alt={logo.alt}
-                        className="h-12 lg:h-20 object-contain mx-auto"
-                        draggable={false}
-                        whileHover={{
-                          filter: "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2))",
-                          transition: { duration: 0.2 },
-                        }}
-                      />
-                    </motion.div>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" align="center">
-                    <motion.span
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {logo.alt}
-                    </motion.span>
-                  </TooltipContent>
-                </Tooltip>
-              ))}
-            </div>
-          </motion.div>
-        </TooltipProvider>
+    <section className="w-full bg-white border-t border-b border-gray-200 py-12 overflow-hidden">
+      <div className="mb-8">
+        <p className="text-center text-lg text-gray-700 font-semibold">
+          Supported by global tech leaders and academic partners
+        </p>
       </div>
-    </motion.section>
+      
+      {/* Infinite Scrolling Carousel */}
+      <div className="relative w-full overflow-hidden">
+        <motion.div
+          className="flex items-center gap-12 will-change-transform"
+          animate={{
+            x: [0, -140 * logos.length * 2] // Move through all logos twice (adjusted for larger logos)
+          }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 50,
+              ease: "linear",
+            },
+          }}
+          style={{ width: "400%" }} // Wide enough for seamless loop
+        >
+          {/* First set of logos */}
+          <div className="flex items-center gap-12 flex-shrink-0">
+            {logos.map((logo, index) => (
+              <div
+                key={`first-${index}`}
+                className="flex items-center justify-center flex-shrink-0 px-6 w-32 h-20"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-16 max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Second set for seamless loop */}
+          <div className="flex items-center gap-12 flex-shrink-0">
+            {logos.map((logo, index) => (
+              <div
+                key={`second-${index}`}
+                className="flex items-center justify-center flex-shrink-0 px-6 w-32 h-20"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-16 max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Third set for extra smoothness */}
+          <div className="flex items-center gap-12 flex-shrink-0">
+            {logos.map((logo, index) => (
+              <div
+                key={`third-${index}`}
+                className="flex items-center justify-center flex-shrink-0 px-6 w-32 h-20"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-16 max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Fourth set for extra smoothness */}
+          <div className="flex items-center gap-12 flex-shrink-0">
+            {logos.map((logo, index) => (
+              <div
+                key={`fourth-${index}`}
+                className="flex items-center justify-center flex-shrink-0 px-6 w-32 h-20"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-16 max-w-full object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                />
+              </div>
+            ))}
+          </div>
+        </motion.div>
+        
+        {/* Subtle fade edges */}
+        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent pointer-events-none z-10" />
+      </div>
+    </section>
   );
 };
 

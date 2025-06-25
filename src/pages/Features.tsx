@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from '../components/SEOHead';
+import { getPageSEO } from '../utils/seo-config';
 import { Link } from 'react-router-dom';
 import { 
   Zap, 
@@ -133,11 +134,7 @@ const Features: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Features - AI-Powered Essay Grading | Remarkably</title>
-        <meta name="description" content="Discover Remarkably's powerful features: lightning-fast grading, precision accuracy, detailed feedback, and comprehensive analytics. Transform your grading workflow today." />
-        <meta name="keywords" content="AI essay grading features, automated grading tools, essay assessment, education technology features" />
-      </Helmet>
+      <SEOHead config={getPageSEO('features')} pageKey="features" />
 
       {/* Hero Section */}
       <section className="section-hero">

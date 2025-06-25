@@ -1,308 +1,154 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import { 
-  ChevronDown, 
-  ChevronUp, 
-  HelpCircle, 
-  ArrowRight,
-  MessageCircle,
-  Search,
-  Sparkles
-} from 'lucide-react';
+import React, { useEffect } from 'react';
+import Layout from '../components/Layout';
+import SEOHead from '../components/SEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
+import { seoConfigs } from '../utils/seo-config';
+import { initSEOMonitoring } from '../utils/seo-optimization';
 
 const QnA: React.FC = () => {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
+    initSEOMonitoring();
+  }, []);
 
-  const faqs = [
+  const faqData = [
     {
-      category: "Getting Started",
-      questions: [
-        {
-          question: "How does Remarkably's AI essay grading work?",
-          answer: "Remarkably uses advanced natural language processing and machine learning algorithms to analyze essays for grammar, structure, content quality, and coherence. Our AI has been trained on thousands of essays and continuously learns to provide accurate, consistent feedback that matches human grading standards."
-        },
-        {
-          question: "Can Remarkably grade handwritten essays?",
-          answer: "Yes! Remarkably includes advanced OCR (Optical Character Recognition) technology that can accurately read handwritten essays. Simply scan or photograph the handwritten work, and our AI will transcribe and grade it just like typed essays."
-        },
-        {
-          question: "How accurate is the AI grading?",
-          answer: "Our AI achieves 95%+ accuracy compared to human graders. The system maintains consistent standards and eliminates human bias factors like fatigue or mood. For complex essays requiring nuanced judgment, we recommend using AI as a first pass with teacher review."
-        }
-      ]
+      question: "How accurate is Remarkably's AI essay grading?",
+      answer: "Remarkably's AI achieves 95%+ accuracy compared to human graders, with consistent performance across different essay types. Our system is trained on thousands of essays and continuously learns from teacher feedback to improve accuracy."
     },
     {
-      category: "Features & Functionality",
-      questions: [
-        {
-          question: "What types of essays can Remarkably grade?",
-          answer: "Remarkably can grade all common essay types including narrative, argumentative, expository, descriptive, comparative, and discursive essays. The AI adapts its feedback based on the essay type and grade level you specify."
-        },
-        {
-          question: "Can I customize the grading rubrics?",
-          answer: "Absolutely! Professional and Enterprise plans include a custom rubrics builder. You can create subject-specific rubrics, adjust weighting for different criteria, and align with your institution's grading standards."
-        },
-        {
-          question: "Does Remarkably integrate with my existing LMS?",
-          answer: "Yes, Remarkably integrates with popular Learning Management Systems including Google Classroom, Canvas, Blackboard, and Moodle. We also provide API access for custom integrations with Enterprise plans."
-        },
-        {
-          question: "How does the feedback personalization work?",
-          answer: "Remarkably learns your grading style over time by analyzing your feedback patterns, tone preferences, and areas of focus. The AI adapts to match your voice and teaching approach, making the feedback feel authentically yours."
-        }
-      ]
+      question: "Can Remarkably grade handwritten essays?",
+      answer: "Yes! Remarkably uses advanced OCR (Optical Character Recognition) technology to convert handwritten text into digital format, then applies AI grading. We support various handwriting styles and can process both scanned documents and photos."
     },
     {
-      category: "Pricing & Plans",
-      questions: [
-        {
-          question: "Is there a free trial available?",
-          answer: "Yes! We offer a 14-day free trial with full access to all features. No credit card required to start. You can grade up to 50 essays during the trial period to fully experience the platform."
-        },
-        {
-          question: "What's included in each pricing plan?",
-          answer: "Our Starter plan ($29/month) includes basic AI grading for up to 100 essays. Professional plan ($99/month) adds custom rubrics, analytics, and team collaboration for up to 500 essays. Enterprise plan ($299/month) offers unlimited essays, dedicated support, and advanced features."
-        },
-        {
-          question: "Can I change plans anytime?",
-          answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any charges. There are no long-term contracts or cancellation fees."
-        },
-        {
-          question: "Do you offer educational discounts?",
-          answer: "Yes! We provide special pricing for educational institutions, non-profits, and bulk licenses. Contact our sales team for custom pricing based on your needs and student population."
-        }
-      ]
+      question: "How much time does Remarkably save teachers?",
+      answer: "Teachers report saving 6-7x time on essay grading with Remarkably. What typically takes 15-20 minutes per essay can now be completed in 2-3 minutes, allowing teachers to focus more on instruction and student interaction."
     },
     {
-      category: "Technical & Security",
-      questions: [
-        {
-          question: "Is student data secure and private?",
-          answer: "Absolutely. We use enterprise-grade security with AES-256 encryption, secure data centers, and strict privacy policies. We're FERPA compliant and never share student data with third parties. Data is stored securely and can be deleted upon request."
-        },
-        {
-          question: "What file formats does Remarkably support?",
-          answer: "Remarkably supports PDF, DOC, DOCX files, and scanned images (JPG, PNG). We also accept direct text input and integrate with Google Docs. Our OCR technology can process handwritten essays from photos or scanned documents."
-        },
-        {
-          question: "Do I need special software or hardware?",
-          answer: "No special software needed! Remarkably is entirely web-based and works on any device with an internet browser - computers, tablets, or smartphones. For handwritten essays, you just need a camera or scanner."
-        },
-        {
-          question: "What happens if the AI makes a mistake?",
-          answer: "While our AI is highly accurate, you always have full control. You can edit any AI-generated feedback, adjust scores, and provide additional comments. The system learns from your corrections to improve future grading."
-        }
-      ]
+      question: "Is Remarkably suitable for Singapore MOE schools?",
+      answer: "Absolutely! Remarkably is specifically designed for Singapore's education system, supporting MOE curriculum standards, PSLE, O-Level, and A-Level essay formats. We're trusted by multiple MOE schools across Singapore."
     },
     {
-      category: "Support & Training",
-      questions: [
-        {
-          question: "What kind of support do you provide?",
-          answer: "We offer email support for all plans, priority support for Professional users, and dedicated account management for Enterprise customers. We also provide comprehensive documentation, video tutorials, and live training sessions."
-        },
-        {
-          question: "How long does it take to learn the system?",
-          answer: "Most teachers are up and running within 15 minutes! The interface is intuitive and designed for educators. We provide quick-start guides, video tutorials, and optional onboarding sessions to help you get the most from the platform."
-        },
-        {
-          question: "Can you help with implementation across our school?",
-          answer: "Yes! For institutional customers, we provide implementation support including staff training, custom setup assistance, and ongoing support to ensure successful adoption across your organization."
-        }
-      ]
+      question: "What types of essays can Remarkably grade?",
+      answer: "Remarkably can grade various essay types including argumentative essays, narrative essays, descriptive essays, expository essays, and creative writing. We support English Language, General Paper, and Social Studies assignments."
+    },
+    {
+      question: "How does Remarkably ensure consistent grading?",
+      answer: "Our AI uses standardized rubrics and maintains consistent scoring criteria across all essays. Unlike human graders who may have varying standards, Remarkably applies the same evaluation criteria every time, ensuring fairness and consistency."
+    },
+    {
+      question: "Can teachers customize the grading rubrics?",
+      answer: "Yes! Teachers can customize rubrics to match their specific requirements, curriculum standards, or assignment criteria. The AI adapts to your rubric while maintaining consistent application across all student submissions."
+    },
+    {
+      question: "Is student data secure with Remarkably?",
+      answer: "Student data security is our top priority. We use enterprise-grade encryption, comply with international data protection standards, and never share student information with third parties. All data is stored securely and can be deleted upon request."
+    },
+    {
+      question: "How much does Remarkably cost?",
+      answer: "We offer flexible pricing plans starting from individual teacher licenses to school-wide implementations. Contact us for a personalized quote based on your needs. We also offer free trials for educators to test the platform."
+    },
+    {
+      question: "Do I need special training to use Remarkably?",
+      answer: "No special training required! Remarkably is designed to be intuitive and easy to use. We provide comprehensive onboarding, tutorial videos, and ongoing support to ensure teachers can start grading efficiently from day one."
+    },
+    {
+      question: "Can Remarkably integrate with existing school systems?",
+      answer: "Yes, Remarkably can integrate with popular Learning Management Systems (LMS) and Student Information Systems (SIS). We support seamless data import/export and can work with your existing workflow."
+    },
+    {
+      question: "What feedback does Remarkably provide to students?",
+      answer: "Remarkably provides detailed, personalized feedback covering grammar, structure, content quality, argumentation, and writing style. The feedback is constructive and helps students understand areas for improvement, similar to what a skilled teacher would provide."
     }
   ];
 
-  const filteredFAQs = faqs.map(category => ({
-    ...category,
-    questions: category.questions.filter(
-      q => 
-        q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        q.answer.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  })).filter(category => category.questions.length > 0);
-
-  const toggleFAQ = (index: number) => {
-    setOpenFAQ(openFAQ === index ? null : index);
+  const seoConfig = {
+    ...seoConfigs['home'],
+    title: 'Frequently Asked Questions | Remarkably AI Essay Grading',
+    description: 'Get answers to common questions about Remarkably\'s AI essay grading platform. Learn about accuracy, features, pricing, security, and how we help teachers save time.',
+    keywords: [
+      'AI essay grading FAQ',
+      'Remarkably questions',
+      'automated grading help',
+      'teacher grading tool FAQ',
+      'Singapore MOE grading',
+      'handwritten essay AI',
+      'essay grading accuracy'
+    ],
+    canonical: 'https://www.remarkably.ink/qna'
   };
 
   return (
-    <>
-      <Helmet>
-        <title>FAQ - Common Questions About AI Essay Grading | Remarkably</title>
-        <meta name="description" content="Find answers to common questions about Remarkably's AI essay grading platform. Learn about features, pricing, security, and implementation." />
-        <meta name="keywords" content="AI grading FAQ, essay grading questions, remarkably help, education technology support" />
-      </Helmet>
-
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto">
-            <div className="badge badge-primary mb-8 inline-flex">
-              <HelpCircle className="h-4 w-4 mr-2" />
-              Frequently Asked Questions
-            </div>
-            
-            <h1 className="mb-6">
-              Everything You Need to Know About
-              <span className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] bg-clip-text text-transparent"> Remarkably</span>
+    <Layout>
+      <SEOHead config={seoConfig} pageKey="qna" />
+      <SchemaMarkup type="faq" data={faqData} />
+      
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        {/* Hero Section */}
+        <section className="pt-32 pb-16 px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Questions</span>
             </h1>
-            
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Find answers to the most common questions about our AI essay grading platform. 
-              Can't find what you're looking for? Contact our support team.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Everything you need to know about Remarkably's AI-powered essay grading platform. 
+              Can't find what you're looking for? <a href="/contact" className="text-blue-600 hover:text-blue-700 underline">Contact us</a>.
             </p>
+          </div>
+        </section>
 
-            {/* Search Bar */}
-            <div className="relative max-w-md mx-auto mb-8">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search questions..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="form-input pl-10"
-              />
+        {/* FAQ Section */}
+        <section className="pb-20 px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-6">
+              {faqData.map((faq, index) => (
+                <div 
+                  key={index}
+                  className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-white/20"
+                >
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-start">
+                    <span className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-0.5">
+                      {index + 1}
+                    </span>
+                    {faq.question}
+                  </h3>
+                  <div className="ml-12">
+                    <p className="text-gray-700 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQ Categories */}
-      <section className="section bg-white">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
-            {filteredFAQs.map((category, categoryIndex) => (
-              <div key={categoryIndex} className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <MessageCircle className="h-6 w-6 mr-2 text-[#667EEA]" />
-                  {category.category}
-                </h2>
-                
-                <div className="space-y-4">
-                  {category.questions.map((faq, questionIndex) => {
-                    const globalIndex = categoryIndex * 100 + questionIndex;
-                    const isOpen = openFAQ === globalIndex;
-                    
-                    return (
-                      <div key={questionIndex} className="card overflow-hidden">
-                        <button
-                          onClick={() => toggleFAQ(globalIndex)}
-                          className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                        >
-                          <h3 className="font-semibold text-gray-900 pr-4">
-                            {faq.question}
-                          </h3>
-                          {isOpen ? (
-                            <ChevronUp className="h-5 w-5 text-gray-500 flex-shrink-0" />
-                          ) : (
-                            <ChevronDown className="h-5 w-5 text-gray-500 flex-shrink-0" />
-                          )}
-                        </button>
-                        
-                        {isOpen && (
-                          <div className="px-6 pb-4">
-                            <div className="border-t border-gray-200 pt-4">
-                              <p className="text-gray-700 leading-relaxed">
-                                {faq.answer}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-            
-            {filteredFAQs.length === 0 && searchTerm && (
-              <div className="text-center py-12">
-                <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
-                <p className="text-gray-600 mb-6">
-                  We couldn't find any questions matching "{searchTerm}". Try different keywords or contact our support team.
-                </p>
-                <button
-                  onClick={() => setSearchTerm('')}
-                  className="btn btn-secondary btn-md"
-                >
-                  Clear Search
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Links */}
-      <section className="section">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="mb-4">Quick Links</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Explore more resources to get the most out of Remarkably
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <Link to="/demo" className="card card-padding text-center hover:shadow-lg transition-shadow">
-              <div className="icon-container icon-container-primary mx-auto">
-                <Sparkles className="h-6 w-6" />
-              </div>
-              <h3 className="mb-3">Try Demo</h3>
-              <p className="text-gray-600 mb-4">Experience Remarkably with our interactive demo</p>
-              <span className="text-[#667EEA] font-medium">Start Demo →</span>
-            </Link>
-
-            <Link to="/features" className="card card-padding text-center hover:shadow-lg transition-shadow">
-              <div className="icon-container icon-container-accent mx-auto">
-                <HelpCircle className="h-6 w-6" />
-              </div>
-              <h3 className="mb-3">View Features</h3>
-              <p className="text-gray-600 mb-4">Learn about all available features and capabilities</p>
-              <span className="text-[#4FD1C7] font-medium">Explore Features →</span>
-            </Link>
-
-            <Link to="/contact" className="card card-padding text-center hover:shadow-lg transition-shadow">
-              <div className="icon-container icon-container-primary mx-auto">
-                <MessageCircle className="h-6 w-6" />
-              </div>
-              <h3 className="mb-3">Contact Support</h3>
-              <p className="text-gray-600 mb-4">Get personalized help from our support team</p>
-              <span className="text-[#667EEA] font-medium">Contact Us →</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section gradient-bg">
-        <div className="container mx-auto text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-white mb-6">
+        {/* Contact CTA Section */}
+        <section className="py-16 px-6 bg-gradient-to-r from-blue-600 to-indigo-600">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
               Still Have Questions?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Our support team is here to help. Get personalized answers to your questions 
-              or schedule a demo to see Remarkably in action.
+              Our team is here to help you get started with AI-powered essay grading.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="btn btn-accent btn-lg">
+              <a
+                href="/contact"
+                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-colors duration-300 shadow-lg"
+              >
                 Contact Support
-                <MessageCircle className="ml-2 h-5 w-5" />
-              </Link>
-              <Link to="/demo" className="btn btn-secondary btn-lg">
-                Schedule Demo
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              </a>
+              <a
+                href="/demo"
+                className="bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-blue-800 transition-colors duration-300 border-2 border-blue-400"
+              >
+                Book a Demo
+              </a>
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </Layout>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from '../components/SEOHead';
+import { getPageSEO } from '../utils/seo-config';
 import { Link } from 'react-router-dom';
 import { 
   Play, 
@@ -182,11 +183,7 @@ const Demo: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Demo - Try AI Essay Grading Free | Remarkably</title>
-        <meta name="description" content="Experience Remarkably's AI-powered essay grading with our free interactive demo. See how we can transform your grading workflow in minutes." />
-        <meta name="keywords" content="AI essay grading demo, free trial, interactive demo, essay assessment tool" />
-      </Helmet>
+      <SEOHead config={getPageSEO('demo')} pageKey="demo" />
 
       {/* Hero Section */}
       <section className="hero">

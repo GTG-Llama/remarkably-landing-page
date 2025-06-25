@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+This is the official B2B marketing site for Remarkably — an AI essay grading platform that saves teachers 6–7x grading time while maintaining personalized, rubric-aligned feedback.
+
+## 🎯 Project Goals
+- Build trust with schools, teachers, and administrators.
+- Highlight time savings, quality of feedback, and ease of use.
+- Show empathy for educators and emphasize mission-driven purpose.
+- Use visuals to demonstrate modernity, clarity, and intelligence.
+
+## 🎨 Design Guidelines
+- Use a **light, gradient-inspired theme** (modern/futuristic but approachable).
+- Backdrops should include **neural net style patterns**, soft motion, or animated gradients.
+- **Hover effects** should create soft spotlight-style glows around mouse movement areas.
+- Use gradients for buttons, text highlights, and section dividers.
+- Typography should feel elegant and readable: no harsh fonts or all-caps overload.
+- Avoid corporate clichés; instead, make it feel **designed for real teachers**.
+## 🧱 Layout Strategy
+- Sections should be ordered: Hero → Metrics → Supported By → Features → Demo → Testimonials → CTA
+- Use **animated counters** for stats (e.g., from 1 to 1M for words graded).
+- Showcase:  
+  - 6–7x faster grading  
+  - 1M+ words graded  
+  - Thousands of educators reached  
+- CTA buttons must stand out and include Framer Motion hover/tap interactions.
+
+## ✅ Must-Haves
+- Framer Motion for animations, hover states, and scroll transitions.
+- GSAP allowed for advanced motion where needed.
+- Gradient overlays and subtle glow effects for polish.
+- Every section must scale and align properly at all zoom levels.
+- "Supported by" carousel with auto-scroll and fade transitions.
+
+## 🚫 Avoid
+- Overuse of dark themes unless reversed for a specific section.
+- Cluttered layout or unnecessary animations.
+- Placeholder content or mock features not ready yet.

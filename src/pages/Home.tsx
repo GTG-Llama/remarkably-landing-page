@@ -1,8 +1,13 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
+import SEOHead from '../components/SEOHead';
+import AdvancedSEOHead from '../components/AdvancedSEOHead';
+import SchemaMarkup from '../components/SchemaMarkup';
+import { getPageSEO } from '../utils/seo-config';
+import { initSEOMonitoring } from '../utils/seo-optimization';
 import HeroSection from '../components/HeroSection';
 import FeaturesSection from '../components/FeaturesSection';
 import SupportedByCarousel from '../components/SupportedByCarousel';
+import ROICalculatorSection from '../components/ROICalculatorSection';
 import { motion } from 'framer-motion';
 import { 
   CheckCircle, 
@@ -16,12 +21,24 @@ import {
   TrendingUp,
   ArrowRight,
   Star,
-  Quote
+  Quote,
+  Heart,
+  Sparkles,
+  MessageCircle,
+  Calendar,
+  Download,
+  Mail,
+  Building,
+  GraduationCap
 } from 'lucide-react';
 
 
 
 const Home: React.FC = () => {
+  useEffect(() => {
+    initSEOMonitoring();
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -34,7 +51,7 @@ const Home: React.FC = () => {
   };
 
   const itemVariants = {
-    hidden: { y: 60, opacity: 0 },
+    hidden: { y: 40, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -78,97 +95,283 @@ const Home: React.FC = () => {
     {
       step: "01",
       title: "Upload Essays",
-      description: "Simply scan or upload handwritten or digital student essays. Our AI processes multiple formats seamlessly.",
-      icon: <BookOpen className="w-8 h-8" />,
-      color: "from-indigo-500 to-purple-500"
+      description: "Simply scan or upload handwritten or digital student essays. Our AI processes multiple formats seamlessly with 99% accuracy.",
+      icon: <BookOpen className="w-7 h-7" />,
+      gradient: "from-indigo-500 to-purple-600",
+      bgColor: "bg-indigo-50"
     },
     {
       step: "02", 
       title: "AI Analysis",
-      description: "Advanced algorithms analyze grammar, content, structure, and style while learning your personal marking preferences.",
-      icon: <Brain className="w-8 h-8" />,
-      color: "from-amber-500 to-orange-500"
+      description: "Advanced algorithms analyze grammar, content, structure, and style while learning your personal marking preferences and teaching standards.",
+      icon: <Brain className="w-7 h-7" />,
+      gradient: "from-amber-500 to-orange-600",
+      bgColor: "bg-amber-50"
     },
     {
       step: "03",
       title: "Get Results",
-      description: "Receive detailed feedback, grades, and insights in minutes. Review, customize, and send to students instantly.",
-      icon: <Target className="w-8 h-8" />,
-      color: "from-emerald-500 to-teal-500"
+      description: "Receive detailed feedback, grades, and insights in minutes. Review, customize, and send to students instantly with your personal touch.",
+      icon: <Target className="w-7 h-7" />,
+      gradient: "from-emerald-500 to-teal-600",
+      bgColor: "bg-emerald-50"
     }
   ];
 
+  // FAQ data for rich snippets
+  const faqData = [
+    {
+      question: "How much time does Remarkably save teachers?",
+      answer: "Teachers report saving 6-7x time on essay grading with Remarkably. What typically takes 15-20 minutes per essay can now be completed in 2-3 minutes."
+    },
+    {
+      question: "Can Remarkably grade handwritten essays?",
+      answer: "Yes! Remarkably uses advanced OCR technology to convert handwritten text into digital format, then applies AI grading with 95%+ accuracy."
+    },
+    {
+      question: "Is Remarkably suitable for Singapore MOE schools?",
+      answer: "Absolutely! Remarkably is specifically designed for Singapore's education system, supporting MOE curriculum standards and trusted by multiple MOE schools."
+    }
+  ];
 
+  // How-to data for rich snippets
+  const howToData = {
+    name: "How to Use Remarkably AI Essay Grading",
+    description: "Step-by-step guide to using Remarkably for AI-powered essay grading",
+    steps: [
+      {
+        name: "Upload Essays",
+        text: "Simply scan or upload handwritten or digital student essays. Our AI processes multiple formats seamlessly."
+      },
+      {
+        name: "AI Analysis", 
+        text: "Advanced algorithms analyze grammar, content, structure, and style while learning your marking preferences."
+      },
+      {
+        name: "Get Results",
+        text: "Receive detailed feedback, grades, and insights in minutes. Review, customize, and send to students instantly."
+      }
+    ]
+  };
 
   return (
     <>
-      <Helmet>
-        <title>Remarkably - AI-Powered Essay Grading Platform for Educators</title>
-        <meta 
-          name="description" 
-          content="Transform your essay grading with AI. Remarkably helps teachers grade 6-7x faster while maintaining quality. Co-designed with MOE educators for handwritten and digital essays." 
-        />
-        <meta 
-          name="keywords" 
-          content="AI essay grading, automated essay scoring, education technology, teacher tools, handwritten essay grading, Singapore MOE, essay feedback, student assessment" 
-        />
-        <meta property="og:title" content="Remarkably - AI-Powered Essay Grading Platform" />
-        <meta property="og:description" content="Grade essays 6-7x faster with AI while maintaining quality and personal teaching standards." />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Helmet>
+      <SEOHead config={getPageSEO('home')} pageKey="home" />
+      <AdvancedSEOHead 
+        pageType="homepage"
+        richSnippets={{
+          faq: faqData,
+          howTo: howToData.steps
+        }}
+      />
+      <SchemaMarkup type="howto" data={howToData} />
 
       {/* Hero Section */}
       <HeroSection />
 
       {/* Supported By Carousel */}
+      <section className="py-12 bg-gray-50/50">
       <SupportedByCarousel />
+      </section>
 
-      {/* How It Works Section */}
-      <section className="section-standard bg-white">
-        <div className="container-custom">
+      {/* Lead Capture Section */}
+      <section className="section-dark relative overflow-hidden">
+        {/* Enhanced Background Patterns */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-800" />
+          <div className="absolute inset-0 geometric-pattern opacity-20" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-indigo-400/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-indigo-400/15 to-purple-400/20 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container-custom relative z-10">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="space-y-12"
+            className="max-w-4xl mx-auto text-center space-y-8"
           >
-            {/* Section Header */}
-            <motion.div variants={itemVariants} className="text-center space-y-4 max-w-4xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full text-blue-700 text-sm font-medium">
-                <TrendingUp className="w-4 h-4" />
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-sm font-medium">
+                <GraduationCap className="w-4 h-4" />
+                Join 2,000+ Educators
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-bold text-white">
+                See Remarkably in Action
+              </h2>
+              
+              <p className="text-xl text-indigo-100 max-w-3xl mx-auto">
+                Book a personalized demo and discover how AI can transform your grading workflow. 
+                See real results with your own essays in just 15 minutes.
+              </p>
+            </motion.div>
+
+            {/* Lead Capture Form */}
+            <motion.div 
+              variants={itemVariants}
+              className="card-glass rounded-2xl p-8 shadow-2xl max-w-2xl mx-auto border border-white/20"
+            >
+                                <div className="space-y-6">
+                    <div className="text-center space-y-3">
+                      <h3 className="text-2xl font-bold text-slate-800">Request Your Demo</h3>
+                      <p className="text-slate-600 font-medium">Get a personalized walkthrough of Remarkably's AI grading platform</p>
+                    </div>
+
+                <form className="space-y-4">
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">First Name</label>
+                        <input
+                          type="text"
+                          className="form-input"
+                          placeholder="Enter your first name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">Last Name</label>
+                        <input
+                          type="text"
+                          className="form-input"
+                          placeholder="Enter your last name"
+                        />
+                      </div>
+                    </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Work Email</label>
+                    <input
+                      type="email"
+                      className="form-input"
+                      placeholder="your.email@school.edu"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">School/Institution</label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Your school name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
+                      <select className="form-input">
+                        <option value="">Select your role</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="department-head">Department Head</option>
+                        <option value="principal">Principal/VP</option>
+                        <option value="admin">Administrator</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">How many essays do you grade per week?</label>
+                    <select className="form-input">
+                      <option value="">Select range</option>
+                      <option value="1-20">1-20 essays</option>
+                      <option value="21-50">21-50 essays</option>
+                      <option value="51-100">51-100 essays</option>
+                      <option value="100+">100+ essays</option>
+                    </select>
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    className="w-full btn-primary text-lg py-4"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Book My Demo
+                  </motion.button>
+
+                  <p className="text-xs text-gray-500 text-center">
+                    By submitting, you agree to our Terms of Service and Privacy Policy. 
+                    We'll contact you within 24 hours to schedule your demo.
+                  </p>
+                </form>
+              </div>
+            </motion.div>
+
+            {/* Additional CTAs */}
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <motion.button
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all duration-300"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Download className="w-4 h-4" />
+                Download ROI Calculator
+              </motion.button>
+              
+              <motion.button
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all duration-300"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <MessageCircle className="w-4 h-4" />
+                Chat with Sales
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works Section - Enhanced */}
+      <section className="section-standard bg-white relative overflow-hidden">
+        {/* Subtle Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-white" />
+        
+        <div className="container-custom relative z-10">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="space-y-16"
+          >
+            {/* Enhanced Section Header */}
+            <motion.div variants={itemVariants} className="text-center space-y-6 max-w-4xl mx-auto">
+              <div className="badge-primary">
+                <Sparkles className="w-4 h-4" />
                 Simple & Effective Process
               </div>
               
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-                How <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-600 bg-clip-text text-transparent">Remarkably</span> Works
+                How <span className="text-gradient-primary">Remarkably</span> Works
               </h2>
               
-              <p className="text-xl text-gray-700 leading-relaxed font-medium">
+              <p className="text-empathetic max-w-3xl mx-auto">
                 From essay upload to detailed feedback in just three simple steps. 
-                Our AI handles the complexity while you focus on teaching.
+                Our AI handles the complexity while you focus on what matters most — teaching.
               </p>
             </motion.div>
 
-            {/* Steps Grid */}
+            {/* Enhanced Steps Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {howItWorks.map((step, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="group relative p-8 bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                  className={`group relative ${step.bgColor} rounded-2xl p-8 border border-gray-200/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-2`}
                   whileHover={{ 
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+                    scale: 1.02,
+                    transition: { type: "spring", stiffness: 300, damping: 10 }
                   }}
                 >
-                  {/* Background Gradient */}
-                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${step.color} opacity-3 group-hover:opacity-8 transition-opacity duration-300`} />
+                  {/* Background Gradient on Hover */}
+                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
                   <div className="relative space-y-6 text-center">
                     {/* Step Number */}
                     <motion.div 
-                      className="text-5xl font-bold text-gray-200 group-hover:text-blue-600 transition-colors duration-300"
+                      className="text-6xl font-bold text-gray-200 group-hover:text-gray-300 transition-colors duration-300"
                       whileHover={{ scale: 1.05 }}
                     >
                       {step.step}
@@ -176,9 +379,10 @@ const Home: React.FC = () => {
                     
                     {/* Icon */}
                     <motion.div 
-                      className={`w-16 h-16 rounded-xl bg-gradient-to-br ${step.color} p-4 text-white flex items-center justify-center mx-auto shadow-lg`}
+                      className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.gradient} flex items-center justify-center mx-auto shadow-lg text-white`}
                       whileHover={{ 
-                        scale: 1.05
+                        scale: 1.1,
+                        rotate: 5
                       }}
                       transition={{ type: "spring", stiffness: 200, damping: 15 }}
                     >
@@ -187,10 +391,10 @@ const Home: React.FC = () => {
                     
                     {/* Content */}
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300">
                         {step.title}
                       </h3>
-                      <p className="text-gray-700 leading-relaxed font-medium">
+                      <p className="text-gray-700 leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -198,35 +402,6 @@ const Home: React.FC = () => {
                 </motion.div>
               ))}
             </div>
-
-            {/* Enhanced Process Flow Animation */}
-            <motion.div
-              variants={itemVariants}
-              className="relative mt-8"
-            >
-              <div className="flex justify-center">
-                <svg className="w-full max-w-4xl h-20" viewBox="0 0 800 80">
-                  <motion.path
-                    d="M 50 40 Q 200 20 350 40 Q 500 60 650 40"
-                    stroke="url(#gradient)"
-                    strokeWidth="4"
-                    fill="none"
-                    strokeDasharray="15 10"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    whileInView={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 3, ease: "easeInOut" }}
-                  />
-                  <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#6366f1" />
-                      <stop offset="33%" stopColor="#a855f7" />
-                      <stop offset="66%" stopColor="#f59e0b" />
-                      <stop offset="100%" stopColor="#10b981" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -234,9 +409,18 @@ const Home: React.FC = () => {
       {/* Features Section */}
       <FeaturesSection />
 
-      {/* Testimonials Section */}
-      <section className="section-standard bg-gray-50">
-        <div className="container-custom">
+      {/* ROI Calculator Section */}
+      <ROICalculatorSection />
+
+      {/* Enhanced Testimonials Section */}
+      <section className="section-standard section-accent relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="floating-elements">
+          <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full blur-2xl opacity-40" />
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full blur-2xl opacity-40" />
+        </div>
+
+        <div className="container-custom relative z-10">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -245,76 +429,55 @@ const Home: React.FC = () => {
             className="space-y-16"
           >
             {/* Section Header */}
-            <motion.div variants={itemVariants} className="text-center space-y-6 max-w-4xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-200 rounded-full text-blue-700 text-sm font-medium">
-                <Star className="w-4 h-4" />
-                Educator Testimonials
+            <motion.div variants={itemVariants} className="text-center space-y-6">
+              <div className="badge-success">
+                <Heart className="w-4 h-4" />
+                Loved by Teachers
               </div>
               
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-                Trusted by <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-600 bg-clip-text text-transparent">Educators</span>
+                What Educators Are Saying
               </h2>
               
-              <p className="text-xl text-gray-700 leading-relaxed font-medium">
-                See how teachers across Singapore and beyond are transforming their 
-                grading workflow with Remarkably's AI-powered platform.
+              <p className="text-empathetic max-w-3xl mx-auto">
+                Real feedback from teachers who've transformed their grading workflow with Remarkably.
               </p>
             </motion.div>
 
             {/* Testimonials Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="group relative p-8 bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
-                  whileHover={{ 
-                    y: -10,
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-                  }}
+                  className="card-elevated p-8 hover-lift"
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="space-y-6">
-                    {/* Quote Icon */}
-                    <motion.div 
-                      className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-sm"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <Quote className="w-4 h-4 text-white" />
-                    </motion.div>
-                    
-                    {/* Rating */}
-                    <div className="flex gap-1">
+                  {/* Star Rating */}
+                  <div className="flex items-center gap-1 mb-6">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: i * 0.1 }}
-                        >
-                          <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                        </motion.div>
+                      <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
                     
                     {/* Quote */}
-                    <p className="text-gray-700 leading-relaxed italic font-medium">
+                  <div className="space-y-4 mb-6">
+                    <Quote className="w-8 h-8 text-indigo-400" />
+                    <p className="text-gray-700 leading-relaxed font-medium">
                       "{testimonial.quote}"
                     </p>
+                  </div>
                     
                     {/* Author */}
-                    <div className="border-t border-gray-200/50 pt-6">
+                  <div className="border-t border-gray-100 pt-6">
                       <div className="flex items-center gap-4">
-                        <motion.div 
-                          className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center"
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <Users className="w-6 h-6 text-blue-600" />
-                        </motion.div>
+                      <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                        {testimonial.author.split(' ').map(n => n[0]).join('')}
+                      </div>
                         <div>
                           <div className="font-semibold text-gray-900">{testimonial.author}</div>
-                          <div className="text-gray-600 text-sm">{testimonial.role}</div>
-                          <div className="text-blue-600 text-sm font-medium">{testimonial.school}</div>
-                        </div>
+                        <div className="text-sm text-gray-500">{testimonial.role}</div>
+                        <div className="text-sm text-gray-400">{testimonial.school}</div>
                       </div>
                     </div>
                   </div>
@@ -325,82 +488,78 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Enhanced CTA Section */}
-      <section className="section-standard bg-white">
+      {/* Enhanced Final CTA Section */}
+      <section className="section-standard bg-white relative overflow-hidden">
         <div className="container-custom">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="space-y-16"
+            className="text-center space-y-8 max-w-4xl mx-auto"
           >
-            {/* Main CTA */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="badge-primary">
+                <Building className="w-4 h-4" />
+                Ready for Your Institution?
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+                Transform Your Grading Today
+              </h2>
+              
+              <p className="text-empathetic">
+                Join thousands of educators who've already revolutionized their essay grading process. 
+                Start your free trial and experience the difference AI can make for your institution.
+              </p>
+            </motion.div>
+
             <motion.div
               variants={itemVariants}
-              className="relative p-12 bg-gradient-to-br from-white/80 via-indigo-50/80 to-white/80 border border-indigo-300/40 rounded-3xl text-center backdrop-blur-sm shadow-xl"
-              whileHover={{ scale: 1.02 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
             >
-              <div className="space-y-8">
-                <motion.div 
-                  className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-500 via-purple-500 to-amber-500 rounded-full mb-6 shadow-lg"
-                  whileHover={{ 
-                    scale: 1.1, 
-                    rotate: 5,
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
-                  }}
-                >
-                  <Zap className="w-10 h-10 text-white" />
-                </motion.div>
-                
-                <div className="space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                    Ready to Transform Your Grading?
-                  </h2>
-                  <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
-                    Join thousands of educators worldwide who are saving time and improving 
-                    feedback quality with Remarkably's AI-powered essay grading platform.
-                  </p>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
                   <motion.button
-                    className="group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                    whileHover={{ scale: 1.05 }}
+                className="btn-primary hover-lift group"
+                whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative flex items-center justify-center">
-                      Start Free Trial
-                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                    </div>
+                <Calendar className="w-5 h-5 mr-2" />
+                Schedule Enterprise Demo
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </motion.button>
                   
                   <motion.button
-                    className="group px-8 py-4 border-2 border-gray-300 text-gray-700 font-bold text-lg rounded-xl hover:border-indigo-400 hover:bg-indigo-50 transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
+                className="btn-secondary hover-lift group"
+                whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <div className="flex items-center justify-center">
-                      <BookOpen className="w-5 h-5 mr-2" />
-                      Watch Demo
-                    </div>
+                <Mail className="w-5 h-5 mr-2" />
+                Contact Sales Team
                   </motion.button>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-4 pt-6">
+              <p className="text-sm text-gray-500">
+                <strong className="text-gray-700">Enterprise-ready</strong> • Custom implementation • Dedicated support • Training included
+              </p>
+              
+              {/* Enterprise Features */}
+              <div className="flex flex-wrap justify-center items-center gap-6 pt-4">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-emerald-500" />
+                  SSO Integration
                 </div>
-                
-                <div className="flex flex-wrap justify-center items-center gap-6 pt-8 text-gray-600 text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>No credit card required</span>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-emerald-500" />
+                  Admin Dashboard
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Setup in 15 minutes</span>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-emerald-500" />
+                  Bulk User Management
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span>Cancel anytime</span>
-                  </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-emerald-500" />
+                  Custom Integrations
                 </div>
               </div>
             </motion.div>

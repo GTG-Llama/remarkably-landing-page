@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from '../components/SEOHead';
+import { getPageSEO } from '../utils/seo-config';
 import { Link } from 'react-router-dom';
 import { 
   Check, 
@@ -129,11 +130,7 @@ const Pricing: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Pricing - Affordable AI Essay Grading Plans | Remarkably</title>
-        <meta name="description" content="Choose the perfect plan for your needs. Start with our free trial and see how Remarkably can save you time and improve grading quality." />
-        <meta name="keywords" content="AI essay grading pricing, education technology pricing, teacher tools cost, grading software plans" />
-      </Helmet>
+      <SEOHead config={getPageSEO('pricing')} pageKey="pricing" />
 
       {/* Hero Section */}
       <section className="hero">

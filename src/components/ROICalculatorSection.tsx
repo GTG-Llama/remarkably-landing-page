@@ -1,376 +1,433 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Calculator, TrendingUp, Clock, DollarSign } from "lucide-react";
+import { 
+  Calculator, 
+  TrendingUp, 
+  Clock, 
+  DollarSign, 
+  Users, 
+  CheckCircle,
+  BarChart3,
+  ArrowRight,
+  Sparkles,
+  Target,
+  Award,
+  Calendar
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ROICalculatorSection: React.FC = () => {
   const [teachers, setTeachers] = useState(10);
-  const [essaysPerMonth, setEssaysPerMonth] = useState(20);
-  const [markingTimePerEssay, setMarkingTimePerEssay] = useState(15);
-  const [hourlyRate, setHourlyRate] = useState(30);
+  const [essaysPerWeek, setEssaysPerWeek] = useState(30);
+  const [hoursPerEssay, setHoursPerEssay] = useState(0.25);
+  const [hourlyRate, setHourlyRate] = useState(50);
+  const [showResults, setShowResults] = useState(false);
   const navigate = useNavigate();
 
   // Calculations
-  const totalEssaysPerMonth = essaysPerMonth * teachers;
-  const monthlyMarkingHours = (totalEssaysPerMonth * markingTimePerEssay) / 60;
-  const yearlyMarkingHours = monthlyMarkingHours * 12;
+  const weeklyHours = teachers * essaysPerWeek * hoursPerEssay;
+  const monthlyCost = weeklyHours * 4 * hourlyRate;
+  const yearlyCost = monthlyCost * 12;
   
-  const timeSavedWithAI = yearlyMarkingHours * 0.8; // 80% time saving
-  const costSavings = timeSavedWithAI * hourlyRate;
-  const hoursPerWeekSaved = (timeSavedWithAI / 52);
+  // With Remarkably (7x faster)
+  const newWeeklyHours = weeklyHours / 7;
+  const newMonthlyCost = newWeeklyHours * 4 * hourlyRate;
+  const newYearlyCost = newMonthlyCost * 12;
 
-  // Singapore teacher calculation: $4,400/month * 12 months = $52,800/year
-  // Assuming part-time is 20 hours/week * 52 weeks = 1,040 hours/year
-  // Hourly rate: $52,800 / 1,040 = ~$50.77/hour for part-time equivalent
-  const singaporeTeacherEquivalent = Math.round(costSavings / 26400); // $4,400 * 6 months as rough part-time equivalent
+  // Savings
+  const monthlySavings = monthlyCost - newMonthlyCost;
+  const yearlySavings = yearlyCost - newYearlyCost;
+  const timeSaved = weeklyHours - newWeeklyHours;
+  
+  // ROI calculation (assuming $200/month per teacher for software)
+  const softwareCost = teachers * 200 * 12;
+  const netSavings = yearlySavings - softwareCost;
+  const roi = ((netSavings / softwareCost) * 100);
+
+  const handleCalculate = () => {
+    setShowResults(true);
+  };
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.8,
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { y: 40, opacity: 0 },
     visible: {
-      opacity: 1,
       y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 10,
-      },
-    },
-  };
-
-  const resultVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
       opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 200,
+        type: "spring" as const,
+        stiffness: 100,
         damping: 15,
+        duration: 0.8,
       },
     },
   };
 
-  const handleContactClick = () => {
-    navigate("/contact");
-  };
+  const benefits = [
+    {
+      icon: <Clock className="w-6 h-6" />,
+      title: "Time Savings",
+      description: "Reduce grading time by 85%",
+      gradient: "from-amber-500 to-orange-600"
+    },
+    {
+      icon: <DollarSign className="w-6 h-6" />,
+      title: "Cost Reduction",
+      description: "Lower operational expenses",
+      gradient: "from-emerald-500 to-teal-600"
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Teacher Satisfaction",
+      description: "95% report better work-life balance",
+      gradient: "from-indigo-500 to-purple-600"
+    },
+    {
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Quality Improvement",
+      description: "More consistent, detailed feedback",
+      gradient: "from-blue-500 to-cyan-600"
+    }
+  ];
 
   return (
-    <section
-      id="roi-calculator"
-      className="py-12 relative overflow-hidden bg-gradient-to-b from-indigo-400 to-indigo-600"
-    >
-      {/* Decorative elements */}
-      <motion.div
-        className="absolute top-6 left-1/4 w-16 h-16 bg-yellow-300 border-4 border-black z-0"
-        initial={{ rotate: 0, opacity: 0 }}
-        whileInView={{ rotate: 12, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      />
-      <motion.div
-        className="absolute bottom-6 right-1/4 w-14 h-14 bg-pink-300 border-4 border-black z-0"
-        initial={{ rotate: 0, opacity: 0 }}
-        whileInView={{ rotate: -6, opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-      />
+    <section className="section-standard bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="floating-elements">
+        <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full blur-2xl opacity-40" />
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full blur-2xl opacity-40" />
+      </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="container-custom relative z-10">
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
+          className="space-y-16"
         >
-          <motion.div
-            className="bg-green-300 border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative transform"
-            variants={itemVariants}
-            whileHover={{
-              rotate: 1,
-              boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)",
-              transition: { duration: 0.3 },
-            }}
-          >
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <Calculator className="w-6 h-6" />
-              <h2 className="text-2xl lg:text-4xl font-black text-black">
+          {/* Section Header */}
+          <motion.div variants={itemVariants} className="text-center space-y-6 max-w-4xl mx-auto">
+            <div className="badge-primary">
+              <Calculator className="w-4 h-4" />
                 ROI Calculator
-              </h2>
             </div>
-            <motion.p
-              className="text-lg text-gray-800 font-bold mt-3 px-3 py-2 bg-white border-2 border-black"
-              variants={itemVariants}
-            >
-              Calculate how much time and money your school can save with Remarkably
-            </motion.p>
-          </motion.div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Calculate Your <span className="text-gradient-primary">Savings</span>
+            </h2>
+            
+            <p className="text-empathetic">
+              See the potential impact Remarkably can have on your institution's budget and teacher productivity. 
+              Most schools see ROI within the first 3 months.
+            </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {/* Input Section */}
-          <motion.div
-            className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.h3
-              className="text-2xl font-black mb-4 text-black relative inline-block"
-              variants={itemVariants}
-            >
-              Your School Details
-              <motion.span
-                className="absolute -bottom-2 left-0 w-full h-3 bg-cyan-300 -z-0"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-              />
-            </motion.h3>
-
-            <div className="space-y-6 mt-4 ">
-              <motion.div variants={itemVariants}>
-                <div className="flex justify-between items-center mb-4">
-                  <label className="block text-base font-bold text-black text-xl">
-                    Number of Teachers
-                  </label>
-                  <div className="bg-yellow-300 border-2 border-black px-3 py-1 font-black text-center mb-2 text-xl">
-                    {teachers}
+          {/* Calculator Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            
+            {/* Input Form */}
+            <motion.div variants={itemVariants} className="space-y-8">
+              <div className="card-elevated p-8">
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                      <BarChart3 className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">Institution Details</h3>
                   </div>
-                </div>
+
+                  {/* Number of Teachers */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-gray-700">
+                      Number of Teachers
+                    </label>
+                    <div className="relative">
                 <input
                   type="range"
                   min="1"
-                  max="100"
+                        max="200"
                   value={teachers}
                   onChange={(e) => setTeachers(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <div className="flex justify-between items-center mb-4">
-                  <label className="block text-base font-bold text-black text-xl">
-                    Essays per Month (per teacher)
-                  </label>
-                  <div className="bg-pink-300 border-2 border-black px-3 py-1 font-black text-center mb-2 text-xl">
-                    {essaysPerMonth}
+                      <div className="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>1</span>
+                        <span className="font-bold text-indigo-600">{teachers} teachers</span>
+                        <span>200+</span>
                   </div>
                 </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="500"
-                  value={essaysPerMonth}
-                  onChange={(e) => setEssaysPerMonth(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
-                />
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <div className="flex justify-between items-center mb-4">
-                  <label className="block text-base font-bold text-black text-xl">
-                    Marking time per essay
-                  </label>
-                  <div className="bg-blue-300 border-2 border-black px-3 py-1 font-black text-center mb-2 text-xl">
-                    {markingTimePerEssay}min
                   </div>
-                </div>
+
+                  {/* Essays per Week */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-gray-700">
+                      Essays Graded Per Teacher Per Week
+                    </label>
+                    <div className="relative">
                 <input
                   type="range"
                   min="5"
-                  max="30"
-                  value={markingTimePerEssay}
-                  onChange={(e) => setMarkingTimePerEssay(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                        max="100"
+                        value={essaysPerWeek}
+                        onChange={(e) => setEssaysPerWeek(Number(e.target.value))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <div className="flex justify-between items-center mb-4">
-                  <label className="block text-base font-bold text-black text-xl">
-                    Teacher Hourly Rate ($)
-                  </label>
-                  <div className="bg-green-300 border-2 border-black px-3 py-1 font-black text-center mb-2 text-xl">
-                    ${hourlyRate}
+                      <div className="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>5</span>
+                        <span className="font-bold text-indigo-600">{essaysPerWeek} essays</span>
+                        <span>100+</span>
+                      </div>
+                    </div>
                   </div>
+
+                  {/* Hours per Essay */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-gray-700">
+                      Average Hours Per Essay
+                  </label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {[0.15, 0.25, 0.5, 1].map((hours) => (
+                        <button
+                          key={hours}
+                          onClick={() => setHoursPerEssay(hours)}
+                          className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                            hoursPerEssay === hours
+                              ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-300'
+                              : 'bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200'
+                          }`}
+                        >
+                          {hours === 0.15 ? '9 min' : hours === 0.25 ? '15 min' : hours === 0.5 ? '30 min' : '1 hour'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Hourly Rate */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-gray-700">
+                      Teacher Hourly Rate (SGD)
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <DollarSign className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  type="range"
-                  min="15"
-                  max="100"
+                        type="number"
                   value={hourlyRate}
                   onChange={(e) => setHourlyRate(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 border-2 border-black appearance-none cursor-pointer slider"
+                        className="form-input pl-10"
+                        placeholder="50"
                 />
-              </motion.div>
-
-              
+                    </div>
             </div>
-          </motion.div>
 
-          {/* Results Section - Simplified ROI Display */}
-          <motion.div
-            className="space-y-4"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {/* Main ROI Display */}
-            <motion.div
-              className="bg-black text-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative"
-              variants={resultVariants}
-              whileHover={{
-                y: -4,
-                x: -4,
-                boxShadow: "12px 12px 0px 0px rgba(0,0,0,1)",
-                transition: { duration: 0.3 },
-              }}
-            >
-              <div className="text-center">
-                <motion.p
-                  className="text-lg font-bold text-gray-300 mb-4"
-                  variants={itemVariants}
+                  <motion.button
+                    onClick={handleCalculate}
+                    className="w-full btn-primary group"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                 >
-                  🏆 TOTAL ANNUAL VALUE RECOVERED
-                </motion.p>
-                <motion.div
-                  className="mb-6"
-                  key={costSavings}
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <motion.p
-                    className="text-6xl lg:text-7xl font-black text-white"
-                    key={costSavings}
-                    initial={{ scale: 1.1, color: "#4ECDC4" }}
-                    animate={{ scale: 1, color: "#FFFFFF" }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    ${costSavings.toLocaleString()}
-                  </motion.p>
-                </motion.div>
-                <motion.p
-                  className="text-base text-gray-300"
-                  variants={itemVariants}
-                >
-                  Or {timeSavedWithAI.toFixed(0)} hours of your teaching staff's time
-                </motion.p>
-                
-                {/* Contact Us Button */}
-                <motion.div
-                  className="mt-6"
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <button 
-                    onClick={handleContactClick}
-                    className="bg-yellow-300 text-black border-4 border-black px-8 py-4 font-black text-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
-                  >
-                    Contact Us
-                  </button>
-                </motion.div>
+                    <Calculator className="w-5 h-5 mr-2" />
+                    Calculate ROI
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
 
-            {/* ROI Breakdown */}
+            {/* Results */}
+            <motion.div variants={itemVariants} className="space-y-8">
+              {showResults ? (
             <motion.div
-              className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
-              variants={resultVariants}
-              whileHover={{
-                y: -2,
-                x: -2,
-                boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)",
-                transition: { duration: 0.2 },
-              }}
-            >
-              <motion.h4
-                className="text-xl font-black text-black mb-4"
-                variants={itemVariants}
-              >
-                How did we get this number?
-              </motion.h4>
-              
-              <div className="space-y-3">
-                <motion.div
-                  className="flex justify-between items-center"
-                  variants={itemVariants}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="space-y-6"
                 >
-                  <span className="font-bold text-black">Hours saved per year</span>
-                  <span className="font-black text-black">{timeSavedWithAI.toFixed(0)} hours</span>
-                </motion.div>
+                  {/* Key Metrics */}
+                  <div className="card-elevated p-8 gradient-overlay">
+                    <div className="space-y-6">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                          <TrendingUp className="w-5 h-5 text-white" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900">Your ROI Results</h3>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-emerald-50 rounded-xl p-6 border border-emerald-200">
+                          <div className="text-3xl font-bold text-emerald-700 mb-2">
+                            {roi > 0 ? '+' : ''}{roi.toFixed(0)}%
+                          </div>
+                          <div className="text-sm font-medium text-emerald-600">
+                            Annual ROI
+                          </div>
+                          <div className="text-xs text-emerald-500 mt-1">
+                            Return on Investment
+                          </div>
+                        </div>
+
+                        <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-200">
+                          <div className="text-3xl font-bold text-indigo-700 mb-2">
+                            {Math.round(timeSaved)}h
+                          </div>
+                          <div className="text-sm font-medium text-indigo-600">
+                            Weekly Time Saved
+                          </div>
+                          <div className="text-xs text-indigo-500 mt-1">
+                            Per teacher productivity gain
+                          </div>
+                        </div>
+                      </div>
                 
-                <motion.div
-                  className="flex justify-between items-center"
-                  variants={itemVariants}
-                >
-                  <span className="font-bold text-black">Value of saving {timeSavedWithAI.toFixed(0)} hours of teaching time</span>
-                  <span className="font-black text-black">${costSavings.toLocaleString()}</span>
-                </motion.div>
-                
-                <motion.div
-                  className="flex justify-between items-center"
-                  variants={itemVariants}
-                >
-                  <span className="font-bold text-black">Cost of Remarkably subscription per year</span>
-                  <span className="font-black text-black">$3,600</span>
-                </motion.div>
-                
-                <motion.div
-                  className="border-t-4 border-black pt-3 mt-4"
-                  variants={itemVariants}
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="font-black text-black text-lg">Total ROI per year</span>
-                    <motion.span
-                      className="font-black text-black text-xl bg-green-300 border-2 border-black px-3 py-1"
-                      key={costSavings}
-                      initial={{ scale: 1.1, backgroundColor: "#4ECDC4" }}
-                      animate={{ scale: 1, backgroundColor: "#a7f3d0" }}
-                      transition={{ duration: 0.3 }}
+                      <div className="border-t border-gray-200 pt-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <div className="text-sm font-medium text-gray-600 mb-2">Monthly Savings</div>
+                            <div className="text-2xl font-bold text-gray-900">
+                              ${monthlySavings.toLocaleString()}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-600 mb-2">Annual Savings</div>
+                            <div className="text-2xl font-bold text-gray-900">
+                              ${yearlySavings.toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Break-even Analysis */}
+                      <div className="bg-amber-50 rounded-xl p-6 border border-amber-200">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Target className="w-5 h-5 text-amber-600" />
+                          <div className="font-semibold text-amber-900">Break-even Analysis</div>
+                        </div>
+                        <div className="text-sm text-amber-700">
+                          With software costs of <strong>${softwareCost.toLocaleString()}/year</strong>, 
+                          you'll break even in <strong>{Math.ceil(softwareCost / monthlySavings)} months</strong> 
+                          and save <strong>${netSavings.toLocaleString()}</strong> annually thereafter.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="text-center space-y-4">
+                    <motion.button
+                      className="btn-primary group"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
-                      ${(costSavings - 3600).toLocaleString()}
-                    </motion.span>
+                      <Calendar className="w-5 h-5 mr-2" />
+                      Schedule Enterprise Demo
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                    </motion.button>
+                    
+                    <p className="text-sm text-gray-500">
+                      See these results in action with a personalized demo
+                    </p>
                   </div>
                 </motion.div>
+              ) : (
+                <div className="card-elevated p-8 text-center">
+                  <div className="space-y-6">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center mx-auto">
+                      <Calculator className="w-8 h-8 text-gray-400" />
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        Calculate Your Potential Savings
+                      </h3>
+                      <p className="text-gray-600">
+                        Enter your institution details to see the financial impact of implementing Remarkably.
+                      </p>
+                    </div>
+
+                    {/* Preview Benefits */}
+                    <div className="grid grid-cols-2 gap-4 mt-8">
+                      {benefits.map((benefit, index) => (
+                        <div key={index} className="text-center space-y-2">
+                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${benefit.gradient} flex items-center justify-center mx-auto text-white`}>
+                            {benefit.icon}
+                          </div>
+                          <div className="text-sm font-medium text-gray-900">{benefit.title}</div>
+                          <div className="text-xs text-gray-500">{benefit.description}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
               </div>
+              )}
             </motion.div>
+          </div>
+
+          {/* Additional Value Props */}
+          <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto">
+                <Award className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Proven Results</h3>
+              <p className="text-gray-600">
+                2,000+ teachers already experiencing 85% time savings and improved work-life balance.
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mx-auto">
+                <Sparkles className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Quality Maintained</h3>
+              <p className="text-gray-600">
+                AI learns your grading style to maintain consistency while providing detailed, personalized feedback.
+              </p>
+            </div>
+
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mx-auto">
+                <CheckCircle className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Easy Implementation</h3>
+              <p className="text-gray-600">
+                Setup in minutes, not months. Full training and support included with enterprise plans.
+              </p>
+            </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
-      <style>{`
+      <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
-          height: 24px;
-          width: 24px;
-          background: #000000;
-          border: 2px solid #000000;
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
           cursor: pointer;
+          box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
         }
+
         .slider::-moz-range-thumb {
-          height: 24px;
-          width: 24px;
-          background: #000000;
-          border: 2px solid #000000;
+          height: 20px;
+          width: 20px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
           cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
         }
       `}</style>
     </section>

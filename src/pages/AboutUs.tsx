@@ -1,5 +1,6 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from '../components/SEOHead';
+import { getPageSEO } from '../utils/seo-config';
 import { Link } from 'react-router-dom';
 import { 
   Users, 
@@ -104,11 +105,7 @@ const AboutUs: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>About Us - Meet the Team Behind Remarkably | AI Essay Grading</title>
-        <meta name="description" content="Learn about Remarkably's mission to transform education through AI. Meet our team of educators and technologists dedicated to helping teachers save time." />
-        <meta name="keywords" content="about remarkably, education technology company, AI grading team, singapore edtech" />
-      </Helmet>
+      <SEOHead config={getPageSEO('about-us')} pageKey="about-us" />
 
       {/* Hero Section */}
       <section className="hero">

@@ -1,14 +1,52 @@
-User-agent: Googlebot
+# Remarkably AI Essay Grading Platform - Robots.txt
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
 Allow: /
 
+# Sitemap location
+Sitemap: https://www.remarkably.ink/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Allow specific search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
 User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block unwanted bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
 Allow: /
 
 User-agent: Twitterbot
 Allow: /
 
-User-agent: facebookexternalhit
+User-agent: LinkedInBot
 Allow: /
 
+# Block access to sensitive areas (if any exist in future)
 User-agent: *
-Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*utm_*
+Disallow: /*?*session*

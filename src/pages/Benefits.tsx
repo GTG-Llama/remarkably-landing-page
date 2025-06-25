@@ -1,5 +1,6 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEOHead from '../components/SEOHead';
+import { getPageSEO } from '../utils/seo-config';
 import { Link } from 'react-router-dom';
 import { 
   Clock, 
@@ -124,11 +125,7 @@ const Benefits: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Benefits - Transform Your Teaching with AI Grading | Remarkably</title>
-        <meta name="description" content="Discover the benefits of AI-powered essay grading: save 80% of grading time, maintain consistent standards, and provide better feedback to students." />
-        <meta name="keywords" content="AI grading benefits, teacher benefits, essay grading advantages, education technology benefits" />
-      </Helmet>
+      <SEOHead config={getPageSEO('benefits')} pageKey="benefits" />
 
       {/* Hero Section */}
       <section className="hero">

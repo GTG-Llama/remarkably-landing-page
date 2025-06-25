@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BetaHeader from './BetaHeader';
+import { NavigationProvider } from '../contexts/NavigationContext';
 
 const BetaLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,7 +59,8 @@ const BetaLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-purple-50/30">
+    <NavigationProvider>
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-purple-50/30">
       {/* Desktop Header - Two Separate Bars */}
       <header className="sticky top-0 z-50 hidden lg:block">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-8 py-6">
@@ -234,6 +236,7 @@ const BetaLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         </div>
       </footer>
     </div>
+    </NavigationProvider>
   );
 };
 

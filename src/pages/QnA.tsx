@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import { seoConfigs } from '../utils/seo-config';
 import { initSEOMonitoring } from '../utils/seo-optimization';
+import { useNavigation } from '../contexts/NavigationContext';
 
 const QnA: React.FC = () => {
+  const { getPath } = useNavigation();
+  
   useEffect(() => {
     initSEOMonitoring();
   }, []);
@@ -90,7 +94,7 @@ const QnA: React.FC = () => {
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Everything you need to know about Remarkably's AI-powered essay grading platform. 
-              Can't find what you're looking for? <a href="/contact" className="text-blue-600 hover:text-blue-700 underline">Contact us</a>.
+              Can't find what you're looking for? <Link to={getPath('contact')} className="text-blue-600 hover:text-blue-700 underline">Contact us</Link>.
             </p>
           </div>
         </section>
@@ -131,18 +135,18 @@ const QnA: React.FC = () => {
               Our team is here to help you get started with AI-powered essay grading.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
+              <Link
+                to={getPath('contact')}
                 className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-colors duration-300 shadow-lg"
               >
                 Contact Support
-              </a>
-              <a
-                href="/demo"
+              </Link>
+              <Link
+                to={getPath('demo')}
                 className="bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-blue-800 transition-colors duration-300 border-2 border-blue-400"
               >
                 Book a Demo
-              </a>
+              </Link>
             </div>
           </div>
         </section>

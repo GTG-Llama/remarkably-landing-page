@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import CountUp from "./CountUp";
 import NeuralMapOverlay from "./NeuralMapOverlay";
+import { useNavigation } from '../contexts/NavigationContext';
 
 // Custom animated counter hook with formatting
 const useAnimatedCounter = (end: number, duration: number = 2) => {
@@ -53,6 +54,7 @@ const useAnimatedCounter = (end: number, duration: number = 2) => {
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const { getPath } = useNavigation();
   
   // Mouse spotlight effect state
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -283,7 +285,7 @@ const HeroSection: React.FC = () => {
               </div>
               <div className="flex flex-col items-center">
                 <Link
-                  to="/contact"
+                  to={getPath('/contact')}
                   className="w-52 sm:w-56 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
                 >
                   Book free demo

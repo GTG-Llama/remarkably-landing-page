@@ -2,13 +2,15 @@ import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../contexts/NavigationContext";
 
 const CTASection: React.FC = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { getPath } = useNavigation();
 
   const handleBookDemo = () => {
-    navigate("/contact");
+    navigate(getPath("contact"));
   };
 
   return (

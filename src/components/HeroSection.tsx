@@ -56,6 +56,7 @@ const HeroSection: React.FC = () => {
   
   // Mouse spotlight effect state
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const headlineRef = useRef<HTMLHeadingElement>(null);
 
@@ -66,6 +67,11 @@ const HeroSection: React.FC = () => {
     setMousePosition({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
+    });
+    // Track global position for fixed elements
+    setGlobalMousePosition({
+      x: e.clientX,
+      y: e.clientY,
     });
   };
 
@@ -156,62 +162,75 @@ const HeroSection: React.FC = () => {
     <>
       <section
         ref={sectionRef}
-        className="relative overflow-hidden min-h-screen group"
+        className="relative overflow-hidden min-h-screen group bg-white"
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         aria-label="Hero section introducing Remarkably AI essay grading platform"
       >
-      {/* Layer 1: Animated Gradient Background */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <motion.div 
-          className="absolute inset-0 animate-gradient-shift"
-          style={{
-            background: 'linear-gradient(-45deg, #ffffff, #f8fafc, #e0e7ff, #f1f5f9, #ffffff, #eef2ff)',
-            backgroundSize: '400% 400%',
-          }}
-          animate={{ opacity: isHovered ? 0.25 : 0.1 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
-        />
-        {/* Enhanced hover gradient overlay */}
-        <motion.div 
-          className="absolute inset-0 animate-gradient-shift"
-          style={{
-            background: 'linear-gradient(-45deg, #e0e7ff, #c7d2fe, #a5b4fc, #e0e7ff, #ddd6fe, #c4b5fd)',
-            backgroundSize: '400% 400%',
-          }}
-          animate={{ opacity: isHovered ? 0.30 : 0 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
-        />
-      </div>
+      {/* Layer 1: Enhanced gradient background */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+                      background: `
+              radial-gradient(circle at 70% 60%, rgba(99, 102, 241, 0.5) 0%, rgba(139, 92, 246, 0.18) 30%, rgba(219, 234, 254, 0.15) 40%, transparent 70%),
+              linear-gradient(135deg, rgba(241, 245, 249, 1) 0%, rgba(248, 250, 252, 0.95) 40%, rgba(255, 255, 255, 1) 100%)
+            `
+        }}
+        aria-hidden="true"
+      ></div>
 
-      {/* Layer 2: Neural Network Overlay */}
-      <div className="absolute inset-0 z-10" aria-hidden="true">
-        <NeuralMapOverlay />
-      </div>
-
-      {/* Layer 3: Enhanced Mouse Spotlight Effect */}
+      {/* Layer 2: Localized Grid Background (visible only in spotlight area) */}
       {isHovered && (
-        <motion.div
-          className="pointer-events-none fixed z-20"
+        <div
+          className="fixed inset-0 z-5 pointer-events-none"
           style={{
-            left: mousePosition.x - 175,
-            top: mousePosition.y - 175,
-            width: 350,
-            height: 350,
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(139, 92, 246, 0.15) 30%, transparent 70%)',
-            borderRadius: '50%',
-            filter: 'blur(30px)',
+            backgroundImage: `url("data:image/svg+xml,%3csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3e%3cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='1'/%3e%3c/pattern%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23grid)' /%3e%3c/svg%3e")`,
+            backgroundSize: '60px 60px',
+            maskImage: `radial-gradient(circle 200px at ${globalMousePosition.x}px ${globalMousePosition.y}px, white 0%, white 60%, transparent 100%)`,
+            WebkitMaskImage: `radial-gradient(circle 200px at ${globalMousePosition.x}px ${globalMousePosition.y}px, white 0%, white 60%, transparent 100%)`,
+            opacity: 0.8
           }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
           aria-hidden="true"
         />
       )}
 
-      {/* Layer 4: Hero Content */}
+      {/* Layer 3: Neural Network Overlay */}
+      <div className="absolute inset-0 z-10" aria-hidden="true">
+        <NeuralMapOverlay />
+      </div>
+
+      {/* Layer 4: Enhanced Blue Spotlight Effect */}
+      {isHovered && (
+        <motion.div
+          className="pointer-events-none fixed z-20"
+          style={{
+            left: globalMousePosition.x - 200,
+            top: globalMousePosition.y - 200,
+            width: 400,
+            height: 400,
+            background: `
+              radial-gradient(circle, 
+                rgba(99, 102, 241, 0.4) 0%, 
+                rgba(139, 92, 246, 0.4) 25%, 
+                rgba(99, 102, 241, 0.15) 45%, 
+                rgba(139, 92, 246, 0.08) 65%,
+                transparent 80%
+              )
+            `,
+            borderRadius: '50%',
+            filter: 'blur(15px)',
+            mixBlendMode: 'normal'
+          }}
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.7 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Layer 5: Hero Content */}
       <div className="container-custom relative z-30 pt-28 sm:pt-36 md:pt-28 lg:pt-20 xl:pt-20">
         <div className="flex flex-col justify-start">
           {/* Main Content */}
@@ -236,7 +255,7 @@ const HeroSection: React.FC = () => {
                     Grade Handwritten Essays
                   </span>
                 </span>
-                <span className="block text-gradient-primary mb-6 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
+                <span className="block text-indigo-600 mb-6 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
                   7× Faster with AI
                 </span>
                 <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-black-700 leading-relaxed max-w-4xl mx-auto text-center">

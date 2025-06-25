@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./Layout";
+import BetaLayout from "./BetaLayout";
 import Home from "../pages/Home";
 import Demo from "../pages/Demo";
 import Features from "../pages/Features";
@@ -22,7 +22,7 @@ import MalaysiaEducation from "../pages/landing/MalaysiaEducation";
 import TuitionCenter from "../pages/landing/TuitionCenter";
 
 const BetaApp = () => (
-  <Layout>
+  <BetaLayout>
     <Routes>
       <Route path="" element={<Home />} />
       <Route path="demo" element={<Demo />} />
@@ -45,7 +45,7 @@ const BetaApp = () => (
       <Route path="tuition" element={<TuitionCenter />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
-  </Layout>
+  </BetaLayout>
 );
 
 export default BetaApp; 

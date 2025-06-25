@@ -15,6 +15,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { ArrowRight, Check, ArrowDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useNavigation } from "../../contexts/NavigationContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,6 +71,7 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { getPath } = useNavigation();
 
   // Set page title and meta description
   useEffect(() => {
@@ -320,7 +322,7 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
   };
 
   const handleContactClick = () => {
-    navigate("/contact");
+    navigate(getPath("contact"));
   };
 
   return (

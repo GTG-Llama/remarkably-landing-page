@@ -192,8 +192,9 @@ const FlowingParticles: React.FC = () => {
     
     // Clean up on unmount
     return () => {
-      if (canvasRef.current && canvasRef.current.parentNode) {
-        canvasRef.current.parentNode.removeChild(canvasRef.current);
+      const canvas = canvasRef.current;
+      if (canvas && canvas.parentNode) {
+        canvas.parentNode.removeChild(canvas);
       }
       window.removeEventListener('resize', handleResize);
       clearInterval(targetUpdateInterval);

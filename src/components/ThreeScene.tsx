@@ -201,7 +201,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
       highlight.layers.set(ESSAY_LAYER);
 
       // Store feature ID as a custom property
-      (highlight as any).featureId = featureId;
+      (highlight as THREE.Mesh & { featureId: string }).featureId = featureId;
 
       return highlight;
     };
@@ -686,7 +686,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
 
             // Highlight the selected feature
             const highlightToAnimate = essayRef.current.highlights.find(
-              (h) => (h as any).featureId === featureId
+              (h) => (h as THREE.Mesh & { featureId: string }).featureId === featureId
             );
 
             if (highlightToAnimate) {

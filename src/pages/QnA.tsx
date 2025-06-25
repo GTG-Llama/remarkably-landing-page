@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Layout from '../components/Layout';
 import SEOHead from '../components/SEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
 import { seoConfigs } from '../utils/seo-config';
@@ -78,13 +77,13 @@ const QnA: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <>
       <SEOHead config={seoConfig} pageKey="qna" />
       <SchemaMarkup type="faq" data={faqData} />
       
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         {/* Hero Section */}
-        <section className="pt-32 pb-16 px-6">
+        <section className="pt-24 pb-16 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Questions</span>
@@ -148,7 +147,7 @@ const QnA: React.FC = () => {
           </div>
         </section>
       </div>
-    </Layout>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { 
   Brain, 
@@ -56,23 +57,11 @@ const HeroSection: React.FC = () => {
   // Mouse spotlight effect state
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
 
-  // Detect mobile devices
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // Mouse tracking for spotlight effect
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isMobile) return;
-    
     const rect = e.currentTarget.getBoundingClientRect();
     setMousePosition({
       x: e.clientX - rect.left,
@@ -81,7 +70,7 @@ const HeroSection: React.FC = () => {
   };
 
   const handleMouseEnter = () => {
-    if (!isMobile) setIsHovered(true);
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
@@ -164,15 +153,17 @@ const HeroSection: React.FC = () => {
   ];
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative overflow-hidden min-h-screen group"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <>
+      <section
+        ref={sectionRef}
+        className="relative overflow-hidden min-h-screen group"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        aria-label="Hero section introducing Remarkably AI essay grading platform"
+      >
       {/* Layer 1: Animated Gradient Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0" aria-hidden="true">
         <motion.div 
           className="absolute inset-0 animate-gradient-shift"
           style={{
@@ -195,12 +186,12 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Layer 2: Neural Network Overlay */}
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-10" aria-hidden="true">
         <NeuralMapOverlay />
       </div>
 
       {/* Layer 3: Enhanced Mouse Spotlight Effect */}
-      {!isMobile && isHovered && (
+      {isHovered && (
         <motion.div
           className="pointer-events-none fixed z-20"
           style={{
@@ -216,164 +207,77 @@ const HeroSection: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
+          aria-hidden="true"
         />
       )}
 
       {/* Layer 4: Hero Content */}
-      <div className="container-custom relative z-30 py-20 md:py-24 lg:py-32">
-        <div className="flex flex-col justify-center min-h-screen">
-          
+      <div className="container-custom relative z-30 pt-28 sm:pt-36 md:pt-28 lg:pt-20 xl:pt-20">
+        <div className="flex flex-col justify-start">
           {/* Main Content */}
           <motion.div
-            className="text-center space-y-8 max-w-5xl mx-auto"
+            className="text-center space-y-2 max-w-5xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
           >
-            {/* Enhanced Badge with Teacher Focus */}
-            <motion.div variants={itemVariants}>
-              <div className="badge-primary shadow-sm hover:shadow-md transition-shadow duration-300 backdrop-blur-sm">
-                <Heart className="w-4 h-4" />
-                Built with Teachers, for Teachers
-              </div>
-            </motion.div>
-
             {/* Main Headline with Enhanced Typography */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              <h1 className="text-balance">
-                <span className="block text-gray-900 mb-2 font-extrabold tracking-tight">Grade Handwritten Essays</span>
-                <span className="block text-gradient-primary mb-4 font-black tracking-tight">
+            <div className="space-y-6">
+              <h1
+                className="break-words text-balance"
+                id="main-heading"
+                ref={headlineRef}
+              >
+                <span className="block text-slate-900 mb-3 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight">
+                  <span className="block sm:hidden">
+                    Grade<br />Handwritten<br />Essays
+                  </span>
+                  <span className="hidden sm:inline">
+                    Grade Handwritten Essays
+                  </span>
+                </span>
+                <span className="block text-gradient-primary mb-6 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
                   7× Faster with AI
                 </span>
-                <span className="block text-xl sm:text-2xl md:text-3xl font-medium text-black-600 leading-relaxed max-w-4xl mx-auto text-center">
+                <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-black-700 leading-relaxed max-w-4xl mx-auto text-center">
                   Remarkably grades handwritten essays in your style, using your rubric — just like you would.
                 </span>
               </h1>
-              
-                            <p className="text-lg md:text-xl text-gray-500 font-medium leading-relaxed max-w-4xl mx-auto">
-                Remarkably grades directly on your handwritten essays, understands your rubric, and gives feedback just like you would.
-              </p>
-              
-              {/* Enhanced Decorative Element */}
-              <div className="flex items-center justify-center space-x-3 py-4">
-                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-indigo-300 to-indigo-400 rounded-full"></div>
-                <motion.div 
-                  className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-lg"
-                  animate={{ 
-                    rotate: [0, 360],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    duration: 8, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                >
-                  <Sparkles className="w-4 h-4 text-white" />
-                </motion.div>
-                <div className="w-16 h-0.5 bg-gradient-to-l from-transparent via-indigo-300 to-indigo-400 rounded-full"></div>
-              </div>
-            </motion.div>
+            </div>
 
-            {/* Enhanced Value Proposition with Better Contrast */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              <p className="text-empathetic max-w-3xl mx-auto font-medium backdrop-blur-sm bg-white/30 rounded-2xl py-6 px-8 border border-white/20">
-                Remarkably learns your unique grading style and maintains your teaching standards while dramatically reducing time spent on essay marking. Trusted by educators across MOE and international schools.
-              </p>
-              
-              {/* Enhanced Trust Indicators with Better Spacing */}
-              <div className="flex flex-wrap justify-center items-center gap-4 pt-6">
-                <motion.div 
-                  className="flex items-center gap-2 text-sm font-medium text-gray-700 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full border border-gray-200/80 shadow-sm hover:shadow-md transition-all duration-300"
-                  whileHover={{ scale: 1.05, y: -1 }}
+            {/* Try and Demo Buttons */}
+            <div className="mt-6 mb-6 flex justify-center gap-4 flex-col sm:flex-row">
+              <div className="flex flex-col items-center">
+                <a
+                  href="https://app.remarkably.ink"
+                  className="w-52 sm:w-56 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                  MOE Co-designed
-                </motion.div>
-                <motion.div 
-                  className="flex items-center gap-2 text-sm font-medium text-gray-700 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full border border-gray-200/80 shadow-sm hover:shadow-md transition-all duration-300"
-                  whileHover={{ scale: 1.05, y: -1 }}
+                  Try for free
+                  <span className="sr-only">For Teachers</span>
+                  </a>
+                <span
+                  className="text-xs text-gray-500 mt-1 tracking-tight leading-snug"
+                  aria-hidden="true"
                 >
-                  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                  Handwritten & Digital
-                </motion.div>
-                <motion.div 
-                  className="flex items-center gap-2 text-sm font-medium text-gray-700 bg-white/80 backdrop-blur-sm px-4 py-2.5 rounded-full border border-gray-200/80 shadow-sm hover:shadow-md transition-all duration-300"
-                  whileHover={{ scale: 1.05, y: -1 }}
-                >
-                  <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" style={{ animationDelay: '1s' }}></div>
-                  Setup in Minutes
-                </motion.div>
+                  For Teachers
+                </span>
               </div>
-            </motion.div>
-
-            {/* Enhanced B2B CTA Section with Better Visual Hierarchy */}
-            <motion.div
-              variants={itemVariants}
-              className="space-y-8 pt-8"
-            >
-              {/* Primary CTAs with Enhanced Shadows */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.button
-                  className="btn-primary hover-lift group relative overflow-hidden shadow-lg backdrop-blur-sm"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+              <div className="flex flex-col items-center">
+                <Link
+                  to="/contact"
+                  className="w-52 sm:w-56 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Book Live Demo
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                </motion.button>
-                
-                <motion.button
-                  className="btn-secondary hover-lift group shadow-md backdrop-blur-sm"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
+                  Book free demo
+                  <span className="sr-only">For Schools</span>
+                </Link>
+                <span
+                  className="text-xs text-gray-500 mt-1 tracking-tight leading-snug"
+                  aria-hidden="true"
                 >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Case Study
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform duration-300" />
-                </motion.button>
+                  For Schools
+                </span>
               </div>
-
-              {/* Secondary CTA with Glass Effect */}
-              <motion.div
-                variants={itemVariants}
-                className="pt-2"
-              >
-                <motion.button
-                  className="inline-flex items-center gap-2 px-8 py-3.5 text-indigo-700 bg-indigo-50/80 backdrop-blur-sm hover:bg-indigo-100/80 rounded-xl font-semibold transition-all duration-300 shadow-sm hover:shadow-md border border-indigo-200/50"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Play className="w-4 h-4" />
-                  Watch 2-Minute Overview
-                </motion.button>
-              </motion.div>
-            </motion.div>
-
-            {/* Enhanced No Risk Message with Better Typography */}
-            <motion.div variants={itemVariants} className="space-y-4 pt-8">
-              <p className="text-sm font-medium text-gray-600 backdrop-blur-sm bg-white/20 rounded-lg py-3 px-6 border border-white/30">
-                <span className="text-gray-800 font-semibold">Free 7-day trial</span> • No credit card required • Enterprise support included
-              </p>
-              <div className="flex justify-center items-center gap-6 text-xs font-medium text-gray-500">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-3 h-3 text-emerald-500" />
-                  SOC2 Compliant
-                </div>
-                <div className="w-1 h-1 rounded-full bg-gray-300"></div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-3 h-3 text-emerald-500" />
-                  PDPA Certified
-                </div>
-                <div className="w-1 h-1 rounded-full bg-gray-300"></div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle className="w-3 h-3 text-emerald-500" />
-                  99.9% Uptime SLA
-                </div>
-              </div>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* Enhanced Metrics Section with Professional Cards */}
@@ -381,30 +285,36 @@ const HeroSection: React.FC = () => {
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="mt-24 max-w-5xl mx-auto"
+            className="mt-12 md:mt-32 max-w-5xl mx-auto"
+            role="region"
+            aria-labelledby="metrics-heading"
           >
-            <motion.div variants={itemVariants} className="text-center mb-12">
-              <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+            <motion.div variants={itemVariants} className="text-center mb-8 md:mb-12">
+              <h2 id="metrics-heading" className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
                 Trusted by educators worldwide
-              </p>
-              <div className="w-24 h-0.5 bg-gradient-to-r from-indigo-300 to-purple-400 mx-auto rounded-full"></div>
+              </h2>
+              <div className="w-16 md:w-24 h-0.5 bg-gradient-to-r from-indigo-300 to-purple-400 mx-auto rounded-full" aria-hidden="true"></div>
             </motion.div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {metrics.map((metric, index) => (
                 <motion.div
                   key={index}
                   variants={statsVariants}
-                  className={`${metric.bgColor} ${metric.borderColor} rounded-2xl p-8 border-2 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden backdrop-blur-sm`}
+                  className={`${metric.bgColor} ${metric.borderColor} rounded-2xl p-6 md:p-8 border-2 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden backdrop-blur-sm focus-within:ring-2 focus-within:ring-indigo-500/50`}
                   whileHover={{ scale: 1.02 }}
+                  tabIndex={0}
+                  role="article"
+                  aria-labelledby={`metric-${index}-label`}
+                  aria-describedby={`metric-${index}-desc`}
                 >
                   {/* Enhanced Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${metric.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${metric.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} aria-hidden="true" />
                   
                   <div className="relative">
                     <div className="flex items-center justify-center mb-6">
                       <motion.div 
-                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${metric.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                        className={`w-12 md:w-14 h-12 md:h-14 rounded-xl bg-gradient-to-br ${metric.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}
                         animate={{ 
                           rotate: [0, 5, -5, 0],
                         }}
@@ -414,19 +324,20 @@ const HeroSection: React.FC = () => {
                           delay: index * 0.5,
                           ease: "easeInOut" 
                         }}
+                        aria-hidden="true"
                       >
                         {metric.icon}
                       </motion.div>
                     </div>
                     
                     <div className="text-center space-y-3">
-                      <div className={`text-4xl md:text-5xl font-bold ${metric.textColor} tracking-tight`}>
+                      <div className={`text-3xl md:text-4xl lg:text-5xl font-bold ${metric.textColor} tracking-tight`}>
                         {metric.isAnimated ? metric.number : metric.number}
                       </div>
-                      <div className="font-semibold text-gray-900 text-lg">
+                      <div id={`metric-${index}-label`} className="font-semibold text-gray-900 text-base md:text-lg">
                         {metric.label}
                       </div>
-                      <div className="text-sm font-medium text-gray-600 leading-relaxed">
+                      <div id={`metric-${index}-desc`} className="text-xs md:text-sm font-medium text-gray-600 leading-relaxed">
                         {metric.description}
                       </div>
                     </div>
@@ -439,17 +350,19 @@ const HeroSection: React.FC = () => {
           {/* Enhanced Social Proof with Better Visual Design */}
           <motion.div 
             variants={itemVariants}
-            className="text-center mt-20 space-y-6"
+            className="text-center mt-16 md:mt-20 space-y-6"
+            role="region"
+            aria-label="Social proof and user statistics"
           >
             <p className="text-sm font-medium text-gray-600">
               Join thousands of teachers who've transformed their grading workflow
             </p>
-            <div className="flex justify-center items-center gap-4">
-              <div className="flex -space-x-3">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+              <div className="flex -space-x-3" role="img" aria-label="Educator avatars">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <motion.div
                     key={i}
-                    className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-600 border-3 border-white flex items-center justify-center text-white text-xs font-bold shadow-lg"
+                    className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-600 border-2 md:border-3 border-white flex items-center justify-center text-white text-xs font-bold shadow-lg"
                     whileHover={{ scale: 1.1, zIndex: 10 }}
                     animate={{ 
                       y: [0, -5, 0],
@@ -460,20 +373,22 @@ const HeroSection: React.FC = () => {
                       delay: i * 0.2,
                       ease: "easeInOut" 
                     }}
+                    aria-hidden="true"
                   >
                     {String.fromCharCode(64 + i)}
                   </motion.div>
                 ))}
               </div>
-              <div className="flex items-center gap-2 text-sm font-medium text-gray-700 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200/60">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                2,000+ educators actively using Remarkably
+              <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-gray-700 bg-white/60 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full border border-gray-200/60">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></div>
+                <span>2,000+ educators actively using Remarkably</span>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 };
 

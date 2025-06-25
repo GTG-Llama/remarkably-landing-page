@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 interface SchemaMarkupProps {
   type: 'faq' | 'howto' | 'review' | 'product' | 'service' | 'event' | 'jobposting';
-  data: any;
+  data: Record<string, unknown>;
 }
 
 const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type, data }) => {
@@ -15,7 +15,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type, data }) => {
         return {
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          "mainEntity": data.map((item: any) => ({
+          "mainEntity": (data as { question: string; answer: string }[]).map((item) => ({
             "@type": "Question",
             "name": item.question,
             "acceptedAnswer": {
@@ -40,7 +40,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type, data }) => {
           },
           "supply": data.supply || [],
           "tool": data.tool || [],
-          "step": data.steps.map((step: any, index: number) => ({
+          "step": (data as { steps: Array<{ name: string; text: string; image?: string }> }).steps.map((step, index: number) => ({
             "@type": "HowToStep",
             "position": index + 1,
             "name": step.name,
@@ -64,7 +64,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type, data }) => {
             "@type": "Organization",
             "name": "Lenor AI Pte. Ltd."
           },
-          "review": data.reviews.map((review: any) => ({
+          "review": (data as { reviews: Array<{ author: string; rating: number; text: string; date: string }> }).reviews.map((review) => ({
             "@type": "Review",
             "author": {
               "@type": "Person",
@@ -158,7 +158,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type, data }) => {
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "AI Grading Services",
-            "itemListElement": data.offerings?.map((offering: any) => ({
+            "itemListElement": (data as { offerings?: Array<{ name: string; description: string }> }).offerings?.map((offering) => ({
               "@type": "Offer",
               "itemOffered": {
                 "@type": "Service",

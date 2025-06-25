@@ -64,13 +64,13 @@ export const measureWebVitals = (): Promise<WebVitalsMetrics> => {
             break;
             
           case 'layout-shift':
-            if (!(entry as any).hadRecentInput) {
-              metrics.CLS = (metrics.CLS || 0) + (entry as any).value;
+            if (!(entry as PerformanceEntry & { hadRecentInput: boolean }).hadRecentInput) {
+              metrics.CLS = (metrics.CLS || 0) + (entry as PerformanceEntry & { value: number }).value;
             }
             break;
             
           case 'first-input':
-            metrics.FID = (entry as any).processingStart - entry.startTime;
+            metrics.FID = (entry as PerformanceEntry & { processingStart: number }).processingStart - entry.startTime;
             checkComplete();
             break;
         }

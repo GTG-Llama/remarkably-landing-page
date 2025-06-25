@@ -49,12 +49,12 @@ export const measureCoreWebVitals = (): Promise<SEOMetrics> => {
             metrics.largestContentfulPaint = entry.startTime;
             break;
           case 'layout-shift':
-            if (!(entry as any).hadRecentInput) {
-              metrics.cumulativeLayoutShift = (metrics.cumulativeLayoutShift || 0) + (entry as any).value;
+            if (!(entry as PerformanceEntry & { hadRecentInput: boolean }).hadRecentInput) {
+              metrics.cumulativeLayoutShift = (metrics.cumulativeLayoutShift || 0) + (entry as PerformanceEntry & { value: number }).value;
             }
             break;
           case 'first-input':
-            metrics.firstInputDelay = (entry as any).processingStart - entry.startTime;
+            metrics.firstInputDelay = (entry as PerformanceEntry & { processingStart: number }).processingStart - entry.startTime;
             break;
         }
       });

@@ -1,23 +1,23 @@
 
-import React, { useEffect, useState } from "react";
-import ThreeScene from "@/components/ThreeScene";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import EssayFocusSection from "@/components/EssayFocusSection";
-import EssayShowcaseSection from "@/components/EssayShowcaseSection";
-import FeaturesSection from "@/components/FeaturesSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import VideoShowcaseSection from "@/components/VideoShowcaseSection";
-import ROICalculatorSection from "@/components/ROICalculatorSection";
-import CTASection from "@/components/CTASection";
+import ImprovedHeroSection from "@/components/ImprovedHeroSection";
 import Footer from "@/components/Footer";
-import FlowingParticles from "@/components/FlowingParticles";
-import GlowEffect from "@/components/GlowEffect";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import SupportedByCarousel from "@/components/SupportedByCarousel";
+import { motion } from "framer-motion";
 
-gsap.registerPlugin(ScrollTrigger);
+// Lazy load heavy components
+const ThreeScene = lazy(() => import("@/components/ThreeScene"));
+const EssayFocusSection = lazy(() => import("@/components/EssayFocusSection"));
+const EssayShowcaseSection = lazy(() => import("@/components/EssayShowcaseSection"));
+const FeaturesSection = lazy(() => import("@/components/FeaturesSection"));
+const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
+const VideoShowcaseSection = lazy(() => import("@/components/VideoShowcaseSection"));
+const ROICalculatorSection = lazy(() => import("@/components/ROICalculatorSection"));
+const CTASection = lazy(() => import("@/components/CTASection"));
+const FlowingParticles = lazy(() => import("@/components/FlowingParticles"));
+const GlowEffect = lazy(() => import("@/components/GlowEffect"));
+const SupportedByCarousel = lazy(() => import("@/components/SupportedByCarousel"));
+const DemoShowcaseSection = lazy(() => import("@/components/DemoShowcaseSection"));
 
 // List of important images to preload
 const imagesToPreload = [
@@ -76,123 +76,34 @@ const Index: React.FC = () => {
     // Ensure the page is scrolled to top
     window.scrollTo(0, 0);
     
-    const tl = gsap.timeline({
-      onComplete: () => setIsLoading(false),
-    });
+    // Simple timeout to hide loading screen
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
 
-    tl.to(".loading-screen", {
-      opacity: 0,
-      duration: 1,
-      ease: "power2.inOut",
-      delay: 0.5,
-    });
-
-    const entranceTl = gsap.timeline({ delay: 1 });
-
-    entranceTl
-      .from("#main-content", {
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out",
-      })
-      .from(
-        ".header-anim",
-        {
-          y: -30,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.8"
-      )
-      .from(
-        ".hero-anim",
-        {
-          scale: 0.98,
-          opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-        },
-        "-=0.6"
-      );
-
-    // Check if the screen width is greater than tablet breakpoint (e.g., 1024px for lg)
-    if (window.innerWidth >= 1024) {
-      gsap.utils.toArray('a[href^="#"]').forEach((anchor: any) => {
-        anchor.addEventListener("click", (e: Event) => {
-          e.preventDefault();
-          const targetID = anchor.getAttribute("href");
-          const target = document.querySelector(targetID);
-
-          if (target) {
-            gsap.to(window, {
-              duration: 1.2,
-              scrollTo: {
-                y: target,
-                offsetY: 80, // Keep header height in mind
-              },
-              ease: "power3.inOut",
-            });
-          }
+    // Setup smooth scrolling for anchor links
+    const handleAnchorClick = (e: Event) => {
+      e.preventDefault();
+      const anchor = e.target as HTMLAnchorElement;
+      const targetID = anchor.getAttribute("href");
+      const target = document.querySelector(targetID);
+      
+      if (target) {
+        target.scrollIntoView({ 
+          behavior: "smooth", 
+          block: "start" 
         });
-      });
+      }
+    };
 
-      const sections = gsap.utils.toArray<HTMLElement>("section[id]");
-
-      // First, reset all indicators to non-active state initially
-      sections.forEach((_, i) => {
-        if (i > 0) {
-          // Skip the first one which should be active on page load
-          gsap.set(`.section-indicator-${i}`, {
-            backgroundColor: "#e5e5e5", // A neutral, non-active color
-          });
-        }
-      });
-
-      // Create individual ScrollTrigger for each section
-      sections.forEach((section, i) => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top center",
-          end: "bottom center",
-          onEnter: () => {
-            // Make all indicators non-active
-            sections.forEach((_, index) => {
-              gsap.to(`.section-indicator-${index}`, {
-                backgroundColor: "#e5e5e5",
-                duration: 0.3,
-              });
-            });
-            // Activate only the current indicator
-            gsap.to(`.section-indicator-${i}`, {
-              backgroundColor: "#ffe712", // Your active color
-              duration: 0.3,
-            });
-          },
-          onEnterBack: () => {
-            // Make all indicators non-active
-            sections.forEach((_, index) => {
-              gsap.to(`.section-indicator-${index}`, {
-                backgroundColor: "#e5e5e5",
-                duration: 0.3,
-              });
-            });
-            // Activate only the current indicator
-            gsap.to(`.section-indicator-${i}`, {
-              backgroundColor: "#ffe712", // Your active color
-              duration: 0.3,
-            });
-          },
-        });
-      });
-    }
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", handleAnchorClick);
+    });
 
     return () => {
-      // Kill all ScrollTriggers if they were created
-      if (window.innerWidth >= 1024) {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      }
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.removeEventListener("click", handleAnchorClick);
+      });
     };
   }, [imagesLoaded, contentReady]);
 
@@ -218,14 +129,18 @@ const Index: React.FC = () => {
         </div>
       )}
 
-      <FlowingParticles />
+      <Suspense fallback={<div />}>
+        <FlowingParticles />
+      </Suspense>
 
-      <GlowEffect targetSelector="#hero-section" startDelay={0.2} />
-      <GlowEffect targetSelector="#essay-focus" startDelay={0.3} />
-      <GlowEffect targetSelector="#essay-showcase" startDelay={0.35} />
-      <GlowEffect targetSelector="#features" startDelay={0.4} />
-      <GlowEffect targetSelector="#video-showcase" startDelay={0.5} />
-      <GlowEffect targetSelector="#roi-calculator" startDelay={0.55} />
+      <Suspense fallback={<div />}>
+        <GlowEffect targetSelector="#hero-section" startDelay={0.2} />
+        <GlowEffect targetSelector="#essay-focus" startDelay={0.3} />
+        <GlowEffect targetSelector="#essay-showcase" startDelay={0.35} />
+        <GlowEffect targetSelector="#features" startDelay={0.4} />
+        <GlowEffect targetSelector="#video-showcase" startDelay={0.5} />
+        <GlowEffect targetSelector="#roi-calculator" startDelay={0.55} />
+      </Suspense>
 
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-20 hidden lg:block">
         <div className="flex flex-col items-center gap-3">
@@ -251,22 +166,77 @@ const Index: React.FC = () => {
 
       {/* Wrap ThreeScene in a div with responsive visibility classes */}
       <div className="hidden lg:block">
-        <ThreeScene scrollContainer="#main-content" />
+        <Suspense fallback={<div />}>
+          <ThreeScene scrollContainer="#main-content" />
+        </Suspense>
       </div>
 
-      <div id="main-content" className="relative z-10">
+      <motion.div 
+        id="main-content" 
+        className="relative z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+      >
         <Header />
-        <HeroSection />
-        <EssayFocusSection />
-        <EssayShowcaseSection />
-        <FeaturesSection />
-        <VideoShowcaseSection />
-        <TestimonialsSection />
-        <ROICalculatorSection />
-        <CTASection />
-        <SupportedByCarousel />
+        <ImprovedHeroSection />
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <EssayFocusSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <EssayShowcaseSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <DemoShowcaseSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <FeaturesSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <VideoShowcaseSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <TestimonialsSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-96 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <ROICalculatorSection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-24 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <CTASection />
+        </Suspense>
+        
+        <Suspense fallback={
+          <div className="h-32 bg-gray-50 animate-pulse border-4 border-black" />
+        }>
+          <SupportedByCarousel />
+        </Suspense>
+        
         <Footer />
-      </div>
+      </motion.div>
     </div>
   );
 };

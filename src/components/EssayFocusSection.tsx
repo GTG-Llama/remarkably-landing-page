@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { ArrowDown } from "lucide-react";
@@ -53,9 +53,9 @@ const getCardVariants = (isMobile: boolean): Variants => ({
 });
 
 // Debounce utility function
-const debounce = (fn: Function, ms = 100) => {
+const debounce = <T extends (...args: unknown[]) => unknown>(fn: T, ms = 100) => {
   let timeoutId: ReturnType<typeof setTimeout>;
-  return function (...args: any[]) {
+  return function (...args: Parameters<T>) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
@@ -80,7 +80,7 @@ const EssayFocusSection: React.FC = () => {
       title: "Upload Essays",
       description:
         "Simply upload student essays in bulk or individually. Remarkably supports various file formats including .docx, .pdf, and plain text.",
-      color: "bg-[#BDE0FE]",
+      color: "bg-gradient-to-br from-indigo-500 to-purple-600",
       videoUrl: "/lenordemo1-2.mp4",
       icons: [
         { icon: FaFileUpload, label: "Upload" },
@@ -94,7 +94,7 @@ const EssayFocusSection: React.FC = () => {
       description:
         "Our AI analyzes content, structure, and style in seconds, identifying key strengths and areas for improvement.",
       videoUrl: "/lenordemo2.mp4",
-      color: "bg-[#BDE0FE]", // Blue
+      color: "bg-gradient-to-br from-indigo-500 to-purple-600", // Blue
       icons: [
         { icon: FaRobot, label: "AI processing" },
         { icon: FaBrain, label: "Smart analysis" },
@@ -107,7 +107,7 @@ const EssayFocusSection: React.FC = () => {
       description:
         "Receive personalized suggestions and insights for each student, with specific recommendations for improvement.",
       videoUrl: "/lenordemo3-3.mp4",
-      color: "bg-[#CDB4DB]", // Purple
+      color: "bg-gradient-to-br from-pink-500 to-rose-600", // Purple
       icons: [
         { icon: FaCommentAlt, label: "Personalized comments" },
         { icon: FaLightbulb, label: "Improvement suggestions" },
@@ -122,12 +122,10 @@ const EssayFocusSection: React.FC = () => {
   }, [cards.length]);
 
   // Debounced version of setActiveCardIndex to prevent rapid state changes
-  const debouncedSetActiveCard = useCallback(
+  const debouncedSetActiveCard = useMemo(() => 
     debounce((index: number | null) => {
       setActiveCardIndex(index);
-    }, 50),
-    []
-  );
+    }, 50), []);
 
   // Function to determine the most visible card
   const updateActiveCard = useCallback(() => {
@@ -209,10 +207,10 @@ const EssayFocusSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="essay-focus"
-      className="min-h-screen flex items-start justify-center relative overflow-hidden py-20 bg-gradient-to-b from-indigo-200 to-white"
+      className="min-h-screen flex items-start justify-center relative overflow-hidden py-20 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white"
     >
       <motion.div
-        className="absolute top-10 left-1/4 w-32 h-32 bg-yellow-300 border-4 border-black rotate-12 z-0"
+        className="absolute top-10 left-1/4 w-32 h-32 bg-yellow-300 border-4 border-white rotate-12 z-0"
         animate={{
           y: [0, -15, 0],
           rotate: [12, 15, 12],
@@ -225,7 +223,7 @@ const EssayFocusSection: React.FC = () => {
       ></motion.div>
 
       <motion.div
-        className="absolute bottom-20 right-10 w-20 h-20 bg-cyan-300 border-4 border-black -rotate-6 z-0"
+        className="absolute bottom-20 right-10 w-20 h-20 bg-cyan-300 border-4 border-white -rotate-6 z-0"
         animate={{
           y: [0, -20, 0],
           rotate: [-6, -10, -6],
@@ -239,7 +237,7 @@ const EssayFocusSection: React.FC = () => {
       ></motion.div>
 
       <motion.div
-        className="absolute top-1/3 right-1/4 w-16 h-16 bg-pink-300 border-4 border-black rotate-45 z-0"
+        className="absolute top-1/3 right-1/4 w-16 h-16 bg-pink-300 border-4 border-white rotate-45 z-0"
         animate={{
           y: [0, 15, 0],
           x: [0, 10, 0],
@@ -264,7 +262,7 @@ const EssayFocusSection: React.FC = () => {
           }}
           variants={contentVariants}
         >
-          <div className="bg-cyan-300 border-4 border-black p-8 lg:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-1 text-center">
+          <div className="bg-gradient-to-r from-yellow-400 to-yellow-300 border-4 border-white p-8 lg:p-12 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.3)] transform rotate-1 text-center">
             <motion.h2
               ref={titleRef}
               className="text-3xl lg:text-5xl font-black mb-6 text-black"
@@ -324,11 +322,7 @@ const EssayFocusSection: React.FC = () => {
         </motion.div>
 
         <div ref={featureCardsRef} className="space-y-20">
-          {cards.map((card, i) => {
-            // Create a video ref for each card
-            const videoRef = useVideoPlayback(true, true, true);
-            
-            return (
+          {cards.map((card, i) => (
               <motion.div
                 key={card.step}
                 ref={(el) => (cardRefs.current[i] = el)}
@@ -354,10 +348,10 @@ const EssayFocusSection: React.FC = () => {
                 <motion.div
                   className={`w-full lg:w-1/2 ${
                     card.color
-                  } p-8 lg:p-12 flex flex-col justify-center border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10 transform transition-all duration-300 ${
+                  } p-8 lg:p-12 flex flex-col justify-center border-4 border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,0.3)] relative z-10 transform transition-all duration-300 ${
                     activeCardIndex === i
-                      ? "translate-x-[-3px] translate-y-[-3px] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
-                      : "shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]"
+                      ? "translate-x-[-3px] translate-y-[-3px] shadow-[12px_12px_0px_0px_rgba(255,255,255,0.5)]"
+                      : "shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]"
                   } ${i % 2 === 0 ? "rotate-1" : "-rotate-1"}`}
                   whileHover={{
                     scale: 1.02,
@@ -369,7 +363,7 @@ const EssayFocusSection: React.FC = () => {
                 >
                   <div className="flex flex-col text-left">
                     <motion.div
-                      className="absolute top-4 right-4 bg-white w-12 h-12 flex items-center justify-center border-3 border-black transform rotate-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                      className="absolute top-4 right-4 bg-yellow-300 w-12 h-12 flex items-center justify-center border-3 border-white transform rotate-12 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]"
                       animate={{
                         rotate: activeCardIndex === i ? [12, 0, 12] : 12,
                       }}
@@ -397,7 +391,7 @@ const EssayFocusSection: React.FC = () => {
                       {card.title}
                     </motion.h3>
                     <motion.p
-                      className="text-black font-bold text-lg mb-8 bg-white border-2 border-black p-4 -rotate-1"
+                      className="text-black font-bold text-lg mb-8 bg-white border-2 border-gray-800 p-4 -rotate-1 shadow-md"
                       animate={{
                         rotate: activeCardIndex === i ? [-1, -2, -1] : -1,
                       }}
@@ -472,8 +466,7 @@ const EssayFocusSection: React.FC = () => {
                   </div>
                 </motion.div>
               </motion.div>
-            );
-          })}
+          ))}
         </div>
       </div>
     </section>

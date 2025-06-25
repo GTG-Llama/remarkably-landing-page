@@ -8,6 +8,7 @@ import HeroSection from '../components/HeroSection';
 import FeaturesSection from '../components/FeaturesSection';
 import SupportedByCarousel from '../components/SupportedByCarousel';
 import ROICalculatorSection from '../components/ROICalculatorSection';
+import WhitepaperSection from '../components/WhitepaperSection';
 import { motion } from 'framer-motion';
 import { 
   CheckCircle, 
@@ -154,6 +155,33 @@ const Home: React.FC = () => {
     ]
   };
 
+  // Additional structured data for better SEO
+  const organizationData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Remarkably",
+    "alternateName": "Lenor AI Pte. Ltd.",
+    "url": "https://www.remarkably.ink",
+    "logo": "https://www.remarkably.ink/remarkably-logo-black.png",
+    "foundingDate": "2023",
+    "description": "AI-powered essay grading platform that helps teachers grade 6-7x faster",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SG",
+      "addressRegion": "Singapore"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+65-XXXX-XXXX",
+      "contactType": "Customer Service",
+      "availableLanguage": ["English", "Chinese"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/remarkably-ai",
+      "https://twitter.com/remarkably_ai"
+    ]
+  };
+
   return (
     <>
       <SEOHead config={getPageSEO('home')} pageKey="home" />
@@ -165,6 +193,14 @@ const Home: React.FC = () => {
         }}
       />
       <SchemaMarkup type="howto" data={howToData} />
+      <SchemaMarkup type="organization" data={organizationData} />
+      
+      {/* Additional meta tags for mobile optimization */}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
       {/* Hero Section */}
       <HeroSection />
@@ -222,44 +258,64 @@ const Home: React.FC = () => {
                 <form className="space-y-4">
                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-2">First Name</label>
+                        <label htmlFor="first-name" className="block text-sm font-semibold text-slate-700 mb-2">First Name</label>
                         <input
+                          id="first-name"
                           type="text"
                           className="form-input"
                           placeholder="Enter your first name"
+                          required
+                          aria-describedby="first-name-help"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-2">Last Name</label>
+                        <label htmlFor="last-name" className="block text-sm font-semibold text-slate-700 mb-2">Last Name</label>
                         <input
+                          id="last-name"
                           type="text"
                           className="form-input"
                           placeholder="Enter your last name"
+                          required
+                          aria-describedby="last-name-help"
                         />
                       </div>
                     </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Work Email</label>
+                    <label htmlFor="work-email" className="block text-sm font-semibold text-slate-700 mb-2">Work Email</label>
                     <input
+                      id="work-email"
                       type="email"
                       className="form-input"
                       placeholder="your.email@school.edu"
+                      required
+                      aria-describedby="email-help"
                     />
+                    <p id="email-help" className="text-xs text-gray-500 mt-1 sr-only">
+                      Please enter your work email address for demo scheduling
+                    </p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">School/Institution</label>
+                      <label htmlFor="school-name" className="block text-sm font-semibold text-slate-700 mb-2">School/Institution</label>
                       <input
+                        id="school-name"
                         type="text"
                         className="form-input"
                         placeholder="Your school name"
+                        required
+                        aria-describedby="school-help"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
-                      <select className="form-input">
+                      <label htmlFor="role-select" className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
+                      <select 
+                        id="role-select"
+                        className="form-input"
+                        required
+                        aria-describedby="role-help"
+                      >
                         <option value="">Select your role</option>
                         <option value="teacher">Teacher</option>
                         <option value="department-head">Department Head</option>
@@ -271,23 +327,32 @@ const Home: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">How many essays do you grade per week?</label>
-                    <select className="form-input">
+                    <label htmlFor="essay-volume" className="block text-sm font-semibold text-slate-700 mb-2">How many essays do you grade per week?</label>
+                    <select 
+                      id="essay-volume"
+                      className="form-input"
+                      required
+                      aria-describedby="volume-help"
+                    >
                       <option value="">Select range</option>
                       <option value="1-20">1-20 essays</option>
                       <option value="21-50">21-50 essays</option>
                       <option value="51-100">51-100 essays</option>
                       <option value="100+">100+ essays</option>
                     </select>
+                    <p id="volume-help" className="text-xs text-gray-500 mt-1 sr-only">
+                      This helps us customize your demo experience
+                    </p>
                   </div>
 
                   <motion.button
                     type="submit"
-                    className="w-full btn-primary text-lg py-4"
+                    className="w-full btn-primary text-lg py-4 focus:ring-4 focus:ring-indigo-500/50 focus:outline-none"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    aria-label="Submit demo request form"
                   >
-                    <Calendar className="w-5 h-5 mr-2" />
+                    <Calendar className="w-5 h-5 mr-2" aria-hidden="true" />
                     Book My Demo
                   </motion.button>
 
@@ -354,16 +419,19 @@ const Home: React.FC = () => {
             </motion.div>
 
             {/* Enhanced Steps Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {howItWorks.map((step, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className={`group relative ${step.bgColor} rounded-2xl p-8 border border-gray-200/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-2`}
+                  className={`group relative ${step.bgColor} rounded-2xl p-6 md:p-8 border border-gray-200/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-2 focus-within:ring-2 focus-within:ring-indigo-500/50`}
                   whileHover={{ 
                     scale: 1.02,
                     transition: { type: "spring", stiffness: 300, damping: 10 }
                   }}
+                  tabIndex={0}
+                  role="article"
+                  aria-labelledby={`step-${index}-title`}
                 >
                   {/* Background Gradient on Hover */}
                   <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${step.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
@@ -391,10 +459,13 @@ const Home: React.FC = () => {
                     
                     {/* Content */}
                     <div className="space-y-4">
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300">
+                      <h3 
+                        id={`step-${index}-title`}
+                        className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300"
+                      >
                         {step.title}
                       </h3>
-                      <p className="text-gray-700 leading-relaxed">
+                      <p className="text-gray-700 leading-relaxed text-sm md:text-base">
                         {step.description}
                       </p>
                     </div>
@@ -408,6 +479,9 @@ const Home: React.FC = () => {
 
       {/* Features Section */}
       <FeaturesSection />
+
+      {/* Whitepaper Section - Content Depth */}
+      <WhitepaperSection />
 
       {/* ROI Calculator Section */}
       <ROICalculatorSection />
@@ -445,27 +519,30 @@ const Home: React.FC = () => {
             </motion.div>
 
             {/* Testimonials Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {testimonials.map((testimonial, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="card-elevated p-8 hover-lift"
+                  className="card-elevated p-6 md:p-8 hover-lift focus-within:ring-2 focus-within:ring-indigo-500/50"
                   whileHover={{ scale: 1.02 }}
+                  tabIndex={0}
+                  role="article"
+                  aria-labelledby={`testimonial-${index}-author`}
                 >
                   {/* Star Rating */}
-                  <div className="flex items-center gap-1 mb-6">
+                  <div className="flex items-center gap-1 mb-6" role="img" aria-label={`${testimonial.rating} out of 5 stars`}>
                       {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                      <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" aria-hidden="true" />
                       ))}
                     </div>
                     
                     {/* Quote */}
                   <div className="space-y-4 mb-6">
-                    <Quote className="w-8 h-8 text-indigo-400" />
-                    <p className="text-gray-700 leading-relaxed font-medium">
+                    <Quote className="w-8 h-8 text-indigo-400" aria-hidden="true" />
+                    <blockquote className="text-gray-700 leading-relaxed font-medium text-sm md:text-base">
                       "{testimonial.quote}"
-                    </p>
+                    </blockquote>
                   </div>
                     
                     {/* Author */}
@@ -475,9 +552,14 @@ const Home: React.FC = () => {
                         {testimonial.author.split(' ').map(n => n[0]).join('')}
                       </div>
                         <div>
-                          <div className="font-semibold text-gray-900">{testimonial.author}</div>
-                        <div className="text-sm text-gray-500">{testimonial.role}</div>
-                        <div className="text-sm text-gray-400">{testimonial.school}</div>
+                          <div 
+                            id={`testimonial-${index}-author`}
+                            className="font-semibold text-gray-900 text-sm md:text-base"
+                          >
+                            {testimonial.author}
+                        </div>
+                        <div className="text-xs md:text-sm text-gray-500">{testimonial.role}</div>
+                        <div className="text-xs md:text-sm text-gray-400">{testimonial.school}</div>
                       </div>
                     </div>
                   </div>
@@ -519,21 +601,23 @@ const Home: React.FC = () => {
               className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
             >
                   <motion.button
-                className="btn-primary hover-lift group"
+                className="btn-primary hover-lift group focus:ring-4 focus:ring-indigo-500/50 focus:outline-none"
                 whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    aria-label="Schedule an enterprise demo"
                   >
-                <Calendar className="w-5 h-5 mr-2" />
+                <Calendar className="w-5 h-5 mr-2" aria-hidden="true" />
                 Schedule Enterprise Demo
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </motion.button>
                   
                   <motion.button
-                className="btn-secondary hover-lift group"
+                className="btn-secondary hover-lift group focus:ring-4 focus:ring-gray-500/50 focus:outline-none"
                 whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    aria-label="Contact our sales team"
                   >
-                <Mail className="w-5 h-5 mr-2" />
+                <Mail className="w-5 h-5 mr-2" aria-hidden="true" />
                 Contact Sales Team
                   </motion.button>
             </motion.div>

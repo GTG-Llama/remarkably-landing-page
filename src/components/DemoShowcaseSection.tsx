@@ -115,7 +115,7 @@ const DemoShowcaseSection: React.FC = () => {
           >
             <h3 className="text-2xl font-bold mb-4">Ready to Transform Your Grading?</h3>
             <p className="text-lg mb-6 opacity-90">
-              Join 500+ teachers who've already saved thousands of hours with Remarkably
+              Join teachers who've already saved thousands of hours with Remarkably
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

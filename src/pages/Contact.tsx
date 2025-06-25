@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import emailjs from "@emailjs/browser";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { emailjsConfig } from "@/lib/emailjs-config";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 /**
  * Contact form validation schema using Zod
@@ -153,41 +155,56 @@ const Contact: React.FC = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex items-center justify-center p-4">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-center"
-        >
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white">
+        <Header />
+        <div className="flex items-center justify-center p-4 pt-32">
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
           >
-            <CheckCircle className="w-10 h-10 text-white" />
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
+              <CheckCircle className="w-10 h-10 text-white" />
+            </motion.div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">Thank you!</h1>
+            <p className="text-lg text-gray-600 mb-6 max-w-md">
+              We've received your message and sent you a welcome email. Our team will be in touch soon.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Button
+                onClick={() => setIsSubmitted(false)}
+                variant="outline"
+                className="border-2 border-black hover:bg-black hover:text-white transition-colors"
+              >
+                Send Another Message
+              </Button>
+              <Button
+                onClick={() => window.location.href = '/'}
+                className="bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Home
+              </Button>
+            </div>
           </motion.div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Thank you!</h1>
-          <p className="text-lg text-gray-600 mb-6 max-w-md">
-            We've received your message and sent you a welcome email. Our team will be in touch soon.
-          </p>
-          <Button
-            onClick={() => setIsSubmitted(false)}
-            variant="outline"
-            className="border-2 border-black hover:bg-black hover:text-white transition-colors"
-          >
-            Send Another Message
-          </Button>
-        </motion.div>
+        </div>
+        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white">
+      <Header />
+      
       {/* Header Section */}
-      <section className="pt-20 pb-12">
+      <section className="pt-32 pb-12">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -196,7 +213,7 @@ const Contact: React.FC = () => {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl lg:text-6xl font-black text-gray-900 mb-6">
-              Get in <span className="bg-yellow-300 px-3 py-1 transform rotate-1 inline-block">Touch</span>
+              Book Your <span className="bg-yellow-300 px-3 py-1 transform rotate-1 inline-block border-4 border-black shadow-lg">Free Demo</span>
             </h1>
             <p className="text-xl text-gray-600 font-medium">
               Ready to transform your marking process? Let's chat about how Remarkably can help your school save time and money.
@@ -397,6 +414,8 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };

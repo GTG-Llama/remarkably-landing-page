@@ -3,13 +3,56 @@ import { IoPlay } from "react-icons/io5";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useVideoPlayback } from "@/hooks/useVideoPlayback";
+import { Clock, FileText, Brain, CheckCircle } from "lucide-react";
+
+interface DemoVideo {
+  id: string;
+  title: string;
+  description: string;
+  videoSrc: string;
+  thumbnail?: string;
+  duration: string;
+}
 
 const VideoShowcaseSection: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const controls = useAnimation();
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
   const videoRef = useVideoPlayback(true, false, true);
+
+  // Demo videos available
+  const demoVideos: DemoVideo[] = [
+    {
+      id: "main-demo",
+      title: "Complete Grading Workflow",
+      description: "See the full essay grading process from upload to feedback",
+      videoSrc: "/remarkably.mp4",
+      duration: "2:30"
+    },
+    {
+      id: "upload-demo",
+      title: "Essay Upload & Analysis",
+      description: "Watch how easily you can upload handwritten essays",
+      videoSrc: "/lenordemo1-2.mp4",
+      duration: "1:45"
+    },
+    {
+      id: "feedback-demo",
+      title: "AI Feedback Generation",
+      description: "Experience AI-powered personalized feedback creation",
+      videoSrc: "/lenordemo2.mp4",
+      duration: "2:10"
+    },
+    {
+      id: "results-demo",
+      title: "Grade Results & Reports",
+      description: "View comprehensive grading results and analytics",
+      videoSrc: "/lenordemo3-3.mp4",
+      duration: "1:55"
+    }
+  ];
 
   useEffect(() => {
     if (isInView) {
@@ -138,9 +181,17 @@ const VideoShowcaseSection: React.FC = () => {
     },
   };
 
-  const handlePlayVideo = () => {
+  const handlePlayVideo = (videoIndex?: number) => {
+    if (videoIndex !== undefined) {
+      setActiveVideo(videoIndex);
+    }
     setIsPlaying(true);
   };
+
+  const currentVideo = demoVideos[activeVideo];
+
+  // Video selection icons
+  const videoIcons = [Brain, FileText, CheckCircle, Clock];
 
   return (
     <motion.section
@@ -201,10 +252,47 @@ const VideoShowcaseSection: React.FC = () => {
                 transition: { duration: 0.2 },
               }}
             >
-              Watch how our AI-powered platform transforms the essay grading
-              experience
+              Watch how our AI-powered platform transforms the essay grading experience
             </motion.p>
           </motion.div>
+        </motion.div>
+
+        {/* Video Selection */}
+        <motion.div 
+          className="mb-8 max-w-4xl mx-auto"
+          variants={itemVariants}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {demoVideos.map((video, index) => {
+              const IconComponent = videoIcons[index];
+              return (
+                <motion.button
+                  key={video.id}
+                  onClick={() => handlePlayVideo(index)}
+                  className={`border-4 border-black p-4 transition-all duration-300 ${
+                    activeVideo === index 
+                      ? 'bg-yellow-300 shadow-lg transform -translate-y-1' 
+                      : 'bg-white hover:bg-yellow-50 hover:shadow-md'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`w-8 h-8 flex items-center justify-center mb-2 ${
+                      activeVideo === index ? 'text-black' : 'text-indigo-600'
+                    }`}>
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-sm mb-1">{video.title}</h3>
+                    <p className="text-xs text-gray-600 mb-2">{video.description}</p>
+                    <span className="text-xs font-mono bg-gray-100 px-2 py-1 rounded">
+                      {video.duration}
+                    </span>
+                  </div>
+                </motion.button>
+              );
+            })}
+          </div>
         </motion.div>
 
         <motion.div
@@ -227,10 +315,10 @@ const VideoShowcaseSection: React.FC = () => {
                 isPlaying ? "hidden" : "block"
               }`}
             >
-              <div className="w-full h-full absolute inset-0 bg-black/30 flex items-center justify-center">
+              <div className="w-full h-full absolute inset-0 bg-black/30 flex items-center justify-center flex-col">
                 <motion.button
-                  onClick={handlePlayVideo}
-                  className="z-10 w-20 h-20 bg-white border-3 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center"
+                  onClick={() => handlePlayVideo()}
+                  className="z-10 w-20 h-20 bg-white border-3 border-black shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center mb-4"
                   aria-label="Play video"
                   variants={playButtonVariants}
                   whileHover="hover"
@@ -238,6 +326,11 @@ const VideoShowcaseSection: React.FC = () => {
                 >
                   <IoPlay size={32} className="text-black" />
                 </motion.button>
+                
+                <div className="bg-white border-2 border-black px-4 py-2 text-center">
+                  <h3 className="font-bold text-black">{currentVideo.title}</h3>
+                  <p className="text-sm text-gray-600">{currentVideo.description}</p>
+                </div>
               </div>
             </div>
 
@@ -251,15 +344,16 @@ const VideoShowcaseSection: React.FC = () => {
               >
                 <video
                   ref={videoRef}
-                  src="/remarkably.mp4"
+                  src={currentVideo.videoSrc}
                   controls
                   autoPlay
                   loop
                   playsInline
                   preload="auto"
                   className="w-full h-full"
+                  onEnded={() => setIsPlaying(false)}
                 >
-                  <source src="/remarkably.mp4" type="video/mp4" />
+                  <source src={currentVideo.videoSrc} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </motion.div>
@@ -281,7 +375,7 @@ const VideoShowcaseSection: React.FC = () => {
           >
             Experience firsthand how Remarkably's intuitive interface and
             powerful AI help teachers grade essays faster while providing better
-            feedback.
+            feedback to students.
           </motion.p>
         </motion.div>
       </div>

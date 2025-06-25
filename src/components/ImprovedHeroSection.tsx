@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { BookDemoCTA, TryFreeCTA, LearnMoreCTA } from '@/components/ui/cta-button';
-import { Brain, Zap, Clock, CheckCircle, Users, Award, Sparkles } from "lucide-react";
+import { Brain, Zap, Clock, CheckCircle, Users, Award, Sparkles, ChevronDown } from "lucide-react";
 
 const ImprovedHeroSection: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Mouse tracking for subtle interactions
@@ -19,38 +17,14 @@ const ImprovedHeroSection: React.FC = () => {
     });
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
   const stats = [
     { icon: <Clock className="w-6 h-6" />, value: "7x", label: "Faster Grading" },
-    { icon: <Users className="w-6 h-6" />, value: "500+", label: "Teachers Trust Us" },
+    { icon: <Users className="w-6 h-6" />, value: "Hundreds", label: "Teachers and Students Trust Us" },
     { icon: <Award className="w-6 h-6" />, value: "99%", label: "Accuracy Rate" },
   ];
 
   return (
     <section
-      ref={sectionRef}
       id="hero-section"
       className="relative min-h-screen flex items-center justify-center bg-neural overflow-hidden"
       onMouseMove={handleMouseMove}
@@ -67,26 +41,18 @@ const ImprovedHeroSection: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container-standard px-6 lg:px-8 py-20">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="text-center max-w-4xl mx-auto"
-        >
+      <div className="container-standard px-6 lg:px-8 py-20 relative z-10">
+        <div className="text-center max-w-4xl mx-auto">
           {/* Badge */}
-          <motion.div variants={itemVariants} className="mb-8">
+          <div className="mb-8">
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 border-2 border-black text-black font-bold text-sm shadow-md">
               <Sparkles className="w-4 h-4" />
-              Trusted by 500+ Schools Worldwide
+              Trusted by Thousands Worldwide
             </span>
-          </motion.div>
+          </div>
 
           {/* Main Headline */}
-          <motion.h1 
-            variants={itemVariants}
-            className="text-5xl lg:text-7xl font-black text-black mb-6 leading-tight"
-          >
+          <h1 className="text-5xl lg:text-7xl font-black text-black mb-6 leading-tight">
             Grade Essays{" "}
             <span className="relative">
               <span className="bg-yellow-300 px-2 py-1 -rotate-1 inline-block border-4 border-black shadow-lg">
@@ -94,32 +60,23 @@ const ImprovedHeroSection: React.FC = () => {
               </span>
             </span>
             {" "}with AI
-          </motion.h1>
+          </h1>
 
           {/* Subheadline */}
-          <motion.p 
-            variants={itemVariants}
-            className="text-xl lg:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed"
-          >
+          <p className="text-xl lg:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
             Remarkably helps teachers grade handwritten essays in seconds, not hours. 
             Upload, analyze, and provide personalized feedback using your own rubric and style.
-          </motion.p>
+          </p>
 
           {/* CTA Buttons */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
-          >
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <TryFreeCTA size="lg" />
             <BookDemoCTA size="lg" />
             <LearnMoreCTA size="lg" />
-          </motion.div>
+          </div>
 
           {/* Trust Indicators */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-gray-600"
-          >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-gray-600 mb-16">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-green-600" />
               <span>No credit card required</span>
@@ -132,27 +89,41 @@ const ImprovedHeroSection: React.FC = () => {
               <CheckCircle className="w-5 h-5 text-green-600" />
               <span>Cancel anytime</span>
             </div>
-          </motion.div>
+          </div>
 
           {/* Stats Section */}
-          <motion.div 
-            variants={itemVariants}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {stats.map((stat, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="bg-white border-4 border-black p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-                whileHover={{ scale: 1.05 }}
               >
                 <div className="flex items-center justify-center mb-4 text-indigo-600">
                   {stat.icon}
                 </div>
                 <div className="text-3xl font-black text-black mb-2">{stat.value}</div>
                 <div className="text-gray-600 font-medium">{stat.label}</div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Down Indicator */}
+      <div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-pointer"
+        onClick={() => {
+          const metricsSection = document.getElementById('metrics-section');
+          metricsSection?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      >
+        <p className="text-sm text-gray-600 mb-2 font-medium">See our impact</p>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-8 h-8 bg-white border-2 border-black rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"
+        >
+          <ChevronDown className="w-4 h-4 text-black" />
         </motion.div>
       </div>
 

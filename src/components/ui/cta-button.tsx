@@ -118,7 +118,7 @@ export const BookDemoCTA: React.FC<{
   <CTAButton
     variant="b2b"
     size={size}
-    href="#demo-booking"
+    href="/contact"
     className={className}
     fullWidth={fullWidth}
   >

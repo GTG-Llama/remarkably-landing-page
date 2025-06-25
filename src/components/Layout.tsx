@@ -15,15 +15,15 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       name: 'Product', 
       path: '#',
       dropdown: [
-        { name: 'Features', path: '/features' },
-        { name: 'Demo', path: '/demo' },
+    { name: 'Features', path: '/features' },
+    { name: 'Demo', path: '/demo' },
       ]
     },
     { 
       name: 'Solutions', 
       path: '#',
       dropdown: [
-        { name: 'Benefits', path: '/benefits' },
+    { name: 'Benefits', path: '/benefits' },
         { name: 'Use Cases', path: '/about-us' },
       ]
     },
@@ -33,11 +33,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       dropdown: [
         { name: 'About Us', path: '/about-us' },
         { name: 'Q&A', path: '/qna' },
-        { name: 'Testimonials', path: '/testimonials' },
-        { name: 'Achievements', path: '/achievements' },
-        { name: 'Rubric Guide', path: '/rubric-guide' },
-        { name: 'Stress Reduction', path: '/stress-reduction' },
-        { name: 'Case Study', path: '/case-study' },
+    { name: 'Testimonials', path: '/testimonials' },
+    { name: 'Achievements', path: '/achievements' },
+    { name: 'Rubric Guide', path: '/rubric-guide' },
+    { name: 'Stress Reduction', path: '/stress-reduction' },
+    { name: 'Case Study', path: '/case-study' },
       ]
     },
     { name: 'Pricing', path: '/pricing' },
@@ -86,10 +86,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
                       <button className="flex items-center gap-1 text-gray-700 hover:text-gray-900 font-medium text-sm transition-colors py-2">
-                        {item.name}
+                  {item.name}
                         <ChevronDown className="w-3 h-3" />
-                      </button>
-                      
+                </button>
+                
                       <AnimatePresence>
                         {activeDropdown === item.name && (
                           <motion.div
@@ -100,29 +100,29 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             className="absolute top-full left-0 mt-3 w-48 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
                           >
                             {item.dropdown.map((subItem) => (
-                              <Link
+                      <Link
                                 key={subItem.name}
                                 to={subItem.path}
                                 className="block px-4 py-3 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                              >
+                      >
                                 {subItem.name}
-                              </Link>
-                            ))}
+                      </Link>
+                    ))}
                           </motion.div>
-                        )}
+                )}
                       </AnimatePresence>
-                    </div>
+            </div>
                   ) : (
-                    <Link
-                      to={item.path}
+                  <Link
+                    to={item.path}
                       className={`text-sm font-medium transition-colors py-2 ${
-                        isActive(item.path)
+                      isActive(item.path)
                           ? 'text-gray-900'
                           : 'text-gray-700 hover:text-gray-900'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
                   )}
                 </div>
               ))}

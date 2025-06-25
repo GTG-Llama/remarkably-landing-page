@@ -68,8 +68,8 @@ const Testimonials: React.FC = () => {
   const stats = [
     {
       icon: <Users className="h-8 w-8" />,
-      number: "500+",
-      label: "Teachers",
+      number: "Hundreds",
+      label: "Teachers and Students",
       description: "Across Singapore and internationally"
     },
     {

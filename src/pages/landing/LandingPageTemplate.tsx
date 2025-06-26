@@ -1,10 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, Suspense, lazy } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FlowingParticles from "@/components/FlowingParticles";
 import GlowEffect from "@/components/GlowEffect";
-import ThreeScene from "@/components/ThreeScene";
 import FeaturesSection from "@/components/FeaturesSection";
+
+// Lazy load the heavy ThreeScene component
+const ThreeScene = lazy(() => import("@/components/ThreeScene"));
+
+// Loading component for ThreeScene
+const ThreeSceneLoader = () => (
+  <div className="h-64 lg:h-80 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg">
+    <div className="text-center space-y-3">
+      <div className="animate-spin rounded-full h-8 w-8 border-2 border-indigo-600 border-t-transparent mx-auto"></div>
+      <p className="text-sm text-gray-600">Loading 3D scene...</p>
+    </div>
+  </div>
+);
 import VideoShowcaseSection from "@/components/VideoShowcaseSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import SupportedByCarousel from "@/components/SupportedByCarousel";
@@ -484,7 +496,9 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
             }}
           >
             <div className="hidden lg:block h-full">
-              <ThreeScene scrollContainer="#main-content" rightSidePosition={true} partialView={true} />
+              <Suspense fallback={<ThreeSceneLoader />}>
+                <ThreeScene scrollContainer="#main-content" rightSidePosition={true} partialView={true} />
+              </Suspense>
             </div>
             
             {/* Fallback for mobile */}

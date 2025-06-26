@@ -45,17 +45,66 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Vendor chunks
-          'react-vendor': ['react', 'react-dom'],
-          'animation-vendor': ['framer-motion'],
-          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-navigation-menu'],
-          'utils': ['clsx', 'tailwind-merge', 'class-variance-authority'],
+        manualChunks: (id) => {
+          // Core React dependencies
+          if (id.includes('react') && !id.includes('@') && !id.includes('react-router')) {
+            return 'react-vendor';
+          }
+          
+          // Animation libraries
+          if (id.includes('framer-motion') || id.includes('gsap')) {
+            return 'animation-vendor';
+          }
+          
+          // Three.js - separate into smaller chunks
+          if (id.includes('three') && !id.includes('@react-three')) {
+            return 'three-core';
+          }
+          if (id.includes('@react-three/')) {
+            return 'three-addons';
+          }
+          if (id.includes('three/examples/jsm')) {
+            return 'three-loaders';
+          }
+          
+          // UI components
+          if (id.includes('@radix-ui/')) {
+            return 'radix-ui';
+          }
+          
+          // Form libraries
+          if (id.includes('@hookform/') || id.includes('react-hook-form') || id.includes('zod')) {
+            return 'forms';
+          }
+          
+          // Routing
+          if (id.includes('react-router')) {
+            return 'routing';
+          }
+          
+          // Email and communication
+          if (id.includes('@emailjs/')) {
+            return 'communication';
+          }
+          
+          // Query and state management
+          if (id.includes('@tanstack/')) {
+            return 'state';
+          }
+          
+          // Utilities
+          if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
+            return 'utils';
+          }
+          
+          // Large dependencies in node_modules
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         }
       }
     },
-    chunkSizeWarningLimit: 600, // Increase warning limit
+    chunkSizeWarningLimit: 500, // Target smaller chunks for better performance
   },
   plugins: [
     react(),

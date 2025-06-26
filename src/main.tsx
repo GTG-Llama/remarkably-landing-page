@@ -42,13 +42,29 @@ if (sessionStorage.getItem("shouldScrollToTop")) {
   window.scrollTo(0, 0);
 }
 
-// Prevent any scrolling until fully loaded
+// Optimize performance by reducing the loading delay
 document.body.style.overflow = "hidden";
 window.addEventListener("load", function() {
-  // Re-enable scrolling after everything is loaded
+  // Re-enable scrolling after critical resources are loaded
   setTimeout(() => {
     document.body.style.overflow = "";
-  }, 1000); // Delay to match loading animation
+  }, 500); // Reduced delay for better perceived performance
 });
+
+// Preload critical resources
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => {
+    // Preload critical images
+    const criticalImages = [
+      '/remarkably logo black.png',
+      '/hero-video-fallback.svg'
+    ];
+    
+    criticalImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+}
 
 createRoot(document.getElementById("root")!).render(<App />);

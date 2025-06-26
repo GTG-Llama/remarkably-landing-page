@@ -21,12 +21,24 @@ import {
 
 const BetaHeader: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   // Close sidebar when route changes
   useEffect(() => {
     setIsSidebarOpen(false);
   }, [location.pathname]);
+
+  // Scroll detection for header transparency
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Prevent scroll when sidebar is open
   useEffect(() => {
@@ -103,8 +115,12 @@ const BetaHeader: React.FC = () => {
 
   return (
     <>
-      {/* Clean Mobile-First Header - Similar to Artisan - Updated with transparent background */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-transparent backdrop-blur-sm">
+      {/* Clean Mobile-First Header - Similar to Artisan - Updated with scroll-based transparency */}
+      <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100/50' 
+          : 'bg-transparent backdrop-blur-sm'
+      }`}>
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
           {/* Logo */}
           <Link to="/beta" className="flex items-center">

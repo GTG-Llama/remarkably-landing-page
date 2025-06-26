@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, FileText, Brain, CheckCircle, MessageCircle } from 'lucide-react';
 
@@ -18,7 +18,7 @@ const AutoDemo: React.FC = () => {
   const [showCursor, setShowCursor] = useState(false);
   const demoRef = useRef<HTMLDivElement>(null);
 
-  const steps: Step[] = [
+  const steps: Step[] = useMemo(() => [
     {
       id: 'upload',
       title: 'Upload Essay',
@@ -51,7 +51,7 @@ const AutoDemo: React.FC = () => {
       duration: 3000,
       action: 'Writing personalized feedback...'
     }
-  ];
+  ], []);
 
   // Auto-advance through steps
   useEffect(() => {

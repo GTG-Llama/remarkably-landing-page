@@ -35,7 +35,7 @@ import {
 
 
 
-const Home: React.FC = () => {
+ const Home: React.FC = () => {
   useEffect(() => {
     initSEOMonitoring();
   }, []);

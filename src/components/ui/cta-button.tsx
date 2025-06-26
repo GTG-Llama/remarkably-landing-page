@@ -47,22 +47,24 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
   };
 
   const sizes = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
+    sm: 'px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
+    md: 'px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base',
+    lg: 'px-5 py-2.5 text-sm sm:px-8 sm:py-4 sm:text-lg',
   };
 
   const buttonVariant = variants[variant];
   const buttonSize = sizes[size];
 
   const baseClasses = cn(
-    'inline-flex items-center justify-center gap-2',
+    'inline-flex items-center justify-center gap-1 sm:gap-2',
     'font-bold',
-    'border-4',
+    'border-2 sm:border-4',
     'transition-all duration-300',
     'transform',
     'active:translate-x-1 active:translate-y-1',
-    'focus:outline-none focus:ring-4 focus:ring-yellow-300',
+    'focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-yellow-300',
+    'whitespace-nowrap overflow-hidden',
+    'min-w-0', // Allows flex items to shrink
     fullWidth ? 'w-full' : '',
     buttonVariant.bg,
     buttonVariant.text,
@@ -122,7 +124,8 @@ export const BookDemoCTA: React.FC<{
     className={className}
     fullWidth={fullWidth}
   >
-    📅 Book Free Demo
+    <span className="hidden sm:inline">📅 Book Free Demo</span>
+    <span className="sm:hidden">📅 Book Demo</span>
   </CTAButton>
 );
 
@@ -138,7 +141,8 @@ export const TryFreeCTA: React.FC<{
     className={className}
     fullWidth={fullWidth}
   >
-    🚀 Try Free for 1 Month
+    <span className="hidden sm:inline">🚀 Try Free for 1 Month</span>
+    <span className="sm:hidden">🚀 Try Free</span>
   </CTAButton>
 );
 

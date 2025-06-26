@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { BookDemoCTA, TryFreeCTA, LearnMoreCTA } from '@/components/ui/cta-button';
 import { Brain, Zap, Clock, CheckCircle, Users, Award, Sparkles, ChevronDown } from "lucide-react";
+import HeroVideo from './HeroVideo';
 
 const ImprovedHeroSection: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -41,62 +42,86 @@ const ImprovedHeroSection: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container-standard px-6 lg:px-8 py-20 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Badge */}
-          <div className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 border-2 border-black text-black font-bold text-sm shadow-md">
-              <Sparkles className="w-4 h-4" />
-              Trusted by Thousands Worldwide
-            </span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-5xl lg:text-7xl font-black text-black mb-6 leading-tight">
-            Grade Essays{" "}
-            <span className="relative">
-              <span className="bg-yellow-300 px-2 py-1 -rotate-1 inline-block border-4 border-black shadow-lg">
-                7x Faster
+      <div className="container-standard px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
+          {/* Left Column - Text Content */}
+          <div className="text-center lg:text-left">
+            {/* Badge */}
+            <div className="mb-6 lg:mb-8">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 border-2 border-black text-black font-bold text-sm shadow-md">
+                <Sparkles className="w-4 h-4" />
+                Trusted by Thousands Worldwide
               </span>
-            </span>
-            {" "}with AI
-          </h1>
+            </div>
 
-          {/* Subheadline */}
-          <p className="text-xl lg:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Remarkably helps teachers grade handwritten essays in seconds, not hours. 
-            Upload, analyze, and provide personalized feedback using your own rubric and style.
-          </p>
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-black mb-4 sm:mb-6 leading-tight">
+              Grade Essays{" "}
+              <span className="relative">
+                <span className="bg-yellow-300 px-2 py-1 -rotate-1 inline-block border-4 border-black shadow-lg">
+                  7x Faster
+                </span>
+              </span>
+              {" "}with AI
+            </h1>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <TryFreeCTA size="lg" />
-            <BookDemoCTA size="lg" />
-            <LearnMoreCTA size="lg" />
+            {/* Subheadline */}
+            <p className="text-base sm:text-lg md:text-xl lg:text-xl text-gray-700 mb-6 sm:mb-8 max-w-2xl lg:max-w-none leading-relaxed px-2 sm:px-0">
+              Remarkably helps teachers grade handwritten essays in seconds, not hours. 
+              Upload, analyze, and provide personalized feedback using your own rubric and style.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center mb-8 sm:mb-12 px-4 sm:px-0">
+              <TryFreeCTA size="lg" />
+              <BookDemoCTA size="lg" />
+              <LearnMoreCTA size="lg" />
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600 px-4 sm:px-0">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span>No credit card required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span>Free 1-month trial</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span>Cancel anytime</span>
+              </div>
+            </div>
           </div>
 
-          {/* Trust Indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-gray-600 mb-16">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <span>No credit card required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <span>Free 1-month trial</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <span>Cancel anytime</span>
-            </div>
+          {/* Right Column - Video Demo */}
+          <div className="relative">
+            <HeroVideo
+              videoSrc="/remarkably.mp4"
+              fallbackImage="/hero-video-fallback.svg"
+              alt="Remarkably AI essay grading demo"
+              className="w-full h-64 sm:h-80 lg:h-96 shadow-2xl"
+            />
+            
+            {/* Decorative elements around video */}
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-yellow-300 border-2 border-black rotate-12 hidden lg:block"></div>
+            <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-pink-300 border-2 border-black -rotate-12 hidden lg:block"></div>
+          </div>
+        </div>
+
+        {/* Stats Section - Full Width Below */}
+        <div className="mt-16 lg:mt-20">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Trusted Results</h2>
+            <p className="text-gray-600">Real impact for teachers and students</p>
           </div>
 
-          {/* Stats Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0">
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className="bg-white border-4 border-black p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white border-2 sm:border-4 border-black p-4 sm:p-6 shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
               >
                 <div className="flex items-center justify-center mb-4 text-indigo-600">
                   {stat.icon}

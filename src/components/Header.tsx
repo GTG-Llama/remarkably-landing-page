@@ -21,7 +21,18 @@ import {
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  // Handle scroll effect for header background
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close sidebar when route changes
   useEffect(() => {
@@ -103,8 +114,12 @@ const Header: React.FC = () => {
 
   return (
     <>
-      {/* Clean Mobile-First Header - Similar to Artisan - Updated with transparent background */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-transparent backdrop-blur-sm">
+      {/* Clean Mobile-First Header with dynamic background */}
+      <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200/50' 
+          : 'bg-transparent'
+      }`}>
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
           {/* Logo */}
           <Link to="/" className="flex items-center">

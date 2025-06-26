@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import CountUp from "./CountUp";
 import NeuralMapOverlay from "./NeuralMapOverlay";
+import HeroVideo from './HeroVideo';
 import { useNavigation } from '../contexts/NavigationContext';
 
 // Custom animated counter hook with formatting
@@ -264,6 +265,21 @@ const HeroSection: React.FC = () => {
                   Remarkably grades handwritten essays in your style, using your rubric — just like you would.
                 </span>
               </h1>
+            </div>
+
+            {/* Video Integration - Seamlessly placed after headline */}
+            <div className="mt-8 mb-8 flex justify-center">
+              <div className="relative w-full max-w-2xl">
+                <HeroVideo
+                  videoSrc="/remarkably.mp4"
+                  fallbackImage="/hero-video-fallback.svg"
+                  alt="Remarkably AI essay grading demo"
+                  className="w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-2xl shadow-lg border border-gray-200/50"
+                />
+                {/* Subtle decorative elements that fit with beta design */}
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-indigo-500 rounded-full opacity-60 animate-pulse hidden lg:block"></div>
+                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-500 rounded-full opacity-40 animate-pulse hidden lg:block" style={{ animationDelay: '1s' }}></div>
+              </div>
             </div>
 
             {/* Try and Demo Buttons */}

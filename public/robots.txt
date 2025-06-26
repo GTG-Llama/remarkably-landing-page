@@ -2,6 +2,14 @@
 # https://www.robotstxt.org/robotstxt.html
 
 User-agent: *
+Allow: /beta
+
+# Disallow unfinished paths
+Disallow: /dev
+Disallow: /old
+
+# Existing rules
+User-agent: *
 Allow: /
 
 # Sitemap location

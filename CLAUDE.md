@@ -216,16 +216,17 @@ VITE_EMAILJS_TEMPLATE_ID
 
 ## Recent Major Updates
 
-### Demo Page Redesign (Latest)
-- **File**: `src/pages/Demo.tsx`
-- **Changes**: Complete redesign inspired by Krisp's interactive demo interface
+### Interactive Demo Integration (Latest)
+- **Files**: `src/pages/Home.tsx` (beta homepage), `src/pages/Demo.tsx` (dedicated demo page)
+- **Changes**: Added interactive demo section to homepage, replacing purple lead capture form
 - **Features**:
-  - Interactive feature selection tabs on left side
-  - Professional video player with browser-style interface
-  - 5 selectable demo features: AI Analysis, Grading, Feedback, Batch Processing, Handwriting Recognition
-  - Responsive design matching beta site's indigo color scheme
+  - **Homepage Integration**: Interactive demo section on `localhost:8080/beta/` 
+  - **Dedicated Demo Page**: Complete redesign at `localhost:8080/beta/demo`
+  - Interactive feature selection with 4 key features: AI Analysis, Grading, Feedback, Batch Processing
+  - Professional video player with browser-style interface and enhanced visual design
+  - Cleaner aesthetics with improved colors, gradients, and visual hierarchy
+  - Responsive design perfectly matching beta site's design language
   - Call-to-action buttons integrated seamlessly
-- **URL**: `localhost:8080/beta/demo`
 
 ### Hero Video Integration 
 - **File**: `src/components/HeroSection.tsx` (beta site)

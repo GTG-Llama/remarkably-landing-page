@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SEOHead from '../components/SEOHead';
 import AdvancedSEOHead from '../components/AdvancedSEOHead';
 import SchemaMarkup from '../components/SchemaMarkup';
@@ -30,12 +30,17 @@ import {
   Download,
   Mail,
   Building,
-  GraduationCap
+  GraduationCap,
+  FileText,
+  Play,
+  Upload
 } from 'lucide-react';
 
 
 
  const Home: React.FC = () => {
+  const [activeDemo, setActiveDemo] = useState('essay-analysis');
+
   useEffect(() => {
     initSEOMonitoring();
   }, []);
@@ -155,6 +160,60 @@ import {
     ]
   };
 
+  // Interactive demo features data
+  const demoFeatures = [
+    {
+      id: 'essay-analysis',
+      title: 'AI Essay Analysis',
+      description: 'Watch our advanced OCR technology analyze handwritten essays with real-time grammar detection, thesis evaluation, and writing style assessment',
+      icon: <Brain className="h-6 w-6" />,
+      highlights: [
+        'Advanced OCR for messy handwriting',
+        'Subject-verb agreement detection', 
+        'Thesis clarity evaluation',
+        'Built-in plagiarism checking'
+      ]
+    },
+    {
+      id: 'grading-process',
+      title: 'Lightning-Fast Grading',
+      description: 'Experience 5-7x faster grading that reduces essay marking from 15-20 minutes to just 3-5 minutes per essay with MOE-aligned rubrics',
+      icon: <Target className="h-6 w-6" />,
+      highlights: [
+        'MOE-aligned custom rubrics',
+        '100% consistent, bias-free scoring',
+        'Detailed breakdown with explanations',
+        '95%+ grading accuracy rate'
+      ]
+    },
+    {
+      id: 'feedback-generation',
+      title: 'Teacher-Style Feedback',
+      description: 'See how our AI learns your unique feedback style, tone, and depth to generate personalized comments that sound exactly like you',
+      icon: <FileText className="h-6 w-6" />,
+      highlights: [
+        'Mimics your personal teaching style',
+        'Real-time essay annotations',
+        'Specific improvement suggestions',
+        'Progress tracking over time'
+      ]
+    },
+    {
+      id: 'batch-processing',
+      title: 'Class-Wide Processing',
+      description: 'Process entire classes simultaneously with automatic student separation, comparative analytics, and instant LMS integration',
+      icon: <Users className="h-6 w-6" />,
+      highlights: [
+        'Auto-separates multi-essay PDFs',
+        'Class performance visualization',
+        'Cross-student comparison insights',
+        'Direct LMS and Google Drive sync'
+      ]
+    }
+  ];
+
+  const currentFeature = demoFeatures.find(feature => feature.id === activeDemo) || demoFeatures[0];
+
   // Additional structured data for better SEO
   const organizationData = {
     "@context": "https://schema.org",
@@ -210,180 +269,155 @@ import {
       <SupportedByCarousel />
       </section>
 
-      {/* Lead Capture Section */}
-      <section className="section-dark relative overflow-hidden">
-        {/* Enhanced Background Patterns */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-800" />
-          <div className="absolute inset-0 geometric-pattern opacity-20" />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-indigo-400/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-indigo-400/15 to-purple-400/20 rounded-full blur-3xl" />
+      {/* Interactive Demo Section */}
+      <section className="py-20 px-6 bg-white/60 backdrop-blur-sm relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-indigo-200/40 to-purple-200/40 rounded-full blur-2xl" />
+          <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-blue-200/40 to-indigo-200/40 rounded-full blur-2xl" />
         </div>
-        
-        <div className="container-custom relative z-10">
+
+        <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            className="max-w-4xl mx-auto text-center space-y-8"
           >
-            <motion.div variants={itemVariants} className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-sm font-medium">
-                <GraduationCap className="w-4 h-4" />
-                Join 2,000+ Educators
+            {/* Section Header */}
+            <motion.div variants={itemVariants} className="text-center mb-16">
+              <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-6">
+                <Play className="h-4 w-4 mr-2" />
+                See Remarkably in Action
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-bold text-white">
-                See Remarkably in Action
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Experience Our 
+                <span className="text-indigo-600 block">Key Features</span>
               </h2>
               
-              <p className="text-xl text-indigo-100 max-w-3xl mx-auto">
-                Book a personalized demo and discover how AI can transform your grading workflow. 
-                See real results with your own essays in just 15 minutes.
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Discover how our AI transforms essay grading through these interactive demonstrations. 
+                Click any feature to see it in action.
               </p>
             </motion.div>
-
-            {/* Lead Capture Form */}
-            <motion.div 
-              variants={itemVariants}
-              className="card-glass rounded-2xl p-8 shadow-2xl max-w-2xl mx-auto border border-white/20"
-            >
-                                <div className="space-y-6">
-                    <div className="text-center space-y-3">
-                      <h3 className="text-2xl font-bold text-slate-800">Request Your Demo</h3>
-                      <p className="text-slate-600 font-medium">Get a personalized walkthrough of Remarkably's AI grading platform</p>
-                    </div>
-
-                <form className="space-y-4">
-                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="first-name" className="block text-sm font-semibold text-slate-700 mb-2">First Name</label>
-                        <input
-                          id="first-name"
-                          type="text"
-                          className="form-input"
-                          placeholder="Enter your first name"
-                          required
-                          aria-describedby="first-name-help"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="last-name" className="block text-sm font-semibold text-slate-700 mb-2">Last Name</label>
-                        <input
-                          id="last-name"
-                          type="text"
-                          className="form-input"
-                          placeholder="Enter your last name"
-                          required
-                          aria-describedby="last-name-help"
-                        />
-                      </div>
-                    </div>
-
-                  <div>
-                    <label htmlFor="work-email" className="block text-sm font-semibold text-slate-700 mb-2">Work Email</label>
-                    <input
-                      id="work-email"
-                      type="email"
-                      className="form-input"
-                      placeholder="your.email@school.edu"
-                      required
-                      aria-describedby="email-help"
-                    />
-                    <p id="email-help" className="text-xs text-gray-500 mt-1 sr-only">
-                      Please enter your work email address for demo scheduling
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="school-name" className="block text-sm font-semibold text-slate-700 mb-2">School/Institution</label>
-                      <input
-                        id="school-name"
-                        type="text"
-                        className="form-input"
-                        placeholder="Your school name"
-                        required
-                        aria-describedby="school-help"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="role-select" className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
-                      <select 
-                        id="role-select"
-                        className="form-input"
-                        required
-                        aria-describedby="role-help"
-                      >
-                        <option value="">Select your role</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="department-head">Department Head</option>
-                        <option value="principal">Principal/VP</option>
-                        <option value="admin">Administrator</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="essay-volume" className="block text-sm font-semibold text-slate-700 mb-2">How many essays do you grade per week?</label>
-                    <select 
-                      id="essay-volume"
-                      className="form-input"
-                      required
-                      aria-describedby="volume-help"
-                    >
-                      <option value="">Select range</option>
-                      <option value="1-20">1-20 essays</option>
-                      <option value="21-50">21-50 essays</option>
-                      <option value="51-100">51-100 essays</option>
-                      <option value="100+">100+ essays</option>
-                    </select>
-                    <p id="volume-help" className="text-xs text-gray-500 mt-1 sr-only">
-                      This helps us customize your demo experience
-                    </p>
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    className="w-full btn-primary text-lg py-4 focus:ring-4 focus:ring-indigo-500/50 focus:outline-none"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    aria-label="Submit demo request form"
-                  >
-                    <Calendar className="w-5 h-5 mr-2" aria-hidden="true" />
-                    Book My Demo
-                  </motion.button>
-
-                  <p className="text-xs text-gray-500 text-center">
-                    By submitting, you agree to our Terms of Service and Privacy Policy. 
-                    We'll contact you within 24 hours to schedule your demo.
-                  </p>
-                </form>
-              </div>
-            </motion.div>
-
-            {/* Additional CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <motion.button
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all duration-300"
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Download className="w-4 h-4" />
-                Download ROI Calculator
-              </motion.button>
+            
+            {/* Main Demo Interface */}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
               
-              <motion.button
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-xl font-medium hover:bg-white/20 transition-all duration-300"
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <MessageCircle className="w-4 h-4" />
-                Chat with Sales
-              </motion.button>
-            </motion.div>
+              {/* Left Side - Feature Selection */}
+              <motion.div variants={itemVariants} className="lg:col-span-2 space-y-4">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    Explore Features
+                  </h3>
+                  <p className="text-gray-600">
+                    Select any feature below to watch it in action
+                  </p>
+                </div>
+
+                {/* Feature Cards */}
+                <div className="space-y-3">
+                  {demoFeatures.map((feature, index) => (
+                    <motion.button
+                      key={feature.id}
+                      onClick={() => setActiveDemo(feature.id)}
+                      className={`w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 ${
+                        activeDemo === feature.id
+                          ? 'bg-indigo-50 border-indigo-300 shadow-lg'
+                          : 'bg-white/80 border-gray-200 hover:border-indigo-200 hover:shadow-md'
+                      }`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <div className="flex items-start space-x-4">
+                        <div className={`p-3 rounded-xl transition-colors ${
+                          activeDemo === feature.id
+                            ? 'bg-indigo-100 text-indigo-600'
+                            : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {feature.icon}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className={`font-semibold mb-2 transition-colors ${
+                            activeDemo === feature.id ? 'text-indigo-900' : 'text-gray-900'
+                          }`}>
+                            {feature.title}
+                          </h4>
+                          <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+                            {feature.description}
+                          </p>
+                          <div className="space-y-2">
+                            {feature.highlights.slice(0, 2).map((highlight, idx) => (
+                              <div key={idx} className="flex items-center text-xs text-gray-500">
+                                <div className={`w-1.5 h-1.5 rounded-full mr-2 ${
+                                  activeDemo === feature.id ? 'bg-indigo-400' : 'bg-gray-400'
+                                }`}></div>
+                                {highlight}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Right Side - Clean Video Player */}
+              <motion.div variants={itemVariants} className="lg:col-span-3">
+                <div className="sticky top-24">
+                  {/* Clean Video Interface */}
+                  <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                    {/* Video Content Area */}
+                    <div className="relative aspect-video bg-gray-900">
+                      <video
+                        key={activeDemo}
+                        className="w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      >
+                        <source src="/remarkably.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+
+                  </div>
+
+                  {/* Call to Action Below Video */}
+                  <motion.div variants={itemVariants} className="mt-8 text-center">
+                    <p className="text-gray-600 mb-6">
+                      Ready to experience the future of essay grading?
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <motion.a
+                        href="https://app.remarkably.ink"
+                        className="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Start Free Trial
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </motion.a>
+                      <motion.a
+                        href="/beta/contact"
+                        className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-2xl border-2 border-gray-200 transition-all duration-300 shadow-sm hover:shadow-md"
+                        whileHover={{ scale: 1.02, y: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <Calendar className="mr-2 h-5 w-5" />
+                        Book Personal Demo
+                      </motion.a>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>

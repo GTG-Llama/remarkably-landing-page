@@ -19,21 +19,18 @@ import {
   BookOpen, 
   Target,
   Brain,
-  TrendingUp,
   ArrowRight,
   Star,
   Quote,
   Heart,
   Sparkles,
-  MessageCircle,
   Calendar,
-  Download,
   Mail,
   Building,
   GraduationCap,
   FileText,
   Play,
-  Upload
+  Shield
 } from 'lucide-react';
 
 
@@ -212,7 +209,6 @@ import {
     }
   ];
 
-  const currentFeature = demoFeatures.find(feature => feature.id === activeDemo) || demoFeatures[0];
 
   // Additional structured data for better SEO
   const organizationData = {
@@ -264,20 +260,107 @@ import {
       {/* Hero Section */}
       <HeroSection />
 
+      {/* Value Proposition Summary */}
+      <section className="py-16 bg-gradient-to-b from-indigo-50/50 to-white relative overflow-hidden">
+        <div className="container-custom relative z-10">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="text-center space-y-12"
+          >
+            {/* Main Value Proposition */}
+            <motion.div variants={itemVariants} className="max-w-4xl mx-auto space-y-6">
+              <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-4">
+                <Zap className="h-4 w-4 mr-2" />
+                Stop Spending Weekends Grading
+              </div>
+              
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                Save <span className="text-indigo-600">Hours Weekly</span> with AI That 
+                <span className="text-indigo-600 block">Thinks Like You</span>
+              </h2>
+              
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Grade essays 5-7× faster while maintaining your personal teaching style. 
+                Our AI learns your feedback patterns and applies them consistently - proven in pilot program.
+              </p>
+            </motion.div>
+
+            {/* Key Benefits Grid */}
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="text-center space-y-3">
+                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                  <Clock className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">15 Min → 3 Min</h3>
+                <p className="text-gray-600">Reduce grading time from 15-20 minutes to just 3-5 minutes per essay</p>
+              </div>
+              
+              <div className="text-center space-y-3">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                  <Target className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">95%+ Accuracy</h3>
+                <p className="text-gray-600">AI grading accuracy that matches experienced teachers with consistent standards</p>
+              </div>
+              
+              <div className="text-center space-y-3">
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
+                  <Brain className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900">Your Style</h3>
+                <p className="text-gray-600">AI learns and mimics your unique feedback style, tone, and marking preferences</p>
+              </div>
+            </motion.div>
+
+            {/* Quick Stats */}
+            <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200/50 shadow-lg max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-indigo-600">5-7×</div>
+                  <div className="text-sm text-gray-600">Faster Grading</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-indigo-600">400+</div>
+                  <div className="text-sm text-gray-600">Essays Graded Monthly</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-indigo-600">80%</div>
+                  <div className="text-sm text-gray-600">Time Savings</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-indigo-600">95%</div>
+                  <div className="text-sm text-gray-600">Teacher Satisfaction</div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Supported By Carousel */}
       <section className="py-12 bg-gray-50/50">
-      <SupportedByCarousel />
+        <div className="container-custom">
+          <div className="text-center mb-8">
+            <p className="text-gray-600 font-medium">
+              Pilot program success with MOE school
+            </p>
+          </div>
+          <SupportedByCarousel />
+        </div>
       </section>
 
       {/* Interactive Demo Section */}
-      <section className="py-20 px-6 bg-white/60 backdrop-blur-sm relative overflow-hidden">
+      <section className="section-standard bg-white/60 backdrop-blur-sm relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-indigo-200/40 to-purple-200/40 rounded-full blur-2xl" />
           <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-blue-200/40 to-indigo-200/40 rounded-full blur-2xl" />
         </div>
 
-        <div className="container mx-auto max-w-7xl relative z-10">
+        <div className="container-custom relative z-10">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -303,57 +386,57 @@ import {
             </motion.div>
             
             {/* Main Demo Interface */}
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
               
               {/* Left Side - Feature Selection */}
               <motion.div variants={itemVariants} className="lg:col-span-2 space-y-4">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                <div className="mb-4 lg:mb-6">
+                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">
                     Explore Features
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-sm lg:text-base text-gray-600">
                     Select any feature below to watch it in action
                   </p>
                 </div>
 
-                {/* Feature Cards */}
-                <div className="space-y-3">
+                {/* Feature Cards - Mobile Optimized */}
+                <div className="space-y-2 lg:space-y-3">
                   {demoFeatures.map((feature, index) => (
                     <motion.button
                       key={feature.id}
                       onClick={() => setActiveDemo(feature.id)}
-                      className={`w-full text-left p-6 rounded-2xl border-2 transition-all duration-300 ${
+                      className={`w-full text-left p-4 lg:p-6 rounded-xl lg:rounded-2xl border-2 transition-all duration-300 touch-manipulation ${
                         activeDemo === feature.id
                           ? 'bg-indigo-50 border-indigo-300 shadow-lg'
-                          : 'bg-white/80 border-gray-200 hover:border-indigo-200 hover:shadow-md'
+                          : 'bg-white/80 border-gray-200 hover:border-indigo-200 hover:shadow-md active:scale-95'
                       }`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: window.innerWidth > 1024 ? 1.02 : 1 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <div className="flex items-start space-x-4">
-                        <div className={`p-3 rounded-xl transition-colors ${
+                      <div className="flex items-start space-x-3 lg:space-x-4">
+                        <div className={`p-2 lg:p-3 rounded-lg lg:rounded-xl transition-colors flex-shrink-0 ${
                           activeDemo === feature.id
                             ? 'bg-indigo-100 text-indigo-600'
                             : 'bg-gray-100 text-gray-600'
                         }`}>
                           {feature.icon}
                         </div>
-                        <div className="flex-1">
-                          <h4 className={`font-semibold mb-2 transition-colors ${
+                        <div className="flex-1 min-w-0">
+                          <h4 className={`font-semibold mb-1 lg:mb-2 transition-colors text-sm lg:text-base ${
                             activeDemo === feature.id ? 'text-indigo-900' : 'text-gray-900'
                           }`}>
                             {feature.title}
                           </h4>
-                          <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+                          <p className="text-xs lg:text-sm text-gray-600 mb-2 lg:mb-3 leading-relaxed line-clamp-2 lg:line-clamp-none">
                             {feature.description}
                           </p>
-                          <div className="space-y-2">
+                          <div className="space-y-1 lg:space-y-2 hidden lg:block">
                             {feature.highlights.slice(0, 2).map((highlight, idx) => (
                               <div key={idx} className="flex items-center text-xs text-gray-500">
-                                <div className={`w-1.5 h-1.5 rounded-full mr-2 ${
+                                <div className={`w-1.5 h-1.5 rounded-full mr-2 flex-shrink-0 ${
                                   activeDemo === feature.id ? 'bg-indigo-400' : 'bg-gray-400'
                                 }`}></div>
                                 {highlight}
@@ -371,7 +454,7 @@ import {
               <motion.div variants={itemVariants} className="lg:col-span-3">
                 <div className="sticky top-24">
                   {/* Clean Video Interface */}
-                  <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+                  <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden border border-gray-200">
                     {/* Video Content Area */}
                     <div className="relative aspect-video bg-gray-900">
                       <video
@@ -381,36 +464,43 @@ import {
                         muted
                         loop
                         playsInline
+                        preload="metadata"
+                        poster="/video-placeholder.jpg"
                       >
                         <source src="/remarkably.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
+                      
+                      {/* Mobile optimization overlay */}
+                      <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded md:hidden">
+                        Tap to pause
+                      </div>
                     </div>
 
                   </div>
 
                   {/* Call to Action Below Video */}
-                  <motion.div variants={itemVariants} className="mt-8 text-center">
-                    <p className="text-gray-600 mb-6">
+                  <motion.div variants={itemVariants} className="mt-6 lg:mt-8 text-center">
+                    <p className="text-sm lg:text-base text-gray-600 mb-4 lg:mb-6 px-4">
                       Ready to experience the future of essay grading?
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col gap-3 lg:gap-4 justify-center px-4">
                       <motion.a
                         href="https://app.remarkably.ink"
-                        className="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl"
-                        whileHover={{ scale: 1.02, y: -2 }}
+                        className="btn-primary hover-lift touch-manipulation min-h-[48px]"
+                        whileHover={{ scale: window.innerWidth > 1024 ? 1.02 : 1, y: window.innerWidth > 1024 ? -2 : 0 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         Start Free Trial
-                        <ArrowRight className="ml-2 h-5 w-5" />
+                        <ArrowRight className="ml-2 h-4 w-4 lg:h-5 lg:w-5" />
                       </motion.a>
                       <motion.a
                         href="/beta/contact"
-                        className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-2xl border-2 border-gray-200 transition-all duration-300 shadow-sm hover:shadow-md"
-                        whileHover={{ scale: 1.02, y: -2 }}
+                        className="btn-secondary hover-lift touch-manipulation min-h-[48px]"
+                        whileHover={{ scale: window.innerWidth > 1024 ? 1.02 : 1, y: window.innerWidth > 1024 ? -2 : 0 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <Calendar className="mr-2 h-5 w-5" />
+                        <Calendar className="mr-2 h-4 w-4 lg:h-5 lg:w-5" />
                         Book Personal Demo
                       </motion.a>
                     </div>
@@ -540,7 +630,7 @@ import {
             <motion.div variants={itemVariants} className="text-center space-y-6">
               <div className="badge-success">
                 <Heart className="w-4 h-4" />
-                Loved by Teachers
+                Loved by Educators
               </div>
               
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
@@ -548,8 +638,29 @@ import {
               </h2>
               
               <p className="text-empathetic max-w-3xl mx-auto">
-                Real feedback from teachers who've transformed their grading workflow with Remarkably.
+                Real feedback from teachers who've experienced the transformation 
+                from our pilot program and early access testing.
               </p>
+
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap justify-center items-center gap-8 pt-6">
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <Shield className="w-5 h-5 text-emerald-500" />
+                  <span className="text-sm font-medium">MOE Pilot Program</span>
+                </div>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <Award className="w-5 h-5 text-emerald-500" />
+                  <span className="text-sm font-medium">NUS Winner 2024 & 2025</span>
+                </div>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <Users className="w-5 h-5 text-emerald-500" />
+                  <span className="text-sm font-medium">Proven Results</span>
+                </div>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <GraduationCap className="w-5 h-5 text-emerald-500" />
+                  <span className="text-sm font-medium">Google Backed</span>
+                </div>
+              </div>
             </motion.div>
 
             {/* Testimonials Grid */}
@@ -625,7 +736,7 @@ import {
               </h2>
               
               <p className="text-empathetic">
-                Join thousands of educators who've already revolutionized their essay grading process. 
+                Join educators who've already revolutionized their essay grading process. 
                 Start your free trial and experience the difference AI can make for your institution.
               </p>
             </motion.div>
@@ -634,7 +745,8 @@ import {
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
             >
-                  <motion.button
+                  <motion.a
+                href="/beta/contact"
                 className="btn-primary hover-lift group focus:ring-4 focus:ring-indigo-500/50 focus:outline-none"
                 whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -643,9 +755,10 @@ import {
                 <Calendar className="w-5 h-5 mr-2" aria-hidden="true" />
                 Schedule Enterprise Demo
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                  </motion.button>
+                  </motion.a>
                   
-                  <motion.button
+                  <motion.a
+                href="/beta/contact"
                 className="btn-secondary hover-lift group focus:ring-4 focus:ring-gray-500/50 focus:outline-none"
                 whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -653,7 +766,7 @@ import {
                   >
                 <Mail className="w-5 h-5 mr-2" aria-hidden="true" />
                 Contact Sales Team
-                  </motion.button>
+                  </motion.a>
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-4 pt-6">

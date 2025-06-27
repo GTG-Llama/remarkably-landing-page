@@ -252,17 +252,17 @@ const HeroSection: React.FC = () => {
               >
                 <span className="block text-slate-900 mb-3 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight">
                   <span className="block sm:hidden">
-                    Grade<br />Handwritten<br />Essays
+                    Stop Spending<br />Weekends<br />Grading
                   </span>
                   <span className="hidden sm:inline">
-                    Grade Handwritten Essays
+                    Stop Spending Weekends Grading
                   </span>
                 </span>
                 <span className="block text-indigo-600 mb-6 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
-                  7× Faster with AI
+                  Grade 7× Faster with AI
                 </span>
                 <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-black-700 leading-relaxed max-w-4xl mx-auto text-center">
-                  Remarkably grades handwritten essays in your style, using your rubric — just like you would.
+                  Remarkably grades handwritten essays in your style, using your rubric — proven in our pilot program.
                 </span>
               </h1>
             </div>
@@ -328,7 +328,7 @@ const HeroSection: React.FC = () => {
           >
             <motion.div variants={itemVariants} className="text-center mb-8 md:mb-12">
               <h2 id="metrics-heading" className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Trusted by educators worldwide
+                Proven results from pilot program
               </h2>
               <div className="w-16 md:w-24 h-0.5 bg-gradient-to-r from-indigo-300 to-purple-400 mx-auto rounded-full" aria-hidden="true"></div>
             </motion.div>
@@ -392,7 +392,7 @@ const HeroSection: React.FC = () => {
             aria-label="Social proof and user statistics"
           >
             <p className="text-sm font-medium text-gray-600">
-              Join thousands of teachers who've transformed their grading workflow
+              Join educators who've transformed their grading workflow
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
               <div className="flex -space-x-3" role="img" aria-label="Educator avatars">
@@ -418,7 +418,7 @@ const HeroSection: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-gray-700 bg-white/60 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full border border-gray-200/60">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></div>
-                <span>2,000+ educators actively using Remarkably</span>
+                <span>Educators saving hours weekly</span>
               </div>
             </div>
           </motion.div>

@@ -23,52 +23,46 @@ const Features: React.FC = () => {
 
   const mainFeatures = [
     {
-      icon: <Zap className="h-8 w-8" />,
-      title: "Lightning-Fast Grading",
-      description: "Grade essays 5-7x faster than traditional methods",
-      details: "Our AI processes essays in seconds, reducing grading time from 15-20 minutes to just 3-5 minutes per essay. Spend more time teaching, less time grading.",
-      benefits: [
-        "Instant essay analysis",
-        "Batch processing capabilities",
-        "Real-time feedback generation",
-        "Automated scoring with explanations"
-      ]
+      icon: <Brain className="h-8 w-8" />,
+      title: "Handwriting Recognition",
+      description: "Upload any handwritten essay and watch our AI read even the messiest handwriting with 95%+ accuracy.",
+      link: "features/handwriting-recognition",
+      userTypes: ["teachers", "schools"]
     },
     {
       icon: <Target className="h-8 w-8" />,
-      title: "Precision Accuracy",
-      description: "AI-powered analysis ensures consistent, fair grading",
-      details: "Advanced natural language processing and machine learning algorithms provide accurate, unbiased assessment that maintains consistency across all essays.",
-      benefits: [
-        "95%+ accuracy rate",
-        "Consistent grading standards",
-        "Bias-free assessment",
-        "Customizable rubrics"
-      ]
+      title: "Teacher Style Learning",
+      description: "Our AI learns your unique feedback style and replicates it perfectly across all essays.",
+      link: "features/teacher-style-learning", 
+      userTypes: ["teachers", "schools"]
     },
     {
-      icon: <BookOpen className="h-8 w-8" />,
-      title: "Detailed Feedback",
-      description: "Comprehensive insights help students improve",
-      details: "Generate detailed, constructive feedback that helps students understand their strengths and areas for improvement, promoting better learning outcomes.",
-      benefits: [
-        "Personalized feedback",
-        "Improvement suggestions",
-        "Writing style analysis",
-        "Grammar and structure insights"
-      ]
+      icon: <Zap className="h-8 w-8" />,
+      title: "Instant Grading",
+      description: "Grade essays 5-7× faster with immediate results and detailed explanations in under 60 seconds.",
+      link: "features/instant-grading",
+      userTypes: ["teachers", "schools"]
     },
     {
       icon: <BarChart3 className="h-8 w-8" />,
       title: "Analytics Dashboard",
-      description: "Track progress and identify trends",
-      details: "Comprehensive analytics help educators understand class performance, identify struggling students, and track improvement over time.",
-      benefits: [
-        "Class performance overview",
-        "Individual student tracking",
-        "Progress visualization",
-        "Trend analysis"
-      ]
+      description: "Track class performance, student progress, and identify learning gaps with comprehensive insights.",
+      link: "features/analytics-dashboard",
+      userTypes: ["teachers", "schools"]
+    },
+    {
+      icon: <FileText className="h-8 w-8" />,
+      title: "Feedback Generation",
+      description: "Generate personalized, constructive feedback that helps students improve their writing skills.",
+      link: "features/feedback-generation",
+      userTypes: ["teachers", "schools"]
+    },
+    {
+      icon: <Users className="h-8 w-8" />,
+      title: "Student Tracking",
+      description: "Monitor individual student progress and writing improvement over time with detailed analytics.",
+      link: "features/student-tracking",
+      userTypes: ["teachers", "schools"]
     }
   ];
 
@@ -163,66 +157,46 @@ const Features: React.FC = () => {
         </div>
       </section>
 
-      {/* Interactive Features Section */}
-<section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative bg-white">
+      {/* Core Features Grid */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Core Features</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Explore our main features that make essay grading faster, more accurate, and more insightful.
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-6">
+              <Brain className="h-4 w-4 mr-2" />
+              AI-Powered Features
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
+              Core Features That Transform
+              <span className="text-indigo-600 block">Essay Grading</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover how each feature works to save time, improve accuracy, and enhance student learning outcomes.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Feature Navigation */}
-            <div className="space-y-4">
-              {mainFeatures.map((feature, index) => (
-                <div
-                  key={index}
-                  className={`card p-6 cursor-pointer transition-all ${
-                    activeFeature === index 
-                      ? 'border-[#667EEA] bg-[#EBF4FF]' 
-                      : 'hover:border-gray-300'
-                  }`}
-                  onClick={() => setActiveFeature(index)}
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className={`icon-container ${
-                      activeFeature === index 
-                        ? 'icon-container-primary' 
-                        : ''
-                    }`}>
-                      {feature.icon}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="mb-2">{feature.title}</h3>
-                      <p className="text-gray-600">{feature.description}</p>
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {mainFeatures.map((feature, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
+              >
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
                   </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                 </div>
-              ))}
-            </div>
-
-            {/* Feature Details */}
-            <div className="card card-padding">
-              <div className="icon-container icon-container-primary mb-6">
-                {mainFeatures[activeFeature].icon}
+                
+                <Link 
+                  to={feature.link}
+                  className="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-semibold transition-colors group"
+                >
+                  Learn More 
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-              
-              <h3 className="mb-4">{mainFeatures[activeFeature].title}</h3>
-              <p className="text-gray-600 mb-6 text-lg">
-                {mainFeatures[activeFeature].details}
-              </p>
-
-              <div className="space-y-3">
-                {mainFeatures[activeFeature].benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-[#4FD1C7] flex-shrink-0" />
-                    <span className="text-gray-700">{benefit}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

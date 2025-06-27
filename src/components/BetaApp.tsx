@@ -20,6 +20,12 @@ import VietnamEducation from "../pages/landing/VietnamEducation";
 import IndonesiaEducation from "../pages/landing/IndonesiaEducation";
 import MalaysiaEducation from "../pages/landing/MalaysiaEducation";
 import TuitionCenter from "../pages/landing/TuitionCenter";
+import HandwritingRecognition from "../pages/features/HandwritingRecognition";
+import TeacherStyleLearning from "../pages/features/TeacherStyleLearning";
+import InstantGrading from "../pages/features/InstantGrading";
+import AnalyticsDashboard from "../pages/features/AnalyticsDashboard";
+import FeedbackGeneration from "../pages/features/FeedbackGeneration";
+import StudentTracking from "../pages/features/StudentTracking";
 import { Helmet } from "react-helmet-async";
 
 const BetaApp = () => (
@@ -38,6 +44,12 @@ const BetaApp = () => (
         <Route path="" element={<Home />} />
         <Route path="demo" element={<Demo />} />
         <Route path="features" element={<Features />} />
+        <Route path="features/handwriting-recognition" element={<HandwritingRecognition />} />
+        <Route path="features/teacher-style-learning" element={<TeacherStyleLearning />} />
+        <Route path="features/instant-grading" element={<InstantGrading />} />
+        <Route path="features/analytics-dashboard" element={<AnalyticsDashboard />} />
+        <Route path="features/feedback-generation" element={<FeedbackGeneration />} />
+        <Route path="features/student-tracking" element={<StudentTracking />} />
         <Route path="benefits" element={<Benefits />} />
         <Route path="testimonials" element={<Testimonials />} />
         <Route path="pricing" element={<Pricing />} />

@@ -34,77 +34,29 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    // allow any ngrok-free.app hostname via RegExp
-    allowedHosts: [
-      "localhost",
-      "::1", 
-      "127.0.0.1",
-      /\.ngrok-free\.app$/
-    ],
   },
   build: {
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // Core React dependencies
-          if (id.includes('react') && !id.includes('@') && !id.includes('react-router')) {
-            return 'react-vendor';
-          }
-          
-          // Animation libraries
-          if (id.includes('framer-motion') || id.includes('gsap')) {
-            return 'animation-vendor';
-          }
-          
-          // Three.js - separate into smaller chunks
-          if (id.includes('three') && !id.includes('@react-three')) {
-            return 'three-core';
-          }
-          if (id.includes('@react-three/')) {
-            return 'three-addons';
-          }
-          if (id.includes('three/examples/jsm')) {
-            return 'three-loaders';
-          }
-          
-          // UI components
-          if (id.includes('@radix-ui/')) {
-            return 'radix-ui';
-          }
-          
-          // Form libraries
-          if (id.includes('@hookform/') || id.includes('react-hook-form') || id.includes('zod')) {
-            return 'forms';
-          }
-          
-          // Routing
-          if (id.includes('react-router')) {
-            return 'routing';
-          }
-          
-          // Email and communication
-          if (id.includes('@emailjs/')) {
-            return 'communication';
-          }
-          
-          // Query and state management
-          if (id.includes('@tanstack/')) {
-            return 'state';
-          }
-          
-          // Utilities
-          if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
-            return 'utils';
-          }
-          
-          // Large dependencies in node_modules
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
+        manualChunks: {
+          // Keep React together - don't split it
+          'react-vendor': ['react', 'react-dom'],
+          'radix-ui': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast'
+          ],
+          'three': ['three'],
+          'animation': ['framer-motion', 'gsap']
         }
       }
     },
-    chunkSizeWarningLimit: 500, // Target smaller chunks for better performance
+    chunkSizeWarningLimit: 1000,
   },
   plugins: [
     react(),

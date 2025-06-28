@@ -37,24 +37,22 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      preserveEntrySignatures: 'strict',
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react')) {
-              return 'react-vendor';
-            }
-            if (id.includes('@radix-ui')) {
-              return 'radix-ui';
-            }
-            if (id.includes('framer-motion') || id.includes('gsap')) {
-              return 'animation';
-            }
-            if (id.includes('three')) {
-              return 'three';
-            }
-            return 'vendor';
-          }
+        manualChunks: {
+          // Keep React together - don't split it
+          'react-vendor': ['react', 'react-dom'],
+          'radix-ui': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-alert-dialog',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-select',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast'
+          ],
+          'three': ['three'],
+          'animation': ['framer-motion', 'gsap']
         }
       }
     },

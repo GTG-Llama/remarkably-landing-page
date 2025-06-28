@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { BookDemoCTA, TryFreeCTA, LearnMoreCTA } from '@/components/ui/cta-button';
-import { Brain, Zap, Clock, CheckCircle, Users, Award, Sparkles, ChevronDown } from "lucide-react";
-import HeroVideo from './HeroVideo';
+import { Zap, Clock, CheckCircle, Users, Award, Sparkles, ChevronDown } from "lucide-react";
 
 const ImprovedHeroSection: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -43,9 +42,9 @@ const ImprovedHeroSection: React.FC = () => {
 
       {/* Main Content */}
       <div className="container-standard px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
-          {/* Left Column - Text Content */}
-          <div className="text-center lg:text-left">
+        <div className="max-w-5xl mx-auto">
+          {/* Main Content - Centered */}
+          <div className="text-center">
             {/* Badge */}
             <div className="mb-6 lg:mb-8">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 border-2 border-black text-black font-bold text-sm shadow-md">
@@ -95,19 +94,6 @@ const ImprovedHeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column - Video Demo */}
-          <div className="relative">
-            <HeroVideo
-              videoSrc="/remarkably.mp4"
-              fallbackImage="/hero-video-fallback.svg"
-              alt="Remarkably AI essay grading demo"
-              className="w-full h-64 sm:h-80 lg:h-96 shadow-2xl"
-            />
-            
-            {/* Decorative elements around video */}
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-yellow-300 border-2 border-black rotate-12 hidden lg:block"></div>
-            <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-pink-300 border-2 border-black -rotate-12 hidden lg:block"></div>
-          </div>
         </div>
 
         {/* Stats Section - Full Width Below */}

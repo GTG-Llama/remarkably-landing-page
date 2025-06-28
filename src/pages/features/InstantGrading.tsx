@@ -136,7 +136,7 @@ const InstantGrading: React.FC = () => {
         config={{
           title: "Instant Grading - Grade Essays 5-7× Faster | Remarkably",
           description: "Grade handwritten and digital essays in under 60 seconds with detailed feedback and rubric scoring. Experience 5-7× faster grading with AI.",
-          keywords: "instant grading, fast essay assessment, AI grading, automated scoring, teacher productivity"
+          keywords: ["instant grading", "fast essay assessment", "AI grading", "automated scoring", "teacher productivity"]
         }} 
         pageKey="instant-grading" 
       />

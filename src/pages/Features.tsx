@@ -26,42 +26,42 @@ const Features: React.FC = () => {
       icon: <Brain className="h-8 w-8" />,
       title: "Handwriting Recognition",
       description: "Upload any handwritten essay and watch our AI read even the messiest handwriting with 95%+ accuracy.",
-      link: "features/handwriting-recognition",
+      link: "handwriting-recognition",
       userTypes: ["teachers", "schools"]
     },
     {
       icon: <Target className="h-8 w-8" />,
       title: "Teacher Style Learning",
       description: "Our AI learns your unique feedback style and replicates it perfectly across all essays.",
-      link: "features/teacher-style-learning", 
+      link: "teacher-style-learning", 
       userTypes: ["teachers", "schools"]
     },
     {
       icon: <Zap className="h-8 w-8" />,
       title: "Instant Grading",
       description: "Grade essays 5-7× faster with immediate results and detailed explanations in under 60 seconds.",
-      link: "features/instant-grading",
+      link: "instant-grading",
       userTypes: ["teachers", "schools"]
     },
     {
       icon: <BarChart3 className="h-8 w-8" />,
       title: "Analytics Dashboard",
       description: "Track class performance, student progress, and identify learning gaps with comprehensive insights.",
-      link: "features/analytics-dashboard",
+      link: "analytics-dashboard",
       userTypes: ["teachers", "schools"]
     },
     {
       icon: <FileText className="h-8 w-8" />,
       title: "Feedback Generation",
       description: "Generate personalized, constructive feedback that helps students improve their writing skills.",
-      link: "features/feedback-generation",
+      link: "feedback-generation",
       userTypes: ["teachers", "schools"]
     },
     {
       icon: <Users className="h-8 w-8" />,
       title: "Student Tracking",
       description: "Monitor individual student progress and writing improvement over time with detailed analytics.",
-      link: "features/student-tracking",
+      link: "student-tracking",
       userTypes: ["teachers", "schools"]
     }
   ];
@@ -149,7 +149,7 @@ const Features: React.FC = () => {
               from a time-consuming task into an efficient, insightful process.
             </p>
 
-            <Link to="/demo" className="btn btn-primary btn-lg">
+            <Link to="/beta/demo" className="btn btn-primary btn-lg">
               Try All Features Free
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
@@ -278,11 +278,11 @@ const Features: React.FC = () => {
               See how AI can transform your grading workflow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/demo" className="btn btn-accent btn-lg">
+              <Link to="/beta/demo" className="btn btn-accent btn-lg">
                 Start Free Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
-              <Link to="/contact" className="btn btn-secondary btn-lg">
+              <Link to="/beta/contact" className="btn btn-secondary btn-lg">
                 Schedule Demo
               </Link>
             </div>

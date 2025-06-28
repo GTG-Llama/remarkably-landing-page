@@ -137,7 +137,7 @@ const AnalyticsDashboard: React.FC = () => {
         config={{
           title: "Analytics Dashboard - Track Student Progress & Performance | Remarkably",
           description: "Monitor student writing progress with detailed analytics, performance tracking, and data-driven insights. Identify learning gaps and improve outcomes.",
-          keywords: "student analytics, performance tracking, progress monitoring, education data, learning insights"
+          keywords: ["student analytics", "performance tracking", "progress monitoring", "education data", "learning insights"]
         }} 
         pageKey="analytics-dashboard" 
       />

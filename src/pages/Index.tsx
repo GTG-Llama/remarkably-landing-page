@@ -7,7 +7,6 @@ import FeaturesSection from "@/components/FeaturesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CTASection from "@/components/CTASection";
 import SupportedByCarousel from "@/components/SupportedByCarousel";
-import VideoShowcaseSection from "@/components/VideoShowcaseSection";
 import { motion } from "framer-motion";
 import { NavigationProvider } from "@/contexts/NavigationContext";
 import { Clock, Users, Trophy } from "lucide-react";
@@ -95,7 +94,6 @@ const Index: React.FC = () => {
             {[
               "hero-section",
               "metrics-section",
-              "video-showcase",
               "features",
               "testimonials",
             ].map((id, index) => (
@@ -131,8 +129,6 @@ const Index: React.FC = () => {
             />
           </section>
 
-          {/* Video Showcase Section */}
-          <VideoShowcaseSection />
           
           <SupportedByCarousel />
           <FeaturesSection />

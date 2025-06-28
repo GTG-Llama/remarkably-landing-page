@@ -131,7 +131,7 @@ const TeacherStyleLearning: React.FC = () => {
         config={{
           title: "Teacher Style Learning - AI That Mimics Your Feedback | Remarkably",
           description: "Our AI learns your unique feedback style and replicates it perfectly across all essays. Maintain your teaching voice while saving hours of grading time.",
-          keywords: "teacher style, AI feedback, personalized grading, education technology, essay assessment"
+          keywords: ["teacher style", "AI feedback", "personalized grading", "education technology", "essay assessment"]
         }} 
         pageKey="teacher-style-learning" 
       />

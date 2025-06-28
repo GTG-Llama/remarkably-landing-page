@@ -110,7 +110,7 @@ const HandwritingRecognition: React.FC = () => {
         config={{
           title: "Handwriting Recognition - Grade Any Handwriting Style | Remarkably",
           description: "Upload handwritten essays and watch our AI read even the messiest handwriting with 95%+ accuracy. Perfect for teachers and schools.",
-          keywords: "handwriting recognition, OCR, essay grading, AI, education technology"
+          keywords: ["handwriting recognition", "OCR", "essay grading", "AI", "education technology"]
         }} 
         pageKey="handwriting-recognition" 
       />

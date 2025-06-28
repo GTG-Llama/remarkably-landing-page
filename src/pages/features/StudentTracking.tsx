@@ -173,7 +173,7 @@ const StudentTracking: React.FC = () => {
         config={{
           title: "Student Tracking - Monitor Writing Progress Over Time | Remarkably",
           description: "Track individual student writing progress with detailed analytics, portfolio development, and early intervention alerts. Support every student's growth.",
-          keywords: "student progress tracking, writing development, student analytics, progress monitoring, educational assessment"
+          keywords: ["student progress tracking", "writing development", "student analytics", "progress monitoring", "educational assessment"]
         }} 
         pageKey="student-tracking" 
       />

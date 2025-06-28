@@ -144,7 +144,7 @@ const FeedbackGeneration: React.FC = () => {
         config={{
           title: "Feedback Generation - Personalized Writing Feedback | Remarkably",
           description: "Generate personalized, constructive feedback that motivates students and improves writing skills. Save hours while providing better guidance.",
-          keywords: "personalized feedback, writing assessment, student feedback, AI feedback generation, constructive criticism"
+          keywords: ["personalized feedback", "writing assessment", "student feedback", "AI feedback generation", "constructive criticism"]
         }} 
         pageKey="feedback-generation" 
       />

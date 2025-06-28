@@ -6,7 +6,8 @@ const FlowingParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
     // Create scene
     const scene = new THREE.Scene();
@@ -192,7 +193,6 @@ const FlowingParticles: React.FC = () => {
     
     // Clean up on unmount
     return () => {
-      const canvas = canvasRef.current;
       if (canvas && canvas.parentNode) {
         canvas.parentNode.removeChild(canvas);
       }

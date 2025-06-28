@@ -145,7 +145,7 @@ const AdvancedSEOHead: React.FC<AdvancedSEOProps> = ({
     <Helmet>
       {/* Advanced Performance Optimizations */}
       <link rel="preload" href="/remarkably-logo-black.png" as="image" type="image/png" />
-      <link rel="preload" href="/remarkably-og-image.png" as="image" type="image/png" />
+      <link rel="preload" href="/remarkably logo black.png" as="image" type="image/png" />
       
       {/* Resource Hints for Critical Third-Party Resources */}
       <link rel="preconnect" href="https://www.googletagmanager.com" />

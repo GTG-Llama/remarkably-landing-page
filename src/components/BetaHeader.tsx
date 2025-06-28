@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookDemoCTA, TryFreeCTA } from '@/components/ui/cta-button';
+import ProductMegaMenu from './ProductMegaMenu';
 import { 
   Menu, 
   X, 
-  ArrowRight, 
+  ChevronDown,
   ChevronRight,
   Home,
   Package,
@@ -22,12 +23,31 @@ import {
 const BetaHeader: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const location = useLocation();
 
-  // Close sidebar when route changes
+  // Close sidebar and mega menu when route changes
   useEffect(() => {
     setIsSidebarOpen(false);
+    setIsMegaMenuOpen(false);
   }, [location.pathname]);
+
+  // Improved hover handlers
+  const handleMouseEnter = () => {
+    if (hoverTimeout) {
+      clearTimeout(hoverTimeout);
+      setHoverTimeout(null);
+    }
+    setIsMegaMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setIsMegaMenuOpen(false);
+    }, 100);
+    setHoverTimeout(timeout);
+  };
 
   // Scroll detection for header transparency
   useEffect(() => {
@@ -53,18 +73,21 @@ const BetaHeader: React.FC = () => {
     };
   }, [isSidebarOpen]);
 
-  const navItems = [
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeout) {
+        clearTimeout(hoverTimeout);
+      }
+    };
+  }, [hoverTimeout]);
+
+  const mainNavItems = [
     { 
       name: 'Home', 
       path: '/beta',
       icon: <Home className="w-5 h-5" />,
       description: 'Back to beta homepage'
-    },
-    { 
-      name: 'Features', 
-      path: '/beta/features',
-      icon: <Package className="w-5 h-5" />,
-      description: 'AI grading capabilities'
     },
     { 
       name: 'Demo', 
@@ -130,20 +153,63 @@ const BetaHeader: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation (Hidden on Mobile) */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.slice(1, -1).map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-indigo-600 ${
-                  location.pathname === item.path
-                    ? 'text-indigo-600'
-                    : 'text-gray-700'
+          <nav className="hidden lg:flex items-center space-x-8 relative">
+            {/* Products Dropdown */}
+            <div className="relative">
+              <button
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
+                className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 hover:text-indigo-600 ${
+                  isMegaMenuOpen ? 'text-indigo-600 bg-indigo-50 px-3 py-1 rounded-md' : 'text-gray-700'
                 }`}
               >
-                {item.name}
-              </Link>
-            ))}
+                Products
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+            
+            {/* Main Nav Items - Krisp Style */}
+            <Link
+              to="/beta/demo"
+              className={`text-sm font-medium transition-colors duration-200 hover:text-indigo-600 ${
+                location.pathname === '/beta/demo'
+                  ? 'text-indigo-600'
+                  : 'text-gray-700'
+              }`}
+            >
+              Demo
+            </Link>
+            <Link
+              to="/beta/pricing"
+              className={`text-sm font-medium transition-colors duration-200 hover:text-indigo-600 ${
+                location.pathname === '/beta/pricing'
+                  ? 'text-indigo-600'
+                  : 'text-gray-700'
+              }`}
+            >
+              Pricing
+            </Link>
+            <Link
+              to="/beta/about-us"
+              className={`text-sm font-medium transition-colors duration-200 hover:text-indigo-600 ${
+                location.pathname === '/beta/about-us'
+                  ? 'text-indigo-600'
+                  : 'text-gray-700'
+              }`}
+            >
+              About
+            </Link>
+            <Link
+              to="/beta/contact"
+              className={`text-sm font-medium transition-colors duration-200 hover:text-indigo-600 ${
+                location.pathname === '/beta/contact'
+                  ? 'text-indigo-600'
+                  : 'text-gray-700'
+              }`}
+            >
+              Contact
+            </Link>
           </nav>
 
           {/* Right Section - B2B/B2C CTAs */}
@@ -168,6 +234,21 @@ const BetaHeader: React.FC = () => {
           </div>
         </div>
       </header>
+
+      {/* Mega Menu */}
+      <AnimatePresence>
+        {isMegaMenuOpen && (
+          <div 
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <ProductMegaMenu 
+              isOpen={isMegaMenuOpen} 
+              onClose={() => setIsMegaMenuOpen(false)} 
+            />
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
@@ -215,7 +296,30 @@ const BetaHeader: React.FC = () => {
             {/* Sidebar Navigation */}
             <div className="flex-1 overflow-y-auto py-6">
               <nav className="px-6 space-y-2">
-                {navItems.map((item, index) => (
+                {/* Products Section for Mobile */}
+                <div className="mb-6">
+                  <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Products
+                  </div>
+                  <div className="mt-2 space-y-1">
+                    <Link
+                      to="/beta/features/handwriting-recognition"
+                      onClick={() => setIsSidebarOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
+                    >
+                      For Teachers
+                    </Link>
+                    <Link
+                      to="/beta/features/analytics-dashboard"
+                      onClick={() => setIsSidebarOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
+                    >
+                      For Schools
+                    </Link>
+                  </div>
+                </div>
+                
+                {mainNavItems.map((item, index) => (
                   <motion.div
                     key={item.name}
                     variants={menuItemVariants}

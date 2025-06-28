@@ -265,7 +265,7 @@ export const getPageSpeedOptimizations = async (): Promise<string[]> => {
     });
 
   } catch (error) {
-    console.error('Error analyzing page speed:', error);
+    // Handle error silently in production
   }
 
   return suggestions;

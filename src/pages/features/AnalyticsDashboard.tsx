@@ -117,17 +117,23 @@ const AnalyticsDashboard: React.FC = () => {
     {
       view: "Teacher Overview",
       description: "See all your classes, recent activity, and key performance indicators at a glance.",
-      features: ["Class averages", "Recent submissions", "Progress alerts", "Quick actions"]
+      features: ["Class averages", "Recent submissions", "Progress alerts", "Quick actions"],
+      image: "/Grade and User Dashboard.png",
+      imageAlt: "Teacher Dashboard showing class overview with grades and student progress"
     },
     {
       view: "Student Analytics",
       description: "Deep dive into individual student performance with detailed writing skill analysis.",
-      features: ["Writing progression", "Skill breakdowns", "Improvement suggestions", "Parent reports"]
+      features: ["Writing progression", "Skill breakdowns", "Improvement suggestions", "Parent reports"],
+      image: "/Individual Student Dashboard.png",
+      imageAlt: "Individual student analytics dashboard with detailed performance metrics"
     },
     {
       view: "Class Performance",
       description: "Monitor entire class trends and identify opportunities for targeted instruction.",
-      features: ["Class averages", "Common challenges", "Top performers", "Curriculum alignment"]
+      features: ["Class averages", "Common challenges", "Top performers", "Curriculum alignment"],
+      image: "/Class Avg and Student Scores.png",
+      imageAlt: "Class performance dashboard showing average scores and student comparisons"
     }
   ];
 
@@ -280,13 +286,14 @@ const AnalyticsDashboard: React.FC = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 rounded-xl">
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-4">
-                          <BarChart3 className="h-8 w-8" />
-                        </div>
-                        <div className="text-sm text-gray-600 mb-2">Sample {view.view}</div>
-                        <div className="text-2xl font-bold text-gray-900">Live Preview</div>
+                    <div className="relative">
+                      <img 
+                        src={view.image}
+                        alt={view.imageAlt}
+                        className="w-full h-auto rounded-xl shadow-lg border border-gray-200"
+                      />
+                      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-sm font-medium text-gray-700">{view.view} Preview</span>
                       </div>
                     </div>
                   </div>

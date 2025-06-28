@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import NotFound from "./pages/NotFound";
 
 // Lazy load components for better performance
@@ -25,24 +26,26 @@ const LoadingSpinner = () => (
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/beta/*" element={<BetaApp />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
-    </HelmetProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/beta/*" element={<BetaApp />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TooltipProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

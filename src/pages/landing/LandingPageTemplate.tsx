@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import FlowingParticles from "@/components/FlowingParticles";
 import GlowEffect from "@/components/GlowEffect";
 import FeaturesSection from "@/components/FeaturesSection";
+import ComponentErrorBoundary from "@/components/ComponentErrorBoundary";
 
 // Lazy load the heavy ThreeScene component
 const ThreeScene = lazy(() => import("@/components/ThreeScene"));
@@ -496,9 +497,21 @@ const LandingPageTemplate: React.FC<LandingPageTemplateProps> = ({
             }}
           >
             <div className="hidden lg:block h-full">
-              <Suspense fallback={<ThreeSceneLoader />}>
-                <ThreeScene scrollContainer="#main-content" rightSidePosition={true} partialView={true} />
-              </Suspense>
+              <ComponentErrorBoundary 
+                componentName="3D Scene"
+                fallback={
+                  <div className="h-64 lg:h-80 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg border-2 border-gray-200">
+                    <div className="text-center space-y-3">
+                      <p className="text-gray-600">3D Scene unavailable</p>
+                      <p className="text-sm text-gray-500">Continuing with optimized experience</p>
+                    </div>
+                  </div>
+                }
+              >
+                <Suspense fallback={<ThreeSceneLoader />}>
+                  <ThreeScene scrollContainer="#main-content" rightSidePosition={true} partialView={true} />
+                </Suspense>
+              </ComponentErrorBoundary>
             </div>
             
             {/* Fallback for mobile */}

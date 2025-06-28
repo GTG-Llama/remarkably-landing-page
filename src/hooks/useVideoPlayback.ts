@@ -31,7 +31,6 @@ export const useVideoPlayback = (
             })
             .catch((error) => {
               // Auto-play was prevented
-              console.warn("Video playback was prevented:", error);
               
               // For Safari: Add event listeners for user interaction
               const playOnInteraction = () => {
@@ -41,7 +40,9 @@ export const useVideoPlayback = (
                     document.removeEventListener("click", playOnInteraction);
                     document.removeEventListener("touchstart", playOnInteraction);
                   })
-                  .catch((e) => console.warn("Still couldn't play video:", e));
+                  .catch((e) => {
+                    // Handle silently in production
+                  });
               };
               
               document.addEventListener("click", playOnInteraction);

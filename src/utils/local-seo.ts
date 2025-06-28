@@ -179,7 +179,7 @@ export const generateLocalBusinessSchema = (region: string) => {
     "description": `AI-powered essay grading platform for ${config.country} educators`,
     "url": `https://www.remarkably.ink/${region}`,
     "logo": "https://www.remarkably.ink/remarkably-logo-black.png",
-    "image": "https://www.remarkably.ink/remarkably-og-image.png",
+    "image": "https://www.remarkably.ink/remarkably logo black.png",
     "telephone": "+65-XXXX-XXXX", // Replace with actual phone
     "address": {
       "@type": "PostalAddress",

@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { emailjsConfig } from "@/lib/emailjs-config";
+import ComponentErrorBoundary from "@/components/ComponentErrorBoundary";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -55,17 +56,9 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      console.log("🚀 Starting email send process...");
-      console.log("📧 EmailJS Config:", {
-        publicKey: emailjsConfig.publicKey ? "✅ Set" : "❌ Missing",
-        serviceId: emailjsConfig.serviceId ? "✅ Set" : "❌ Missing", 
-        templateId: emailjsConfig.templateId ? "✅ Set" : "❌ Missing",
-      });
-      console.log("📝 Form data:", data);
 
       // Initialize EmailJS with config
       await emailjs.init(emailjsConfig.publicKey);
-      console.log("✅ EmailJS initialized successfully");
 
       // Send welcome email to the user
       const emailParams = {
@@ -79,7 +72,6 @@ const Contact: React.FC = () => {
         message: data.message || "No specific message provided",
       };
 
-      console.log("📨 Email params:", emailParams);
 
       // Send the email using config values
       const result = await emailjs.send(
@@ -88,7 +80,6 @@ const Contact: React.FC = () => {
         emailParams
       );
 
-      console.log("✅ Email sent successfully:", result);
 
       // Show success state
       setIsSubmitted(true);
@@ -99,10 +90,6 @@ const Contact: React.FC = () => {
         description: "We've sent you a welcome email and will be in touch soon.",
       });
     } catch (error) {
-      console.error("❌ Full error details:", error);
-      console.error("❌ Error message:", error.message);
-      console.error("❌ Error text:", error.text);
-      console.error("❌ Error status:", error.status);
       
       // More specific error messages
       let errorMessage = "Please try again or contact us directly.";
@@ -298,7 +285,16 @@ const Contact: React.FC = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <ComponentErrorBoundary 
+                    componentName="Contact Form"
+                    fallback={
+                      <div className="p-6 text-center bg-red-50 rounded-lg border border-red-200">
+                        <p className="text-red-800 font-medium">Contact form temporarily unavailable</p>
+                        <p className="text-red-600 text-sm mt-2">Please contact us directly at contact@lenorai.com</p>
+                      </div>
+                    }
+                  >
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     {/* Name Fields */}
                     <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
@@ -408,6 +404,7 @@ const Contact: React.FC = () => {
                       </Button>
                     </motion.div>
                   </form>
+                  </ComponentErrorBoundary>
                 </CardContent>
               </Card>
             </motion.div>

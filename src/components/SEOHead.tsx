@@ -26,7 +26,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({ config, pageKey }) => {
   } = config;
 
   const baseUrl = 'https://www.remarkably.ink';
-  const defaultImage = `${baseUrl}/remarkably-og-image.png`;
+  // TODO: Create proper OG image (1200x630px) and replace this temporary logo
+  const defaultImage = `${baseUrl}/remarkably logo black.png`;
 
   return (
     <Helmet>
@@ -120,7 +121,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ config, pageKey }) => {
           "legalName": "Lenor AI Pte. Ltd.",
           "url": baseUrl,
           "logo": `${baseUrl}/remarkably-logo-black.png`,
-          "image": `${baseUrl}/remarkably-og-image.png`,
+          "image": `${baseUrl}/remarkably logo black.png`,
           "description": "AI-powered essay grading platform that helps teachers grade 6-7x faster while maintaining quality feedback",
           "address": {
             "@type": "PostalAddress",

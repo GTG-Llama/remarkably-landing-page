@@ -16,7 +16,8 @@ export interface SEOConfig {
 }
 
 const baseUrl = 'https://www.remarkably.ink';
-const defaultImage = `${baseUrl}/remarkably-og-image.png`;
+// TODO: Create proper OG image (1200x630px) and replace this temporary logo
+const defaultImage = `${baseUrl}/remarkably logo black.png`;
 
 export const seoConfigs: Record<string, SEOConfig> = {
   home: {

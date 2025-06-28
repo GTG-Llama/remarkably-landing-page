@@ -29,7 +29,6 @@ const WhitepaperSection: React.FC = () => {
       setIsDownloading(false);
       setShowForm(false);
       // In real implementation, trigger actual download
-      console.log('Downloading whitepaper for:', email);
     }, 2000);
   };
 

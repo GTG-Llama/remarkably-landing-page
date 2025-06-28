@@ -83,12 +83,10 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
       "/pen.glb",
       () => {
         // Success callback - model is now preloaded
-        console.log("Pen model preloaded successfully");
       },
       undefined, // Progress callback (optional)
       (error) => {
-        // Error callback
-        console.error("Error preloading pen model:", error);
+        // Error callback - handle silently in production
       }
     );
   };
@@ -175,7 +173,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
         },
         undefined,
         (error) => {
-          console.error("Error loading pen model:", error);
+          // Handle error silently in production
           resolve(); // Resolve even on error
         }
       );

@@ -28,7 +28,6 @@ const HeroVideo: React.FC<HeroVideoProps> = ({
       // Attempt to play the video
       video.play().catch(() => {
         // If autoplay fails, that's okay - user can click to play
-        console.log('Autoplay was prevented, which is normal');
       });
     };
 

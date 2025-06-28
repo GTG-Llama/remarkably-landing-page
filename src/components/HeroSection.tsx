@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { 
   Brain, 
   Zap, 
@@ -23,42 +23,13 @@ import NeuralMapOverlay from "./NeuralMapOverlay";
 import HeroVideo from './HeroVideo';
 import { useNavigation } from '../contexts/NavigationContext';
 
-// Custom animated counter hook with formatting
-const useAnimatedCounter = (end: number, duration: number = 2) => {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const nodeRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const controls = animate(0, end, {
-      duration,
-      onUpdate: (value) => setCount(Math.floor(value)),
-    });
-
-    return controls.stop;
-  }, [end, duration, isVisible]);
-
-  const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-      return `${(num / 1000000).toFixed(1)}+ Million`;
-    } else if (num >= 1000) {
-      return `${(num / 1000).toFixed(0)}K+`;
-    }
-    return num.toLocaleString();
-  };
-
-  return { count, nodeRef, setIsVisible, formatNumber };
-};
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const { getPath } = useNavigation();
   
-  // Mouse spotlight effect state
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // Mouse spotlight effect state (mousePosition removed as unused)
   const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -66,11 +37,6 @@ const HeroSection: React.FC = () => {
 
   // Mouse tracking for spotlight effect
   const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
     // Track global position for fixed elements
     setGlobalMousePosition({
       x: e.clientX,

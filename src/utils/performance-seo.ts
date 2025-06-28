@@ -80,7 +80,7 @@ export const measureWebVitals = (): Promise<WebVitalsMetrics> => {
     try {
       observer.observe({ entryTypes: ['paint', 'largest-contentful-paint', 'layout-shift', 'first-input'] });
     } catch (e) {
-      console.warn('Performance Observer not supported');
+      // Performance Observer not supported
     }
 
     // Set timeout to resolve with collected metrics

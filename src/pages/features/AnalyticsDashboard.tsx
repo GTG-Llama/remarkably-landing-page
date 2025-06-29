@@ -118,21 +118,21 @@ const AnalyticsDashboard: React.FC = () => {
       view: "Teacher Overview",
       description: "See all your classes, recent activity, and key performance indicators at a glance.",
       features: ["Class averages", "Recent submissions", "Progress alerts", "Quick actions"],
-      image: "/Grade and User Dashboard.png",
+              image: "/Grade and User Dashboard.png?cb=1",
       imageAlt: "Teacher Dashboard showing class overview with grades and student progress"
     },
     {
       view: "Student Analytics",
       description: "Deep dive into individual student performance with detailed writing skill analysis.",
       features: ["Writing progression", "Skill breakdowns", "Improvement suggestions", "Parent reports"],
-      image: "/Individual Student Dashboard.png",
+              image: "/Individual Student Dashboard.png?cb=1",
       imageAlt: "Individual student analytics dashboard with detailed performance metrics"
     },
     {
       view: "Class Performance",
       description: "Monitor entire class trends and identify opportunities for targeted instruction.",
       features: ["Class averages", "Common challenges", "Top performers", "Curriculum alignment"],
-      image: "/Class Avg and Student Scores.png",
+              image: "/Class Avg and Student Scores.png?cb=1",
       imageAlt: "Class performance dashboard showing average scores and student comparisons"
     }
   ];

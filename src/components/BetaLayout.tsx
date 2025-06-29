@@ -26,7 +26,7 @@ const BetaLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {/* Company Info */}
             <div className="md:col-span-2">
               <img
-                src="/remarkably logo black.png"
+                src="/remarkably logo black.png?cb=1"
                 alt="Remarkably"
                 className="h-8 w-auto mb-4"
               />

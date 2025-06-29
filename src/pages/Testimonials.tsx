@@ -278,7 +278,7 @@ const Testimonials: React.FC = () => {
                 Start Free Trial
                 <Sparkles className="ml-2 h-5 w-5" />
               </Link>
-              <Link to="/contact" className="btn btn-secondary btn-lg">
+              <Link to="/beta/contact" className="btn btn-secondary btn-lg">
                 Schedule Demo
               </Link>
             </div>

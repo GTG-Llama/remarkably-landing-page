@@ -71,7 +71,7 @@ const Index: React.FC = () => {
             <div className="absolute -top-4 -left-4 w-24 h-24 bg-pink-300 border-4 border-black rotate-6"></div>
             <div className="w-48 h-16 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative z-10 flex items-center justify-center transform -rotate-2">
               <img
-                src="/remarkably logo black.png"
+                src="/remarkably logo black.png?cb=1"
                 alt="Logo"
                 className="w-32 h-12 object-contain px-2"
               />

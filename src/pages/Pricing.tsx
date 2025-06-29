@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import SEOHead from '../components/SEOHead';
 import { getPageSEO } from '../utils/seo-config';
 import { Link } from 'react-router-dom';
@@ -13,471 +14,753 @@ import {
   Users,
   Zap,
   Shield,
-  Sparkles
+  Sparkles,
+  ChevronDown,
+  Award,
+  TrendingUp,
+  FileText,
+  BarChart3,
+  BookOpen,
+  Headphones,
+  Crown,
+  Building2,
+  GraduationCap,
+  Phone,
+  Mail,
+  Calendar,
+  UserCheck,
+  Settings
 } from 'lucide-react';
 
 const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
-  const [essaysPerMonth, setEssaysPerMonth] = useState(100);
-  const [timePerEssay, setTimePerEssay] = useState(15);
-  const [hourlyRate, setHourlyRate] = useState(50);
+  const [activeFeatureTab, setActiveFeatureTab] = useState('grading');
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+  const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<'teachers' | 'institutions'>('teachers');
 
-  const plans = [
+  const teacherPlans = [
     {
       name: 'Starter',
-      description: 'Perfect for individual teachers',
-      price: { monthly: 29, yearly: 290 },
+      subtitle: 'Perfect for new teachers',
+      price: { monthly: 20.99, yearly: 16.99 },
+      originalPrice: { yearly: 20.99 },
+      color: 'from-gray-500 to-gray-700',
       features: [
-        'Up to 100 essays per month',
+        'Up to 20 essays per month',
         'Basic AI grading',
-        'Standard feedback',
+        'Standard rubrics',
         'Email support',
-        'Basic analytics',
-        'PDF export'
+        'PDF export',
+        'Basic analytics'
       ],
-      limitations: [
-        'No custom rubrics',
-        'No team collaboration',
-        'No API access'
-      ],
+      cta: 'Start Free 30-Day Trial',
       popular: false,
-      cta: 'Start Free Trial'
+      icon: <BookOpen className="w-6 h-6" />
     },
     {
       name: 'Professional',
-      description: 'Ideal for departments and schools',
-      price: { monthly: 99, yearly: 990 },
+      subtitle: 'Most popular for active teachers',
+      price: { monthly: 29.99, yearly: 23.99 },
+      originalPrice: { yearly: 29.99 },
+      color: 'from-blue-600 to-cyan-600',
       features: [
-        'Up to 500 essays per month',
+        'Up to 100 essays per month',
         'Advanced AI grading',
-        'Detailed feedback',
+        'Custom rubrics',
         'Priority support',
         'Advanced analytics',
-        'Custom rubrics',
-        'Team collaboration',
-        'Bulk processing',
-        'LMS integration'
+        'Bulk upload',
+        'Grade tracking',
+        'Student progress reports'
       ],
-      limitations: [
-        'No white-label options',
-        'Limited API calls'
-      ],
+      cta: 'Start Free 30-Day Trial',
       popular: true,
-      cta: 'Start Free Trial'
+      icon: <Award className="w-6 h-6" />
     },
     {
-      name: 'Enterprise',
-      description: 'For large institutions',
-      price: { monthly: 299, yearly: 2990 },
+      name: 'Expert',
+      subtitle: 'For experienced educators',
+      price: { monthly: 38.99, yearly: 31.99 },
+      originalPrice: { yearly: 38.99 },
+      color: 'from-purple-600 to-indigo-600',
       features: [
-        'Unlimited essays',
+        'Up to 300 essays per month',
         'Premium AI grading',
-        'Custom feedback templates',
-        'Dedicated support',
+        'Custom rubrics & templates',
+        'Priority support',
         'Full analytics suite',
-        'Custom rubrics',
-        'Team collaboration',
-        'Bulk processing',
-        'Full LMS integration',
+        'Bulk upload',
+        'Grade tracking',
+        'Student progress reports',
         'API access',
-        'White-label options',
-        'Custom training',
-        'SLA guarantee'
+        'White-label reports'
       ],
-      limitations: [],
+      cta: 'Start Free 30-Day Trial',
       popular: false,
-      cta: 'Contact Sales'
+      icon: <Crown className="w-6 h-6" />
     }
   ];
 
-  const calculateROI = () => {
-    const timeSavedPerEssay = timePerEssay * 0.8; // 80% time savings
-    const totalTimeSaved = (essaysPerMonth * timeSavedPerEssay) / 60; // in hours
-    const monthlySavings = totalTimeSaved * hourlyRate;
-    const yearlyROI = (monthlySavings * 12) - (plans[1].price.yearly); // Using Professional plan
-    
-    return {
-      timeSavedPerMonth: totalTimeSaved,
-      monthlySavings,
-      yearlyROI
-    };
+  const schoolFeatures = [
+    {
+      title: 'Unlimited Teachers & Students',
+      description: 'No per-user limits, scale to your entire institution',
+      icon: <Users className="w-8 h-8" />
+    },
+    {
+      title: 'Custom Implementation',
+      description: 'Tailored setup and integration with your existing systems',
+      icon: <Settings className="w-8 h-8" />
+    },
+    {
+      title: 'Advanced Analytics',
+      description: 'School-wide insights, department reporting, and progress tracking',
+      icon: <BarChart3 className="w-8 h-8" />
+    },
+    {
+      title: 'Dedicated Support',
+      description: '24/7 priority support with dedicated account manager',
+      icon: <Headphones className="w-8 h-8" />
+    },
+    {
+      title: 'Training & Onboarding',
+      description: 'Comprehensive teacher training and ongoing professional development',
+      icon: <GraduationCap className="w-8 h-8" />
+    },
+    {
+      title: 'Data Security & Compliance',
+      description: 'Enterprise-grade security, GDPR compliance, and data sovereignty',
+      icon: <Shield className="w-8 h-8" />
+    }
+  ];
+
+  const featureTabs = [
+    { id: 'grading', label: 'AI Grading', icon: <FileText className="w-5 h-5" /> },
+    { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" /> },
+    { id: 'collaboration', label: 'Collaboration', icon: <Users className="w-5 h-5" /> },
+    { id: 'integration', label: 'Integration', icon: <Zap className="w-5 h-5" /> }
+  ];
+
+  const featureContent = {
+    grading: {
+      title: 'Advanced AI Essay Grading',
+      description: 'Our AI provides detailed, personalized feedback on every essay, saving you 6-7x time while maintaining educational quality.',
+                  image: '/Essay Grader Dashboard.png?cb=1',
+      features: [
+        'Intelligent rubric-based scoring',
+        'Detailed strength & weakness analysis',
+        'Personalized improvement suggestions',
+        'Handwriting recognition support'
+      ]
+    },
+    analytics: {
+      title: 'Comprehensive Analytics Dashboard',
+      description: 'Track student progress, identify learning patterns, and make data-driven teaching decisions with powerful analytics.',
+                  image: '/Grade and User Dashboard.png?cb=1',
+      features: [
+        'Student performance tracking',
+        'Class average comparisons',
+        'Progress over time visualization',
+        'Exportable reports for admin'
+      ]
+    },
+    collaboration: {
+      title: 'Team Collaboration Tools',
+      description: 'Work seamlessly with other teachers, share rubrics, and maintain consistency across your institution.',
+                  image: '/Create Class Feature.png?cb=1',
+      features: [
+        'Shared rubric libraries',
+        'Team grading workflows',
+        'Comment templates',
+        'Peer review capabilities'
+      ]
+    },
+    integration: {
+      title: 'LMS & Platform Integration',
+      description: 'Seamlessly integrate with your existing learning management system and workflow tools.',
+                  image: '/Grading Interface .png?cb=1',
+      features: [
+        'Google Classroom integration',
+        'Canvas LMS support',
+        'Bulk import/export',
+        'API access for custom workflows'
+      ]
+    }
   };
 
-  const roi = calculateROI();
+  const testimonials = [
+    {
+      name: "Sarah Chen",
+      role: "High School English Teacher",
+      school: "Singapore International School",
+      quote: "Remarkably has transformed my teaching. I now spend my weekends with family instead of grading papers.",
+      rating: 5,
+      image: "SC",
+      type: "teacher"
+    },
+    {
+      name: "Dr. Michael Rodriguez",
+      role: "Department Head",
+      school: "International School Bangkok",
+      quote: "The analytics help us track student progress across our entire department. Game-changer for data-driven teaching.",
+      rating: 5,
+      image: "MR",
+      type: "teacher"
+    },
+    {
+      name: "Principal Emily Watson",
+      role: "School Principal",
+      school: "Australian School Singapore",
+      quote: "Implementing Remarkably school-wide has improved our grading consistency and teacher satisfaction dramatically.",
+      rating: 5,
+      image: "EW",
+      type: "school"
+    }
+  ];
 
   const faqs = [
     {
-      question: "Is there a free trial?",
-      answer: "Yes! We offer a 14-day free trial for all plans. No credit card required."
+      question: "How does the 30-day free trial work for teachers?",
+      answer: "Start with any teacher plan completely free for 30 days. No credit card required, no setup fees. You get full access to all features of your chosen plan. Cancel anytime during the trial period.",
+      category: "teacher"
     },
     {
-      question: "Can I change plans anytime?",
-      answer: "Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect immediately."
+      question: "Can I switch between teacher plans anytime?",
+      answer: "Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any differences in your next billing cycle.",
+      category: "teacher"
     },
     {
-      question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards, PayPal, and can arrange invoicing for enterprise customers."
+      question: "What happens if I exceed my essay limit?",
+      answer: "We'll notify you when approaching your limit. You can either upgrade your plan or purchase additional essay credits. We never stop your service unexpectedly.",
+      category: "teacher"
     },
     {
-      question: "Is there a setup fee?",
-      answer: "No setup fees for any plan. We believe in transparent, straightforward pricing."
+      question: "How does school pricing work?",
+      answer: "School pricing is customized based on your number of teachers, students, and specific requirements. We offer volume discounts and flexible payment terms for educational institutions.",
+      category: "school"
     },
     {
-      question: "Do you offer discounts for educational institutions?",
-      answer: "Yes! We offer special pricing for schools and educational institutions. Contact us for details."
+      question: "What's included in school implementation?",
+      answer: "School packages include unlimited users, custom setup, data migration, teacher training, dedicated support, and ongoing professional development resources.",
+      category: "school"
+    },
+    {
+      question: "Do you offer pilot programs for schools?",
+      answer: "Yes! We offer 60-day pilot programs for schools to test Remarkably with a select group of teachers before full implementation.",
+      category: "school"
     }
   ];
+
+  const savings = billingCycle === 'yearly' ? 
+    Math.round(((teacherPlans[1].originalPrice.yearly - teacherPlans[1].price.yearly) / teacherPlans[1].originalPrice.yearly) * 100) : 0;
 
   return (
     <>
       <SEOHead config={getPageSEO('pricing')} pageKey="pricing" />
 
       {/* Hero Section */}
-      <section className="hero">
-        <div className="container mx-auto text-center">
-          <div className="max-w-4xl mx-auto">
-            <div className="badge badge-primary mb-8 inline-flex">
-              <DollarSign className="h-4 w-4 mr-2" />
-              Transparent Pricing
+      <section className="relative pt-16 pb-8 bg-gradient-to-br from-blue-50 via-white to-cyan-50 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+          <div className="absolute top-0 right-1/4 w-72 h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
             </div>
             
-            <h1 className="mb-6">
-              Simple Pricing for
-              <span className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] bg-clip-text text-transparent"> Every Educator</span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Choose the plan that fits your needs. All plans include our core AI grading features 
-              with a 14-day free trial. No setup fees, no hidden costs.
-            </p>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full text-blue-800 text-sm font-medium mb-4"
+            >
+              <DollarSign className="w-4 h-4 mr-2" />
+              Simple, Transparent Pricing
+            </motion.div>
 
-            {/* Billing Toggle */}
-            <div className="flex items-center justify-center mb-12">
-              <span className={`mr-3 ${billingCycle === 'monthly' ? 'text-gray-900' : 'text-gray-500'}`}>
-                Monthly
-              </span>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4"
+            >
+              Pricing for Every
+              <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"> Educator</span>
+            </motion.h1>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-lg text-gray-600 mb-6 max-w-3xl mx-auto"
+            >
+              Whether you're an individual teacher or a school leader, we have the perfect solution 
+              to transform your grading experience. Start your free trial today.
+            </motion.p>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            {/* Tab Selection */}
+            <div className="flex justify-center mb-8">
+              <div className="bg-gray-100 p-1 rounded-full shadow-lg border border-gray-200">
+                <div className="flex items-center">
+                  <button
+                    onClick={() => setActiveTab('teachers')}
+                    className={`px-8 py-3 rounded-full text-sm font-medium transition-all ${
+                      activeTab === 'teachers'
+                        ? 'bg-white text-gray-900 shadow-lg'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    For Teachers
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('institutions')}
+                    className={`px-8 py-3 rounded-full text-sm font-medium transition-all ${
+                      activeTab === 'institutions'
+                        ? 'bg-white text-gray-900 shadow-lg'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    For Institutions
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Teachers Tab Content */}
+          {activeTab === 'teachers' && (
+            <div>
+              <div className="text-center mb-8">
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-6">
+                  Choose the plan that fits your classroom size and needs. All plans include our core AI grading features 
+                  with a 30-day free trial.
+                </p>
+
+                {/* Billing Toggle */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="flex flex-col items-center justify-center mb-8"
+                >
+                  {/* Static Savings Text */}
+                  <div className="mb-3">
+                    <p className="text-sm text-gray-600 font-medium">
+                      Up to 20% off annually
+                    </p>
+                  </div>
+                  
+                  {/* Toggle Switch with Labels Outside */}
+                  <div className="flex items-center space-x-8">
+                    <span className={`text-base font-semibold transition-all duration-300 ${
+                      billingCycle === 'monthly' 
+                        ? 'text-blue-600 scale-110' 
+                        : 'text-gray-400 hover:text-gray-600'
+                    }`}>
+                      Monthly
+                    </span>
+                    
+                    <div className="relative">
+                      <button
+                        onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
+                        className={`relative w-16 h-8 rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-3 focus:ring-blue-300 focus:ring-offset-2 transform hover:scale-105 ${
+                          billingCycle === 'yearly' 
+                            ? 'bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg shadow-blue-500/25' 
+                            : 'bg-gray-300 hover:bg-gray-400'
+                        }`}
+                      >
+                        <div className={`absolute top-0.5 left-0.5 w-7 h-7 bg-white rounded-full shadow-lg transform transition-all duration-300 ease-in-out flex items-center justify-center ${
+                          billingCycle === 'yearly' ? 'translate-x-8' : 'translate-x-0'
+                        }`}>
+                          {billingCycle === 'yearly' ? (
+                            <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>
+                          ) : (
+                            <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+                    
+                    <span className={`text-base font-semibold transition-all duration-300 ${
+                      billingCycle === 'yearly' 
+                        ? 'text-blue-600 scale-110' 
+                        : 'text-gray-400 hover:text-gray-600'
+                    }`}>
+                      Annually
+                    </span>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {teacherPlans.map((plan, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 * index }}
+                    onMouseEnter={() => setHoveredPlan(index)}
+                    onMouseLeave={() => setHoveredPlan(null)}
+                    className="relative"
+                  >
+                    {plan.popular && (
+                      <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 z-10">
+                        <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                          <Star className="w-4 h-4 mr-1 fill-current" />
+                          Most Popular
+                        </div>
+                    </div>
+                  )}
+                  
+                    <div className={`relative h-full bg-white rounded-2xl border-2 transition-all duration-300 ${
+                      plan.popular 
+                        ? 'border-blue-500 shadow-xl' 
+                        : hoveredPlan === index 
+                          ? 'border-gray-300 shadow-lg' 
+                          : 'border-gray-200 shadow-md'
+                    } ${hoveredPlan === index ? 'transform scale-105' : ''}`}>
+                      
+                      <div className="p-8">
+                        <div className="text-center mb-8">
+                          <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${plan.color} rounded-2xl mb-4`}>
+                            <div className="text-white">
+                              {plan.icon}
+                            </div>
+                          </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                          <p className="text-gray-600 text-sm mb-6">{plan.subtitle}</p>
+                  
+                  <div className="mb-6">
+                            <div className="flex items-baseline justify-center">
+                      <span className="text-4xl font-bold text-gray-900">
+                                ${billingCycle === 'monthly' ? plan.price.monthly : plan.price.yearly}
+                              </span>
+                              <span className="text-gray-600 ml-2">per month</span>
+                            </div>
+                            {billingCycle === 'yearly' && (
+                              <div className="mt-2">
+                                <span className="text-sm text-gray-500 line-through">
+                                  ${plan.originalPrice.yearly}/mo
+                      </span>
+                                <span className="text-sm text-green-600 ml-2 font-medium">
+                                  Save ${Math.round((plan.originalPrice.yearly - plan.price.yearly) * 12)}/year
+                      </span>
+                    </div>
+                    )}
+                  </div>
+
+                  <Link
+                            to="/beta/contact"
+                            className={`w-full inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                              plan.popular
+                                ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl'
+                                : 'bg-gray-900 text-white hover:bg-gray-800'
+                            }`}
+                  >
+                    {plan.cta}
+                            <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </div>
+
+                        <div className="space-y-4">
+                          <div className="text-sm font-medium text-gray-900 mb-3">What's included:</div>
+                          {plan.features.map((feature, featureIndex) => (
+                            <div key={featureIndex} className="flex items-center">
+                              <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                              <span className="text-gray-700 text-sm">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Institutions Tab Content */}
+          {activeTab === 'institutions' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* School Features */}
+              <div className="space-y-8">
+                <div className="text-center lg:text-left mb-8">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    Transform Your Entire School
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    Comprehensive solutions designed for educational institutions. 
+                    Custom pricing, unlimited users, and dedicated support.
+                  </p>
+                      </div>
+                {schoolFeatures.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 * index }}
+                    className="flex items-start space-x-4"
+                  >
+                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center text-white">
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                      <p className="text-gray-600">{feature.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
+                      </div>
+
+              {/* Contact Card */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-white rounded-2xl shadow-2xl p-8 lg:p-12"
+              >
+                <div className="text-center mb-8">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl mb-6">
+                    <Building2 className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Custom Enterprise Solution</h3>
+                  <p className="text-gray-600 mb-6">
+                    Get a tailored solution that fits your institution's unique needs and budget.
+                  </p>
+                </div>
+
+                <div className="space-y-6 mb-8">
+                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-700">Teachers & Students</span>
+                    <span className="font-medium text-gray-900">Unlimited</span>
+                  </div>
+                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-700">Setup & Training</span>
+                    <span className="font-medium text-gray-900">Included</span>
+                      </div>
+                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                    <span className="text-gray-700">Support Level</span>
+                    <span className="font-medium text-gray-900">Dedicated</span>
+                      </div>
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-gray-700">Implementation</span>
+                    <span className="font-medium text-gray-900">60 days</span>
+                      </div>
+                    </div>
+
+                <div className="space-y-4">
+                  <Link
+                    to="/beta/contact"
+                    className="w-full inline-flex items-center justify-center px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  >
+                    <Calendar className="w-5 h-5 mr-2" />
+                    Schedule a Demo
+                  </Link>
+                  <Link
+                    to="/beta/contact"
+                    className="w-full inline-flex items-center justify-center px-6 py-4 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-all duration-200"
+                  >
+                    <Mail className="w-5 h-5 mr-2" />
+                    Request Quote
+                  </Link>
+                </div>
+
+                <div className="mt-6 text-center">
+                  <p className="text-sm text-gray-500">
+                    <Phone className="w-4 h-4 inline mr-1" />
+                    Or call us at +65 8888 8888
+                  </p>
+                      </div>
+              </motion.div>
+                      </div>
+          )}
+                      </div>
+      </section>
+
+
+
+      {/* Feature Showcase */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Everything You Need in One Platform
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Explore the features that make Remarkably the complete solution for modern educators
+            </p>
+                    </div>
+
+          {/* Feature Tabs */}
+          <div className="flex flex-wrap justify-center mb-12">
+            {featureTabs.map((tab) => (
               <button
-                onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  billingCycle === 'yearly' ? 'bg-[#667EEA]' : 'bg-gray-200'
+                key={tab.id}
+                onClick={() => setActiveFeatureTab(tab.id)}
+                className={`flex items-center px-6 py-3 m-2 rounded-lg font-medium transition-all duration-200 ${
+                  activeFeatureTab === tab.id
+                    ? 'bg-blue-600 text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-600 hover:text-blue-600 border border-gray-200'
                 }`}
               >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    billingCycle === 'yearly' ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
+                {tab.icon}
+                <span className="ml-2">{tab.label}</span>
               </button>
-              <span className={`ml-3 ${billingCycle === 'yearly' ? 'text-gray-900' : 'text-gray-500'}`}>
-                Yearly
-              </span>
-              {billingCycle === 'yearly' && (
-                <span className="ml-2 badge badge-accent">Save 17%</span>
-              )}
+            ))}
+                      </div>
+
+          {/* Feature Content */}
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+              <div className="p-8 lg:p-12">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {featureContent[activeFeatureTab].title}
+                </h3>
+                <p className="text-gray-600 mb-8 text-lg">
+                  {featureContent[activeFeatureTab].description}
+                </p>
+                <div className="space-y-4">
+                  {featureContent[activeFeatureTab].features.map((feature, index) => (
+                    <div key={index} className="flex items-center">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                  </div>
+                  </div>
+              <div className="bg-gray-50 p-8 lg:p-12 flex items-center justify-center">
+                <div className="bg-white rounded-lg shadow-lg p-4 max-w-full">
+                  <img
+                    src={featureContent[activeFeatureTab].image}
+                    alt={featureContent[activeFeatureTab].title}
+                    className="w-full h-auto rounded-lg"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Cards */}
-      <section className="section bg-white">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {plans.map((plan, index) => (
-              <div
+      {/* Testimonials */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Loved by Teachers & Schools Worldwide
+            </h2>
+            <p className="text-xl text-gray-600">
+              See what educators are saying about Remarkably
+            </p>
+          </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
                 key={index}
-                className={`pricing-card ${plan.popular ? 'pricing-card-featured' : ''}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="p-8">
-                  {plan.popular && (
-                    <div className="flex items-center justify-center mb-4">
-                      <span className="badge badge-primary">
-                        <Star className="h-3 w-3 mr-1" />
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-                  
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                  <p className="text-gray-600 mb-6">{plan.description}</p>
-                  
-                  <div className="mb-6">
-                    <div className="flex items-baseline">
-                      <span className="text-4xl font-bold text-gray-900">
-                        ${plan.price[billingCycle]}
-                      </span>
-                      <span className="text-gray-500 ml-2">
-                        /{billingCycle === 'monthly' ? 'month' : 'year'}
-                      </span>
-                    </div>
-                    {billingCycle === 'yearly' && (
-                      <p className="text-sm text-gray-500 mt-1">
-                        ${Math.round(plan.price.yearly / 12)}/month billed annually
-                      </p>
-                    )}
-                  </div>
-
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center">
-                        <Check className="h-5 w-5 text-[#4FD1C7] mr-3 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                    {plan.limitations.map((limitation, limitationIndex) => (
-                      <li key={limitationIndex} className="flex items-center">
-                        <X className="h-5 w-5 text-gray-400 mr-3 flex-shrink-0" />
-                        <span className="text-gray-500">{limitation}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    to={plan.cta === 'Contact Sales' ? '/contact' : '/demo'}
-                    className={`btn w-full ${
-                      plan.popular ? 'btn-primary' : 'btn-secondary'
-                    } btn-lg`}
-                  >
-                    {plan.cta}
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                <div className="flex items-center mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                  ))}
                 </div>
+                <p className="text-gray-700 mb-6 italic">"{testimonial.quote}"</p>
+                <div className="flex items-center">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-medium text-sm mr-4 ${
+                    testimonial.type === 'school' 
+                      ? 'bg-gradient-to-r from-purple-600 to-blue-600' 
+                      : 'bg-gradient-to-r from-blue-600 to-cyan-600'
+                  }`}>
+                    {testimonial.image}
               </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{testimonial.name}</div>
+                    <div className="text-sm text-gray-600">{testimonial.role}</div>
+                    <div className={`text-sm ${
+                      testimonial.type === 'school' ? 'text-purple-600' : 'text-blue-600'
+                    }`}>{testimonial.school}</div>
+              </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ROI Calculator */}
-      <section className="section">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="mb-4">Calculate Your ROI</h2>
-              <p className="text-xl text-gray-600">
-                See how much time and money you can save with Remarkably
-              </p>
-            </div>
-
-            <div className="card card-padding">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Calculator Inputs */}
-                <div>
-                  <h3 className="mb-6 flex items-center">
-                    <Calculator className="h-6 w-6 mr-2 text-[#667EEA]" />
-                    Your Current Situation
-                  </h3>
-                  
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Essays graded per month
-                      </label>
-                      <input
-                        type="range"
-                        min="10"
-                        max="500"
-                        value={essaysPerMonth}
-                        onChange={(e) => setEssaysPerMonth(Number(e.target.value))}
-                        className="w-full"
-                      />
-                      <div className="flex justify-between text-sm text-gray-500 mt-1">
-                        <span>10</span>
-                        <span className="font-medium text-[#667EEA]">{essaysPerMonth}</span>
-                        <span>500</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Minutes per essay (current)
-                      </label>
-                      <input
-                        type="range"
-                        min="5"
-                        max="30"
-                        value={timePerEssay}
-                        onChange={(e) => setTimePerEssay(Number(e.target.value))}
-                        className="w-full"
-                      />
-                      <div className="flex justify-between text-sm text-gray-500 mt-1">
-                        <span>5</span>
-                        <span className="font-medium text-[#667EEA]">{timePerEssay}</span>
-                        <span>30</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Your hourly rate ($)
-                      </label>
-                      <input
-                        type="range"
-                        min="20"
-                        max="100"
-                        value={hourlyRate}
-                        onChange={(e) => setHourlyRate(Number(e.target.value))}
-                        className="w-full"
-                      />
-                      <div className="flex justify-between text-sm text-gray-500 mt-1">
-                        <span>$20</span>
-                        <span className="font-medium text-[#667EEA]">${hourlyRate}</span>
-                        <span>$100</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Results */}
-                <div>
-                  <h3 className="mb-6 flex items-center">
-                    <Sparkles className="h-6 w-6 mr-2 text-[#4FD1C7]" />
-                    Your Savings with Remarkably
-                  </h3>
-                  
-                  <div className="space-y-6">
-                    <div className="bg-[#EBF4FF] rounded-lg p-4">
-                      <div className="flex items-center mb-2">
-                        <Clock className="h-5 w-5 text-[#667EEA] mr-2" />
-                        <span className="font-medium text-gray-700">Time Saved</span>
-                      </div>
-                      <div className="text-2xl font-bold text-[#667EEA]">
-                        {roi.timeSavedPerMonth.toFixed(1)} hours/month
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        80% reduction in grading time
-                      </div>
-                    </div>
-
-                    <div className="bg-[#E6FFFA] rounded-lg p-4">
-                      <div className="flex items-center mb-2">
-                        <DollarSign className="h-5 w-5 text-[#4FD1C7] mr-2" />
-                        <span className="font-medium text-gray-700">Monthly Savings</span>
-                      </div>
-                      <div className="text-2xl font-bold text-[#4FD1C7]">
-                        ${roi.monthlySavings.toFixed(0)}
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Value of time saved
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-[#667EEA] to-[#764BA2] rounded-lg p-4 text-white">
-                      <div className="flex items-center mb-2">
-                        <Zap className="h-5 w-5 mr-2" />
-                        <span className="font-medium">Annual ROI</span>
-                      </div>
-                      <div className="text-2xl font-bold">
-                        ${roi.yearlyROI.toFixed(0)}
-                      </div>
-                      <div className="text-sm opacity-90">
-                        Net savings after Professional plan cost
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6">
-                    <Link to="/demo" className="btn btn-primary btn-lg w-full">
-                      Start Saving Today
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Comparison */}
-      <section className="section bg-white">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="mb-4">Why Choose Remarkably?</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Compare our features with traditional grading methods
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="icon-container icon-container-primary mx-auto">
-                  <Clock className="h-8 w-8" />
-                </div>
-                <h3 className="mb-3">5-7x Faster</h3>
-                <p className="text-gray-600">
-                  Reduce grading time from 15-20 minutes to just 3-5 minutes per essay
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="icon-container icon-container-accent mx-auto">
-                  <Shield className="h-8 w-8" />
-                </div>
-                <h3 className="mb-3">Consistent Quality</h3>
-                <p className="text-gray-600">
-                  AI ensures consistent grading standards across all essays
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="icon-container icon-container-primary mx-auto">
-                  <Users className="h-8 w-8" />
-                </div>
-                <h3 className="mb-3">Trusted by 50+ Schools</h3>
-                <p className="text-gray-600">
-                  Join educators worldwide who trust Remarkably for efficient grading
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FAQ Section */}
-      <section className="section">
-        <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto">
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Frequently Asked Questions
+            </h2>
               <p className="text-xl text-gray-600">
-                Everything you need to know about our pricing and plans
+              Everything you need to know about pricing and plans
               </p>
             </div>
 
-            <div className="space-y-6">
+          <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="card card-padding">
-                  <h3 className="mb-3">{faq.question}</h3>
-                  <p className="text-gray-600">{faq.answer}</p>
+              <div key={index} className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <div className="flex items-center">
+                    <div className={`w-3 h-3 rounded-full mr-3 ${
+                      faq.category === 'school' ? 'bg-purple-500' : 'bg-blue-500'
+                    }`}></div>
+                    <span className="font-medium text-gray-900">{faq.question}</span>
+                  </div>
+                  <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${
+                    expandedFAQ === index ? 'transform rotate-180' : ''
+                  }`} />
+                </button>
+                {expandedFAQ === index && (
+                  <div className="px-6 pb-4">
+                    <p className="text-gray-600 ml-6">{faq.answer}</p>
+                  </div>
+                )}
                 </div>
               ))}
-            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section gradient-bg">
-        <div className="container mx-auto text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-white mb-6">
+      {/* Final CTA */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-cyan-600">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
               Ready to Transform Your Grading?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Start your free trial today. No credit card required, 
-              no setup fees, and full access to all features.
+            Join 1000+ teachers and 50+ schools who save hours every week with Remarkably
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/demo" className="btn btn-accent btn-lg">
-                Start Free Trial
-                <ArrowRight className="ml-2 h-5 w-5" />
+            <Link
+              to="/beta/contact"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
+            >
+              Start Free Teacher Trial
+              <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
-              <Link to="/contact" className="btn btn-secondary btn-lg">
-                Contact Sales
+            <Link
+              to="/beta/contact"
+              className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-medium rounded-lg border-2 border-white hover:bg-white hover:text-blue-600 transition-all duration-200"
+            >
+              Schedule School Demo
               </Link>
-            </div>
           </div>
         </div>
       </section>

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 const Achievements: React.FC = () => {
   const supportedInstitutions = [
-    { name: 'Google for Startups', logo: '/google.png', description: 'Cloud credits and startup support program' },
-    { name: 'NVIDIA Inception Program', logo: '/nvidia-inception.png', description: 'AI acceleration and technology partnership' },
-    { name: 'MongoDB for Startups', logo: '/mongodb.png', description: 'Database infrastructure and support' },
-    { name: 'NUS Enterprise', logo: '/nus-enterprise.png', description: 'University incubation and mentorship' },
-    { name: 'BLOCK71', logo: '/block71.png', description: 'Singapore\'s leading startup ecosystem' },
-    { name: 'The HANGAR', logo: '/hangar.png', description: 'Aerospace and deep tech incubator' },
-    { name: 'NUS Computing', logo: '/nus-soc.png', description: 'School of Computing partnership' },
-    { name: 'NUS', logo: '/nus.png', description: 'National University of Singapore' }
+      { name: 'Google for Startups', logo: '/google.png?cb=1', description: 'Cloud credits and startup support program' },
+  { name: 'NVIDIA Inception Program', logo: '/nvidia-inception.png?cb=1', description: 'AI acceleration and technology partnership' },
+  { name: 'MongoDB for Startups', logo: '/mongodb.png?cb=1', description: 'Database infrastructure and support' },
+  { name: 'NUS Enterprise', logo: '/nus-enterprise.png?cb=1', description: 'University incubation and mentorship' },
+  { name: 'BLOCK71', logo: '/block71.png?cb=1', description: 'Singapore\'s leading startup ecosystem' },
+  { name: 'The HANGAR', logo: '/hangar.png?cb=1', description: 'Aerospace and deep tech incubator' },
+  { name: 'NUS Computing', logo: '/nus-soc.png?cb=1', description: 'School of Computing partnership' },
+  { name: 'NUS', logo: '/nus.png?cb=1', description: 'National University of Singapore' }
   ];
 
   const awards = [
@@ -149,7 +149,7 @@ const Achievements: React.FC = () => {
           <div className="text-center mb-20">
             <div className="flex items-center justify-center mb-8">
               <img 
-                src="/remarkably logo black.png" 
+                src="/remarkably logo black.png?cb=1" 
                 alt="Remarkably Logo" 
                 className="h-16 w-auto mr-4"
               />
@@ -265,7 +265,7 @@ const Achievements: React.FC = () => {
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white text-center">
               <div className="flex items-center justify-center mb-8">
                 <img 
-                  src="/lianhua-primary.png" 
+                  src="/lianhua-primary.png?cb=1" 
                   alt="Lianhua Primary School" 
                   className="h-16 w-auto mr-4 bg-white rounded-lg p-2"
                 />
@@ -376,7 +376,7 @@ const Achievements: React.FC = () => {
                 Watch Success Stories
               </a>
               <Link
-                to="/contact"
+                to="/beta/contact"
                 className="bg-white border-2 border-gray-200 hover:border-blue-300 text-gray-800 hover:text-blue-600 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
               >
                 Schedule Partnership Call

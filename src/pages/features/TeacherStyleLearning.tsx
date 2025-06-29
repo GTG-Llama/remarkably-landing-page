@@ -184,14 +184,14 @@ const TeacherStyleLearning: React.FC = () => {
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 to="/beta/demo" 
-                className="btn-primary hover-lift inline-flex items-center"
+                className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
               >
                 <Play className="mr-2 h-5 w-5" />
                 See Style Training Demo
               </Link>
               <Link 
                 to="/beta/contact" 
-                className="btn-secondary hover-lift inline-flex items-center"
+                className="bg-white border-2 border-purple-200 text-purple-700 hover:bg-purple-50 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
               >
                 Train Your AI Now
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -312,7 +312,7 @@ const TeacherStyleLearning: React.FC = () => {
                   </div>
                 </div>
                 <img 
-                  src="/Grading Interface .png" 
+                                      src="/Grading Interface .png?cb=1" 
                   alt="Teacher style learning and grading interface"
                   className="w-full h-auto"
                 />

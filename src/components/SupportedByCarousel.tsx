@@ -6,42 +6,42 @@ const SupportedByCarousel: React.FC = () => {
   const supporters = [
     {
       name: "Ministry of Education",
-      logo: "/nus.png", 
+      logo: "/nus.png?cb=1", 
       description: "Co-designed with MOE educators"
     },
     {
       name: "National University of Singapore",
-      logo: "/nus-soc.png",
+      logo: "/nus-soc.png?cb=1",
       description: "Research partnership"
     },
     {
       name: "NUS Enterprise", 
-      logo: "/nus-enterprise.png",
+      logo: "/nus-enterprise.png?cb=1",
       description: "Startup incubation support"
     },
     {
       name: "Block71",
-      logo: "/block71.png",
+      logo: "/block71.png?cb=1",
       description: "Innovation ecosystem"
     },
     {
       name: "NVIDIA Inception",
-      logo: "/nvidia-inception.png", 
+      logo: "/nvidia-inception.png?cb=1", 
       description: "AI technology partner"
     },
     {
       name: "MongoDB",
-      logo: "/mongodb.png",
+      logo: "/mongodb.png?cb=1",
       description: "Database infrastructure"
     },
     {
       name: "Google Cloud",
-      logo: "/google.png",
+      logo: "/google.png?cb=1",
       description: "Cloud computing platform"
     },
     {
       name: "Social Impact Catalyst",
-      logo: "/social-impact-catalyst.png",
+      logo: "/social-impact-catalyst.png?cb=1",
       description: "Mission-driven support"
     }
   ];

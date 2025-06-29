@@ -20,34 +20,38 @@ import {
   Star,
   ThumbsUp,
   Lightbulb,
-  TrendingUp
+  TrendingUp,
+  Eye,
+  Award,
+  Zap
 } from 'lucide-react';
 
 const FeedbackGeneration: React.FC = () => {
   const [userType, setUserType] = useState<'teachers' | 'schools'>('teachers');
+  const [activeTab, setActiveTab] = useState<'strengths' | 'improvements' | 'comprehensive'>('strengths');
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
         delayChildren: 0.2,
-      },
-    },
+        staggerChildren: 0.1
+      }
+    }
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
-      y: 0,
       opacity: 1,
+      y: 0,
       transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-      },
-    },
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
   };
 
   const benefits = {
@@ -138,6 +142,80 @@ const FeedbackGeneration: React.FC = () => {
     }
   ];
 
+  // Interactive Feedback Showcase Data
+  const feedbackShowcase = {
+    strengths: {
+      title: "Student Strengths",
+      description: "AI-powered feedback that identifies and celebrates what students do well",
+              image: "/(Student B) Essay Strength.png?cb=1",
+      imageAlt: "Student essay showing AI-generated positive feedback highlighting strengths",
+      features: [
+        "Identifies specific writing techniques used well",
+        "Celebrates improvement and growth",
+        "Builds confidence with constructive praise",
+        "Highlights unique voice and style"
+      ],
+      stats: { accuracy: "94%", confidence: "High", impact: "Motivational" }
+    },
+    improvements: {
+      title: "Identify Weaknesses", 
+      description: "Constructive feedback that guides students toward specific improvements",
+              image: "/(Student B) Essay Weakness.png?cb=1",
+      imageAlt: "Student essay showing AI-generated improvement suggestions and guidance",
+      features: [
+        "Specific, actionable improvement suggestions",
+        "Scaffolded learning recommendations",
+        "Clear examples of better alternatives",
+        "Gentle guidance without discouragement"
+      ],
+      stats: { accuracy: "91%", confidence: "High", impact: "Developmental" }
+    },
+    comprehensive: {
+      title: "Feedback Overview",
+      description: "Comprehensive analysis combining strengths, areas for growth, and next steps",
+              image: "/(Student B) Essay Summary.png?cb=1", 
+      imageAlt: "Complete student essay feedback summary with overall analysis",
+      features: [
+        "Holistic writing assessment",
+        "Balanced strengths and growth areas",
+        "Clear next steps for improvement",
+        "Progress tracking over time"
+      ],
+      stats: { accuracy: "96%", confidence: "Very High", impact: "Comprehensive" }
+    }
+  };
+
+  const interactiveFeatures = [
+    {
+      icon: <Heart className="h-6 w-6" />,
+      title: "Emotionally Intelligent",
+      description: "Feedback that considers student emotions and motivation levels",
+      benefit: "Builds confidence and engagement",
+      color: "from-pink-500 to-rose-600"
+    },
+    {
+      icon: <Lightbulb className="h-6 w-6" />,
+      title: "Specific & Actionable", 
+      description: "Clear, concrete suggestions students can immediately implement",
+      benefit: "Accelerates improvement",
+      color: "from-amber-500 to-orange-600"
+    },
+    {
+      icon: <Target className="h-6 w-6" />,
+      title: "Standards-Aligned",
+      description: "Directly connected to your curriculum and learning objectives",
+      benefit: "Meets educational requirements",
+      color: "from-blue-500 to-indigo-600"
+    },
+    {
+      icon: <TrendingUp className="h-6 w-6" />,
+      title: "Growth-Focused",
+      description: "Tracks improvement over time and celebrates progress",
+      benefit: "Encourages continuous learning",
+      color: "from-green-500 to-emerald-600"
+    }
+  ];
+
   return (
     <>
       <SEOHead 
@@ -197,14 +275,14 @@ const FeedbackGeneration: React.FC = () => {
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 to="/beta/demo" 
-                className="btn-primary hover-lift inline-flex items-center"
+                className="bg-gradient-to-r from-rose-500 to-orange-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
               >
                 <Play className="mr-2 h-5 w-5" />
-                See Feedback Examples
+                See Live Examples
               </Link>
               <Link 
                 to="/beta/contact" 
-                className="btn-secondary hover-lift inline-flex items-center"
+                className="bg-white border-2 border-rose-200 text-rose-700 hover:bg-rose-50 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
               >
                 Generate Sample Feedback
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -214,38 +292,124 @@ const FeedbackGeneration: React.FC = () => {
         </div>
       </section>
 
-      {/* User Type Selector */}
-      <section className="py-12 bg-white">
+      {/* Interactive Feedback Showcase */}
+      <section className="py-20 bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Choose Your Perspective</h2>
-            <div className="inline-flex rounded-lg bg-gray-100 p-1">
-              <button
-                onClick={() => setUserType('teachers')}
-                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
-                  userType === 'teachers'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <motion.div variants={itemVariants} className="text-center mb-12">
+              <div className="inline-flex items-center px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-medium mb-6">
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Real Student Examples
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                See Our AI Feedback in Action
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Explore actual student work with our AI-generated feedback. Click between different feedback types.
+              </p>
+            </motion.div>
+
+            {/* Interactive Tabs */}
+            <motion.div variants={itemVariants} className="mb-12">
+              <div className="flex flex-wrap justify-center gap-2 mb-8">
+                {Object.entries(feedbackShowcase).map(([key, content]) => (
+                  <button
+                    key={key}
+                    onClick={() => setActiveTab(key as any)}
+                    className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      activeTab === key
+                        ? 'bg-gradient-to-r from-rose-500 to-orange-600 text-white shadow-lg transform scale-105'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+                    }`}
+                  >
+                    {content.title}
+                  </button>
+                ))}
+              </div>
+
+              {/* Active Tab Content */}
+              <motion.div 
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
               >
-                For Teachers
-              </button>
-              <button
-                onClick={() => setUserType('schools')}
-                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
-                  userType === 'schools'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                For Schools
-              </button>
-            </div>
-          </div>
+                {/* Screenshot */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-orange-600/20 rounded-2xl blur-xl transform group-hover:scale-105 transition-transform duration-300"></div>
+                  <div className="relative bg-white rounded-2xl shadow-2xl border-2 border-gray-100 overflow-hidden">
+                    <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 border-b flex items-center space-x-2">
+                      <div className="flex space-x-2">
+                        <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                        <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                      </div>
+                      <span className="text-sm text-gray-600 ml-4">Student Essay - AI Feedback Preview</span>
+                    </div>
+                    <img 
+                      src={feedbackShowcase[activeTab].image}
+                      alt={feedbackShowcase[activeTab].imageAlt}
+                      className="w-full h-auto"
+                    />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      {feedbackShowcase[activeTab].title}
+                    </h3>
+                    <p className="text-lg text-gray-600 mb-6">
+                      {feedbackShowcase[activeTab].description}
+                    </p>
+                  </div>
+
+                  {/* Features List */}
+                  <div className="space-y-3">
+                    {feedbackShowcase[activeTab].features.map((feature, index) => (
+                      <div key={index} className="flex items-start space-x-3">
+                        <CheckCircle className="h-5 w-5 text-green-500 mt-1 flex-shrink-0" />
+                        <span className="text-gray-700">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-4 pt-6 border-t">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-rose-600">
+                        {feedbackShowcase[activeTab].stats.accuracy}
+                      </div>
+                      <div className="text-sm text-gray-600">Accuracy</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-orange-600">
+                        {feedbackShowcase[activeTab].stats.confidence}
+                      </div>
+                      <div className="text-sm text-gray-600">Confidence</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-indigo-600">
+                        {feedbackShowcase[activeTab].stats.impact}
+                      </div>
+                      <div className="text-sm text-gray-600">Impact</div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Feedback Types */}
+      {/* Interactive Features Grid */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="container-custom">
           <motion.div
@@ -255,84 +419,37 @@ const FeedbackGeneration: React.FC = () => {
             viewport={{ once: true, amount: 0.2 }}
           >
             <motion.div variants={itemVariants} className="text-center mb-16">
-              <div className="inline-flex items-center px-4 py-2 bg-rose-100 text-rose-700 rounded-full text-sm font-medium mb-6">
-                <MessageSquare className="h-4 w-4 mr-2" />
-                Multiple Feedback Styles
-              </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Feedback Tailored to Your Teaching Style
+                Why Teachers Love Our Feedback
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Choose from different feedback approaches that match your teaching philosophy and student needs.
-              </p>
-            </motion.div>
-
-            <div className="space-y-8">
-              {feedbackTypes.map((type, index) => (
-                <motion.div 
-                  key={index} 
-                  variants={itemVariants}
-                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                    <div className="text-center lg:text-left">
-                      <div className={`inline-flex items-center px-4 py-2 bg-gradient-to-r ${type.color} text-white rounded-full text-sm font-medium mb-4`}>
-                        {type.icon}
-                        <span className="ml-2">{type.type}</span>
-                      </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3">{type.type} Feedback</h3>
-                      <p className="text-gray-600">{type.description}</p>
-                    </div>
-
-                    <div className="lg:col-span-2">
-                      <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-6">
-                        <div className="text-sm font-medium text-gray-700 mb-3">✨ Sample AI-Generated Feedback</div>
-                        <p className="text-gray-800 italic leading-relaxed">"{type.example}"</p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Feedback Features */}
-      <section className="py-20 bg-white">
-        <div className="container-custom">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.div variants={itemVariants} className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Comprehensive Feedback Features
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Every piece of feedback is designed to help students understand their strengths and improve their writing skills.
+                Every piece of feedback is carefully crafted to inspire growth while maintaining student motivation.
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {feedbackFeatures.map((feature, index) => (
+              {interactiveFeatures.map((feature, index) => (
                 <motion.div 
                   key={index} 
                   variants={itemVariants}
-                  className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl border border-gray-100"
+                  className="relative group cursor-pointer"
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
                 >
-                  <div className="flex items-start space-x-4">
-                    <div className="w-16 h-16 bg-rose-100 rounded-xl flex items-center justify-center text-rose-600 flex-shrink-0">
+                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                  <div className="relative bg-white p-8 rounded-2xl border border-gray-100 shadow-lg group-hover:shadow-2xl group-hover:transform group-hover:scale-105 transition-all duration-300">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center text-white mb-6`}>
                       {feature.icon}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
-                        <span className="text-sm font-medium text-rose-600 bg-rose-100 px-2 py-1 rounded">{feature.benefit}</span>
-                      </div>
-                      <p className="text-gray-600">{feature.description}</p>
+                    
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
+                    <p className="text-gray-600 mb-4">{feature.description}</p>
+                    
+                    <div className={`inline-flex items-center px-3 py-1 bg-gradient-to-r ${feature.color} bg-opacity-10 rounded-full text-sm font-medium transition-all duration-300 ${
+                      hoveredCard === index ? 'transform scale-105' : ''
+                    }`}>
+                      <span className="text-gray-700">{feature.benefit}</span>
+                      {hoveredCard === index && <ArrowRight className="ml-2 h-4 w-4" />}
                     </div>
                   </div>
                 </motion.div>
@@ -342,139 +459,47 @@ const FeedbackGeneration: React.FC = () => {
         </div>
       </section>
 
-      {/* User-Specific Benefits */}
-      <section className="py-20 bg-gradient-to-br from-rose-50 to-orange-50">
-        <div className="container-custom">
+      {/* Compelling CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-rose-500 via-orange-600 to-amber-500 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+        <div className="container-custom relative z-10">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
+            className="text-center"
           >
-            <motion.div variants={itemVariants} className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                {userType === 'teachers' ? 'Perfect for Individual Teachers' : 'Designed for Schools & Institutions'}
+            <motion.div variants={itemVariants} className="mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Transform Your Feedback Process Today
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                {userType === 'teachers' 
-                  ? 'Give every student the detailed, personal feedback they deserve without spending hours writing comments.'
-                  : 'Ensure every student receives consistent, high-quality feedback that supports their academic growth.'
-                }
+              <p className="text-xl text-orange-100 max-w-3xl mx-auto leading-relaxed">
+                Join thousands of educators who've revolutionized their grading with AI-powered feedback 
+                that actually helps students improve.
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {benefits[userType].map((benefit, index) => (
-                <motion.div 
-                  key={index} 
-                  variants={itemVariants}
-                  className="bg-white p-8 rounded-2xl shadow-lg"
-                >
-                  <div className="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center text-rose-600 mb-6">
-                    {benefit.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">{benefit.title}</h3>
-                  <p className="text-gray-600">{benefit.description}</p>
-                </motion.div>
-              ))}
-            </div>
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                to="/beta/demo" 
+                className="bg-white text-rose-600 hover:bg-orange-50 font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
+              >
+                <Play className="mr-2 h-5 w-5" />
+                Try Live Demo
+              </Link>
+              <Link 
+                to="/beta/contact" 
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-rose-600 font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
+              >
+                Start Free Trial
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Before & After Example */}
-      <section className="py-20 bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                From Generic to Personalized
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                See how AI-generated feedback transforms from basic comments to detailed, 
-                personalized guidance that actually helps students improve.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-sm">✕</div>
-                    <span className="font-semibold text-red-700">Typical Generic Feedback</span>
-                  </div>
-                  <p className="text-red-600 italic">"Good essay. Work on grammar and organization. Try to be more specific."</p>
-                </div>
-
-                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center text-white text-sm">✓</div>
-                    <span className="font-semibold text-emerald-700">AI-Generated Personalized Feedback</span>
-                  </div>
-                  <p className="text-emerald-700">"Your opening hook about climate change really draws readers in! Your argument becomes stronger when you include specific statistics like in paragraph 2. For even greater impact, try connecting your conclusion back to that compelling opening question. Also, watch for comma splices in sentences 3 and 7 - breaking these into shorter sentences will improve clarity."</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-rose-50 to-orange-50 p-8 rounded-2xl">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-rose-500 to-orange-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-6">
-                  <Heart className="h-8 w-8" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Student Impact</h3>
-                <p className="text-gray-600 mb-6">
-                  Students report feeling more motivated and confident when they receive specific, 
-                  encouraging feedback that shows their teacher really read their work.
-                </p>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="bg-white p-4 rounded-lg">
-                    <div className="text-2xl font-bold text-rose-600 mb-1">85%</div>
-                    <div className="text-gray-600">More Motivated</div>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg">
-                    <div className="text-2xl font-bold text-rose-600 mb-1">3×</div>
-                    <div className="text-gray-600">More Detail</div>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg">
-                    <div className="text-2xl font-bold text-rose-600 mb-1">92%</div>
-                    <div className="text-gray-600">Find Helpful</div>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg">
-                    <div className="text-2xl font-bold text-rose-600 mb-1">5 min</div>
-                    <div className="text-gray-600">To Review</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-rose-600 to-orange-600">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Transform Student Feedback?
-          </h2>
-          <p className="text-xl text-rose-100 mb-8 max-w-2xl mx-auto">
-            Start generating personalized, encouraging feedback that helps every student grow as a writer. 
-            Your students will notice the difference immediately.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              to="/beta/demo" 
-              className="inline-flex items-center justify-center px-8 py-4 bg-white text-rose-600 font-semibold rounded-xl hover:bg-gray-50 transition-colors"
-            >
-              Generate Sample Feedback
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link 
-              to="/beta/contact" 
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-rose-600 transition-colors"
-            >
-              Get Personal Demo
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 };

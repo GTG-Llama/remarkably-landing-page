@@ -226,14 +226,14 @@ const StudentTracking: React.FC = () => {
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 to="/beta/demo" 
-                className="btn-primary hover-lift inline-flex items-center"
+                className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
               >
                 <Play className="mr-2 h-5 w-5" />
                 View Progress Demo
               </Link>
               <Link 
                 to="/beta/contact" 
-                className="btn-secondary hover-lift inline-flex items-center"
+                className="bg-white border-2 border-teal-200 text-teal-700 hover:bg-teal-50 font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center"
               >
                 Start Tracking Students
                 <ArrowRight className="ml-2 h-5 w-5" />

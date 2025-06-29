@@ -128,6 +128,11 @@
   }
 
   html {
+    scroll-behavior: auto;
+  }
+  
+  /* Only use smooth scrolling for intentional interactions */
+  html.smooth-scroll {
     scroll-behavior: smooth;
   }
 

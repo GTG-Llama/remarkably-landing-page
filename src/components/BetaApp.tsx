@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import BetaLayout from "./BetaLayout";
+import ScrollToTop from "./ScrollToTop";
 import Home from "../pages/Home";
 import Demo from "../pages/Demo";
 import Features from "../pages/Features";
@@ -39,6 +40,7 @@ const BetaApp = () => (
       <meta property="og:image" content="https://remarkably.ink/beta/og-image.png" />
       <meta property="og:type" content="website" />
     </Helmet>
+    <ScrollToTop />
     <BetaLayout>
       <Routes>
         <Route path="" element={<Home />} />

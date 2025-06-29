@@ -75,7 +75,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
   const preloadResources = () => {
     // Preload textures
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load("/paper-texture2.jpg");
+          textureLoader.load("/paper-texture2.jpg?cb=1");
 
     // Preload models - adding required callback functions
     const gltfLoader = new GLTFLoader();
@@ -107,7 +107,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({
 
     // Add subtle texture to paper
     const textureLoader = new THREE.TextureLoader();
-    textureLoader.load("/paper-texture2.jpg", (texture) => {
+            textureLoader.load("/paper-texture2.jpg?cb=1", (texture) => {
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
       texture.repeat.set(1, 1);

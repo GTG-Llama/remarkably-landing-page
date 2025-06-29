@@ -99,7 +99,7 @@ const Demo: React.FC = () => {
 
   const stats = [
     { icon: Clock, value: "7×", label: "Faster Grading" },
-    { icon: Award, value: "99%", label: "Accuracy Rate" },
+    { icon: Award, value: "95Thi%", label: "Accuracy Rate" },
     { icon: Users, value: "2,000+", label: "Active Teachers" }
   ];
 

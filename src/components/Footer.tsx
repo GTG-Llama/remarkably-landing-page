@@ -271,11 +271,11 @@ const Footer: React.FC = () => {
             <div className="text-center space-y-6">
               <p className="text-tech-slate-400 text-sm">Trusted by leading educational institutions</p>
               <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-                <img src="/nus.png" alt="NUS" className="h-8 grayscale hover:grayscale-0 transition-all" />
-                <img src="/google.png" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all" />
-                <img src="/nvidia-inception.png" alt="NVIDIA" className="h-8 grayscale hover:grayscale-0 transition-all" />
-                <img src="/mongodb.png" alt="MongoDB" className="h-6 grayscale hover:grayscale-0 transition-all" />
-                <img src="/nus-enterprise.png" alt="NUS Enterprise" className="h-8 grayscale hover:grayscale-0 transition-all" />
+                            <img src="/nus.png?cb=1" alt="NUS" className="h-8 grayscale hover:grayscale-0 transition-all" />
+            <img src="/google.png?cb=1" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all" />
+            <img src="/nvidia-inception.png?cb=1" alt="NVIDIA" className="h-8 grayscale hover:grayscale-0 transition-all" />
+            <img src="/mongodb.png?cb=1" alt="MongoDB" className="h-6 grayscale hover:grayscale-0 transition-all" />
+            <img src="/nus-enterprise.png?cb=1" alt="NUS Enterprise" className="h-8 grayscale hover:grayscale-0 transition-all" />
               </div>
             </div>
           </motion.div>

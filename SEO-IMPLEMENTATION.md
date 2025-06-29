@@ -30,7 +30,7 @@ This document outlines the comprehensive SEO optimization implemented for the Re
 
 ### 2. **Content Optimization**
 - [x] **Keyword Strategy**
-  - Primary keywords: "AI essay grading", "automated essay scoring"
+  - Primary keywords: "AI essay grading", "automated essay scoring", "Handwritten essay grading", "Personalized Feedback", 
   - Secondary keywords: "handwritten essay grading", "Singapore MOE schools"
   - Long-tail keywords: "AI essay grading for teachers", "automated essay feedback"
   - Local SEO: "Singapore education technology", "MOE approved grading tools"

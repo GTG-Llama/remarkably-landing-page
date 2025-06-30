@@ -127,48 +127,49 @@ const ImprovedHeroSection: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container-standard px-2 sm:px-4 lg:px-6 pt-28 sm:pt-32 md:pt-36 lg:pt-40 xl:pt-44 pb-12 sm:pb-16 lg:pb-20 relative z-10">
+      <div className="container-standard px-2 sm:px-4 lg:px-6 pt-32 sm:pt-36 md:pt-40 lg:pt-40 xl:pt-44 pb-16 sm:pb-20 lg:pb-20 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
             {/* Left Column - Content */}
-            <div className="text-left lg:pr-12 lg:pl-4">
+            <div className="text-center lg:text-left lg:pr-12 lg:pl-4">
               {/* Main Headlines */}
               <h1>
-                <span className="block -ml-14 text-slate-900 mb-4 sm:mb-6 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight">
+                <span className="block text-slate-900 mb-6 sm:mb-8 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-6xl leading-tight px-4 lg:px-0 lg:-ml-14">
                   <span className="block sm:hidden">Stop Spending<br />Weekends<br />Grading</span>
-                  <span className="hidden sm:inline">Stop Spending Weekends Grading</span>
+                  <span className="hidden sm:block md:hidden">Stop Spending<br />Weekends Grading</span>
+                  <span className="hidden md:block">Stop Spending Weekends Grading</span>
                 </span>
               </h1>
               
-              <span className="block -ml-14 text-indigo-600 mb-8 sm:mb-10 md:mb-12 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-5xl leading-tight">Grade 7× Faster with AI</span>
+              <span className="block text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 bg-clip-text mb-10 sm:mb-12 md:mb-14 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-5xl leading-tight px-4 lg:px-0 lg:-ml-14">Grade 7× Faster with AI</span>
 
               {/* Subheadline */}
-              <span className="block -ml-14 text-base sm:text-lg md:text-lg lg:text-l font-medium text-black-700 leading-relaxed mb-8 sm:mb-10 md:mb-12">Remarkably grades handwritten essays in your style, using your rubric — proven in our pilot program.</span>
+              <span className="block text-lg sm:text-xl md:text-2xl lg:text-xl font-medium text-black-700 leading-relaxed mb-10 sm:mb-12 md:mb-14 px-4 lg:px-0 lg:-ml-14 max-w-3xl mx-auto lg:mx-0">Remarkably grades handwritten essays in your style, using your rubric — proven in our pilot program.</span>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-8 -ml-14">
-                <div className="text-left">
+              <div className="flex flex-col sm:flex-row gap-6 mb-8 items-center justify-center lg:justify-start lg:items-start lg:-ml-14">
+                <div className="text-center">
                   <a
                     href="https://app.remarkably.ink"
-                    className="w-52 sm:w-56 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="w-64 sm:w-56 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transform hover:scale-105"
                   >
                     Try for free
                     <span className="sr-only">For Teachers</span>
                   </a>
-                  <div className="text-sm text-gray-500 font-medium mt-2">For Teachers</div>
+                  <div className="text-base text-gray-600 font-medium mt-3">For Teachers</div>
                 </div>
                 
-                <div className="text-left">
+                <div className="text-center">
                   <Link
-                    to="/beta/contact"
-                    className="w-52 sm:w-56 bg-white hover:bg-gray-50 text-gray-800 font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                    to="/contact"
+                    className="w-64 sm:w-56 bg-white hover:bg-gray-50 text-gray-800 font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 border-2 border-gray-200 hover:border-gray-300 transform hover:scale-105"
                   >
                     Book free demo
                     <span className="sr-only">For Schools</span>
                   </Link>
-                  <div className="text-sm text-gray-500 font-medium mt-2">For Schools</div>
+                  <div className="text-base text-gray-600 font-medium mt-3">For Schools</div>
                 </div>
               </div>
 

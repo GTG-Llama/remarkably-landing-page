@@ -252,7 +252,7 @@ const Contact: React.FC = () => {
             ...getPageSEO('contact'),
             title: "Message Sent Successfully – Remarkably",
             description: "Thank you for contacting Remarkably. We'll be in touch soon to schedule your personalized demo.",
-            canonical: "https://www.remarkably.ink/beta/contact"
+            canonical: "https://www.remarkably.ink/contact"
           }} 
           pageKey="contact" 
         />
@@ -294,7 +294,7 @@ const Contact: React.FC = () => {
                 transition={{ delay: 0.9, duration: 0.5 }}
               >
                 <Button
-                  onClick={() => window.location.href = '/beta'}
+                  onClick={() => window.location.href = '/'}
                   className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   Back to Home
@@ -313,7 +313,7 @@ const Contact: React.FC = () => {
       <SEOHead 
         config={{
           ...getPageSEO('contact'),
-          canonical: "https://www.remarkably.ink/beta/contact"
+          canonical: "https://www.remarkably.ink/contact"
         }} 
         pageKey="contact" 
       />
@@ -392,7 +392,7 @@ const Contact: React.FC = () => {
                       See Remarkably in action with your own essays in our live demo
                     </p>
                     <Button
-                      onClick={() => window.location.href = '/beta/demo'}
+                      onClick={() => window.location.href = '/demo'}
                       variant="outline"
                       className="border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300"
                     >

@@ -30,27 +30,27 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
       name: 'Handwriting Recognition',
       description: 'AI that reads and grades handwritten essays with 95%+ accuracy',
       icon: <Brain className="w-5 h-5" />,
-      path: '/beta/features/handwriting-recognition',
+      path: '/features/handwriting-recognition',
       badge: 'Popular'
     },
     {
       name: 'Personalized Feedback',
       description: 'Generate detailed feedback that matches your teaching style',
       icon: <MessageSquare className="w-5 h-5" />,
-      path: '/beta/features/feedback-generation'
+      path: '/features/feedback-generation'
     },
     {
       name: 'Instant Grading',
       description: 'Grade entire classes in minutes instead of hours',
       icon: <Zap className="w-5 h-5" />,
-      path: '/beta/features/instant-grading',
+      path: '/features/instant-grading',
       badge: 'New'
     },
     {
       name: 'Custom Rubric Upload',
       description: 'Upload your rubrics and let AI grade to your exact standards',
       icon: <Upload className="w-5 h-5" />,
-      path: '/beta/contact',
+      path: '/contact',
       badge: 'Coming Soon'
     }
   ];
@@ -60,26 +60,26 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
       name: 'Teacher Style Learning',
       description: 'AI adapts to each teacher\'s grading style and feedback preferences',
       icon: <Target className="w-5 h-5" />,
-      path: '/beta/features/teacher-style-learning',
+      path: '/features/teacher-style-learning',
       badge: 'Enterprise'
     },
     {
       name: 'Analytics & Progress Tracking',
       description: 'Track class performance, student improvement, and generate reports',
       icon: <BarChart3 className="w-5 h-5" />,
-      path: '/beta/features/analytics-dashboard'
+      path: '/features/analytics-dashboard'
     },
     {
       name: 'Batch Processing',
       description: 'Grade entire classes simultaneously with consistent quality',
       icon: <Users className="w-5 h-5" />,
-      path: '/beta/features/instant-grading'
+      path: '/features/instant-grading'
     },
     {
       name: 'Enterprise Solutions',
       description: 'Custom deployment, training, and white-label implementation services',
       icon: <Building className="w-5 h-5" />,
-      path: '/beta/contact',
+      path: '/contact',
       badge: 'Custom'
     }
   ];
@@ -227,14 +227,14 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
             </div>
             <div className="flex gap-4">
               <Link
-                to="/beta/demo"
+                to="/demo"
                 onClick={onClose}
                 className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 Book Demo
               </Link>
               <Link
-                to="/beta/contact"
+                to="/contact"
                 onClick={onClose}
                 className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 font-semibold"
               >

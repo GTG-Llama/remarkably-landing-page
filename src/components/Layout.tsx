@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,160 +6,14 @@ import Header from './Header';
 import { NavigationProvider } from '../contexts/NavigationContext';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  const navItems = [
-    { 
-      name: 'Product', 
-      path: '#',
-      dropdown: [
-    { name: 'Features', path: '/features' },
-    { name: 'Demo', path: '/demo' },
-      ]
-    },
-    { 
-      name: 'Solutions', 
-      path: '#',
-      dropdown: [
-    { name: 'Benefits', path: '/benefits' },
-        { name: 'Use Cases', path: '/about-us' },
-      ]
-    },
-    { 
-      name: 'Resources', 
-      path: '#',
-      dropdown: [
-        { name: 'About Us', path: '/about-us' },
-        { name: 'Q&A', path: '/qna' },
-    { name: 'Testimonials', path: '/testimonials' },
-    { name: 'Achievements', path: '/achievements' },
-    { name: 'Rubric Guide', path: '/rubric-guide' },
-    { name: 'Stress Reduction', path: '/stress-reduction' },
-    { name: 'Case Study', path: '/case-study' },
-      ]
-    },
-    { name: 'Pricing', path: '/pricing' },
-  ];
-
-  const dropdownVariants = {
-    hidden: {
-      opacity: 0,
-      y: -10,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-    },
-  };
-
-  // Handle scroll effect for desktop header
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const isActive = (path: string) => location.pathname === path;
 
   return (
     <NavigationProvider>
       <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50/30 via-indigo-50/20 to-purple-50/30">
-      {/* Desktop Header - Two Separate Bars */}
-      <header className={`sticky top-0 z-50 hidden lg:block transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md' : 'bg-transparent'
-      }`}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto px-8 py-6">
-          {/* Left Section - Navigation Container */}
-          <div className="flex items-center bg-white/95 backdrop-blur-md border border-gray-200/60 rounded-full px-8 py-4 shadow-lg">
-            {/* Logo */}
-            <Link to="/" className="mr-8">
-              <img
-                src="/remarkably logo black.png?cb=1"
-                alt="Remarkably"
-                className="h-6 w-auto"
-              />
-            </Link>
-
-            {/* Navigation Items */}
-            <nav className="flex items-center space-x-8">
-              {navItems.map((item) => (
-                <div key={item.name} className="relative">
-                  {item.dropdown ? (
-                    <div
-                      className="relative"
-                      onMouseEnter={() => setActiveDropdown(item.name)}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
-                      <button className="flex items-center gap-1 text-gray-700 hover:text-gray-900 font-medium text-sm transition-colors py-2">
-                  {item.name}
-                        <ChevronDown className="w-3 h-3" />
-                </button>
-                
-                      <AnimatePresence>
-                        {activeDropdown === item.name && (
-                          <motion.div
-                            variants={dropdownVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="hidden"
-                            className="absolute top-full left-0 mt-3 w-48 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden"
-                          >
-                            {item.dropdown.map((subItem) => (
-                      <Link
-                                key={subItem.name}
-                                to={subItem.path}
-                                className="block px-4 py-3 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                      >
-                                {subItem.name}
-                      </Link>
-                    ))}
-                          </motion.div>
-                )}
-                      </AnimatePresence>
-            </div>
-                  ) : (
-                  <Link
-                    to={item.path}
-                      className={`text-sm font-medium transition-colors py-2 ${
-                      isActive(item.path)
-                          ? 'text-gray-900'
-                          : 'text-gray-700 hover:text-gray-900'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                  )}
-                </div>
-              ))}
-            </nav>
-          </div>
-
-          {/* Right Section - Contact Us Button */}
-          <Link to="/contact">
-            <motion.button
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-8 py-4 rounded-full transition-colors shadow-lg flex items-center gap-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Contact Us
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
-          </Link>
-        </div>
-      </header>
-
-      {/* Mobile Header - Use the new Header component */}
-      <div className="lg:hidden">
-        <Header />
-      </div>
+      
+      {/* Use Header for all screen sizes */}
+      <Header />
 
       <main className="flex-1">
         {children}
@@ -205,29 +59,35 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               </ul>
             </div>
 
-            {/* Support Links */}
+            {/* Company Links */}
             <div>
-              <h3 className="font-semibold text-gray-900 mb-4">Support</h3>
+              <h3 className="font-semibold text-gray-900 mb-4">Company</h3>
               <ul className="space-y-2">
-                <li><Link to="/qna" className="text-gray-600 hover:text-[#667EEA] transition-colors">Q&A</Link></li>
                 <li><Link to="/about-us" className="text-gray-600 hover:text-[#667EEA] transition-colors">About Us</Link></li>
+                <li><Link to="/testimonials" className="text-gray-600 hover:text-[#667EEA] transition-colors">Testimonials</Link></li>
                 <li><Link to="/contact" className="text-gray-600 hover:text-[#667EEA] transition-colors">Contact</Link></li>
+                <li><Link to="/achievements" className="text-gray-600 hover:text-[#667EEA] transition-colors">Achievements</Link></li>
               </ul>
             </div>
           </div>
 
-          {/* Bottom Section */}
-          <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 text-sm">
-              © 2024 Remarkably. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-gray-600 hover:text-[#667EEA] text-sm transition-colors">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="text-gray-600 hover:text-[#667EEA] text-sm transition-colors">
-                Terms of Service
-              </Link>
+          {/* Bottom Bar */}
+          <div className="border-t border-gray-200 mt-8 pt-8">
+            <div className="flex flex-col sm:flex-row justify-between items-center">
+              <p className="text-gray-600 text-sm">
+                © 2024 Remarkably. All rights reserved.
+              </p>
+              <div className="flex space-x-6 mt-4 sm:mt-0">
+                <Link to="/contact" className="text-gray-600 hover:text-[#667EEA] text-sm transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link to="/contact" className="text-gray-600 hover:text-[#667EEA] text-sm transition-colors">
+                  Terms of Service
+                </Link>
+                <Link to="/contact" className="text-gray-600 hover:text-[#667EEA] text-sm transition-colors">
+                  Support
+                </Link>
+              </div>
             </div>
           </div>
         </div>

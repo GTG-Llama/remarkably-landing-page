@@ -457,7 +457,7 @@ const Pricing: React.FC = () => {
                   </div>
 
                   <Link
-                            to="/beta/contact"
+                            to="/contact"
                             className={`w-full inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
                               plan.popular
                                 ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700 shadow-lg hover:shadow-xl'
@@ -557,14 +557,14 @@ const Pricing: React.FC = () => {
 
                 <div className="space-y-4">
                   <Link
-                    to="/beta/contact"
+                    to="/contact"
                     className="w-full inline-flex items-center justify-center px-6 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl"
                   >
                     <Calendar className="w-5 h-5 mr-2" />
                     Schedule a Demo
                   </Link>
                   <Link
-                    to="/beta/contact"
+                    to="/contact"
                     className="w-full inline-flex items-center justify-center px-6 py-4 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-all duration-200"
                   >
                     <Mail className="w-5 h-5 mr-2" />
@@ -749,14 +749,14 @@ const Pricing: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/beta/contact"
+              to="/contact"
               className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
             >
               Start Free Teacher Trial
               <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             <Link
-              to="/beta/contact"
+              to="/contact"
               className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-medium rounded-lg border-2 border-white hover:bg-white hover:text-blue-600 transition-all duration-200"
             >
               Schedule School Demo

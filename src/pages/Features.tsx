@@ -149,7 +149,7 @@ const Features: React.FC = () => {
               from a time-consuming task into an efficient, insightful process.
             </p>
 
-            <Link to="/beta/demo" className="btn btn-primary btn-lg">
+            <Link to="/demo" className="btn btn-primary btn-lg">
               Try All Features Free
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
@@ -293,11 +293,11 @@ const Features: React.FC = () => {
               See how AI can transform your grading workflow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/beta/demo" className="btn btn-accent btn-lg">
+              <Link to="/demo" className="btn btn-accent btn-lg">
                 Start Free Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
-              <Link to="/beta/contact" className="btn btn-secondary btn-lg">
+              <Link to="/contact" className="btn btn-secondary btn-lg">
                 Schedule Demo
               </Link>
             </div>

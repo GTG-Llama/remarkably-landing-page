@@ -34,7 +34,7 @@ import {
 
 // Interactive Demo Component 1
 const HowItWorksDemo1: React.FC = () => {
-  const [activeFeature1, setActiveFeature1] = useState('upload');
+  const [activeFeature1, setActiveFeature1] = useState('analysis');
 
   const features1 = [
     {
@@ -448,7 +448,7 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </section>
-
+              
       {/* 4. How It Works Section - Part 2 */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -472,36 +472,36 @@ const Home: React.FC = () => {
               <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Watch how AI generates grades and personalized feedback
               </p>
-            </motion.div>
-            
+              </motion.div>
+
             {/* Demo Interface */}
             <HowItWorksDemo2 />
           </motion.div>
-        </div>
+                        </div>
       </section>
 
       {/* 5. Interactive Demo Section */}
       <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white" data-demo-section>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Content removed */}
-        </div>
+                    </div>
       </section>
-
+                    
       {/* 6. Enhanced Statistics Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-indigo-50 to-purple-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
+                      <motion.div 
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-          >
+                      >
             <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
               <div className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-6">
                 <TrendingUp className="h-4 w-4 mr-2" />
                 Proven Results
-              </div>
-              
+                  </div>
+
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                 The Numbers Speak for Themselves
               </h2>
@@ -534,7 +534,7 @@ const Home: React.FC = () => {
                   <div className="text-4xl font-bold text-gray-900 mb-2">{stat.value}</div>
                   <div className="text-lg font-semibold text-gray-800 mb-1">{stat.label}</div>
                   <div className="text-sm text-gray-600">{stat.description}</div>
-                </motion.div>
+              </motion.div>
               ))}
             </div>
           </motion.div>
@@ -681,12 +681,12 @@ const Home: React.FC = () => {
                   gradient: "from-violet-500 to-purple-600"
                 }
               ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
                   className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100"
                   whileHover={{ y: -5, scale: 1.02 }}
-                >
+                  >
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 text-white group-hover:scale-110 transition-transform shadow-lg`}>
                     {feature.icon}
                   </div>
@@ -694,8 +694,8 @@ const Home: React.FC = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                 </motion.div>
-              ))}
-            </div>
+                        ))}
+                      </div>
           </motion.div>
         </div>
       </section>
@@ -747,10 +747,10 @@ const Home: React.FC = () => {
                 >
                   <h3 className="text-xl font-bold text-gray-900 mb-4">{faq.question}</h3>
                   <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
         </div>
       </section>
 

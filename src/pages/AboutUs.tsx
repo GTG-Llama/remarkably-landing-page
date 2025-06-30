@@ -272,14 +272,14 @@ const AboutUs: React.FC = () => {
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link 
-                to="/beta/demo" 
+                to="/demo" 
                 className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
                 See Our Product
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <Link 
-                to="/beta/contact" 
+                to="/contact" 
                 className="inline-flex items-center justify-center px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-gray-300"
               >
                 Get In Touch
@@ -608,14 +608,14 @@ const AboutUs: React.FC = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
                 <Link 
-                  to="/beta/demo" 
+                  to="/demo" 
                   className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 hover:text-blue-700 font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
                 >
                   Try Remarkably
                   <Sparkles className="ml-2 h-5 w-5" />
                 </Link>
                 <Link 
-                  to="/beta/contact" 
+                  to="/contact" 
                   className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   Get In Touch

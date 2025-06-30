@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { emailjsConfig } from "@/lib/emailjs-config";
+import { emailjsConfig, emailjsValidation } from "@/lib/emailjs-config";
 import ComponentErrorBoundary from "@/components/ComponentErrorBoundary";
 import SEOHead from "@/components/SEOHead";
 import { getPageSEO } from "../utils/seo-config";
@@ -70,13 +70,40 @@ const Contact: React.FC = () => {
   const onSubmit = async (data: ContactFormData): Promise<void> => {
     setIsSubmitting(true);
 
+    // Pre-validate EmailJS configuration
+    if (!emailjsValidation.isValid) {
+      console.error("[Contact Form] EmailJS configuration is invalid:", emailjsValidation.errors);
+      toast({
+        title: "Configuration Error",
+        description: "Email service is not properly configured. Please check console for details.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
+      console.log("[Contact Form] Environment variables:", {
+        VITE_EMAILJS_PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY ? "✅ Set" : "❌ Not set",
+        VITE_EMAILJS_SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID ? "✅ Set" : "❌ Not set",
+        VITE_EMAILJS_TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID ? "✅ Set" : "❌ Not set"
+      });
+      
+      console.log("[Contact Form] Initializing EmailJS with config:", {
+        publicKey: emailjsConfig.publicKey.substring(0, 6) + "...",
+        serviceId: emailjsConfig.serviceId,
+        templateId: emailjsConfig.templateId,
+        publicKeyFull: emailjsConfig.publicKey,
+        isProduction: !import.meta.env.DEV
+      });
+
       await emailjs.init(emailjsConfig.publicKey);
 
       const emailParams = {
-        to_email: data.email,
+        email: data.email,
+        name: `${data.firstName} ${data.lastName}`,
         to_name: `${data.firstName} ${data.lastName}`,
-        from_name: "Remarkably Team",
+        from_name: "Remarkably Team", 
         first_name: data.firstName,
         last_name: data.lastName,
         company: data.company || "",
@@ -84,12 +111,18 @@ const Contact: React.FC = () => {
         message: data.message || "No specific message provided",
       };
 
+      console.log("[Contact Form] Sending email with params:", {
+        ...emailParams,
+        email: emailParams.email.substring(0, 3) + "***"
+      });
+
       await emailjs.send(
         emailjsConfig.serviceId,
         emailjsConfig.templateId,
         emailParams
       );
 
+      console.log("[Contact Form] Email sent successfully");
       setIsSubmitted(true);
       reset();
 
@@ -97,18 +130,51 @@ const Contact: React.FC = () => {
         title: "Message sent successfully! 📧",
         description: "We've sent you a welcome email and will be in touch soon.",
       });
-    } catch (error) {
-      let errorMessage = "Please try again or contact us directly.";
+    } catch (error: any) {
+      console.error("[Contact Form] Error sending email:", error);
       
-      if (error.status === 404) {
-        errorMessage = "EmailJS service not found. Please check your Service ID.";
-      } else if (error.status === 401) {
-        errorMessage = "Authentication failed. Please check your Public Key.";
+      let errorMessage = "Please try again or contact us directly.";
+      let debugInfo = "";
+      
+      if (error?.status) {
+        switch (error.status) {
+          case 404:
+            errorMessage = "EmailJS service not found. Please check your Service ID.";
+            debugInfo = `Service ID: ${emailjsConfig.serviceId}`;
+            break;
+          case 401:
+            errorMessage = "Authentication failed. Please check your Public Key.";
+            debugInfo = `Public Key: ${emailjsConfig.publicKey.substring(0, 6)}...`;
+            break;
+          case 400:
+            errorMessage = "Invalid request. Please check your template configuration.";
+            debugInfo = `Template ID: ${emailjsConfig.templateId}`;
+            break;
+          default:
+            errorMessage = `Service error (${error.status}). Please try again.`;
+        }
+      } else if (error?.text) {
+        errorMessage = error.text;
+      } else if (error?.message) {
+        errorMessage = error.message;
       }
+
+      // Enhanced error logging
+      console.error("[Contact Form] Detailed error info:", {
+        error,
+        config: {
+          publicKey: emailjsConfig.publicKey.substring(0, 6) + "...",
+          serviceId: emailjsConfig.serviceId,
+          templateId: emailjsConfig.templateId
+        },
+        debugInfo
+      });
 
       toast({
         title: "Something went wrong",
-        description: errorMessage,
+        description: import.meta.env.DEV 
+          ? `${errorMessage} (Debug: ${debugInfo})` 
+          : errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -143,13 +209,13 @@ const Contact: React.FC = () => {
     {
       icon: <Mail className="h-5 w-5" />,
       title: "Email Us",
-      contact: "contact@lenorai.com",
+      contact: "hello@remarkably.ink",
       color: "from-blue-500 to-cyan-600"
     },
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Call Us",
-      contact: "+65 8260 8445",
+      contact: "+65 8854 0297",
       color: "from-emerald-500 to-teal-600"
     },
     {
@@ -164,7 +230,7 @@ const Contact: React.FC = () => {
     {
       icon: <Clock className="h-5 w-5" />,
       title: "Quick Response",
-      description: "We respond within 2 hours during business hours"
+      description: "We respond as soon as we can"
     },
     {
       icon: <Shield className="h-5 w-5" />,
@@ -220,7 +286,7 @@ const Contact: React.FC = () => {
                 transition={{ delay: 0.7, duration: 0.5 }}
                 className="text-gray-600 mb-8 leading-relaxed"
               >
-                Thank you for reaching out! We've received your message and will get back to you within 2 hours during business hours. Check your email for a welcome message with next steps.
+                Thank you for reaching out! We've received your message and will get back to you as soon as we can. Check your email for a welcome message with next steps.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

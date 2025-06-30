@@ -49,14 +49,14 @@ const SEOHead: React.FC<SEOHeadProps> = ({ config, pageKey }) => {
       <meta property="og:site_name" content="Remarkably" />
       <meta property="og:locale" content="en_US" />
       
-      {/* Twitter */}
+      {/* Twitter
       <meta property="twitter:card" content={twitterCard} />
       <meta property="twitter:url" content={canonical || baseUrl} />
       <meta property="twitter:title" content={twitterTitle || title} />
       <meta property="twitter:description" content={twitterDescription || description} />
       <meta property="twitter:image" content={twitterImage || ogImage || defaultImage} />
-      <meta name="twitter:creator" content="@remarkably_ai" />
-      <meta name="twitter:site" content="@remarkably_ai" />
+      <meta name="twitter:creator" content="@lenor_eduai" />
+      <meta name="twitter:site" content="@lenor_eduai" /> */}
       
       {/* Additional SEO Meta Tags */}
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -149,8 +149,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ config, pageKey }) => {
             "NUS Enterprise"
           ],
           "sameAs": [
-            "https://www.linkedin.com/company/remarkably-ai",
-            "https://twitter.com/remarkably_ai"
+            "https://www.linkedin.com/company/lenor-eduai/",
           ]
         })}
       </script>

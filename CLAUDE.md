@@ -14,12 +14,12 @@ npm run build        # Production build
 npm run build:dev    # Development build with development mode
 npm run lint         # ESLint code checking
 npm run preview      # Preview production build
-```
+```2
 
 **🌐 LOCAL DEVELOPMENT URLS:**
 - **Beta Site (PRIMARY)**: `localhost:8080/beta/` - All new development happens here
-- **Old Site (Legacy)**: `localhost:8080/` - Legacy version, do not modify
-
+- **Old Site (Legacy)**: `localhost:8080/` - Legacy version, do not mo1dify
+2
 ## Product & Business Context
 
 - **Remarkably's mission**: AI essay grading that delivers up to 7x faster feedback while reducing teacher stress

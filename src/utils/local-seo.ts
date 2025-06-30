@@ -214,7 +214,6 @@ export const generateLocalBusinessSchema = (region: string) => {
     },
     "sameAs": [
       "https://www.linkedin.com/company/remarkably-ai",
-      "https://twitter.com/remarkably_ai"
     ],
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",

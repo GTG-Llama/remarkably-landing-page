@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmailJS Debug Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <h1>EmailJS Debug Test</h1>
+    <button onclick="testEmailJS()">Test EmailJS</button>
+    <div id="result"></div>
+
+    <script>
+        function testEmailJS() {
+            console.log("Testing EmailJS configuration...");
+            
+            // Your credentials from .env.local
+            const config = {
+                publicKey: 'Gv6rDhJgWBAbnImyK',
+                serviceId: 'service_cb557lk',
+                templateId: 'template_iz0bdle'
+            };
+            
+            console.log("Config:", config);
+            
+            emailjs.init(config.publicKey);
+            
+            const templateParams = {
+                to_email: 'test@example.com',
+                to_name: 'Test User',
+                from_name: 'Remarkably Team',
+                first_name: 'Test',
+                last_name: 'User',
+                company: 'Test Company',
+                role: 'Test Role',
+                message: 'This is a test message'
+            };
+            
+            console.log("Sending with params:", templateParams);
+            
+            emailjs.send(config.serviceId, config.templateId, templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.getElementById('result').innerHTML = '<p style="color: green;">SUCCESS: Email sent!</p>';
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    document.getElementById('result').innerHTML = '<p style="color: red;">ERROR: ' + JSON.stringify(error) + '</p>';
+                });
+        }
+    </script>
+</body>
+</html>

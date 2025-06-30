@@ -179,7 +179,7 @@ const Achievements: React.FC = () => {
       year: '2025',
       title: 'Scaling and Recognition',
       events: [
-        'Expanded to 50+ schools',
+        'Expanded',
         'Best Pitch NUS Ground Zero',
         'International school partnerships',
         'Southeast Asia expansion'
@@ -229,7 +229,7 @@ const Achievements: React.FC = () => {
             <motion.p variants={itemVariants} className="text-xl sm:text-2xl text-gray-600 mb-12 max-w-5xl mx-auto leading-relaxed">
               Built for educators. Supported by world-class accelerators and technology partners. 
               <span className="block mt-2 font-semibold text-indigo-700">
-                Serving 50+ schools across Singapore and expanding internationally.
+                Serving Thousands across Singapore and expanding internationally.
               </span>
             </motion.p>
 

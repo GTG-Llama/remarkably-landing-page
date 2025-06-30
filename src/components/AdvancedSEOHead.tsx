@@ -223,8 +223,7 @@ const AdvancedSEOHead: React.FC<AdvancedSEOProps> = ({
           "url": baseUrl,
           "logo": `${baseUrl}/remarkably-logo-black.png`,
           "sameAs": [
-            "https://www.linkedin.com/company/remarkably-ai",
-            "https://twitter.com/remarkably_ai"
+            "https://www.linkedin.com/company/lenor-eduai/",
           ],
           "hasOfferCatalog": {
             "@type": "OfferCatalog",

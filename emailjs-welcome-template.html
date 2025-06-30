@@ -11,246 +11,325 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #333333;
-            background-color: #f8fafc;
+            color: #374151;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 20px 0;
         }
-        
+
         .email-container {
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
-            border: 4px solid #000000;
-            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
-            margin-top: 20px;
-            margin-bottom: 20px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
         }
-        
+
+        /* Header with gradient background matching your site */
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 40px 30px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            padding: 48px 32px;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
-        
+
+        /* Animated background dots like your site */
         .header::before {
             content: '';
             position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 80px;
-            height: 80px;
-            background-color: #ffd700;
-            border: 4px solid #000000;
-            transform: rotate(12deg);
+            top: 20px;
+            right: 30px;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        
+
         .header::after {
             content: '';
             position: absolute;
-            bottom: -15px;
-            left: -15px;
-            width: 60px;
-            height: 60px;
-            background-color: #ff69b4;
-            border: 4px solid #000000;
-            transform: rotate(-6deg);
+            bottom: 20px;
+            left: 40px;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: pulse 2s infinite 1s;
         }
-        
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1); 
+            }
+            50% { 
+                opacity: 0.6; 
+                transform: scale(1.2); 
+            }
+        }
+
         .logo {
-            font-size: 36px;
-            font-weight: 900;
-            color: #ffffff;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .header-subtitle {
-            font-size: 18px;
-            color: #ffffff;
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .content {
-            padding: 40px 30px;
-        }
-        
-        .greeting {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 800;
-            color: #1a202c;
-            margin-bottom: 20px;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.025em;
         }
-        
+
+        .header-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        /* Content section */
+        .content {
+            padding: 48px 32px;
+        }
+
+        .greeting {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
         .highlight {
-            background-color: #ffd700;
-            padding: 2px 8px;
-            border: 2px solid #000000;
-            font-weight: 900;
-            transform: rotate(1deg);
-            display: inline-block;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
         }
-        
+
         .message-text {
             font-size: 16px;
-            color: #4a5568;
-            margin-bottom: 30px;
+            color: #6b7280;
+            margin-bottom: 24px;
             line-height: 1.7;
         }
-        
+
+        .message-text strong {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        /* Next steps section with modern card design */
         .next-steps {
-            background-color: #e6fffa;
-            border: 3px solid #000000;
-            padding: 25px;
-            margin: 30px 0;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #e0f2fe;
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
             position: relative;
         }
-        
-        .next-steps::before {
-            content: '🚀';
+
+        .next-steps-badge {
             position: absolute;
-            top: -15px;
-            left: 20px;
-            background-color: #ffffff;
-            border: 2px solid #000000;
-            padding: 5px 10px;
-            font-size: 20px;
+            top: -12px;
+            left: 24px;
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
         }
-        
+
         .next-steps h3 {
             font-size: 20px;
-            font-weight: 800;
-            color: #1a202c;
-            margin-bottom: 15px;
-            margin-top: 10px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 20px;
+            margin-top: 8px;
         }
-        
+
         .steps-list {
             list-style: none;
             padding: 0;
         }
-        
+
         .steps-list li {
-            padding: 8px 0;
-            font-weight: 600;
-            color: #2d3748;
+            padding: 12px 0;
+            font-weight: 500;
+            color: #374151;
             position: relative;
-            padding-left: 30px;
+            padding-left: 40px;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.1);
         }
-        
+
+        .steps-list li:last-child {
+            border-bottom: none;
+        }
+
         .steps-list li::before {
-            content: '✓';
+            content: '';
             position: absolute;
             left: 0;
-            color: #38a169;
-            font-weight: 900;
-            font-size: 18px;
+            top: 18px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+
+        .steps-list li::after {
+            content: '✓';
+            position: absolute;
+            left: 6px;
+            top: 16px;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        /* CTA button matching your site's style */
         .cta-section {
             text-align: center;
             margin: 40px 0;
         }
-        
+
         .cta-button {
             display: inline-block;
-            background-color: #000000;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: #ffffff;
-            padding: 15px 30px;
+            padding: 16px 32px;
             text-decoration: none;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 16px;
-            border: 3px solid #000000;
+            border-radius: 12px;
             transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+            transform: translateY(0);
         }
-        
+
         .cta-button:hover {
-            background-color: #ffffff;
-            color: #000000;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
         }
-        
+
+        /* Bulletproof table-based contact design */
         .contact-info {
-            background-color: #fff5f5;
-            border: 3px solid #000000;
-            padding: 25px;
+            background-color: #f8fafc;
+            padding: 30px;
             margin: 30px 0;
             text-align: center;
         }
-        
-        .contact-item {
-            display: inline-block;
-            margin: 10px 20px;
-            font-weight: 600;
-            color: #2d3748;
+
+        .contact-info h3 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e293b;
+            margin: 0 0 10px 0;
         }
-        
-        .contact-icon {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-color: #4ade80;
-            border: 2px solid #000000;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 26px;
-            margin-right: 8px;
-            vertical-align: middle;
+
+        .contact-info-subtitle {
+            font-size: 16px;
+            color: #64748b;
+            margin: 0 0 30px 0;
         }
-        
-        .footer {
-            background-color: #1a202c;
-            color: #ffffff;
-            padding: 30px;
-            text-align: center;
+
+        .contact-table {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
-        
-        .footer-text {
-            font-size: 14px;
+
+        .contact-row {
+            background-color: #ffffff;
             margin-bottom: 15px;
         }
-        
-        .social-links {
-            margin-top: 20px;
+
+        .contact-cell {
+            padding: 20px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
         }
-        
+
+        /* Footer matching your site's style */
+        .footer {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+            color: #ffffff;
+            padding: 40px 32px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #d1d5db;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            color: #9ca3af;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .social-links {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #374151;
+        }
+
         .social-link {
             display: inline-block;
-            margin: 0 10px;
-            color: #ffffff;
+            margin: 0 16px;
+            color: #d1d5db;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        
+
+        .social-link:hover {
+            color: #a78bfa;
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 600px) {
+            body {
+                padding: 10px 0;
+            }
+
             .email-container {
-                margin: 10px;
-                border: 2px solid #000000;
-                box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+                margin: 0 10px;
+                border-radius: 16px;
             }
-            
+
             .header, .content, .footer {
-                padding: 20px 15px;
+                padding: 32px 24px;
             }
-            
+
+            .contact-info {
+                padding: 32px 24px;
+            }
+
             .logo {
                 font-size: 28px;
             }
-            
+
             .greeting {
-                font-size: 20px;
+                font-size: 24px;
             }
-            
-            .contact-item {
-                display: block;
-                margin: 10px 0;
+
+            .contact-cell {
+                padding: 15px !important;
+            }
+
+            .next-steps, .contact-info {
+                padding: 24px;
             }
         }
     </style>
@@ -260,78 +339,84 @@
         <!-- Header Section -->
         <div class="header">
             <div class="logo">Remarkably</div>
-            <div class="header-subtitle">AI-Powered Marking & Assessment</div>
+            <div class="header-subtitle">Grade 7× Faster with AI</div>
         </div>
-        
+
         <!-- Main Content -->
         <div class="content">
             <div class="greeting">
-                Hello <span class="highlight">{{to_name}}</span>! 👋
+                Hello <span class="highlight">{{first_name}}</span>! 👋
             </div>
-            
+
             <div class="message-text">
-                Thank you for reaching out to Remarkably! We're absolutely <strong>thrilled</strong> that you're interested in revolutionizing your marking and assessment process.
+                Thank you for reaching out to Remarkably! We're absolutely <strong>thrilled</strong> that you're interested in transforming your essay grading workflow with AI.
             </div>
-            
+
             <div class="message-text">
-                At Remarkably, we understand the challenges educators face with time-consuming marking tasks. That's why we've built an AI-powered solution that can save your school thousands of hours and significant costs while maintaining the highest quality of feedback for students.
+                At Remarkably, we understand that grading takes up too much of your valuable time. That's why we've built an AI solution that can save you <strong>8+ hours per week</strong> while providing better, more consistent feedback for your students.
             </div>
-            
+
             <!-- Next Steps Section -->
             <div class="next-steps">
-                <h3>What happens next?</h3>
+                <div class="next-steps-badge">🚀 What's Next</div>
+                <h3>Your Personalized Demo Journey</h3>
                 <ul class="steps-list">
-                    <li>Our education specialists will review your inquiry within 24 hours</li>
-                    <li>We'll schedule a personalized demo tailored to your school's needs</li>
-                    <li>You'll see exactly how Remarkably can transform your marking process</li>
-                    <li>We'll calculate your specific time and cost savings</li>
+                    <li>Our education specialists will review your specific needs</li>
+                    <li>We'll schedule a live demo tailored to your teaching style</li>
+                    <li>You'll see Remarkably grade real essays in your subject area</li>
+                    <li>We'll calculate your exact time savings and ROI</li>
                 </ul>
             </div>
-            
+
             <div class="message-text">
-                In the meantime, feel free to explore our resources or reply to this email with any specific questions about your marking challenges. We're here to help! 🎯
+                In the meantime, feel free to explore our interactive demo at <strong>remarkably.ink/demo</strong> or reply to this email with any questions about your specific grading challenges. We're here to help! 🎯
             </div>
-            
-            <!-- Call to Action -->
-            <div class="cta-section">
-                <a href="mailto:contact@lenorai.com" class="cta-button">
-                    📧 Reply to This Email
-                </a>
-            </div>
-            
+
             <!-- Contact Information -->
             <div class="contact-info">
-                <div class="contact-item">
-                    <span class="contact-icon">📧</span>
-                    <strong>Email:</strong> contact@lenorai.com
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon">📞</span>
-                    <strong>Phone:</strong> +65 8260 8445
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon">🌏</span>
-                    <strong>Location:</strong> Singapore
-                </div>
+                <h3>Get in Touch</h3>
+                <p class="contact-info-subtitle">We're available to answer any questions</p>
+
+                <table class="contact-table" cellpadding="0" cellspacing="0" border="0">
+                    <tr class="contact-row">
+                        <td class="contact-cell">
+                            <strong style="color: #6366f1; font-size: 18px;">📧&nbsp;&nbsp;EMAIL</strong><br><br>
+                            <span style="color: #1e293b; font-size: 16px; font-weight: 600;">hello@remarkably.ink</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 25px;"><td></td></tr>
+                    <tr class="contact-row">
+                        <td class="contact-cell">
+                            <strong style="color: #6366f1; font-size: 18px;">📞&nbsp;&nbsp;PHONE</strong><br><br>
+                            <span style="color: #1e293b; font-size: 16px; font-weight: 600;">+65 8854 0297</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 25px;"><td></td></tr>
+                    <tr class="contact-row">
+                        <td class="contact-cell">
+                            <strong style="color: #6366f1; font-size: 18px;">🌏&nbsp;&nbsp;LOCATION</strong><br><br>
+                            <span style="color: #1e293b; font-size: 16px; font-weight: 600;">Singapore</span>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
-        
+
         <!-- Footer -->
         <div class="footer">
             <div class="footer-text">
                 <strong>Best regards,</strong><br>
-                {{from_name}}<br>
                 The Remarkably Team
             </div>
-            
-            <div class="footer-text">
-                🚀 Transforming education through intelligent assessment technology
+
+            <div class="footer-tagline">
+                🎓 Transforming education through AI-powered essay grading
             </div>
-            
+
             <div class="social-links">
-                <a href="#" class="social-link">Website</a> |
-                <a href="#" class="social-link">LinkedIn</a> |
-                <a href="#" class="social-link">Twitter</a>
+                <a href="https://www.remarkably.ink" class="social-link">Website</a>
+                <span style="color: #6b7280; margin: 0 8px;">|</span>
+                <a href="https://www.linkedin.com/company/lenor-eduai" class="social-link">LinkedIn</a>
             </div>
         </div>
     </div>

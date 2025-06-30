@@ -27,7 +27,6 @@ import {
 } from 'lucide-react';
 
 const FeedbackGeneration: React.FC = () => {
-  const [userType, setUserType] = useState<'teachers' | 'schools'>('teachers');
   const [activeTab, setActiveTab] = useState<'strengths' | 'improvements' | 'comprehensive'>('strengths');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 

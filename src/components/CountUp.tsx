@@ -29,12 +29,16 @@ export default function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(direction === "down" ? to : from);
 
-  const damping = 20 + 40 * (1 / duration);
-  const stiffness = 100 * (1 / duration);
+  // Enhanced spring parameters for faster finale
+  // Increased stiffness and reduced damping for snappier end animation
+  const damping = 15 + 25 * (1 / duration); // Reduced from 20 + 40
+  const stiffness = 150 * (1 / duration);    // Increased from 100
 
   const springValue = useSpring(motionValue, {
     damping,
     stiffness,
+    // Add velocity to push through the final numbers faster
+    velocity: to > 100000 ? 50 : 0,
   });
 
   const isInView = useInView(ref, { once: true, margin: "0px" });
@@ -71,19 +75,26 @@ export default function CountUp({
   useEffect(() => {
     const unsubscribe = springValue.on("change", (latest) => {
       if (ref.current) {
-        const options = {
-          useGrouping: !!separator,
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        };
+        const currentValue = Math.floor(latest);
+        
+        // Special case for 1 million - show "1 Million +" when we reach 1000000
+        if (currentValue >= 1000000) {
+          ref.current.textContent = "1 Million +";
+        } else {
+          const options = {
+            useGrouping: !!separator,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          };
 
-        const formattedNumber = Intl.NumberFormat("en-US", options).format(
-          latest.toFixed(0)
-        );
+          const formattedNumber = Intl.NumberFormat("en-US", options).format(
+            currentValue
+          );
 
-        ref.current.textContent = separator
-          ? formattedNumber.replace(/,/g, separator)
-          : formattedNumber;
+          ref.current.textContent = separator
+            ? formattedNumber.replace(/,/g, separator)
+            : formattedNumber;
+        }
       }
     });
 

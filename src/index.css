@@ -259,52 +259,11 @@
 
   /* Modern Button Styles */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white rounded-xl;
-    background: var(--gradient-primary);
-    box-shadow: var(--shadow-colored);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px -8px rgba(79, 70, 229, 0.35);
-  }
-
-  .btn-primary:active {
-    transform: translateY(0);
-  }
-
-  .btn-primary:focus-visible {
-    outline: 2px solid #a5b4fc;
-    outline-offset: 2px;
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transform hover:scale-105;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    border: 2px solid #e2e8f0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .btn-secondary:hover {
-    border-color: #cbd5e1;
-    background: var(--bg-secondary);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .btn-secondary:focus-visible {
-    outline: 2px solid #4f46e5;
-    outline-offset: 2px;
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-6 py-3 rounded-lg border border-gray-300 hover:border-gray-400 transition-all duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2;
   }
 
   /* Enhanced Card Styles with Teacher-First Design */
@@ -323,11 +282,11 @@
   }
 
   .card-feature {
-    @apply card-elevated p-6 group cursor-pointer;
+    @apply bg-white rounded-2xl p-8 border border-gray-200/50 hover:shadow-lg transition-all duration-300 group;
   }
 
-  .card-feature:hover {
-    @apply border-indigo-200;
+  .card-testimonial {
+    @apply bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300;
   }
 
   /* Interactive Background Elements */
@@ -588,6 +547,19 @@
       transform: scale(1.02);
     }
   }
+
+  /* Demo Interface Styles */
+  .demo-button {
+    @apply w-full text-left p-6 rounded-xl border-2 transition-all duration-300 hover:shadow-md;
+  }
+
+  .demo-button.active {
+    @apply bg-indigo-50 border-indigo-300 shadow-lg;
+  }
+
+  .demo-button:not(.active) {
+    @apply bg-white border-gray-200 hover:border-indigo-200;
+  }
 }
 
 /* Enhanced Responsive Design */
@@ -630,8 +602,7 @@
 /* Focus Styles for Accessibility */
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--remarkably-primary);
-  outline-offset: 2px;
+  @apply outline-2 outline-offset-2 outline-indigo-500;
 }
 
 /* Print Styles */
@@ -639,6 +610,21 @@ a:focus-visible {
   .floating-elements,
   .interactive-bg::before {
     display: none;
+  }
+}
+
+/* Improved Responsive Breakpoints */
+@media (max-width: 640px) {
+  .btn-primary {
+    @apply px-6 py-3 text-base;
+  }
+  
+  .card-feature {
+    @apply p-6;
+  }
+  
+  .demo-button {
+    @apply p-4;
   }
 }
 

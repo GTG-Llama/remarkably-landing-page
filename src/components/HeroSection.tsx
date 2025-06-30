@@ -16,20 +16,19 @@ import {
   Heart,
   Sparkles,
   Calendar,
-  Download
+  Download,
+  ChevronDown
 } from "lucide-react";
 import CountUp from "./CountUp";
 import NeuralMapOverlay from "./NeuralMapOverlay";
-import HeroVideo from './HeroVideo';
 import { useNavigation } from '../contexts/NavigationContext';
-
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const { getPath } = useNavigation();
   
-  // Mouse spotlight effect state (mousePosition removed as unused)
+  // Mouse spotlight effect state
   const [globalMousePosition, setGlobalMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -44,352 +43,184 @@ const HeroSection: React.FC = () => {
     });
   };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 120,
-        damping: 12,
-        duration: 0.6,
-      },
-    },
-  };
-
-  const statsVariants = {
-    hidden: { y: 20, opacity: 0, scale: 0.95 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 15,
-        duration: 0.7,
-      },
-    },
-  };
-
-  // Enhanced metrics with teacher-focused messaging
-  const metrics = [
-    {
-      icon: <Clock className="w-5 h-5" />,
-      number: "5–7×",
-      label: "Faster Grading",
-      description: "Reduce grading time from hours to minutes",
-      gradient: "from-amber-500 via-orange-500 to-orange-600",
-      bgColor: "bg-amber-50",
-      textColor: "text-amber-700",
-      borderColor: "border-amber-200"
-    },
-    {
-      icon: <BookOpen className="w-5 h-5" />,
-      number: <CountUp to={1000000} duration={2.5} className="font-bold" />,
-      label: "Words Graded", 
-      description: "Across real student essays",
-      gradient: "from-indigo-500 via-purple-600 to-indigo-600",
-      bgColor: "bg-indigo-50",
-      textColor: "text-indigo-700",
-      borderColor: "border-indigo-200",
-      isAnimated: true
-    },
-    {
-      icon: <Heart className="w-5 h-5" />,
-      number: "95%+",
-      label: "Teacher Satisfaction",
-      description: "Educators love the time savings",
-      gradient: "from-emerald-500 via-teal-600 to-emerald-600",
-      bgColor: "bg-emerald-50",
-      textColor: "text-emerald-700",
-      borderColor: "border-emerald-200"
-    }
+  const stats = [
+    { icon: <Clock className="w-6 h-6" />, value: "7x", label: "Faster Grading" },
+    { icon: <Users className="w-6 h-6" />, value: "Hundreds", label: "Teachers and Students Trust Us" },
+    { icon: <Award className="w-6 h-6" />, value: "99%", label: "Accuracy Rate" },
   ];
 
   return (
     <>
       <section
         ref={sectionRef}
-        className="relative overflow-hidden min-h-screen group bg-white"
+        id="hero-section"
+        className="relative min-h-screen flex items-center justify-center bg-neural overflow-hidden"
         onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         aria-label="Hero section introducing Remarkably AI essay grading platform"
       >
-      {/* Layer 1: Enhanced gradient background */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-                      background: `
-              radial-gradient(circle at 70% 60%, rgba(99, 102, 241, 0.5) 0%, rgba(139, 92, 246, 0.18) 30%, rgba(219, 234, 254, 0.15) 40%, transparent 70%),
-              linear-gradient(135deg, rgba(241, 245, 249, 1) 0%, rgba(248, 250, 252, 0.95) 40%, rgba(255, 255, 255, 1) 100%)
-            `
-        }}
-        aria-hidden="true"
-      ></div>
-
-      {/* Layer 2: Localized Grid Background (visible only in spotlight area) */}
-      {isHovered && (
-        <div
-          className="fixed inset-0 z-5 pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3e%3cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='%23ffffff' stroke-width='1.5' opacity='1'/%3e%3c/pattern%3e%3c/defs%3e%3crect width='100%25' height='100%25' fill='url(%23grid)' /%3e%3c/svg%3e")`,
-            backgroundSize: '60px 60px',
-            maskImage: `radial-gradient(circle 200px at ${globalMousePosition.x}px ${globalMousePosition.y}px, white 0%, white 60%, transparent 100%)`,
-            WebkitMaskImage: `radial-gradient(circle 200px at ${globalMousePosition.x}px ${globalMousePosition.y}px, white 0%, white 60%, transparent 100%)`,
-            opacity: 0.8
-          }}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Layer 3: Neural Network Overlay */}
-      <div className="absolute inset-0 z-10" aria-hidden="true">
-        <NeuralMapOverlay />
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-yellow-50" />
+        
+        {/* Animated Background Dots */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-20 w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+          <div className="absolute top-40 right-32 w-3 h-3 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute bottom-32 left-1/4 w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-20 right-20 w-3 h-3 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '1.5s' }} />
       </div>
 
-      {/* Layer 4: Enhanced Blue Spotlight Effect */}
-      {isHovered && (
-        <motion.div
-          className="pointer-events-none fixed z-20"
-          style={{
-            left: globalMousePosition.x - 200,
-            top: globalMousePosition.y - 200,
-            width: 400,
-            height: 400,
-            background: `
-              radial-gradient(circle, 
-                rgba(99, 102, 241, 0.4) 0%, 
-                rgba(139, 92, 246, 0.4) 25%, 
-                rgba(99, 102, 241, 0.15) 45%, 
-                rgba(139, 92, 246, 0.08) 65%,
-                transparent 80%
-              )
-            `,
-            borderRadius: '50%',
-            filter: 'blur(15px)',
-            mixBlendMode: 'normal'
-          }}
-          initial={{ opacity: 0, scale: 0.7 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.7 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          aria-hidden="true"
-        />
-      )}
-
-      {/* Layer 5: Hero Content */}
-      <div className="container-custom relative z-30 pt-28 sm:pt-36 md:pt-28 lg:pt-20 xl:pt-20">
-        <div className="flex flex-col justify-start">
           {/* Main Content */}
-          <motion.div
-            className="text-center space-y-2 max-w-5xl mx-auto"
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-          >
-            {/* Main Headline with Enhanced Typography */}
-            <div className="space-y-6">
-              <h1
-                className="break-words text-balance"
-                id="main-heading"
-                ref={headlineRef}
-              >
-                <span className="block text-slate-900 mb-3 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight">
-                  <span className="block sm:hidden">
-                    Stop Spending<br />Weekends<br />Grading
-                  </span>
-                  <span className="hidden sm:inline">
-                    Stop Spending Weekends Grading
-                  </span>
+        <div className="container-standard px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            {/* Main Content - Centered */}
+            <div className="text-center">
+              {/* Badge */}
+              <div className="mb-6 lg:mb-8">
+                <span className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 border-2 border-black text-black font-bold text-sm shadow-md">
+                  <Sparkles className="w-4 h-4" />
+                  Trusted by Thousands Worldwide
                 </span>
-                <span className="block text-indigo-600 mb-6 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
-                  Grade 7× Faster with AI
-                </span>
-                <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-black-700 leading-relaxed max-w-4xl mx-auto text-center">
-                  Remarkably grades handwritten essays in your style, using your rubric — proven in our pilot program.
-                </span>
-              </h1>
-            </div>
-
-            {/* Video Integration - Seamlessly placed after headline */}
-            <div className="mt-8 mb-8 flex justify-center">
-              <div className="relative w-full max-w-2xl">
-                <HeroVideo
-                  videoSrc="/remarkably.mp4"
-                  fallbackImage="/hero-video-fallback.svg"
-                  alt="Remarkably AI essay grading demo"
-                  className="w-full h-48 sm:h-56 md:h-64 lg:h-72 rounded-2xl shadow-lg border border-gray-200/50"
-                />
-                {/* Subtle decorative elements that fit with beta design */}
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-indigo-500 rounded-full opacity-60 animate-pulse hidden lg:block"></div>
-                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-purple-500 rounded-full opacity-40 animate-pulse hidden lg:block" style={{ animationDelay: '1s' }}></div>
               </div>
-            </div>
 
-            {/* Try and Demo Buttons */}
-            <div className="mt-6 mb-6 flex justify-center gap-4 flex-col sm:flex-row">
-              <div className="flex flex-col items-center">
-                <a
-                  href="https://app.remarkably.ink"
-                  className="w-52 sm:w-56 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              {/* Main Headlines */}
+              <h1 
+                ref={headlineRef}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black mb-6 sm:mb-8 leading-tight"
+              >
+                Stop Spending Weekends Grading
+              </h1>
+              
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black mb-6 sm:mb-8 leading-tight">
+                Grade{" "}
+                <span className="relative">
+                  <span className="bg-yellow-300 px-2 py-1 -rotate-1 inline-block border-4 border-black shadow-lg">
+                    7× Faster
+                  </span>
+                </span>
+                {" "}with AI
+              </h2>
+
+              {/* Subheadline */}
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0">
+                Remarkably grades handwritten essays in your style, using your rubric — proven in our pilot program.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="mb-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <a
+                    href="https://app.remarkably.ink"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg px-8 py-4 border-4 border-black rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
                   Try for free
-                  <span className="sr-only">For Teachers</span>
-                  </a>
-                <span
-                  className="text-xs text-gray-500 mt-1 tracking-tight leading-snug"
-                  aria-hidden="true"
-                >
-                  For Teachers
-                </span>
-              </div>
-              <div className="flex flex-col items-center">
+                </a>
                 <Link
-                  to={getPath('/contact')}
-                  className="w-52 sm:w-56 bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold text-base px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 justify-center focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                  to={getPath("/contact")}
+                  className="bg-white hover:bg-gray-50 text-gray-900 font-bold text-lg px-8 py-4 border-4 border-black rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
                   Book free demo
-                  <span className="sr-only">For Schools</span>
                 </Link>
-                <span
-                  className="text-xs text-gray-500 mt-1 tracking-tight leading-snug"
-                  aria-hidden="true"
-                >
-                  For Schools
-                </span>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-600 px-4 sm:px-0 mb-16">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span>No credit card required</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span>Free 1-month trial</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span>Cancel anytime</span>
+                </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Enhanced Metrics Section with Professional Cards */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="mt-12 md:mt-32 max-w-5xl mx-auto"
-            role="region"
-            aria-labelledby="metrics-heading"
-          >
-            <motion.div variants={itemVariants} className="text-center mb-8 md:mb-12">
-              <h2 id="metrics-heading" className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Proven results from pilot program
-              </h2>
-              <div className="w-16 md:w-24 h-0.5 bg-gradient-to-r from-indigo-300 to-purple-400 mx-auto rounded-full" aria-hidden="true"></div>
-            </motion.div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {metrics.map((metric, index) => (
-                <motion.div
+          {/* Stats Section - Full Width Below */}
+          <div className="mt-16 lg:mt-20">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Trusted Results</h2>
+              <p className="text-gray-600">Real impact for teachers and students</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-0">
+              {stats.map((stat, index) => (
+                <div
                   key={index}
-                  variants={statsVariants}
-                  className={`${metric.bgColor} ${metric.borderColor} rounded-2xl p-6 md:p-8 border-2 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden backdrop-blur-sm focus-within:ring-2 focus-within:ring-indigo-500/50`}
-                  whileHover={{ scale: 1.02 }}
-                  tabIndex={0}
-                  role="article"
-                  aria-labelledby={`metric-${index}-label`}
-                  aria-describedby={`metric-${index}-desc`}
+                  className="bg-white border-2 sm:border-4 border-black p-4 sm:p-6 shadow-lg sm:shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
                 >
-                  {/* Enhanced Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${metric.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} aria-hidden="true" />
-                  
-                  <div className="relative">
-                    <div className="flex items-center justify-center mb-6">
-                      <motion.div 
-                        className={`w-12 md:w-14 h-12 md:h-14 rounded-xl bg-gradient-to-br ${metric.gradient} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                        animate={{ 
-                          rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{ 
-                          duration: 4, 
-                          repeat: Infinity, 
-                          delay: index * 0.5,
-                          ease: "easeInOut" 
-                        }}
-                        aria-hidden="true"
-                      >
-                        {metric.icon}
-                      </motion.div>
-                    </div>
-                    
-                    <div className="text-center space-y-3">
-                      <div className={`text-3xl md:text-4xl lg:text-5xl font-bold ${metric.textColor} tracking-tight`}>
-                        {metric.isAnimated ? metric.number : metric.number}
-                      </div>
-                      <div id={`metric-${index}-label`} className="font-semibold text-gray-900 text-base md:text-lg">
-                        {metric.label}
-                      </div>
-                      <div id={`metric-${index}-desc`} className="text-xs md:text-sm font-medium text-gray-600 leading-relaxed">
-                        {metric.description}
-                      </div>
-                    </div>
+                  <div className="flex items-center justify-center mb-4 text-indigo-600">
+                    {stat.icon}
                   </div>
-                </motion.div>
+                  <div className="text-3xl font-black text-black mb-2">{stat.value}</div>
+                  <div className="text-gray-600 font-medium">{stat.label}</div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
+        </div>
 
-          {/* Enhanced Social Proof with Better Visual Design */}
-          <motion.div 
-            variants={itemVariants}
-            className="text-center mt-16 md:mt-20 space-y-6"
-            role="region"
-            aria-label="Social proof and user statistics"
+        {/* Scroll Down Indicator */}
+        <div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-pointer"
+          onClick={() => {
+            const metricsSection = document.getElementById('metrics-section');
+            metricsSection?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          <p className="text-sm text-gray-600 mb-2 font-medium">See our impact</p>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-8 h-8 bg-white border-2 border-black rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"
           >
-            <p className="text-sm font-medium text-gray-600">
-              Join educators who've transformed their grading workflow
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
-              <div className="flex -space-x-3" role="img" aria-label="Educator avatars">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <motion.div
-                    key={i}
-                    className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-600 border-2 md:border-3 border-white flex items-center justify-center text-white text-xs font-bold shadow-lg"
-                    whileHover={{ scale: 1.1, zIndex: 10 }}
-                    animate={{ 
-                      y: [0, -5, 0],
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity, 
-                      delay: i * 0.2,
-                      ease: "easeInOut" 
-                    }}
-                    aria-hidden="true"
-                  >
-                    {String.fromCharCode(64 + i)}
-                  </motion.div>
-                ))}
-              </div>
-              <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-gray-700 bg-white/60 backdrop-blur-sm px-3 md:px-4 py-2 rounded-full border border-gray-200/60">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></div>
-                <span>Educators saving hours weekly</span>
-              </div>
-            </div>
+            <ChevronDown className="w-4 h-4 text-black" />
           </motion.div>
         </div>
-      </div>
+
+        {/* Floating Elements */}
+        <motion.div
+          className="absolute top-1/4 left-10 w-16 h-16 bg-yellow-300 border-4 border-black rotate-12 hidden lg:block"
+          animate={{
+            rotate: [12, 18, 12],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/4 right-10 w-12 h-12 bg-pink-300 border-4 border-black -rotate-12 hidden lg:block"
+          animate={{
+            rotate: [-12, -6, -12],
+            y: [0, -10, 0],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* Subtle Mouse Follower */}
+        {globalMousePosition.x > 0 && (
+          <div
+            className="absolute pointer-events-none rounded-full bg-gradient-radial from-yellow-200/20 to-transparent hidden lg:block"
+            style={{
+              left: globalMousePosition.x - 150,
+              top: globalMousePosition.y - 150,
+              width: 300,
+              height: 300,
+              transition: 'all 0.3s ease',
+            }}
+          />
+        )}
       </section>
     </>
   );

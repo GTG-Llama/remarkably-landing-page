@@ -25,7 +25,6 @@ import {
 } from 'lucide-react';
 
 const StudentTracking: React.FC = () => {
-  const [userType, setUserType] = useState<'teachers' | 'schools'>('teachers');
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -243,36 +242,7 @@ const StudentTracking: React.FC = () => {
         </div>
       </section>
 
-      {/* User Type Selector */}
-      <section className="py-12 bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Choose Your Perspective</h2>
-            <div className="inline-flex rounded-lg bg-gray-100 p-1">
-              <button
-                onClick={() => setUserType('teachers')}
-                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
-                  userType === 'teachers'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                For Teachers
-              </button>
-              <button
-                onClick={() => setUserType('schools')}
-                className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
-                  userType === 'schools'
-                    ? 'bg-white text-indigo-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                For Schools
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Progress Tracking Process */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
@@ -403,18 +373,15 @@ const StudentTracking: React.FC = () => {
           >
             <motion.div variants={itemVariants} className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                {userType === 'teachers' ? 'Perfect for Individual Teachers' : 'Designed for Schools & Institutions'}
+                Perfect for Individual Teachers
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                {userType === 'teachers' 
-                  ? 'Get the insights you need to support every student\'s writing journey and celebrate their progress.'
-                  : 'Scale student monitoring across your entire institution with comprehensive tracking and reporting.'
-                }
+                Get the insights you need to support every student's writing journey and celebrate their progress.
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {benefits[userType].map((benefit, index) => (
+              {benefits['teachers'].map((benefit, index) => (
                 <motion.div 
                   key={index} 
                   variants={itemVariants}

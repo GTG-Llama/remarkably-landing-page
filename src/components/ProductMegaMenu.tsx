@@ -28,83 +28,59 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
   const teacherFeatures = [
     {
       name: 'Handwriting Recognition',
-      description: 'AI that reads and grades handwritten essays',
+      description: 'AI that reads and grades handwritten essays with 95%+ accuracy',
       icon: <Brain className="w-5 h-5" />,
       path: '/beta/features/handwriting-recognition',
       badge: 'Popular'
     },
     {
+      name: 'Personalized Feedback',
+      description: 'Generate detailed feedback that matches your teaching style',
+      icon: <MessageSquare className="w-5 h-5" />,
+      path: '/beta/features/feedback-generation'
+    },
+    {
       name: 'Instant Grading',
-      description: 'Grade essays in seconds, not hours',
+      description: 'Grade entire classes in minutes instead of hours',
       icon: <Zap className="w-5 h-5" />,
       path: '/beta/features/instant-grading',
       badge: 'New'
     },
     {
       name: 'Custom Rubric Upload',
-      description: 'Upload your grading criteria and let AI adapt',
+      description: 'Upload your rubrics and let AI grade to your exact standards',
       icon: <Upload className="w-5 h-5" />,
-      path: '/beta/pricing',
+      path: '/beta/contact',
       badge: 'Coming Soon'
-    },
-    {
-      name: 'Flexible Subscription',
-      description: 'Pay per essay or choose monthly plans',
-      icon: <CreditCard className="w-5 h-5" />,
-      path: '/beta/pricing'
-    },
-    {
-      name: 'Easy Implementation',
-      description: 'Set up in 5 minutes, grade in seconds',
-      icon: <Settings className="w-5 h-5" />,
-      path: '/beta/features/handwriting-recognition'
     }
   ];
 
   const schoolFeatures = [
     {
       name: 'Teacher Style Learning',
-      description: 'AI learns each teacher\'s grading preferences',
+      description: 'AI adapts to each teacher\'s grading style and feedback preferences',
       icon: <Target className="w-5 h-5" />,
       path: '/beta/features/teacher-style-learning',
       badge: 'Enterprise'
     },
     {
-      name: 'Analytics Dashboard',
-      description: 'School-wide insights and performance metrics',
+      name: 'Analytics & Progress Tracking',
+      description: 'Track class performance, student improvement, and generate reports',
       icon: <BarChart3 className="w-5 h-5" />,
       path: '/beta/features/analytics-dashboard'
     },
     {
-      name: 'Student Progress Tracking',
-      description: 'Monitor student improvement over time',
+      name: 'Batch Processing',
+      description: 'Grade entire classes simultaneously with consistent quality',
       icon: <Users className="w-5 h-5" />,
-      path: '/beta/features/student-tracking'
+      path: '/beta/features/instant-grading'
     },
     {
-      name: 'Feedback Generation',
-      description: 'Consistent, quality feedback across all faculty',
-      icon: <MessageSquare className="w-5 h-5" />,
-      path: '/beta/features/feedback-generation'
-    },
-    {
-      name: 'School Implementation',
-      description: 'Campus-wide deployment and training',
+      name: 'Enterprise Solutions',
+      description: 'Custom deployment, training, and white-label implementation services',
       icon: <Building className="w-5 h-5" />,
-      path: '/beta/contact'
-    },
-    {
-      name: 'White-label Solutions',
-      description: 'Branded platform matching your school identity',
-      icon: <Palette className="w-5 h-5" />,
       path: '/beta/contact',
       badge: 'Custom'
-    },
-    {
-      name: 'Custom Grading Criteria',
-      description: 'Tailored grading criteria and additional tools',
-      icon: <Cog className="w-5 h-5" />,
-      path: '/beta/contact'
     }
   ];
 

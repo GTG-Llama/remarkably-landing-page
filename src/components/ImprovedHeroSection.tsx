@@ -94,7 +94,7 @@ const ImprovedHeroSection: React.FC = () => {
   return (
     <section
       id="hero-section"
-      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 overflow-hidden"
+      className="relative min-h-screen flex flex-col bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Background Elements */}

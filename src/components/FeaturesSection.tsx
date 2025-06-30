@@ -43,7 +43,7 @@ const FeaturesSection: React.FC = () => {
     {
       icon: Clock,
       title: "Lightning Fast Results",
-      description: "Get comprehensive feedback in seconds, not hours. Save 6-7 hours per week on grading tasks.",
+      description: "Get comprehensive feedback in seconds, not hours. Save 5-7 hours per week on grading tasks.",
       gradient: "from-blue-500 to-cyan-600", 
       bgGradient: "from-blue-50 to-cyan-50"
     },

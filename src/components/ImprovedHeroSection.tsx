@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Zap, Clock, CheckCircle, Users, Award, Sparkles, ChevronDown } from "lucide-react";
+import { Zap, Clock, CheckCircle, Users, Award, Sparkles, ChevronDown, FileText, Heart } from "lucide-react";
+import CountUp from "./CountUp";
 
 // Floating Grading Interface Component
 const FloatingGradingInterface: React.FC = () => {
@@ -86,9 +87,26 @@ const ImprovedHeroSection: React.FC = () => {
   };
 
   const stats = [
-    { icon: <Clock className="w-6 h-6" />, value: "7x", label: "Faster Grading" },
-    { icon: <Users className="w-6 h-6" />, value: "Hundreds", label: "Teachers and Students Trust Us" },
-    { icon: <Award className="w-6 h-6" />, value: "99%", label: "Accuracy Rate" },
+    { 
+      icon: <Clock className="w-6 h-6" />, 
+      value: "7x", 
+      label: "Faster Grading",
+      countUp: false 
+    },
+    { 
+      icon: <FileText className="w-6 h-6" />, 
+      value: 1000000, 
+      // suffix: "+", 
+      label: "Words Graded",
+      countUp: true 
+    },
+    { 
+      icon: <Heart className="w-6 h-6" />, 
+      value: 95, 
+      suffix: "%", 
+      label: "Teacher Satisfaction",
+      countUp: true 
+    },
   ];
 
   return (
@@ -167,24 +185,57 @@ const ImprovedHeroSection: React.FC = () => {
 
           {/* Stats Section - Full Width Below */}
           <div className="mt-16 lg:mt-20">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Trusted Results</h2>
-              <p className="text-gray-600">Real impact for teachers and students</p>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Trusted Results</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">Real impact for teachers and students worldwide</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100"
-                >
-                  <div className="flex items-center justify-center mb-4 text-indigo-600">
-                    {stat.icon}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl w-full">
+                {stats.map((stat, index) => (
+                  <div
+                    key={index}
+                    className="relative group"
+                  >
+                    {/* Background with gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                    
+                    {/* Main card */}
+                    <div className="relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 text-center">
+                      {/* Icon with gradient background */}
+                      <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <div className="text-white">
+                          {stat.icon}
+                        </div>
+                      </div>
+                      
+                      {/* Value */}
+                      <div className="text-4xl lg:text-5xl font-black mb-3">
+                        <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                          {stat.countUp ? (
+                            <>
+                              <CountUp 
+                                to={typeof stat.value === 'number' ? stat.value : 0} 
+                                duration={2.5}
+                                separator={stat.value === 1000000 ? "," : ""}
+                              />
+                              {stat.suffix}
+                            </>
+                          ) : (
+                            stat.value
+                          )}
+                        </span>
+                      </div>
+                      
+                      {/* Label */}
+                      <div className="text-gray-700 font-semibold text-lg">{stat.label}</div>
+                      
+                      {/* Decorative line */}
+                      <div className="w-12 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mx-auto mt-4"></div>
+                    </div>
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -198,14 +249,7 @@ const ImprovedHeroSection: React.FC = () => {
           metricsSection?.scrollIntoView({ behavior: 'smooth' });
         }}
       >
-        <p className="text-sm text-gray-600 mb-2 font-medium">See our impact</p>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow border border-gray-200"
-        >
-          <ChevronDown className="w-4 h-4 text-gray-600" />
-        </motion.div>
+        {/*  */}
       </div>
 
       {/* Floating Elements */}

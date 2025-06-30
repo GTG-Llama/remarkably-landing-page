@@ -32,6 +32,196 @@ import {
   CreditCard
 } from 'lucide-react';
 
+// Interactive Demo Component 1
+const HowItWorksDemo1: React.FC = () => {
+  const [activeFeature1, setActiveFeature1] = useState('upload');
+
+  const features1 = [
+    {
+      id: 'analysis',
+      title: 'Comprehensive AI Analysis',
+      description: 'AI evaluates content quality, narrative structure, vocabulary usage, and writing effectiveness. Goes beyond grammar to assess literary elements and coherence.',
+      icon: <Brain className="h-6 w-6" />,
+      image: '/Essay Grader Dashboard.png',
+      alt: 'Comprehensive AI analysis dashboard showing detailed essay evaluation'
+    },
+    {
+      id: 'recognition',
+      title: 'Handwriting Recognition',
+      description: 'Advanced OCR technology reads even messy handwriting with 95%+ accuracy. Handles different pen colors, paper types, and writing styles automatically.',
+      icon: <FileText className="h-6 w-6" />,
+      image: '/(Student B) marking on messy handwriting.png',
+      alt: 'Handwriting recognition processing messy student handwriting'
+    },
+    {
+      id: 'upload',
+      title: 'Upload Essays',
+      description: 'Drag and drop or upload handwritten/digital essays in multiple formats. Supports PDF, images, Word docs, and more. Bulk upload entire classes at once.',
+      icon: <Upload className="h-6 w-6" />,
+      image: '/PDF Splitter.png',
+      alt: 'PDF splitter interface showing essay upload process'
+    },
+  ];
+
+  const currentFeature1 = features1.find(f => f.id === activeFeature1) || features1[0];
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-6 gap-6 max-w-7xl mx-auto items-center">
+      {/* Feature Selection - Left Side */}
+      <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="lg:col-span-2">
+        <div className="w-full space-y-3">
+          {features1.map((feature) => (
+            <motion.button
+              key={feature.id}
+              onClick={() => setActiveFeature1(feature.id)}
+              className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer ${
+                activeFeature1 === feature.id
+                  ? 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-400 shadow-xl'
+                  : 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-lg'
+              }`}
+              whileHover={{ scale: 1.01, y: -2 }}
+              whileTap={{ scale: 0.99 }}
+            >
+              <div className="flex items-center space-x-4">
+                <div className={`p-3 rounded-lg transition-all duration-300 ${
+                  activeFeature1 === feature.id
+                    ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600'
+                }`}>
+                  <div className="text-lg">
+                    {feature.icon}
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h4 className={`font-bold text-base mb-1 transition-colors ${
+                    activeFeature1 === feature.id ? 'text-indigo-900' : 'text-gray-900'
+                  }`}>
+                    {feature.title}
+                  </h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Dynamic Image Display - Right Side */}
+      <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="lg:col-span-4">
+        <div className="aspect-video bg-gray-100 rounded-2xl overflow-hidden shadow-2xl relative">
+          <motion.img
+            key={activeFeature1}
+            src={currentFeature1.image}
+            alt={currentFeature1.alt}
+            className="w-full h-full object-cover"
+            loading="lazy"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+// Interactive Demo Component 2
+const HowItWorksDemo2: React.FC = () => {
+  const [activeFeature2, setActiveFeature2] = useState('grading');
+
+  const features2 = [
+    {
+      id: 'grading',
+      title: 'Smart Grading',
+      description: 'AI applies your custom rubrics and grading criteria automatically. Ensures consistent evaluation across all students while maintaining your unique teaching standards and expectations.',
+      icon: <Target className="h-6 w-6" />,
+      image: '/Grading Interface .png',
+      alt: 'Smart grading interface with rubric application'
+    },
+    {
+      id: 'feedback',
+      title: 'Personalized Feedback Generation',
+      description: 'Creates detailed, constructive feedback that matches your teaching voice and style. Identifies strengths, areas for improvement, and provides specific suggestions for student growth.',
+      icon: <MessageSquare className="h-6 w-6" />,
+      image: '/(Student B) Essay Feedback.png',
+      alt: 'Detailed essay feedback interface with personalized comments'
+    },
+    {
+      id: 'analytics',
+      title: 'Progress Analytics & Insights',
+      description: 'Track individual student progress, class performance trends, and common areas for improvement. Generate reports for parents, administrators, and curriculum planning.',
+      icon: <BarChart3 className="h-6 w-6" />,
+      image: '/Score Distribution and Improvement.png',
+      alt: 'Analytics dashboard showing score distribution and improvements'
+    }
+  ];
+
+  const currentFeature2 = features2.find(f => f.id === activeFeature2) || features2[0];
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-6 gap-6 max-w-7xl mx-auto items-center">
+      {/* Feature Selection - Left Side */}
+      <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="lg:col-span-2">
+        <div className="w-full space-y-3">
+          {features2.map((feature) => (
+            <motion.button
+              key={feature.id}
+              onClick={() => setActiveFeature2(feature.id)}
+              className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer ${
+                activeFeature2 === feature.id
+                  ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-400 shadow-xl'
+                  : 'bg-white border-gray-200 hover:border-green-300 hover:shadow-lg'
+              }`}
+              whileHover={{ scale: 1.01, y: -2 }}
+              whileTap={{ scale: 0.99 }}
+            >
+              <div className="flex items-center space-x-4">
+                <div className={`p-3 rounded-lg transition-all duration-300 ${
+                  activeFeature2 === feature.id
+                    ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600'
+                }`}>
+                  <div className="text-lg">
+                    {feature.icon}
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h4 className={`font-bold text-base mb-1 transition-colors ${
+                    activeFeature2 === feature.id ? 'text-green-900' : 'text-gray-900'
+                  }`}>
+                    {feature.title}
+                  </h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Dynamic Image Display - Right Side */}
+      <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="lg:col-span-4">
+        <div className="aspect-video bg-gray-100 rounded-2xl overflow-hidden shadow-2xl relative">
+          <motion.img
+            key={activeFeature2}
+            src={currentFeature2.image}
+            alt={currentFeature2.alt}
+            className="w-full h-full object-cover"
+            loading="lazy"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 const Home: React.FC = () => {
   const [activeDemo, setActiveDemo] = useState('essay-analysis');
 
@@ -114,7 +304,7 @@ const Home: React.FC = () => {
     {
       icon: <Calendar className="h-8 w-8" />,
       title: "Get Your Weekends Back",
-      description: "Stop spending hours grading. Get 6-7 hours back weekly to focus on teaching and life.",
+      description: "Stop spending hours grading. Get 8+ hours back weekly to focus on teaching and life.",
       gradient: "from-emerald-500 to-teal-600",
       bgColor: "bg-emerald-50",
       textColor: "text-emerald-700"
@@ -129,7 +319,7 @@ const Home: React.FC = () => {
     },
     {
       icon: <Lightbulb className="h-8 w-8" />,
-      title: "Give Better Feedback, Faster",
+      title: "Mimics your marking style",
       description: "Provide detailed, constructive feedback that helps students improve while saving time.",
       gradient: "from-amber-500 to-orange-600",
       bgColor: "bg-amber-50", 
@@ -140,23 +330,22 @@ const Home: React.FC = () => {
   // Testimonials with teacher focus
   const testimonials = [
     {
-      name: "Sarah Chen",
-      role: "English Teacher, Raffles Institution",
+      // name: "",
+      role: "Private Tutor",
       content: "Remarkably gave me my weekends back. I can finally focus on lesson planning instead of endless grading!",
       rating: 5,
-      avatar: "SC"
+      avatar: "T"
     },
     {
-      name: "Marcus Wong",
-      role: "HOD English, Hwa Chong Institution", 
-      content: "The consistency is amazing. All my teachers now grade with the same standards, and students love the detailed feedback.",
+      role: "English Teacher, Lianhua Primary School", 
+      content: "With Remarkably, I cut grading time from 15 minutes to 3 minutes per essay. Beyond speed, it's helped me give clearer, more meaningful feedback to support my students' growth.",
       rating: 5,
       avatar: "MW"
     },
     {
-      name: "Priya Sharma",
-      role: "Secondary Teacher, NUS High School",
-      content: "I was skeptical about AI grading, but Remarkably actually writes feedback in MY style. It's incredible!",
+      name: "Mavis Low",
+      role: "Singapore Ministry of Education School, Vice Principal",
+      content: "Engaging the services of the Remarkably was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation, personalised student support like more time nuturing students' writing skills.",
       rating: 5,
       avatar: "PS"
     }
@@ -166,15 +355,15 @@ const Home: React.FC = () => {
   const faqData = [
     {
       question: "How accurate is Remarkably's AI grading?",
-      answer: "Remarkably achieves 90%+ accuracy in grading, matching experienced teachers' assessments. Our AI is specifically trained on Singapore's education standards."
+      answer: "Remarkably achieves 95%+ accuracy in grading, matching experienced teachers' assessments. Our AI is specifically trained on Singapore's education standards."
     },
     {
       question: "Can Remarkably grade handwritten essays?",
-      answer: "Yes! Remarkably uses advanced OCR technology to convert handwritten text into digital format, then applies AI grading with 95%+ accuracy."
+      answer: "Yes! Remarkably uses advanced OCR technology to read handwritten essays, then applies AI grading with 95%+ accuracy."
     },
     {
-      question: "Is Remarkably suitable for Singapore MOE schools?",
-      answer: "Absolutely! Remarkably is specifically designed for Singapore's education system, supporting MOE curriculum standards and trusted by multiple MOE schools."
+      question: "Is Remarkably suitable for all schools?",
+      answer: "Absolutely! Remarkably can tailor a solution for your school education system, supporting any type of curriculum standards, rubrics and customization you want."
     }
   ];
 
@@ -229,7 +418,38 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. How It Works Section */}
+      {/* 3. How It Works Section - Part 1 */}
+      <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {/* Section Header */}
+            <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
+              <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
+                <Play className="h-4 w-4 mr-2" />
+                How It Works - Part 1
+              </div>
+              
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Upload & Analysis Process
+              </h2>
+              
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                See how Remarkably processes your essays from upload to analysis
+              </p>
+            </motion.div>
+            
+            {/* Demo Interface */}
+            <HowItWorksDemo1 />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4. How It Works Section - Part 2 */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -238,150 +458,36 @@ const Home: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
+            {/* Section Header */}
             <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
-                <Zap className="h-4 w-4 mr-2" />
-                Simple Process
+              <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-6">
+                <Target className="h-4 w-4 mr-2" />
+                How It Works - Part 2
               </div>
               
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                How Remarkably Works
+                Grading & Feedback Process
               </h2>
               
               <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Get started with AI-powered essay grading in three simple steps
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
-              {howToData.steps.map((step, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  className="text-center group"
-                >
-                  <div className="relative mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                      <span className="text-2xl font-bold text-white">{index + 1}</span>
-                    </div>
-                    {index < howToData.steps.length - 1 && (
-                      <div className="hidden md:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-indigo-300 to-purple-300 transform -translate-x-2"></div>
-                    )}
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.name}</h3>
-                  <p className="text-gray-600 leading-relaxed text-lg">{step.text}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div variants={itemVariants} className="text-center mt-12">
-              <a
-                href="https://app.remarkably.ink"
-                className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                Start Free Trial
-                <ArrowRight className="w-5 h-5" />
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. Interactive Demo Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white" data-demo-section>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {/* Demo Header */}
-            <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
-              <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-6">
-                <Play className="h-4 w-4 mr-2" />
-                See Remarkably in Action
-              </div>
-              
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Watch How It Works
-              </h2>
-              
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Experience our core features through interactive demonstrations
+                Watch how AI generates grades and personalized feedback
               </p>
             </motion.div>
             
             {/* Demo Interface */}
-            <div className="grid grid-cols-1 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
-              
-              {/* Feature Selection - Compact */}
-              <motion.div variants={itemVariants} className="lg:col-span-2 flex items-center">
-                <div className="w-full space-y-3">
-                  {demoFeatures.map((feature) => (
-                    <motion.button
-                      key={feature.id}
-                      onClick={() => setActiveDemo(feature.id)}
-                      className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 shadow-md hover:shadow-lg ${
-                        activeDemo === feature.id
-                          ? 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-400 shadow-xl'
-                          : 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-lg'
-                      }`}
-                      whileHover={{ scale: 1.01, y: -2 }}
-                      whileTap={{ scale: 0.99 }}
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className={`p-3 rounded-lg transition-all duration-300 ${
-                          activeDemo === feature.id
-                            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md'
-                            : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600'
-                        }`}>
-                          <div className="text-lg">
-                            {feature.icon}
-                          </div>
-                        </div>
-                        <div className="flex-1">
-                          <h4 className={`font-bold text-base mb-1 transition-colors ${
-                            activeDemo === feature.id ? 'text-indigo-900' : 'text-gray-900'
-                          }`}>
-                            {feature.title}
-                          </h4>
-                          <p className="text-sm text-gray-600 leading-relaxed">
-                            {feature.description.split(',')[0]}
-                          </p>
-                        </div>
-                      </div>
-                    </motion.button>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Clean Video Player */}
-              <motion.div variants={itemVariants} className="lg:col-span-4">
-                <div className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl relative">
-                  <video
-                    className="w-full h-full object-cover"
-                    controls
-                    poster="/hero-video-fallback.svg"
-                    preload="metadata"
-                  >
-                    <source src="/remarkably.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  
-                  {/* Optional overlay for branding */}
-                  <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1">
-                    <span className="text-white text-sm font-medium">Remarkably Demo</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+            <HowItWorksDemo2 />
           </motion.div>
         </div>
       </section>
 
-      {/* 5. Enhanced Statistics Section */}
+      {/* 5. Interactive Demo Section */}
+      <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white" data-demo-section>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Content removed */}
+        </div>
+      </section>
+
+      {/* 6. Enhanced Statistics Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-indigo-50 to-purple-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -410,10 +516,10 @@ const Home: React.FC = () => {
                 { value: "7×", label: "Faster Grading", description: "Average time reduction", icon: <Clock className="w-8 h-8" /> },
                 { value: "95%+", label: "Accuracy Rate", description: "Matches teacher grading", icon: <Target className="w-8 h-8" /> },
                 { value: "400+", label: "Essays/Month", description: "Currently processed", icon: <FileText className="w-8 h-8" /> },
-                { value: "6-7hrs", label: "Time Saved Weekly", description: "Per teacher average", icon: <Calendar className="w-8 h-8" /> },
+                { value: "8hrs", label: "Time Saved Weekly", description: "Per teacher average", icon: <Calendar className="w-8 h-8" /> },
                 { value: "2000+", label: "Users", description: "Across multiple schools", icon: <Users className="w-8 h-8" /> },
                 { value: "99%", label: "Teacher Satisfaction", description: "Would recommend", icon: <Heart className="w-8 h-8" /> },
-                { value: "MOE", label: "Singapore Approved", description: "Trusted by schools", icon: <Award className="w-8 h-8" /> },
+                { value: "MOE", label: "Schools Approved", description: "Trusted by Singapore Government Schools", icon: <Award className="w-8 h-8" /> },
                 { value: "24/7", label: "Always Available", description: "Grade anytime", icon: <Sparkles className="w-8 h-8" /> }
               ].map((stat, index) => (
                 <motion.div
@@ -435,7 +541,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. Core Benefits Section */}
+      {/* 7. Core Benefits Section */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -500,7 +606,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 7. Comprehensive Features Section */}
+      {/* 8. Comprehensive Features Section */}
       <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -594,7 +700,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 8. FAQ Section */}
+      {/* 9. FAQ Section */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -625,14 +731,14 @@ const Home: React.FC = () => {
                   question: "What pricing plans are available?",
                   answer: "We offer flexible pricing starting from $29/month for individual teachers, with school-wide plans available. All plans include a free trial period."
                 },
-                {
-                  question: "How secure is student data?",
-                  answer: "We use enterprise-grade security with end-to-end encryption, GDPR compliance, and strict data privacy policies. Student data is never shared or used for training."
-                },
-                {
-                  question: "Can I integrate with my existing LMS?",
-                  answer: "Yes! Remarkably integrates with popular learning management systems including Google Classroom, Canvas, and Moodle."
-                }
+                // {
+                //   question: "How secure is student data?",
+                //   answer: "We use enterprise-grade security with end-to-end encryption, GDPR compliance, and strict data privacy policies. Student data is never shared or used for training."
+                // },
+                // {
+                //   question: "Can I integrate with my existing LMS?",
+                //   answer: "Yes! Remarkably integrates with popular learning management systems including Google Classroom, Canvas, and Moodle."
+                // }
               ].map((faq, index) => (
                 <motion.div
                   key={index}
@@ -648,7 +754,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 9. Security & Trust Section */}
+      {/* 10. Security & Trust Section */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-slate-50 to-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -681,8 +787,8 @@ const Home: React.FC = () => {
                 },
                 {
                   icon: <Award className="w-8 h-8" />,
-                  title: "MOE Trusted",
-                  description: "Approved by Singapore Ministry of Education"
+                  title: "MOE Schools",
+                  description: "Approved"
                 },
                 {
                   icon: <Users className="w-8 h-8" />,
@@ -713,184 +819,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 10. Pricing Preview Section */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
-              <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium mb-6">
-                <CreditCard className="h-4 w-4 mr-2" />
-                Simple Pricing
-              </div>
-              
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Choose Your Plan
-              </h2>
-              
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Flexible options for teachers and schools
-              </p>
-            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {[
-                {
-                  name: "Teacher",
-                  price: "$29",
-                  period: "/month",
-                  description: "Perfect for individual educators",
-                  features: ["Up to 100 essays/month", "Personal feedback style", "Basic analytics", "Email support"],
-                  popular: false
-                },
-                {
-                  name: "School",
-                  price: "$99",
-                  period: "/month",
-                  description: "For small schools and departments",
-                  features: ["Up to 500 essays/month", "Multiple teacher styles", "Advanced analytics", "Priority support", "Custom rubrics"],
-                  popular: true
-                },
-                {
-                  name: "Enterprise",
-                  price: "Custom",
-                  period: "",
-                  description: "For large institutions",
-                  features: ["Unlimited essays", "Full customization", "Dedicated support", "API access", "On-premise option"],
-                  popular: false
-                }
-              ].map((plan, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  className={`bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 relative ${
-                    plan.popular ? 'border-2 border-indigo-500 scale-105' : 'border border-gray-200'
-                  }`}
-                  whileHover={{ y: -5, scale: plan.popular ? 1.05 : 1.02 }}
-                >
-                  {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-indigo-500 text-white px-4 py-2 rounded-full text-sm font-medium">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-                  
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                    <div className="mb-4">
-                      <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                      <span className="text-gray-600">{plan.period}</span>
-                    </div>
-                    <p className="text-gray-600">{plan.description}</p>
-                  </div>
-                  
-                  <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-600">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <a
-                    href="https://app.remarkably.ink"
-                    className={`w-full py-3 px-6 rounded-full font-semibold transition-all duration-300 text-center block ${
-                      plan.popular
-                        ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                        : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
-                    }`}
-                  >
-                    Get Started
-                  </a>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 11. Testimonials & Final CTA */}
-      <section className="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-indigo-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {/* Testimonials */}
-            <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Join 2,000+ Happy Teachers
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-16">
-                {testimonials.map((testimonial, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    className="bg-white rounded-3xl p-10 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-500 group relative overflow-hidden"
-                    whileHover={{ y: -6, scale: 1.02 }}
-                  >
-                    {/* Subtle gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-2 mb-6">
-                        {[1, 2, 3, 4, 5].map((i) => (
-                          <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400 drop-shadow-sm" />
-                        ))}
-                      </div>
-                      
-                      <p className="text-gray-700 mb-8 leading-relaxed text-lg italic font-medium">
-                        "{testimonial.content}"
-                      </p>
-                      
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform">
-                          {testimonial.avatar}
-                        </div>
-                        <div>
-                          <div className="font-bold text-gray-900 text-lg">{testimonial.name}</div>
-                          <div className="text-base text-gray-600 font-medium">{testimonial.role}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Final CTA */}
-            <motion.div variants={itemVariants} className="text-center">
-              <div className="bg-white rounded-2xl p-12 shadow-lg border border-gray-200 max-w-4xl mx-auto">
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                  Ready to Get Your Time Back?
-                </h3>
-                <p className="text-xl text-gray-600 mb-8">
-                  Join thousands who've transformed their grading workflow with AI
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <a
-                    href="https://app.remarkably.ink"
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 group transform hover:scale-105"
-                  >
-                    Try For Free!
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
     </>
   );
 };

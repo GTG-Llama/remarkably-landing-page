@@ -178,23 +178,28 @@ const Features: React.FC = () => {
             {mainFeatures.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
+                className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group relative overflow-hidden"
               >
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </div>
+                {/* Subtle gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
-                <Link 
-                  to={feature.link}
-                  className="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-semibold transition-colors group"
-                >
-                  Learn More 
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <div className="relative z-10">
+                  <div className="mb-8">
+                    <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-xl">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+                    <p className="text-gray-600 leading-relaxed text-lg">{feature.description}</p>
+                  </div>
+                  
+                  <Link 
+                    to={feature.link}
+                    className="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-bold transition-colors group/link"
+                  >
+                    Learn More 
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -202,23 +207,27 @@ const Features: React.FC = () => {
       </section>
 
       {/* Additional Features Grid */}
-      <section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative">
+      <section className="py-16 bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Additional Features</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-6">
+              <Sparkles className="h-4 w-4 mr-2" />
+              Enhanced Capabilities
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Additional Features</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               More powerful tools to enhance your grading experience and improve educational outcomes.
             </p>
           </div>
 
-          <div className="feature-grid">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {additionalFeatures.map((feature, index) => (
-              <div key={index} className="card card-padding text-center">
-                <div className="icon-container icon-container-accent mx-auto">
+              <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 text-center group hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
                   {feature.icon}
                 </div>
-                <h3 className="mb-3">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -226,35 +235,41 @@ const Features: React.FC = () => {
       </section>
 
       {/* Comparison Table */}
-      <section className="py-8 md:py-12 px-4 md:px-8 lg:px-16 relative bg-white">
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Traditional vs. AI-Powered Grading</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium mb-6">
+              <BarChart3 className="h-4 w-4 mr-2" />
+              Performance Comparison
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Traditional vs. AI-Powered Grading</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               See how Remarkably compares to traditional grading methods across key metrics.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="card overflow-hidden">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gradient-to-r from-indigo-50 to-purple-50">
                     <tr>
-                      <th className="px-6 py-4 text-left font-semibold text-gray-900">Feature</th>
-                      <th className="px-6 py-4 text-left font-semibold text-gray-900">Traditional Grading</th>
-                      <th className="px-6 py-4 text-left font-semibold text-gray-900">Remarkably AI</th>
-                      <th className="px-6 py-4 text-left font-semibold text-[#667EEA]">Improvement</th>
+                      <th className="px-8 py-6 text-left font-bold text-gray-900 text-lg">Feature</th>
+                      <th className="px-8 py-6 text-left font-bold text-gray-900 text-lg">Traditional Grading</th>
+                      <th className="px-8 py-6 text-left font-bold text-gray-900 text-lg">Remarkably AI</th>
+                      <th className="px-8 py-6 text-left font-bold text-indigo-600 text-lg">Improvement</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-100">
                     {comparisonData.map((row, index) => (
-                      <tr key={index} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
-                        <td className="px-6 py-4 text-gray-600">{row.traditional}</td>
-                        <td className="px-6 py-4 text-gray-900">{row.remarkably}</td>
-                        <td className="px-6 py-4">
-                          <span className="badge badge-primary">{row.improvement}</span>
+                      <tr key={index} className="hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300">
+                        <td className="px-8 py-6 font-bold text-gray-900 text-lg">{row.feature}</td>
+                        <td className="px-8 py-6 text-gray-600 font-medium">{row.traditional}</td>
+                        <td className="px-8 py-6 text-gray-900 font-semibold">{row.remarkably}</td>
+                        <td className="px-8 py-6">
+                          <span className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-full shadow-lg">
+                            {row.improvement}
+                          </span>
                         </td>
                       </tr>
                     ))}

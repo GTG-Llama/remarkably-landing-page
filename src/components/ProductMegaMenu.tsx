@@ -124,48 +124,48 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
       exit="hidden"
       className="fixed top-16 left-0 right-0 bg-white border-t border-gray-100 shadow-xl z-50"
     >
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="container mx-auto px-8 py-12 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           {/* For Teachers Section */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Users className="w-5 h-5 text-blue-600" />
+          <div className="space-y-6">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900">For Teachers</h3>
-                <p className="text-sm text-gray-600">Individual educator solutions</p>
+                <h3 className="text-xl font-bold text-gray-900">For Teachers</h3>
+                <p className="text-gray-600 font-medium">Individual educator solutions</p>
               </div>
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               {teacherFeatures.map((feature, index) => (
                 <motion.div key={feature.name} variants={itemVariants}>
                   <Link
                     to={feature.path}
                     onClick={onClose}
-                    className="group flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="group flex items-start gap-5 p-5 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-300 border border-transparent hover:border-blue-200 hover:shadow-lg"
                   >
-                    <div className="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-100 transition-colors">
+                    <div className="flex-shrink-0 w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-100 group-hover:scale-110 transition-all duration-300 shadow-sm">
                       {feature.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h4 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
                           {feature.name}
                         </h4>
                         {feature.badge && (
-                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${getBadgeColor(feature.badge)}`}>
+                          <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getBadgeColor(feature.badge)} shadow-sm`}>
                             {feature.badge}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed font-medium">
                         {feature.description}
                       </p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300 mt-1" />
                   </Link>
                 </motion.div>
               ))}
@@ -173,44 +173,44 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
           </div>
 
           {/* For Schools Section */}
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Building className="w-5 h-5 text-purple-600" />
+          <div className="space-y-6">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Building className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900">For Schools</h3>
-                <p className="text-sm text-gray-600">Enterprise & institutional solutions</p>
+                <h3 className="text-xl font-bold text-gray-900">For Schools</h3>
+                <p className="text-gray-600 font-medium">Enterprise & institutional solutions</p>
               </div>
             </div>
             
-            <div className="space-y-3">
+            <div className="space-y-2">
               {schoolFeatures.map((feature, index) => (
                 <motion.div key={feature.name} variants={itemVariants}>
                   <Link
                     to={feature.path}
                     onClick={onClose}
-                    className="group flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="group flex items-start gap-5 p-5 rounded-xl hover:bg-gradient-to-r hover:from-purple-50 hover:to-violet-50 transition-all duration-300 border border-transparent hover:border-purple-200 hover:shadow-lg"
                   >
-                    <div className="flex-shrink-0 w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600 group-hover:bg-purple-100 transition-colors">
+                    <div className="flex-shrink-0 w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 group-hover:bg-purple-100 group-hover:scale-110 transition-all duration-300 shadow-sm">
                       {feature.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h4 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
                           {feature.name}
                         </h4>
                         {feature.badge && (
-                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${getBadgeColor(feature.badge)}`}>
+                          <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getBadgeColor(feature.badge)} shadow-sm`}>
                             {feature.badge}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed font-medium">
                         {feature.description}
                       </p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all duration-300 mt-1" />
                   </Link>
                 </motion.div>
               ))}
@@ -219,24 +219,24 @@ const ProductMegaMenu: React.FC<MegaMenuProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Bottom CTA Section */}
-        <div className="border-t border-gray-100 mt-8 pt-6">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="border-t border-gray-200 mt-12 pt-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-6">
             <div className="text-center lg:text-left">
-              <h4 className="font-semibold text-gray-900 mb-1">Not sure which solution fits your needs?</h4>
-              <p className="text-sm text-gray-600">Our team can help you choose the right plan for your specific requirements.</p>
+              <h4 className="text-lg font-bold text-gray-900 mb-2">Not sure which solution fits your needs?</h4>
+              <p className="text-gray-600 font-medium">Our team can help you choose the right plan for your specific requirements.</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <Link
                 to="/beta/demo"
                 onClick={onClose}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 Book Demo
               </Link>
               <Link
                 to="/beta/contact"
                 onClick={onClose}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
+                className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 font-semibold"
               >
                 Contact Sales
               </Link>

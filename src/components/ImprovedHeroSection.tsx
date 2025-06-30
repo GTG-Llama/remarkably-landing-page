@@ -109,28 +109,28 @@ const ImprovedHeroSection: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="container-standard px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 md:pt-36 lg:pt-40 xl:pt-44 pb-12 sm:pb-16 lg:pb-20 relative z-10">
+      <div className="container-standard px-2 sm:px-4 lg:px-6 pt-28 sm:pt-32 md:pt-36 lg:pt-40 xl:pt-44 pb-12 sm:pb-16 lg:pb-20 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             
             {/* Left Column - Content */}
-            <div className="text-left lg:pr-8">
+            <div className="text-left lg:pr-12 lg:pl-4">
               {/* Main Headlines */}
               <h1>
-                <span className="block text-slate-900 mb-4 sm:mb-6 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight">
+                <span className="block -ml-14 text-slate-900 mb-4 sm:mb-6 font-extrabold tracking-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight">
                   <span className="block sm:hidden">Stop Spending<br />Weekends<br />Grading</span>
                   <span className="hidden sm:inline">Stop Spending Weekends Grading</span>
                 </span>
               </h1>
               
-              <span className="block text-indigo-600 mb-8 sm:mb-10 md:mb-12 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight">Grade 7× Faster with AI</span>
+              <span className="block -ml-14 text-indigo-600 mb-8 sm:mb-10 md:mb-12 font-black tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-5xl leading-tight">Grade 7× Faster with AI</span>
 
               {/* Subheadline */}
-              <span className="block text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-gray-700 leading-relaxed mb-8 sm:mb-10 md:mb-12">Remarkably grades handwritten essays in your style, <br className="hidden sm:inline" /> using your rubric — proven in our pilot program.</span>
+              <span className="block -ml-14 text-base sm:text-lg md:text-lg lg:text-l font-medium text-black-700 leading-relaxed mb-8 sm:mb-10 md:mb-12">Remarkably grades handwritten essays in your style, using your rubric — proven in our pilot program.</span>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row gap-4 mb-8 -ml-14">
                 <div className="text-left">
                   <a
                     href="https://app.remarkably.ink"

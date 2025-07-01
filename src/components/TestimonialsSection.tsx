@@ -16,32 +16,42 @@ const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Mrs Mavis Low",
-    role: "Vice-Princpal",
+    role: "Vice-Principal",
     school: "Lianhua Primary School",
     quote:
-      "Engaging the services of the Remarkably AI essay grader was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation and personalized student support. By leveraging AI, our teachers can provide more timely feedback, identify learning gaps efficiently, and dedicate more attention to nurturing students' writing skills. This technology empowers our teachers to teach more effectively while managing their workload stress.",
+      "Engaging the services of the Remarkably AI essay grader was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation and personalised student support. By leveraging AI, our teachers can provide more timely feedback, identify learning gaps efficiently, and dedicate more attention to nurturing students' writing skills. This technology empowers our teachers to teach more effectively while managing their workload stress.",
     rating: 5,
     color: "bg-[#FFC8DD]", // Pastel pink
   },
   {
     id: 2,
+    name: "Pavitra",
+    role: "English Teacher",
+    school: "MOE School",
+    quote:
+      "With Remarkably, I cut grading time from 15 minutes to 3 minutes per essay. Beyond speed, it’s helped me give clearer, more meaningful feedback to support my students’ growth.",
+    rating: 5,
+    color: "bg-[#BDE0FE]", // Pastel blue
+  },
+  {
+    id: 3,
     name: "Dr Lim",
     role: "English Teacher",
     school: "Raffles Institution",
     quote:
       "Marking is a critical part of teaching, but it can be time-consuming and exhausting. With AI tools, we have a real opportunity to speed up feedback cycles—helping students improve faster by closing the feedback loop. The potential to streamline grading while retaining teacher oversight is incredibly promising.",
     rating: 5,
-    color: "bg-[#BDE0FE]", // Pastel blue
+    color: "bg-[#CDB4DB]", // Pastel purple
   },
   {
-    id: 3,
+    id: 4,
     name: "Mr Tan",
     role: "Teacher",
     school: "High School",
     quote:
       "Grading essays is honestly one of the most draining parts of the job. It takes forever, and after hours of marking, there's barely any time left to write detailed, personalized feedback for every student. I love teaching writing—but the marking? Not so much.",
     rating: 4,
-    color: "bg-[#CDB4DB]", // Pastel purple
+    color: "bg-[#A8E6CF]", // Pastel green
   },
 ];
 

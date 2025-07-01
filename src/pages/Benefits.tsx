@@ -120,25 +120,25 @@ const Benefits: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "Remarkably has transformed how I approach essay grading. I can now provide detailed feedback to all my students without spending entire weekends grading.",
-      author: "Sarah Chen",
+      quote: "With Remarkably, I cut grading time from 15 minutes to 3 minutes per essay. Beyond speed, it's helped me give clearer, more meaningful feedback to support my students' growth.",
+      author: "Pavitra",
       role: "English Teacher",
-      school: "Singapore International School",
-      avatar: "SC"
+      school: "MOE School",
+      avatar: "P"
     },
     {
-      quote: "The consistency in grading has been remarkable. My students know exactly what to expect, and I can focus on helping them improve rather than just marking papers.",
-      author: "Michael Rodriguez",
-      role: "Head of English Department",
-      school: "Victoria Junior College",
-      avatar: "MR"
+      quote: "Engaging the services of the Remarkably AI essay grader was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation and personalised student support. By leveraging AI, our teachers can provide more timely feedback, identify learning gaps efficiently, and dedicate more attention to nurturing students' writing skills. This technology empowers our teachers to teach more effectively while managing their workload stress.",
+      author: "Mrs Mavis Low",
+      role: "Vice-Principal",
+      school: "Lianhua Primary School",
+      avatar: "ML"
     },
     {
-      quote: "I was skeptical about AI grading, but Remarkably's feedback quality is exceptional. It catches things I might miss and provides insights I wouldn't have thought of.",
-      author: "Dr. Emily Watson",
-      role: "Literature Professor",
-      school: "National University of Singapore",
-      avatar: "EW"
+      quote: "Marking is a critical part of teaching, but it can be time-consuming and exhausting. With AI tools, we have a real opportunity to speed up feedback cycles—helping students improve faster by closing the feedback loop. The potential to streamline grading while retaining teacher oversight is incredibly promising.",
+      author: "Dr Lim",
+      role: "English Teacher",
+      school: "Raffles Institution",
+      avatar: "DL"
     }
   ];
 

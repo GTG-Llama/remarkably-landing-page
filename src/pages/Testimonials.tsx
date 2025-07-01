@@ -45,87 +45,69 @@ const Testimonials: React.FC = () => {
 
   const testimonials = [
     {
-      quote: "Remarkably has completely transformed my grading workflow. What used to take me entire weekends now takes just a few hours. The AI feedback is incredibly detailed and helps my students improve their writing significantly.",
-      author: "Dr. Sarah Chen",
-      role: "English Department Head",
-      school: "Singapore International School",
+      quote: "With Remarkably, I cut grading time from 15 minutes to 3 minutes per essay. Beyond speed, it's helped me give clearer, more meaningful feedback to support my students' growth.",
+      author: "Pavitra",
+      role: "English Teacher",
+      school: "MOE School",
       rating: 5,
-      image: "SC",
+      image: "P",
       category: "Time Savings"
     },
     {
-      quote: "I was initially skeptical about AI grading, but Remarkably's accuracy and consistency have won me over. It maintains the same high standards across all essays, something I struggled with during long grading sessions.",
-      author: "Michael Rodriguez",
-      role: "Literature Teacher", 
-      school: "Victoria Junior College",
+      quote: "Engaging the services of the Remarkably AI essay grader was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation and personalised student support. By leveraging AI, our teachers can provide more timely feedback, identify learning gaps efficiently, and dedicate more attention to nurturing students' writing skills. This technology empowers our teachers to teach more effectively while managing their workload stress.",
+      author: "Mrs Mavis Low",
+      role: "Vice-Principal",
+      school: "Lianhua Primary School",
       rating: 5,
-      image: "MR",
-      category: "Quality & Consistency"
+      image: "ML",
+      category: "Educational Leadership"
     },
     {
-      quote: "The time savings are incredible. I can now provide detailed feedback to all 150 of my students without sacrificing quality. My work-life balance has improved dramatically.",
-      author: "Dr. Emily Watson",
-      role: "Professor of English",
-      school: "National University of Singapore",
-      rating: 5,
-      image: "EW",
-      category: "Work-Life Balance"
-    },
-    {
-      quote: "Remarkably's OCR technology is amazing. It reads my students' handwriting better than I can sometimes! The feedback quality is exceptional and really helps students understand their mistakes.",
-      author: "James Liu",
-      role: "Secondary School Teacher",
+      quote: "Marking is a critical part of teaching, but it can be time-consuming and exhausting. With AI tools, we have a real opportunity to speed up feedback cycles—helping students improve faster by closing the feedback loop. The potential to streamline grading while retaining teacher oversight is incredibly promising.",
+      author: "Dr Lim",
+      role: "English Teacher",
       school: "Raffles Institution",
       rating: 5,
-      image: "JL",
-      category: "Technology"
+      image: "DL",
+      category: "Innovation & Efficiency"
     },
     {
-      quote: "As a department coordinator, I love how Remarkably ensures consistency across all our teachers' grading. The analytics help us identify students who need extra support.",
-      author: "Dr. Priya Sharma",
-      role: "English Department Coordinator",
-      school: "Anglo-Chinese School",
-      rating: 5,
-      image: "PS",
-      category: "Analytics & Insights"
-    },
-    {
-      quote: "The student progress tracking is invaluable. I can see exactly how each student is improving over time and adjust my teaching accordingly. It's like having a teaching assistant that never sleeps.",
-      author: "Robert Kim",
-      role: "IB English Teacher",
-      school: "United World College",
-      rating: 5,
-      image: "RK",
-      category: "Progress Tracking"
+      quote: "Grading essays is honestly one of the most draining parts of the job. It takes forever, and after hours of marking, there's barely any time left to write detailed, personalized feedback for every student. I love teaching writing—but the marking? Not so much.",
+      author: "Mr Tan",
+      role: "Teacher",
+      school: "High School",
+      rating: 4,
+      image: "MT",
+      category: "Teacher Experience"
     }
   ];
 
   const stats = [
     {
-      icon: <Users className="h-8 w-8" />,
-      number: "1,000+",
-      label: "Teachers Worldwide",
-      description: "Across Singapore and internationally",
+      icon: <Award className="h-8 w-8" />,
+      number: "MOE",
+      label: "Schools Approved",
+      description: "Trusted by Singapore Government Schools",
       gradient: "from-blue-500 to-indigo-500"
     },
     {
-      icon: <Award className="h-8 w-8" />,
-      number: "50+",
-      label: "Schools & Institutions",
-      description: "MOE and international schools",
+      icon: <TrendingUp className="h-8 w-8" />,
+      number: "400+",
+      label: "Essays/Month",
+      description: "Currently processed",
       gradient: "from-emerald-500 to-teal-500"
     },
     {
       icon: <Star className="h-8 w-8" />,
-      number: "4.9/5",
-      label: "Average Rating",
-      description: "From educator reviews",
+      number: "95%+",
+      label: "Accuracy Rate",
+      description: "Matches teacher grading",
       gradient: "from-amber-500 to-orange-500"
     },
     {
       icon: <Heart className="h-8 w-8" />,
-      number: "95%",
-      label: "Satisfaction Rate",
+      number: "99%",
+      label: "Teacher Satisfaction",
       description: "Would recommend to colleagues",
       gradient: "from-rose-500 to-pink-500"
     }
@@ -196,8 +178,8 @@ const Testimonials: React.FC = () => {
                 </div>
                 <span className="text-gray-800 font-semibold">4.9/5 rating</span>
               </div>
-              <div className="text-gray-600 font-medium">1,000+ teachers</div>
-              <div className="text-gray-600 font-medium">50+ schools</div>
+              {/* <div className="text-gray-600 font-medium">1,000+ teachers</div>
+              <div className="text-gray-600 font-medium">50+ schools</div> */}
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -237,7 +219,7 @@ const Testimonials: React.FC = () => {
                 Trusted by Thousands
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Real numbers from educators using Remarkably worldwide
+                {/* Real numbers from educators using Remarkably worldwide */}
               </p>
             </motion.div>
 

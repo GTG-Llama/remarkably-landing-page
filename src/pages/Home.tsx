@@ -330,24 +330,32 @@ const Home: React.FC = () => {
   // Testimonials with teacher focus
   const testimonials = [
     {
-      // name: "",
-      role: "Private Tutor",
-      content: "Remarkably gave me my weekends back. I can finally focus on lesson planning instead of endless grading!",
-      rating: 5,
-      avatar: "T"
-    },
-    {
-      role: "English Teacher, Lianhua Primary School", 
+      name: "Pavitra",
+      role: "English Teacher, MOE School",
       content: "With Remarkably, I cut grading time from 15 minutes to 3 minutes per essay. Beyond speed, it's helped me give clearer, more meaningful feedback to support my students' growth.",
       rating: 5,
-      avatar: "MW"
+      avatar: "P"
     },
     {
-      name: "Mavis Low",
-      role: "Singapore Ministry of Education School, Vice Principal",
-      content: "Engaging the services of the Remarkably was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation, personalised student support like more time nuturing students' writing skills.",
+      name: "Mrs Mavis Low",
+      role: "Vice-Principal, Lianhua Primary School",
+      content: "Engaging the services of the Remarkably AI essay grader was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation and personalised student support. By leveraging AI, our teachers can provide more timely feedback, identify learning gaps efficiently, and dedicate more attention to nurturing students' writing skills. This technology empowers our teachers to teach more effectively while managing their workload stress.",
       rating: 5,
-      avatar: "PS"
+      avatar: "ML"
+    },
+    {
+      name: "Dr Lim",
+      role: "English Teacher, Raffles Institution",
+      content: "Marking is a critical part of teaching, but it can be time-consuming and exhausting. With AI tools, we have a real opportunity to speed up feedback cycles—helping students improve faster by closing the feedback loop. The potential to streamline grading while retaining teacher oversight is incredibly promising.",
+      rating: 5,
+      avatar: "DL"
+    },
+    {
+      name: "Mr Tan",
+      role: "Teacher, High School",
+      content: "Grading essays is honestly one of the most draining parts of the job. It takes forever, and after hours of marking, there's barely any time left to write detailed, personalized feedback for every student. I love teaching writing—but the marking? Not so much.",
+      rating: 4,
+      avatar: "MT"
     }
   ];
 

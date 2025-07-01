@@ -65,7 +65,7 @@ const Pricing: React.FC = () => {
       originalPrice: { yearly: 29.99 },
       color: 'from-blue-600 to-cyan-600',
       features: [
-        'Up to 100 essays per month',
+        'Up to 30 essays per month',
         'Advanced AI grading',
         'Custom rubrics',
         'Priority support',
@@ -85,7 +85,7 @@ const Pricing: React.FC = () => {
       originalPrice: { yearly: 38.99 },
       color: 'from-purple-600 to-indigo-600',
       features: [
-        'Up to 300 essays per month',
+        'Unlimited essays per month',
         'Premium AI grading',
         'Custom rubrics & templates',
         'Priority support',
@@ -93,7 +93,6 @@ const Pricing: React.FC = () => {
         'Bulk upload',
         'Grade tracking',
         'Student progress reports',
-        'API access',
         'White-label reports'
       ],
       cta: 'Start Free 30-Day Trial',
@@ -191,30 +190,30 @@ const Pricing: React.FC = () => {
 
   const testimonials = [
     {
-      name: "Sarah Chen",
-      role: "High School English Teacher",
-      school: "Singapore International School",
-      quote: "Remarkably has transformed my teaching. I now spend my weekends with family instead of grading papers.",
+      name: "Mavis Low",
+      role: "Vice-Principal",
+      school: "Lianhua Primary School",
+      quote: "Engaging the services of the Remarkably AI essay grader was a strategic decision to reduce the time spent on marking, allowing teachers to focus on higher-value tasks such as lesson preparation and personalized student support. By leveraging AI, our teachers can provide more timely feedback, identify learning gaps efficiently, and dedicate more attention to nurturing students' writing skills.",
       rating: 5,
-      image: "SC",
+      image: "ML",
       type: "teacher"
     },
     {
-      name: "Dr. Michael Rodriguez",
-      role: "Department Head",
-      school: "International School Bangkok",
-      quote: "The analytics help us track student progress across our entire department. Game-changer for data-driven teaching.",
+      name: "Pavitra",
+      role: "English Teacher",
+      school: "MOE School",
+      quote: "With Remarkably, I cut grading time from 15 minutes to 3 minutes per essay. Beyond speed, it’s helped me give clearer, more meaningful feedback to support my students’ growth.",
       rating: 5,
-      image: "MR",
+      image: "PV",
       type: "teacher"
     },
     {
-      name: "Principal Emily Watson",
-      role: "School Principal",
-      school: "Australian School Singapore",
-      quote: "Implementing Remarkably school-wide has improved our grading consistency and teacher satisfaction dramatically.",
+      name: "Dr Lim",
+      role: "English Teacher",
+      school: "Raffles Institution",
+      quote: "Marking is a critical part of teaching, but it can be time-consuming and exhausting. With AI tools, we have a real opportunity to speed up feedback cycles—helping students improve faster by closing the feedback loop. The potential to streamline grading while retaining teacher oversight is incredibly promising.",
       rating: 5,
-      image: "EW",
+      image: "DL",
       type: "school"
     }
   ];
@@ -222,7 +221,7 @@ const Pricing: React.FC = () => {
   const faqs = [
     {
       question: "How does the 30-day free trial work for teachers?",
-      answer: "Start with any teacher plan completely free for 30 days. No credit card required, no setup fees. You get full access to all features of your chosen plan. Cancel anytime during the trial period.",
+      answer: "Start with any teacher plan completely free for 30 days. No setup fees. You get full access to all features of your chosen plan. Cancel anytime during the trial period.",
       category: "teacher"
     },
     {
@@ -237,7 +236,7 @@ const Pricing: React.FC = () => {
     },
     {
       question: "How does school pricing work?",
-      answer: "School pricing is customized based on your number of teachers, students, and specific requirements. We offer volume discounts and flexible payment terms for educational institutions.",
+      answer: "School pricing is customized based on your number of teachers, students, and specific requests. We offer volume discounts and flexible payment terms for educational institutions, reach out to us to know more!",
       category: "school"
     },
     {
@@ -745,7 +744,7 @@ const Pricing: React.FC = () => {
               Ready to Transform Your Grading?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-            Join 1000+ teachers and 50+ schools who save hours every week with Remarkably
+            Save hours every week with Remarkably now!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
